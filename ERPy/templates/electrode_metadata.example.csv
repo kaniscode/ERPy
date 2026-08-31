@@ -1,0 +1,3 @@
+patient_id,session_id,elec_label,anat_label,mni_x,mni_y,mni_z,bad_channel
+EXAMPLE_PATIENT,A,LACC1,L ACC,0,20,30,false
+EXAMPLE_PATIENT,A,LACC2,L ACC,2,21,31,false

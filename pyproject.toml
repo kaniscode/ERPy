@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "erpy-neuro"
+version = "1.0.0"
+description = "ERPy: open-source software for automated stimulation-evoked intracranial response analysis"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+authors = [{name = "Ishan Kanungo"}]
+keywords = ["iEEG", "CCEP", "SPES", "evoked potentials", "neuroscience"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+
+dependencies = [
+    "numpy>=1.22",
+    "pandas>=1.5",
+    "scipy>=1.9",
+    "matplotlib>=3.6",
+    "pyyaml>=6.0",
+    "h5py>=3.7",
+    "tables>=3.7",
+    "statsmodels>=0.13",
+    "networkx>=2.8",
+]
+
+[project.optional-dependencies]
+edf = ["mne>=1.6"]
+nwb = ["pynwb>=2.5"]
+viz = ["seaborn>=0.12", "nilearn>=0.10", "plotly>=5.18"]
+surface = ["mne>=1.6", "pyvista>=0.43"]
+validation = ["mne>=1.6", "requests>=2.28", "pynwb>=2.5"]
+dev = ["pytest>=7", "build>=1.0", "twine>=4.0", "mne>=1.6", "plotly>=5.18", "pynwb>=2.5"]
+
+[project.urls]
+Homepage = "https://github.com/kaniscode/ERPy"
+Documentation = "https://github.com/kaniscode/ERPy/tree/main/docs"
+Repository = "https://github.com/kaniscode/ERPy"
+Issues = "https://github.com/kaniscode/ERPy/issues"
+
+[project.scripts]
+erpy-init = "ERPy.cli:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["ERPy*"]
+
+[tool.setuptools.package-data]
+ERPy = ["templates/*.yaml", "templates/*.csv"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

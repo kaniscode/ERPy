@@ -1,0 +1,9 @@
+numpy>=1.22
+pandas>=1.5
+scipy>=1.9
+matplotlib>=3.6
+pyyaml>=6.0
+h5py>=3.7
+tables>=3.7
+statsmodels>=0.13
+networkx>=2.8

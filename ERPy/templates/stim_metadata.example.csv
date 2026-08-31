@@ -1,0 +1,2 @@
+patient_id,session_id,stim_pair,stim_start,stim_stop,stim_freq,amplitude_ma,pulse_width_us
+EXAMPLE_PATIENT,A,LACC_1_2,2026-01-01T00:01:00,2026-01-01T00:02:00,0.2,6,200
