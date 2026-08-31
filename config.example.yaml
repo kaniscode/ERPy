@@ -1,0 +1,10 @@
+rawdata_path: ./data/raw
+procdata_path: ./data/processed
+rawdata_meta_path: ./data/metadata/raw_metadata.csv
+stim_meta_path: ./data/metadata/stim_metadata.csv
+elec_meta_path: ./data/metadata/electrode_metadata.csv
+event_path:
+python_path:
+session_ids:
+  EXAMPLE_PATIENT:
+    - A

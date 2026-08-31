@@ -1,0 +1,2 @@
+patient_id,session_id,raw_file,start_time,stop_time,sampling_freq,nwb_series
+EXAMPLE_PATIENT,A,raw/example.edf,2026-01-01T00:00:00,2026-01-01T00:10:00,2048,

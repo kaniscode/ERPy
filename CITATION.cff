@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use ERPy in research, please cite it as below."
+type: software
+title: "ERPy: open-source software for automated stimulation-evoked intracranial response analysis"
+version: 1.0.0
+date-released: 2026-09-01
+license: MIT
+authors:
+  - family-names: Kanungo
+    given-names: Ishan
+keywords:
+  - iEEG
+  - CCEP
+  - single pulse electrical stimulation
+  - evoked potentials
+  - Python
+repository-code: "https://github.com/kaniscode/ERPy"
+url: "https://github.com/kaniscode/ERPy"
