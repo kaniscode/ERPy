@@ -1,0 +1,17 @@
+site,rater,raw_annotation,n_annotations
+Mayo,MvdB_clin,0.0,5947
+Mayo,MvdB_clin,1.0,161
+Mayo,MvdB_clin,2.0,160
+Mayo,SB,0.0,3698
+Mayo,SB,1.0,60
+Mayo,SB,2.0,16
+UMCU,DvB,0.0,10952
+UMCU,DvB,1.0,3430
+UMCU,JvdA,0.0,10038
+UMCU,JvdA,1.0,1419
+UMCU,MvdB,0.0,21917
+UMCU,MvdB,1.0,3281
+UMCU,MvdB,2.0,606
+UMCU,SB,0.0,1376
+UMCU,SB,1.0,128
+UMCU,SB,2.0,38

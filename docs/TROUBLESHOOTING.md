@@ -1,5 +1,7 @@
 # Troubleshooting
 
+Project: [ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis](../README.md).
+
 ## `No module named ERPy`
 
 Activate the same environment in which ERPy was installed, then verify it:

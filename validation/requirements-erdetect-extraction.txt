@@ -1,0 +1,5 @@
+# Raw extraction used a separate Python3.12 environment onmacOSarm64.
+numpy==2.5.3
+pandas==3.0.5
+scipy==1.18.1
+pymef==1.4.8

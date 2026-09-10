@@ -1,0 +1,946 @@
+[
+  {
+    "file": "sub-MAYO01_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      88
+    ],
+    "channels_first": [
+      "LAS1",
+      "LAS2",
+      "LAS3",
+      "LAS4"
+    ],
+    "stimpairs_shape": [
+      48
+    ],
+    "stimpairs_first": [
+      "LMS1-LMS2",
+      "LMS2-LMS3",
+      "LMS3-LMS4",
+      "LPS1-LPS2"
+    ],
+    "annotations_shape": [
+      88,
+      48
+    ],
+    "values_counts": {
+      "-1.0": 96,
+      "0.0": 2483,
+      "1.0": 386,
+      "2.0": 71,
+      "nan": 1188
+    }
+  },
+  {
+    "file": "sub-MAYO02_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      64
+    ],
+    "channels_first": [
+      "LG1",
+      "LG2",
+      "LG3",
+      "LG4"
+    ],
+    "stimpairs_shape": [
+      51
+    ],
+    "stimpairs_first": [
+      "LG1-LG2",
+      "LG2-LG3",
+      "LG3-LG4",
+      "LG4-LG5"
+    ],
+    "annotations_shape": [
+      64,
+      51
+    ],
+    "values_counts": {
+      "-1.0": 101,
+      "0.0": 2396,
+      "1.0": 223,
+      "2.0": 80,
+      "nan": 464
+    }
+  },
+  {
+    "file": "sub-MAYO03_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      36
+    ],
+    "channels_first": [
+      "RG1",
+      "RG2",
+      "RG3",
+      "RG4"
+    ],
+    "stimpairs_shape": [
+      30
+    ],
+    "stimpairs_first": [
+      "RG1-RG2",
+      "RG2-RG3",
+      "RG3-RG4",
+      "RG4-RG5"
+    ],
+    "annotations_shape": [
+      36,
+      30
+    ],
+    "values_counts": {
+      "-1.0": 57,
+      "0.0": 790,
+      "1.0": 60,
+      "2.0": 80,
+      "nan": 93
+    }
+  },
+  {
+    "file": "sub-MAYO04_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      24
+    ],
+    "channels_first": [
+      "LG1",
+      "LG2",
+      "LG3",
+      "LG4"
+    ],
+    "stimpairs_shape": [
+      16
+    ],
+    "stimpairs_first": [
+      "LG1-LG2",
+      "LG2-LG3",
+      "LG3-LG4",
+      "LG4-LG5"
+    ],
+    "annotations_shape": [
+      24,
+      16
+    ],
+    "values_counts": {
+      "-1.0": 31,
+      "0.0": 251,
+      "1.0": 36,
+      "2.0": 16,
+      "nan": 50
+    }
+  },
+  {
+    "file": "sub-MAYO04_ses-ieeg01_task-ccep_run-01_annot_SB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      24
+    ],
+    "channels_first": [
+      "LG1",
+      "LG2",
+      "LG3",
+      "LG4"
+    ],
+    "stimpairs_shape": [
+      16
+    ],
+    "stimpairs_first": [
+      "LG1-LG2",
+      "LG2-LG3",
+      "LG3-LG4",
+      "LG4-LG5"
+    ],
+    "annotations_shape": [
+      24,
+      16
+    ],
+    "values_counts": {
+      "-1.0": 31,
+      "0.0": 248,
+      "1.0": 46,
+      "2.0": 9,
+      "nan": 50
+    }
+  },
+  {
+    "file": "sub-MAYO05_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      96
+    ],
+    "channels_first": [
+      "LTG1",
+      "LTG2",
+      "LTG3",
+      "LTG4"
+    ],
+    "stimpairs_shape": [
+      55
+    ],
+    "stimpairs_first": [
+      "LTG1-LTG2",
+      "LTG2-LTG3",
+      "LTG3-LTG4",
+      "LTG4-LTG5"
+    ],
+    "annotations_shape": [
+      96,
+      55
+    ],
+    "values_counts": {
+      "-1.0": 108,
+      "0.0": 4093,
+      "1.0": 183,
+      "2.0": 103,
+      "nan": 793
+    }
+  },
+  {
+    "file": "sub-MAYO05_ses-ieeg01_task-ccep_run-01_annot_SB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      96
+    ],
+    "channels_first": [
+      "LTG1",
+      "LTG2",
+      "LTG3",
+      "LTG4"
+    ],
+    "stimpairs_shape": [
+      55
+    ],
+    "stimpairs_first": [
+      "LTG1-LTG2",
+      "LTG2-LTG3",
+      "LTG3-LTG4",
+      "LTG4-LTG5"
+    ],
+    "annotations_shape": [
+      96,
+      55
+    ],
+    "values_counts": {
+      "-1.0": 106,
+      "0.0": 4190,
+      "1.0": 180,
+      "2.0": 14,
+      "nan": 790
+    }
+  },
+  {
+    "file": "sub-UMCU20_ses-1_task-SPESclin_run-011757_annot_DvB.mat",
+    "fields": [
+      "annotations",
+      "channels",
+      "stimpairs"
+    ],
+    "annotations_shape": [
+      85,
+      74
+    ],
+    "values_counts": {
+      "-1": 148,
+      "0": 4843,
+      "1": 1299
+    },
+    "channels_shape": [
+      85
+    ],
+    "channels_first": [
+      "F01",
+      "F02",
+      "F03",
+      "F04"
+    ],
+    "stimpairs_shape": [
+      74
+    ],
+    "stimpairs_first": [
+      "F01-F02",
+      "F02-F03",
+      "F03-F04",
+      "F04-F05"
+    ]
+  },
+  {
+    "file": "sub-UMCU20_ses-1_task-SPESclin_run-011757_annot_MvdB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      88
+    ],
+    "channels_first": [
+      "F01",
+      "F02",
+      "F03",
+      "F04"
+    ],
+    "stimpairs_shape": [
+      10
+    ],
+    "stimpairs_first": [
+      "HF13-HF14",
+      "HF14-HF15",
+      "HF15-HF16",
+      "IH01-IH02"
+    ],
+    "annotations_shape": [
+      88,
+      10
+    ],
+    "values_counts": {
+      "-1.0": 19,
+      "0.0": 671,
+      "1.0": 91,
+      "2.0": 48,
+      "nan": 51
+    }
+  },
+  {
+    "file": "sub-UMCU21_ses-1_task-SPESclin_run-021525_annot_DvB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      62
+    ],
+    "channels_first": [
+      "CH01",
+      "CH02",
+      "CH03",
+      "CH04"
+    ],
+    "stimpairs_shape": [
+      42
+    ],
+    "stimpairs_first": [
+      "CH01-CH02",
+      "CH02-CH03",
+      "CH03-CH04",
+      "CH04-CH05"
+    ],
+    "annotations_shape": [
+      62,
+      42
+    ],
+    "values_counts": {
+      "-1.0": 84,
+      "0.0": 1899,
+      "1.0": 501,
+      "nan": 120
+    }
+  },
+  {
+    "file": "sub-UMCU21_ses-1_task-SPESclin_run-021525_annot_MvdB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      62
+    ],
+    "channels_first": [
+      "CH01",
+      "CH02",
+      "CH03",
+      "CH04"
+    ],
+    "stimpairs_shape": [
+      42
+    ],
+    "stimpairs_first": [
+      "CH01-CH02",
+      "CH02-CH03",
+      "CH03-CH04",
+      "CH04-CH05"
+    ],
+    "annotations_shape": [
+      62,
+      42
+    ],
+    "values_counts": {
+      "-1.0": 84,
+      "0.0": 1731,
+      "1.0": 220,
+      "2.0": 69,
+      "nan": 500
+    }
+  },
+  {
+    "file": "sub-UMCU21_ses-1_task-SPESclin_run-021525_annot_SB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      62
+    ],
+    "channels_first": [
+      "CH01",
+      "CH02",
+      "CH03",
+      "CH04"
+    ],
+    "stimpairs_shape": [
+      42
+    ],
+    "stimpairs_first": [
+      "CH01-CH02",
+      "CH02-CH03",
+      "CH03-CH04",
+      "CH04-CH05"
+    ],
+    "annotations_shape": [
+      62,
+      42
+    ],
+    "values_counts": {
+      "-1.0": 83,
+      "0.0": 1872,
+      "1.0": 200,
+      "2.0": 98,
+      "nan": 351
+    }
+  },
+  {
+    "file": "sub-UMCU22_ses-1_task-SPESclin_run-011714_annot_DvB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      80
+    ],
+    "channels_first": [
+      "F01",
+      "F02",
+      "F03",
+      "F04"
+    ],
+    "stimpairs_shape": [
+      70
+    ],
+    "stimpairs_first": [
+      "F01-F02",
+      "F02-F03",
+      "F03-F04",
+      "F04-F05"
+    ],
+    "annotations_shape": [
+      80,
+      70
+    ],
+    "values_counts": {
+      "-1": 140,
+      "0": 4157,
+      "1": 1303
+    }
+  },
+  {
+    "file": "sub-UMCU22_ses-1_task-SPESclin_run-011714_annot_MvdB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      80
+    ],
+    "channels_first": [
+      "F01",
+      "F02",
+      "F03",
+      "F04"
+    ],
+    "stimpairs_shape": [
+      70
+    ],
+    "stimpairs_first": [
+      "F01-F02",
+      "F02-F03",
+      "F03-F04",
+      "F04-F05"
+    ],
+    "annotations_shape": [
+      80,
+      70
+    ],
+    "values_counts": {
+      "-1.0": 140,
+      "0.0": 4378,
+      "1.0": 716,
+      "2.0": 216,
+      "nan": 150
+    }
+  },
+  {
+    "file": "sub-UMCU23_ses-1_task-SPESclin_run-021706_annot_DvB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      56
+    ],
+    "channels_first": [
+      "IHL01",
+      "IHL02",
+      "IHL03",
+      "IHL04"
+    ],
+    "stimpairs_shape": [
+      45
+    ],
+    "stimpairs_first": [
+      "IHL01-IHL02",
+      "IHL02-IHL03",
+      "IHL03-IHL04",
+      "IHL04-IHL05"
+    ],
+    "annotations_shape": [
+      56,
+      45
+    ],
+    "values_counts": {
+      "-1": 90,
+      "0": 1868,
+      "1": 562
+    }
+  },
+  {
+    "file": "sub-UMCU23_ses-1_task-SPESclin_run-021706_annot_MvdB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      56
+    ],
+    "channels_first": [
+      "IHL01",
+      "IHL02",
+      "IHL03",
+      "IHL04"
+    ],
+    "stimpairs_shape": [
+      45
+    ],
+    "stimpairs_first": [
+      "IHL01-IHL02",
+      "IHL02-IHL03",
+      "IHL03-IHL04",
+      "IHL04-IHL05"
+    ],
+    "annotations_shape": [
+      56,
+      45
+    ],
+    "values_counts": {
+      "-1.0": 90,
+      "0.0": 1580,
+      "1.0": 574,
+      "2.0": 138,
+      "nan": 138
+    }
+  },
+  {
+    "file": "sub-UMCU25_ses-1_task-SPESclin_run-031729_annot_DvB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      86
+    ],
+    "channels_first": [
+      "T01",
+      "T02",
+      "T03",
+      "T04"
+    ],
+    "stimpairs_shape": [
+      54
+    ],
+    "stimpairs_first": [
+      "T03-T04",
+      "T04-T05",
+      "T05-T06",
+      "T06-T07"
+    ],
+    "annotations_shape": [
+      86,
+      54
+    ],
+    "values_counts": {
+      "-1": 108,
+      "0": 3965,
+      "1": 571
+    }
+  },
+  {
+    "file": "sub-UMCU25_ses-1_task-SPESclin_run-031729_annot_MvdB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      86
+    ],
+    "channels_first": [
+      "T01",
+      "T02",
+      "T03",
+      "T04"
+    ],
+    "stimpairs_shape": [
+      43
+    ],
+    "stimpairs_first": [
+      "T17-T18",
+      "T18-T19",
+      "T19-T20",
+      "T20-T21"
+    ],
+    "annotations_shape": [
+      86,
+      43
+    ],
+    "values_counts": {
+      "-1.0": 86,
+      "0.0": 2473,
+      "1.0": 398,
+      "2.0": 120,
+      "nan": 621
+    }
+  },
+  {
+    "file": "sub-UMCU26_ses-1_task-SPESclin_run-011555_annot_DvB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      64
+    ],
+    "channels_first": [
+      "F01",
+      "F02",
+      "F03",
+      "F04"
+    ],
+    "stimpairs_shape": [
+      48
+    ],
+    "stimpairs_first": [
+      "F01-F02",
+      "F02-F03",
+      "F03-F04",
+      "F04-F05"
+    ],
+    "annotations_shape": [
+      64,
+      48
+    ],
+    "values_counts": {
+      "-1": 96,
+      "0": 1990,
+      "1": 986
+    }
+  },
+  {
+    "file": "sub-UMCU26_ses-1_task-SPESclin_run-011555_annot_MvdB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      64
+    ],
+    "channels_first": [
+      "F01",
+      "F02",
+      "F03",
+      "F04"
+    ],
+    "stimpairs_shape": [
+      48
+    ],
+    "stimpairs_first": [
+      "F01-F02",
+      "F02-F03",
+      "F03-F04",
+      "F04-F05"
+    ],
+    "annotations_shape": [
+      64,
+      48
+    ],
+    "values_counts": {
+      "-1.0": 96,
+      "0.0": 2128,
+      "1.0": 472,
+      "2.0": 34,
+      "nan": 342
+    }
+  },
+  {
+    "file": "sub-UMCU59_ses-1_task-SPESclin_run-041501_annot_JvdA.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      48
+    ],
+    "channels_first": [
+      "F01",
+      "F02",
+      "F03",
+      "F04"
+    ],
+    "stimpairs_shape": [
+      42
+    ],
+    "stimpairs_first": [
+      "F01-F02",
+      "F02-F03",
+      "F03-F04",
+      "F04-F05"
+    ],
+    "annotations_shape": [
+      48,
+      42
+    ],
+    "values_counts": {
+      "0.0": 1754,
+      "1.0": 180,
+      "nan": 82
+    }
+  },
+  {
+    "file": "sub-UMCU59_ses-1_task-SPESclin_run-041501_annot_MvdB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      64
+    ],
+    "channels_first": [
+      "F01",
+      "F02",
+      "F03",
+      "F04"
+    ],
+    "stimpairs_shape": [
+      56
+    ],
+    "stimpairs_first": [
+      "F01-F02",
+      "F02-F03",
+      "F03-F04",
+      "F04-F05"
+    ],
+    "annotations_shape": [
+      64,
+      56
+    ],
+    "values_counts": {
+      "-1.0": 112,
+      "0.0": 2290,
+      "1.0": 254,
+      "2.0": 5,
+      "nan": 923
+    }
+  },
+  {
+    "file": "sub-UMCU62_ses-1b_task-SPESclin_run-050941_annot_JvdA.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      80
+    ],
+    "channels_first": [
+      "C01",
+      "C02",
+      "C03",
+      "C04"
+    ],
+    "stimpairs_shape": [
+      64
+    ],
+    "stimpairs_first": [
+      "C01-C02",
+      "C02-C03",
+      "C03-C04",
+      "C04-C05"
+    ],
+    "annotations_shape": [
+      80,
+      64
+    ],
+    "values_counts": {
+      "0.0": 4108,
+      "1.0": 554,
+      "nan": 458
+    }
+  },
+  {
+    "file": "sub-UMCU62_ses-1b_task-SPESclin_run-050941_annot_MvdB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      80
+    ],
+    "channels_first": [
+      "C01",
+      "C02",
+      "C03",
+      "C04"
+    ],
+    "stimpairs_shape": [
+      64
+    ],
+    "stimpairs_first": [
+      "C01-C02",
+      "C02-C03",
+      "C03-C04",
+      "C04-C05"
+    ],
+    "annotations_shape": [
+      80,
+      64
+    ],
+    "values_counts": {
+      "-1.0": 128,
+      "0.0": 4157,
+      "1.0": 421,
+      "2.0": 10,
+      "nan": 404
+    }
+  },
+  {
+    "file": "sub-UMCU67_ses-1_task-SPESclin_run-021704_annot_JvdA.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      80
+    ],
+    "channels_first": [
+      "C01",
+      "C02",
+      "C03",
+      "C04"
+    ],
+    "stimpairs_shape": [
+      66
+    ],
+    "stimpairs_first": [
+      "C01-C02",
+      "C02-C03",
+      "C03-C04",
+      "C04-C05"
+    ],
+    "annotations_shape": [
+      80,
+      66
+    ],
+    "values_counts": {
+      "0.0": 4462,
+      "1.0": 686,
+      "nan": 132
+    }
+  },
+  {
+    "file": "sub-UMCU67_ses-1_task-SPESclin_run-021704_annot_MvdB.mat",
+    "fields": [
+      "channels",
+      "stimpairs",
+      "annotations"
+    ],
+    "channels_shape": [
+      80
+    ],
+    "channels_first": [
+      "C01",
+      "C02",
+      "C03",
+      "C04"
+    ],
+    "stimpairs_shape": [
+      66
+    ],
+    "stimpairs_first": [
+      "C01-C02",
+      "C02-C03",
+      "C03-C04",
+      "C04-C05"
+    ],
+    "annotations_shape": [
+      80,
+      66
+    ],
+    "values_counts": {
+      "-1": 132,
+      "0": 4745,
+      "1": 399,
+      "2": 4
+    }
+  }
+]

@@ -9,15 +9,23 @@ include config.example.yaml
 recursive-include ERPy/templates *.yaml *.csv
 recursive-include docs *.md
 recursive-include notebooks/examples *.ipynb *.py
-include scripts/build_example_notebooks.py
-include scripts/generate_api_reference.py
-include scripts/release_audit.py
-include validation/validate_public_spes.py
-include validation/validate_crp_energy_real_baseline.py
-include validation/benchmark_crp_energy.py
-include validation/benchmark_crp_energy_composite_nulls.py
+include validation/*.py
+include validation/*.md
+include validation/*.json
+include validation/*.txt
+include validation/prediction_provenance_example.csv
+graft validation/erdetect_reference
+graft validation/frozen_results
+graft validation/multiscale_interval_precision
+graft validation/public_workflow_completion
+graft validation/n1_timing_reporting
 exclude ERPy/rcs_manifest.py
 global-exclude .DS_Store
 global-exclude *.py[cod]
 prune writing_phase
 prune release_artifacts
+
+graft validation/n1_input_contract
+graft validation/annotation_agreement
+graft validation/n1_comparison
+graft validation/n1_label_free

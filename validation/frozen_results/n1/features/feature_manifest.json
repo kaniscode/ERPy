@@ -1,0 +1,4225 @@
+{
+  "protocol_sha256": "1e94c68307049760f8142c016a753b603d1d9b3de3dc50667cb2b4d50009ef6a",
+  "config": {
+    "response_window": [
+      0.01,
+      0.09
+    ],
+    "baseline_window": [
+      -1.0,
+      -0.1
+    ],
+    "normalization_window": [
+      -0.5,
+      -0.02
+    ],
+    "min_trials": 8
+  },
+  "code_sha256": {
+    "validation/extract_n1_features.py": "b85f18c78a7d77496b13072015a26755f2b20a66181d00e04308eb8757ed0e08",
+    "ERPy/n1.py": "36d1b11cdbd045d691dd3bc140c94983afa95199867e0b406d921b77c8a47178",
+    "validation/predict_erdetect_epochs.py": "76616617e272b4e0e8a1d64eb490a929b754e46c01907f468b5f4566942bb18d"
+  },
+  "python": "3.12.5",
+  "numpy": "1.26.4",
+  "scipy": "1.13.1",
+  "pandas": "2.2.2",
+  "annotation_inputs": [],
+  "archived_call_inputs": [],
+  "records": 36016,
+  "feature_available": 34928,
+  "inputs": [
+    {
+      "subject": "MAYO01",
+      "stimpair": "LMS3-LMS4",
+      "epoch_file": "LMS3-LMS4.npz",
+      "epoch_sha256": "57f600ed2578a2d2b0f67c7ec951ab14d69ae7c8f2e264b480055832d28ce5a3",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LPS1-LPS2",
+      "epoch_file": "LPS1-LPS2.npz",
+      "epoch_sha256": "ea927fc857aee41fd5d41c5800f06277c244917caa2f8e2f7296d4920ab4ae3c",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LPS2-LPS3",
+      "epoch_file": "LPS2-LPS3.npz",
+      "epoch_sha256": "e854394a898902b30db315bfcfd6d5d69862e83e8d140178262fbeb60cad39b5",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG1-LTG2",
+      "epoch_file": "LTG1-LTG2.npz",
+      "epoch_sha256": "44849f60d237093b16979b188c753d7c12ff7a16e3e786f2483000e2c41b019f",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG10-LTG11",
+      "epoch_file": "LTG10-LTG11.npz",
+      "epoch_sha256": "0eb89a7738667350a97b971dd9c5133849b235af0f565690ff34f3f1843873ef",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG11-LTG12",
+      "epoch_file": "LTG11-LTG12.npz",
+      "epoch_sha256": "8c3a50c8f7301dc1ee75bbb0605d738e3cd32b36a3c752ef8828a8aab9f3101d",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG12-LTG13",
+      "epoch_file": "LTG12-LTG13.npz",
+      "epoch_sha256": "19a710f2f437912ea581681d7ec0a69de538d93abee52014843c7f2ca65367d1",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG13-LTG14",
+      "epoch_file": "LTG13-LTG14.npz",
+      "epoch_sha256": "c84ea3ee9e9c01b007576aadc11f4fa94125d884cb13d7bbb70f957156260b0f",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG14-LTG15",
+      "epoch_file": "LTG14-LTG15.npz",
+      "epoch_sha256": "b9f11334706b881fa6793d9dff041f5d064050fe78f09f20a9900bb2a31bc5b0",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG15-LTG16",
+      "epoch_file": "LTG15-LTG16.npz",
+      "epoch_sha256": "8d6a10936bcb70b13dab008fd8f34a7cd800077479f3689bbd475a6247356d1c",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG17-LTG18",
+      "epoch_file": "LTG17-LTG18.npz",
+      "epoch_sha256": "d081e88c4c573b0afde878ebd5b0f663f86efe36883fa45ae4847098a140f1f8",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG18-LTG19",
+      "epoch_file": "LTG18-LTG19.npz",
+      "epoch_sha256": "3814ebabcdf34dd70d803b45d5f5a0e25e49f1127fc547e5a839f8e9da5d6533",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG19-LTG20",
+      "epoch_file": "LTG19-LTG20.npz",
+      "epoch_sha256": "2a6abff93e5ba7e175453914b9d737a684880aba212c266e149d6e34163b4fc6",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG2-LTG3",
+      "epoch_file": "LTG2-LTG3.npz",
+      "epoch_sha256": "0f2c284ead6d000627459a5636e50a5b4329aab15315a7c8a7e9a444c8c9c33f",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG20-LTG21",
+      "epoch_file": "LTG20-LTG21.npz",
+      "epoch_sha256": "94a55406e10fc7c0dbdaa54063cf0b3d04646c916d7271b9c08657178d1b6656",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG21-LTG22",
+      "epoch_file": "LTG21-LTG22.npz",
+      "epoch_sha256": "008b800e1a2c52f1f27e0a691158b9848984b189f44c8e376df7a2a86620f8e0",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG22-LTG23",
+      "epoch_file": "LTG22-LTG23.npz",
+      "epoch_sha256": "d982222fe5bff85160720a278509c6dce8b1893505621cbc0ea4381af24d1779",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG23-LTG24",
+      "epoch_file": "LTG23-LTG24.npz",
+      "epoch_sha256": "a663874f9bd5d277a161f43b1f8421b4fa80a963f32812a5ecbbf5422c4c9bf4",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG25-LTG26",
+      "epoch_file": "LTG25-LTG26.npz",
+      "epoch_sha256": "8dffd22be3ae5ce06b1e448d3c5e484ff80cc5e8f7d88ceab66c2a320d1d0d3b",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG26-LTG27",
+      "epoch_file": "LTG26-LTG27.npz",
+      "epoch_sha256": "4931dc6ecb50dd414a79e0f8e01cc7bc9b63c933660a821cbf2bd69473c99284",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG27-LTG28",
+      "epoch_file": "LTG27-LTG28.npz",
+      "epoch_sha256": "1e72656c19dc9f27f66f7fe96d6b1a0b471ea6c30b8edf922d02c935c1a9148a",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG28-LTG29",
+      "epoch_file": "LTG28-LTG29.npz",
+      "epoch_sha256": "d0e315c15344e14859606a88e3d06db75593f5675d3efd079ab3b385f759aef7",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG29-LTG30",
+      "epoch_file": "LTG29-LTG30.npz",
+      "epoch_sha256": "428940614543ba6eb9864fe528fdb8ca925d241fa38f15ae7c702859d24efa39",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG3-LTG4",
+      "epoch_file": "LTG3-LTG4.npz",
+      "epoch_sha256": "8c569458298b80aa95db8cfccaec93044f0f4cb58f10e32c6272ab451e450014",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG30-LTG31",
+      "epoch_file": "LTG30-LTG31.npz",
+      "epoch_sha256": "d98c83239aedb383ce35cdd73c031c0ff85e987356b38afa04f21bc943f50f4b",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG31-LTG32",
+      "epoch_file": "LTG31-LTG32.npz",
+      "epoch_sha256": "d0950288faa8b670f2c29ce1adcf44a2739795a077711c5188781496c0e75eb0",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG33-LTG34",
+      "epoch_file": "LTG33-LTG34.npz",
+      "epoch_sha256": "13cce4993d13e6fe7fa2b18530c126bbeaee4a87484b78e6faefd74c9507c7f8",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG34-LTG35",
+      "epoch_file": "LTG34-LTG35.npz",
+      "epoch_sha256": "5579aef8a378a21b2c70c29b9d1057eace0a94ed468cd0e0990bbf77dd66395d",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG35-LTG36",
+      "epoch_file": "LTG35-LTG36.npz",
+      "epoch_sha256": "a0757863d2ba54f4f97ea0ff6504e84b58f1f7732a1317b6c4334e5037d0cbd5",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG36-LTG37",
+      "epoch_file": "LTG36-LTG37.npz",
+      "epoch_sha256": "e18d3b942f97aa15969f38b3ef703aed68c8f726111d90aa7109352827151a85",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG37-LTG38",
+      "epoch_file": "LTG37-LTG38.npz",
+      "epoch_sha256": "8b76dd783d3446b41a697a5532fd714c8851ad72f32cd1351e28e762ae5fe553",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG38-LTG39",
+      "epoch_file": "LTG38-LTG39.npz",
+      "epoch_sha256": "86247f1967e4fd6c8fc2747640e472b01500fc5715c75de1a2c39864f7afcdbc",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG39-LTG40",
+      "epoch_file": "LTG39-LTG40.npz",
+      "epoch_sha256": "2204564094b0e88855c8e9d5c18b7544a62fc153606c9aae25a4984c045fffe5",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG4-LTG5",
+      "epoch_file": "LTG4-LTG5.npz",
+      "epoch_sha256": "504f4acc8e3584591d4782708dbd458ab8da198ed3b5cff0b069ebc248a4228d",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG41-LTG42",
+      "epoch_file": "LTG41-LTG42.npz",
+      "epoch_sha256": "e3769a6399188713442e533445a87e485506aefd7ef26edaf27266f0bfc7378e",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG42-LTG43",
+      "epoch_file": "LTG42-LTG43.npz",
+      "epoch_sha256": "12de5dc27e18026ff104978eb31a0095f6c9c6bf43c8748178272873c72b44ac",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG43-LTG44",
+      "epoch_file": "LTG43-LTG44.npz",
+      "epoch_sha256": "68f90329e1f2ac7c2d3912a3d3c723629a3bc59afab3e746fdb367d3e9c59f99",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG44-LTG45",
+      "epoch_file": "LTG44-LTG45.npz",
+      "epoch_sha256": "96eb8bff93af0a1b78284eeafff18ca0d443cedf60ffe54ab82f5f3719eda4a1",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG45-LTG46",
+      "epoch_file": "LTG45-LTG46.npz",
+      "epoch_sha256": "722fdd569fad9e6d1a414e4f8d395d43da0e2dfa37a2a2d9f935e5ed8ecbfd60",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG46-LTG47",
+      "epoch_file": "LTG46-LTG47.npz",
+      "epoch_sha256": "845be3334a274fad7a088d041f18d0ee4f919ad9908397e30d27ffd064179e33",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG47-LTG48",
+      "epoch_file": "LTG47-LTG48.npz",
+      "epoch_sha256": "1fd8d6800ea3fde433c4afae954eb77ca2f7f5777e067a9752f42793f53db031",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG5-LTG6",
+      "epoch_file": "LTG5-LTG6.npz",
+      "epoch_sha256": "27da08aaefd909337b74e219b2e2b7ce614a17f459a8e2765f2b4a8ddb681a23",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG6-LTG7",
+      "epoch_file": "LTG6-LTG7.npz",
+      "epoch_sha256": "a9aa18c42920242044693360830f9ef9b870442e8d6988c9dc60e050d48026b1",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG7-LTG8",
+      "epoch_file": "LTG7-LTG8.npz",
+      "epoch_sha256": "7b255b73076d093e8758b5002f45db4163454cbe890ce7b34dd010f50eec7aa6",
+      "records": 62
+    },
+    {
+      "subject": "MAYO01",
+      "stimpair": "LTG9-LTG10",
+      "epoch_file": "LTG9-LTG10.npz",
+      "epoch_sha256": "62da57ad403889c666a54568d6ac3fb8c071bf8bb6893bae4eed43aa6877867a",
+      "records": 62
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LAD1-LAD2",
+      "epoch_file": "LAD1-LAD2.npz",
+      "epoch_sha256": "6aa2fbd9916d9c27e37d823b1ab47492675a599baf310fc480f6c39f65658948",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LAD2-LAD3",
+      "epoch_file": "LAD2-LAD3.npz",
+      "epoch_sha256": "9166a5ec01b575d8891f5e50dfd9b30b0f970359d53d38d5c52d92e37693580f",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LAD3-LAD4",
+      "epoch_file": "LAD3-LAD4.npz",
+      "epoch_sha256": "26974b97798b2b4af465a9aa0d656f8e2171719fbb9474c65eb1f62fb208d6d3",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LAS1-LAS2",
+      "epoch_file": "LAS1-LAS2.npz",
+      "epoch_sha256": "b16c5dbcd7a3ca0789c8a00817abb988737837e9cfdf640341c597515ee1c33d",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LAS2-LAS3",
+      "epoch_file": "LAS2-LAS3.npz",
+      "epoch_sha256": "e8794695ef279edd4294e8873b011c3e3cac11c1560e1d1060d1a4f31dc5b4d8",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LAS3-LAS4",
+      "epoch_file": "LAS3-LAS4.npz",
+      "epoch_sha256": "8f4734d686e003250d0085ad5fc629a7535e2c30ebe86eb4f1cebfd42e6e5db5",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG1-LG2",
+      "epoch_file": "LG1-LG2.npz",
+      "epoch_sha256": "b5434d72e3aa3e90c8c8e711498fe3362929d6ca5a9474da66403dff576a48f6",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG10-LG11",
+      "epoch_file": "LG10-LG11.npz",
+      "epoch_sha256": "930e243ecbc89f60ca8a6fc44ad7684970ff9b2336c1806466875ddbef1b1b08",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG11-LG12",
+      "epoch_file": "LG11-LG12.npz",
+      "epoch_sha256": "2e6b830cbae871040e9547116d27fd5ddebd33cc6c70d809f8cd3712017fd0ba",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG12-LG13",
+      "epoch_file": "LG12-LG13.npz",
+      "epoch_sha256": "722133dcf89bafc3c4907ff42f2c57d154024db7187e8c82e10ffa387aa2eb9f",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG13-LG14",
+      "epoch_file": "LG13-LG14.npz",
+      "epoch_sha256": "7ee463edc874c33a4a34024f581383785b23c2adcbce41825137ed5e5ddd1da7",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG14-LG15",
+      "epoch_file": "LG14-LG15.npz",
+      "epoch_sha256": "d41c8379821e8d230f62a628c0f7a034234e7bf00ca465d0ce1eaf2291443eee",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG15-LG16",
+      "epoch_file": "LG15-LG16.npz",
+      "epoch_sha256": "0d86cf7a55da7d040917cf0e239ed05968f3cc86790e3034932339a24f22702c",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG17-LG18",
+      "epoch_file": "LG17-LG18.npz",
+      "epoch_sha256": "07a0177099615e8c18ad39b31668f64a863af8a7d9425bfcd243c80595510953",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG18-LG19",
+      "epoch_file": "LG18-LG19.npz",
+      "epoch_sha256": "ef8677518e3b215b12a39c32ffe65a6516a466b462d3b0eaee13c07c4d1c580b",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG19-LG20",
+      "epoch_file": "LG19-LG20.npz",
+      "epoch_sha256": "eb5321a65ddbbf71fb6d24a461078edda459ca847bc61181c8420301513af7da",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG2-LG3",
+      "epoch_file": "LG2-LG3.npz",
+      "epoch_sha256": "73f132f26eb6a1fec75d5d689d3c749fef05af92286bdd863785afd1584b7cfc",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG20-LG21",
+      "epoch_file": "LG20-LG21.npz",
+      "epoch_sha256": "3a3fbddc40381578c8bd8ea1bbde88b497bb1f6aa61543d1b333604a5b10e245",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG21-LG22",
+      "epoch_file": "LG21-LG22.npz",
+      "epoch_sha256": "59d5f1f73c615cad30809ac7459b2b3ce776428b4b72844b73bf08e9ff7d3d76",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG22-LG23",
+      "epoch_file": "LG22-LG23.npz",
+      "epoch_sha256": "0e58762b2cbe67618b12a9fa9721a632c6f199de92b43ed08d80247c8027f322",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG23-LG24",
+      "epoch_file": "LG23-LG24.npz",
+      "epoch_sha256": "5c0e39874e7957dfce2b13026ab03833e425a0957be45f6548e0a8f49af5a6db",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG26-LG27",
+      "epoch_file": "LG26-LG27.npz",
+      "epoch_sha256": "6b74ce592c824d76c5891b6d701aefdfd51280e208c903c6672862fe5972a515",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG27-LG28",
+      "epoch_file": "LG27-LG28.npz",
+      "epoch_sha256": "ca0260ec06c34879cfd9e60ade338e405d6cec799b951a98477c0f5c82f965e0",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG28-LG29",
+      "epoch_file": "LG28-LG29.npz",
+      "epoch_sha256": "d88df7aff112cf31c0f98d18e06146f82f6c7f70a22681f34d96acfb864d0872",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG29-LG30",
+      "epoch_file": "LG29-LG30.npz",
+      "epoch_sha256": "8e40633097d01f4d7c7cea10eb95df38e7d012da4d2993fa3f6f041824704658",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG3-LG4",
+      "epoch_file": "LG3-LG4.npz",
+      "epoch_sha256": "2f4d2737a549063557554bd436c4a88cc213ed472bde643ffb7e60384af2250b",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG30-LG31",
+      "epoch_file": "LG30-LG31.npz",
+      "epoch_sha256": "f6ad091a7a0b3f39b4f967ba47f5f2bd2a73bdbec0659fde5549b29bef50b2b1",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG31-LG32",
+      "epoch_file": "LG31-LG32.npz",
+      "epoch_sha256": "741e97410f7896a0213ae5b43e78b4663ecbdd7f07f9274f2b3876f0b46f456b",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG33-LG34",
+      "epoch_file": "LG33-LG34.npz",
+      "epoch_sha256": "04313b2b3398dee9118fe955aec32100ae39e3d862d1a879dba34b5f7bad492d",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG34-LG35",
+      "epoch_file": "LG34-LG35.npz",
+      "epoch_sha256": "dcd536a7abe236053567b143ac728a5b6137ded09ac500513351f7215ef2d8b8",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG35-LG36",
+      "epoch_file": "LG35-LG36.npz",
+      "epoch_sha256": "f49071b25e04ab6d6653cefe80e78ab59776358252b3d3321de45eb31eb8dfb3",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG36-LG37",
+      "epoch_file": "LG36-LG37.npz",
+      "epoch_sha256": "e72b577f6d8655b0e250eb6810a5a3d355605159071021c884eb8b9dc867d6b8",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG37-LG38",
+      "epoch_file": "LG37-LG38.npz",
+      "epoch_sha256": "eb5c416d541b338dd3439d46d7344be96c51765f050524e80de0b3dad7aac5f9",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG38-LG39",
+      "epoch_file": "LG38-LG39.npz",
+      "epoch_sha256": "01cf13c3cf82c245954c9f3f42fa99f063d845ac5969429df850b6af0df47f87",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG39-LG40",
+      "epoch_file": "LG39-LG40.npz",
+      "epoch_sha256": "b685c96d5dfc74bd891b8dd53b271cb46d25c99a73fe93b5ee985ca3e7719c80",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG4-LG5",
+      "epoch_file": "LG4-LG5.npz",
+      "epoch_sha256": "157cce509399bbc5c70de6c330a85cec8eb1f012190c6eb172db1d3eab0dd053",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG41-LG42",
+      "epoch_file": "LG41-LG42.npz",
+      "epoch_sha256": "dc19e70d64d3ac6075e81d5c5d3ae93e2684e4eafc09bbbdccb5ab6f32d6c114",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG42-LG43",
+      "epoch_file": "LG42-LG43.npz",
+      "epoch_sha256": "4ebba8f7d05459a92b0f9357fbcf43133ee0b5f784bf9ee68c8114a5e46f1168",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG43-LG44",
+      "epoch_file": "LG43-LG44.npz",
+      "epoch_sha256": "804e691e01504adc0684943ee00c06a7fe8aeb5de0bbbd9648bb79a5bec76ebd",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG44-LG45",
+      "epoch_file": "LG44-LG45.npz",
+      "epoch_sha256": "75f64a9aa5c339361c9945f07ffac9b7630fdc3789b09661f3593fb0d8d6e6f6",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG45-LG46",
+      "epoch_file": "LG45-LG46.npz",
+      "epoch_sha256": "fab7825b9efdfcc23a1e6639272321cbbef2c2f37a09f7d79d4a7717351169d3",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG46-LG47",
+      "epoch_file": "LG46-LG47.npz",
+      "epoch_sha256": "e4a422bb738542e0ba371879c7f7e0aaa94c790defd179d829b57e0eee4c7ffd",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG47-LG48",
+      "epoch_file": "LG47-LG48.npz",
+      "epoch_sha256": "a89d25b34d8f58b8adbc78967cd6bbc98602d0d1270dba133272b9849022dfa2",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG5-LG6",
+      "epoch_file": "LG5-LG6.npz",
+      "epoch_sha256": "7728d1846885ce215feaecc734d4eb3702914a8b501a594daf9288499388c065",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG6-LG7",
+      "epoch_file": "LG6-LG7.npz",
+      "epoch_sha256": "8ce47b74a1ad5b52d057ce8f1da22c7b387cff889b78283784a04c42f3e5a6c8",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG7-LG8",
+      "epoch_file": "LG7-LG8.npz",
+      "epoch_sha256": "faae2477bf2ef8d2bdaf3d6581b48647a4a262a3ea07582f08de337b67255535",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LG9-LG10",
+      "epoch_file": "LG9-LG10.npz",
+      "epoch_sha256": "d5cc639be10bd411e1a1c4063d233f152a33148a0aa379929c97f8eabf7ceedf",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LST1-LST2",
+      "epoch_file": "LST1-LST2.npz",
+      "epoch_sha256": "f5c582dd6624bd5e2eea6285ccba7669a1b75aa78373fb43fad2ba923adc6161",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LST2-LST3",
+      "epoch_file": "LST2-LST3.npz",
+      "epoch_sha256": "5b6c097fd3fb5e2908a959453efa2e8911b0ec8719faa5e185113fae02db49dc",
+      "records": 54
+    },
+    {
+      "subject": "MAYO02",
+      "stimpair": "LST3-LST4",
+      "epoch_file": "LST3-LST4.npz",
+      "epoch_sha256": "6836297de0f9a8d14c7bbd82a1ce12c7311210e71e3c74a5f6024e6c5b22fc23",
+      "records": 54
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG1-RG2",
+      "epoch_file": "RG1-RG2.npz",
+      "epoch_sha256": "16643a465d5f86b905ffe09f0e37c32e0837398add92c8829e2da43fa65b23b4",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG10-RG11",
+      "epoch_file": "RG10-RG11.npz",
+      "epoch_sha256": "5f1cb6e7de07c232e68c96f1fd4a932beae5bf8d30a95ddd37cfc9a673c0b099",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG13-RG14",
+      "epoch_file": "RG13-RG14.npz",
+      "epoch_sha256": "c4a2811f8aa1d1251d0106cc2fe806222edfdc1b4d4a2f1b697ff92c5cf6a667",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG14-RG15",
+      "epoch_file": "RG14-RG15.npz",
+      "epoch_sha256": "4107d4a6ff6bb5067314213a298625e84b2acca3c01960c8cb56aa5dd41b165c",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG15-RG16",
+      "epoch_file": "RG15-RG16.npz",
+      "epoch_sha256": "dcda3d0ebe17e83afd10632e6434c813d87a00b760ff853597782e6487802ab0",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG16-RG17",
+      "epoch_file": "RG16-RG17.npz",
+      "epoch_sha256": "73dd160ed18978532600bbbc9d100e0a563b25c14aa52e157215384ad6a94241",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG17-RG18",
+      "epoch_file": "RG17-RG18.npz",
+      "epoch_sha256": "efa9c3fe42e64283cf124e173bb7d2c09d8032f58ed685741b224d94acd93714",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG19-RG20",
+      "epoch_file": "RG19-RG20.npz",
+      "epoch_sha256": "0c94336b71e62f1c82aa01ef7f7050d733826b94cfc3cda93a385f6aba67c413",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG2-RG3",
+      "epoch_file": "RG2-RG3.npz",
+      "epoch_sha256": "250178adce84283c446a2d32136f3a5179d8b864d2e7d29382eb903f6362efde",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG20-RG21",
+      "epoch_file": "RG20-RG21.npz",
+      "epoch_sha256": "40093868a184fd45e5d0272e73f2081b79fca17ce63cc6557a9a8edab2a5708c",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG21-RG22",
+      "epoch_file": "RG21-RG22.npz",
+      "epoch_sha256": "211717b50d3b545d0dc8e94a68ccfa894bc193147bba32d50ab78a965a405687",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG22-RG23",
+      "epoch_file": "RG22-RG23.npz",
+      "epoch_sha256": "2a866246e55602de00c8bb7bc39c78b6f49eb9afca370df5cba9b941d86cedb3",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG23-RG24",
+      "epoch_file": "RG23-RG24.npz",
+      "epoch_sha256": "33643805d681470542168e20f15e8055c647a12cc2940551d055b769f71a693f",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG25-RG26",
+      "epoch_file": "RG25-RG26.npz",
+      "epoch_sha256": "7b2492b30221fb591c87fe1df185c91d3b40bfc51ed06f8bec615b092938c9b5",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG26-RG27",
+      "epoch_file": "RG26-RG27.npz",
+      "epoch_sha256": "977321327ced73588e0523c80d4aedb322056647647795cecffca8b5c2465ff9",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG27-RG28",
+      "epoch_file": "RG27-RG28.npz",
+      "epoch_sha256": "c2dc0642f7a541a993e322d591cc6a718381a8e000a8bb72c1a77bf38140a6b0",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG28-RG29",
+      "epoch_file": "RG28-RG29.npz",
+      "epoch_sha256": "0ccd4b029ce9d76e6203716f12f3a6c45b5e5b869e23a6e46b2aa3e964af0b30",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG29-RG30",
+      "epoch_file": "RG29-RG30.npz",
+      "epoch_sha256": "0d837dcca7327c8f9660086ae6d0aebf3f05ed4efd15180edb0eb146035582bc",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG3-RG4",
+      "epoch_file": "RG3-RG4.npz",
+      "epoch_sha256": "e96bcd981ad967dba4d09cec7b48ff2c273acb95b14d480a0119250e604f7032",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG31-RG32",
+      "epoch_file": "RG31-RG32.npz",
+      "epoch_sha256": "e2c3fac11eb8d607a22222d67666c1ee83eaab28d889b4bdb0069f50d5b5c0fa",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG32-RG33",
+      "epoch_file": "RG32-RG33.npz",
+      "epoch_sha256": "e61d11e0d5c5c0d58397cbcdd70ad034764fc3090ec43c18cd7b52739deaaa2c",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG33-RG34",
+      "epoch_file": "RG33-RG34.npz",
+      "epoch_sha256": "724630c4a59b58367cb79a159f525d4608d4782e5a90d5afff7741fd801b9ffe",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG34-RG35",
+      "epoch_file": "RG34-RG35.npz",
+      "epoch_sha256": "9a2b4dbc6f8188a6235804102e5bc2a9548951c11b204f48d5be12e5b1e86e9c",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG35-RG36",
+      "epoch_file": "RG35-RG36.npz",
+      "epoch_sha256": "6db82a3a69bc5c7c70aa85e8016bc11148d4a32e56989fa234f8431a427e6d69",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG4-RG5",
+      "epoch_file": "RG4-RG5.npz",
+      "epoch_sha256": "89789d88fb3ad4895a11ee35dbb493f6e0f49af4bdf5a4d6cda7194d77e4b75e",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG5-RG6",
+      "epoch_file": "RG5-RG6.npz",
+      "epoch_sha256": "d633ff9838b99fac50efe9926c8f78074a6aad1f82e7439275408bcfa2f27f34",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG7-RG8",
+      "epoch_file": "RG7-RG8.npz",
+      "epoch_sha256": "166e1421079de85e437dd253303988a7ee8bc85515baba5aec22a707bbd5f74f",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG8-RG9",
+      "epoch_file": "RG8-RG9.npz",
+      "epoch_sha256": "edb73b452f2eeb8446282190fc90104b2a9d59097104a4662ddae7b05cdf78bc",
+      "records": 32
+    },
+    {
+      "subject": "MAYO03",
+      "stimpair": "RG9-RG10",
+      "epoch_file": "RG9-RG10.npz",
+      "epoch_sha256": "9034b7cada286ba1bb58cd0af4d39f04433d107bdef578d1d9789e56941889e8",
+      "records": 32
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG1-LG2",
+      "epoch_file": "LG1-LG2.npz",
+      "epoch_sha256": "83883328bb01b765c8fd68b4ba85b71eafb36aca5da8dd8dd8c0995e9dc4ca20",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG10-LG11",
+      "epoch_file": "LG10-LG11.npz",
+      "epoch_sha256": "3b14edcc1b35964e7557219e1453d250ec68a34f0cb06becd7be783850910cdc",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG11-LG12",
+      "epoch_file": "LG11-LG12.npz",
+      "epoch_sha256": "69c2cbe3c1baa94fd63f6951cde72e7bcaa77da047a84a3db4bb654ab3161574",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG12-LG18",
+      "epoch_file": "LG12-LG18.npz",
+      "epoch_sha256": "c2702dc1db6036ebaae9b712e4789a0293d73cc97bd9e3957f611a13074df304",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG13-LG14",
+      "epoch_file": "LG13-LG14.npz",
+      "epoch_sha256": "a7d5c0ce2fb3f0e489bd380c3c8b1b84a3468f906bfe6c2806f1c015baad5039",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG14-LG15",
+      "epoch_file": "LG14-LG15.npz",
+      "epoch_sha256": "e3a80590937c8055ef348e1f9173c5d6a7e48addbe9eeec6c1fa7ef213d883b0",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG15-LG16",
+      "epoch_file": "LG15-LG16.npz",
+      "epoch_sha256": "d85b7d87ff10147db81f548a2e7a53a75253b303eec25b5848774420e64939f7",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG19-LG20",
+      "epoch_file": "LG19-LG20.npz",
+      "epoch_sha256": "414f566256d14e910fedb0b268bff2aa0771f083681562482e6a16c174154168",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG2-LG3",
+      "epoch_file": "LG2-LG3.npz",
+      "epoch_sha256": "5d4120c4159c3a95e6a31373cd9e55a9cc915249ec0838b7aec7399323607640",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG22-LG23",
+      "epoch_file": "LG22-LG23.npz",
+      "epoch_sha256": "d59e96a68d4643a4323230240fdf7fb36c7aa2e67b3931d9dca338344121fcf5",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG23-LG24",
+      "epoch_file": "LG23-LG24.npz",
+      "epoch_sha256": "c723a00a102bfe3a2a9cabe9f0aecf2df840f17d82456ef571c66404be32f5e5",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG3-LG4",
+      "epoch_file": "LG3-LG4.npz",
+      "epoch_sha256": "1dd1f4db49ea03b4954102ac48cddd2a8332eb6667b1bec8a9bab79bbd261b84",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG4-LG5",
+      "epoch_file": "LG4-LG5.npz",
+      "epoch_sha256": "749a0411031ff1a3f77f9bb938af9dcf20a82aa930b3c605744692c1f3c922a7",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG7-LG8",
+      "epoch_file": "LG7-LG8.npz",
+      "epoch_sha256": "c26d7246872707ca584e416c0a4a66b279e0d47a2742d76d7c0fd3c25d8d70d8",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG8-LG9",
+      "epoch_file": "LG8-LG9.npz",
+      "epoch_sha256": "169bd2cf345124f3816324bf945a317dc2e41d584d391df8328c6526bedfe86f",
+      "records": 19
+    },
+    {
+      "subject": "MAYO04",
+      "stimpair": "LG9-LG10",
+      "epoch_file": "LG9-LG10.npz",
+      "epoch_sha256": "a8e8bc218d6a8b3f13196d7d759bbac6b87888fb0c5e899117de3463e92a25b9",
+      "records": 19
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LAD1-LAD2",
+      "epoch_file": "LAD1-LAD2.npz",
+      "epoch_sha256": "634b11f96e33ddec098e8e9ab989973ecabafc6fb51c38b26a07b0d6b54e2ceb",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LAD2-LAD3",
+      "epoch_file": "LAD2-LAD3.npz",
+      "epoch_sha256": "c115f53dfed1126ba5d5bcdd08272e3d795a3a441f70b91d56b836e65e26ea1a",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LAD3-LAD4",
+      "epoch_file": "LAD3-LAD4.npz",
+      "epoch_sha256": "765fc262d9383f1cee31693cb7a005ae81e154eb93e4218db6e68a4c125e2d16",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LAS1-LAS2",
+      "epoch_file": "LAS1-LAS2.npz",
+      "epoch_sha256": "17ffd0e1fd6c23b745be7fc0a80e5b2c50174d0b804ade133f63642208fbdd4c",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LAS2-LAS3",
+      "epoch_file": "LAS2-LAS3.npz",
+      "epoch_sha256": "2d6ced519e70173511c6a97384ded6f93d8b7c8be6d5283bf866ff291b3244bf",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LAS3-LAS4",
+      "epoch_file": "LAS3-LAS4.npz",
+      "epoch_sha256": "430335712c6b06b3f9eb8f0acbe3de06a274206c4a6e85112eb265af2c75c297",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG1-LFG2",
+      "epoch_file": "LFG1-LFG2.npz",
+      "epoch_sha256": "4ef49a99b186e005bf273fa80b16b540e87cd8a8e531f20db66e233d9109b1ff",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG10-LFG11",
+      "epoch_file": "LFG10-LFG11.npz",
+      "epoch_sha256": "28152d63e947b72b0607da5b9668f13c79cddb0e81a951d7d734c27ce59d3e3d",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG13-LFG14",
+      "epoch_file": "LFG13-LFG14.npz",
+      "epoch_sha256": "17baf53619ce3cb10feb723704bb0714e60df2061560caf2e9663f3d98b30dc7",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG14-LFG15",
+      "epoch_file": "LFG14-LFG15.npz",
+      "epoch_sha256": "4cdd263bf777aefa82d8596c1feb275d4e108d5389ba7306e3fb2434d5ee54ee",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG15-LFG16",
+      "epoch_file": "LFG15-LFG16.npz",
+      "epoch_sha256": "606b487f364bed80db2c7000c759714dd11e04185121eeddfa62aee7245e0e7f",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG16-LFG17",
+      "epoch_file": "LFG16-LFG17.npz",
+      "epoch_sha256": "abf873fe816e0385a356c92edf6d1136d41ea770e02bca24a3412c29ecd3f9ab",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG17-LFG18",
+      "epoch_file": "LFG17-LFG18.npz",
+      "epoch_sha256": "03ea02eb6beaae8eaaa09e3d9c1b92590d4a5e14cfa23c3a656c4096c2c8d76f",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG19-LFG20",
+      "epoch_file": "LFG19-LFG20.npz",
+      "epoch_sha256": "c8a141b7899b824c47a3df4518b3034e48bcb9dcf1d3cac1d03230907b63de58",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG2-LFG3",
+      "epoch_file": "LFG2-LFG3.npz",
+      "epoch_sha256": "18ff5acdaea23ea2b8dd20c453f6581961d62324d8ce93e88440be8244c29419",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG20-LFG21",
+      "epoch_file": "LFG20-LFG21.npz",
+      "epoch_sha256": "93bafe19e4ccb8e865a8810eba87d284dc54099e4095496af495f60b9e2ef60f",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG21-LFG22",
+      "epoch_file": "LFG21-LFG22.npz",
+      "epoch_sha256": "1c28c2942d55fd6ec0ca5f9af56557734830956de91c013ab93ba68cb9f3d977",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG22-LFG23",
+      "epoch_file": "LFG22-LFG23.npz",
+      "epoch_sha256": "32c4739764ec87633c4aaacfa2e86ce28bc7e132d0a0f4c7080c61adb3805783",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG23-LFG24",
+      "epoch_file": "LFG23-LFG24.npz",
+      "epoch_sha256": "3edee79d3fe199ca8aee4a35055aca24ce52e0e0073937daabeec67ff3f75a38",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG3-LFG4",
+      "epoch_file": "LFG3-LFG4.npz",
+      "epoch_sha256": "d455403b22b5de8df98f2ecf82ea15dbb3fae2bc55e5407a2ba3179539b1f160",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG4-LFG5",
+      "epoch_file": "LFG4-LFG5.npz",
+      "epoch_sha256": "638bf9f339d19d5c0fb971c9a11e3e6e3ce64e1dcc028b8cde5d208d166d153a",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG5-LFG6",
+      "epoch_file": "LFG5-LFG6.npz",
+      "epoch_sha256": "ebe5e922f1e8c75921d3b6eccbfa60d262dcd91bf98d329b28155f787981c3ae",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG7-LFG8",
+      "epoch_file": "LFG7-LFG8.npz",
+      "epoch_sha256": "3ae52639800e307dcf8390d32257b3eb0957177ce611f11ab63faff513f659e0",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG8-LFG9",
+      "epoch_file": "LFG8-LFG9.npz",
+      "epoch_sha256": "6849e6771a0b4757124a06f9f44ad9eb5a49a652ec77074d73c522bcc665adcd",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LFG9-LFG10",
+      "epoch_file": "LFG9-LFG10.npz",
+      "epoch_sha256": "7426bd0e8bb08c72110df3530cb1a92771389bcabc4efd29e11f01c9e65892b1",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LMD1-LMD2",
+      "epoch_file": "LMD1-LMD2.npz",
+      "epoch_sha256": "0d8d65a084544c56f141838e62f52faad1103992f1719983e0b515ceb0f3a379",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LMD2-LMD3",
+      "epoch_file": "LMD2-LMD3.npz",
+      "epoch_sha256": "7a0b9a5c9340e2a004ef6465f8fab7316a1ec45b2c893a93df408a69683c249b",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LMD3-LMD4",
+      "epoch_file": "LMD3-LMD4.npz",
+      "epoch_sha256": "1c7a2df61b4324e9ce4dbe8eb4850ba0dd1c762763862bb19a30ad49926d1a1e",
+      "exclusion": "bad_or_missing_stimulation_contact",
+      "records": 0
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LMS1-LMS2",
+      "epoch_file": "LMS1-LMS2.npz",
+      "epoch_sha256": "e192871fbb40f5696774d73a2692d5c3e60cecf5865ba19ef0349ae095f519f0",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LMS2-LMS3",
+      "epoch_file": "LMS2-LMS3.npz",
+      "epoch_sha256": "d729281cd67d9edfbddbbbd28a436f84374f8aa550de6f62a9a0f91d087b36d8",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LMS3-LMS4",
+      "epoch_file": "LMS3-LMS4.npz",
+      "epoch_sha256": "ee1bcdb5380d3cf013cf2ea2f22c81d3eccd598cf9470415ddb4d0611031e126",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPG1-LPG2",
+      "epoch_file": "LPG1-LPG2.npz",
+      "epoch_sha256": "71ca55a7003d1448acdb831fc096071584e343ca283dd34f98c81b243a50e322",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPG10-LPG11",
+      "epoch_file": "LPG10-LPG11.npz",
+      "epoch_sha256": "3425017c61a76867f97754ba1ec6c1f4d6000244e818751c6fbd8bb90565de0e",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPG11-LPG12",
+      "epoch_file": "LPG11-LPG12.npz",
+      "epoch_sha256": "804c670f4f16b17fce27a23bc764338c44145040209f671088c8fab9edf81d57",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPG13-LPG14",
+      "epoch_file": "LPG13-LPG14.npz",
+      "epoch_sha256": "550475a036f20d2f9b9f54880d33199e90abbf8b30eaa1866c920ca7ad3544d1",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPG14-LPG15",
+      "epoch_file": "LPG14-LPG15.npz",
+      "epoch_sha256": "248fbb05c1e823d5e2fe2c67dd2efba6278c7dc21e5eff4a80169ee8c2c38989",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPG15-LPG16",
+      "epoch_file": "LPG15-LPG16.npz",
+      "epoch_sha256": "02340b2db59a56229a3870479e612509fd8c99c5509dc9648802190485fc95fd",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPG2-LPG3",
+      "epoch_file": "LPG2-LPG3.npz",
+      "epoch_sha256": "f7c9f96e80b430a9236c5f0c7862e29adb97bf459ab414e702766a4612d151c7",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPG3-LPG4",
+      "epoch_file": "LPG3-LPG4.npz",
+      "epoch_sha256": "61853b37751363942793c780570a487be4621a0e23f295ef4e0225e035aa5c14",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPG5-LPG6",
+      "epoch_file": "LPG5-LPG6.npz",
+      "epoch_sha256": "ed3631be04b35e9790cd3e7e9fde7057cb6cb1a5bad9243ed177eb0248ee1229",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPG6-LPG7",
+      "epoch_file": "LPG6-LPG7.npz",
+      "epoch_sha256": "9a0e40cadf9a73cd04f52449c2c4ac95be0f03c0afc84c29309c622717ab860f",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPG7-LPG8",
+      "epoch_file": "LPG7-LPG8.npz",
+      "epoch_sha256": "e0c855ae5c14b652dc9bd81e3bb57cb0de8a171d779d1678eca787365889c5e0",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPG9-LPG10",
+      "epoch_file": "LPG9-LPG10.npz",
+      "epoch_sha256": "14adcc1f3c51c9b2891515363d05e3f8e162d23b7300c4414de7c60fdfd70084",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPS1-LPS2",
+      "epoch_file": "LPS1-LPS2.npz",
+      "epoch_sha256": "8dc689ae35aed4c92ebac344d7035418ba7068e5aa03de9160d564a4b378929d",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPS2-LPS3",
+      "epoch_file": "LPS2-LPS3.npz",
+      "epoch_sha256": "a499a20ee76e3fe45b9bfd8701f01eb9754e0f70235e216b9f0087d8f060f2ec",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LPS3-LPS4",
+      "epoch_file": "LPS3-LPS4.npz",
+      "epoch_sha256": "c90f16014e8567126123bb5589eafad881f8f658b5ab9dec5a7bc6ced42e1537",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LTG1-LTG2",
+      "epoch_file": "LTG1-LTG2.npz",
+      "epoch_sha256": "0d1f613a9b65c4b21a4ab74bc6620b00ed4fdcb78295d81269f58e79d2b0f30e",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LTG2-LTG3",
+      "epoch_file": "LTG2-LTG3.npz",
+      "epoch_sha256": "78a4d4bf06fe7ef5ca7f90daf8e3b2243ea602024ee60f6bd34d6c90691c7160",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LTG3-LTG4",
+      "epoch_file": "LTG3-LTG4.npz",
+      "epoch_sha256": "ccee197307e53226e89747a2701bf4e612f3ba97501c2da9b63a46f9c950e777",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LTG4-LTG5",
+      "epoch_file": "LTG4-LTG5.npz",
+      "epoch_sha256": "8475bba911f520cb3ea93b60bb686d5cac97200a1e66fad533943c5622471790",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LTG5-LTG6",
+      "epoch_file": "LTG5-LTG6.npz",
+      "epoch_sha256": "4adfad4ae30b92baf2a1e5448b509ede217286f7513a448cbfba92c04e9ae176",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LTG6-LTG7",
+      "epoch_file": "LTG6-LTG7.npz",
+      "epoch_sha256": "5f459dac4f9f362dc6acba30ba6d72aec55518d2b0bc0546a0fb089a57bcd05b",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LTG7-LTG8",
+      "epoch_file": "LTG7-LTG8.npz",
+      "epoch_sha256": "438e4f01d8e140eaebe68f4516e644a4ebe5291560a4ab483801f77be4897b6c",
+      "records": 81
+    },
+    {
+      "subject": "MAYO05",
+      "stimpair": "LTG9-LTG10",
+      "epoch_file": "LTG9-LTG10.npz",
+      "epoch_sha256": "13185e900f3b81a42836afacf0b84a497431df3c589f038fafdb45fa19426253",
+      "records": 81
+    },
+    {
+      "subject": "UMCU20",
+      "stimpair": "HF13-HF14",
+      "epoch_file": "sub-UMCU20__HF13-HF14.npz",
+      "epoch_sha256": "751004d38a215d780859f22b07f3897ac91fa739907100d242b555c057e21ba8",
+      "records": 81
+    },
+    {
+      "subject": "UMCU20",
+      "stimpair": "HF14-HF15",
+      "epoch_file": "sub-UMCU20__HF14-HF15.npz",
+      "epoch_sha256": "9a467d59d942aa4b2ada4b51010ac48d81c42409b192ea00da36ddef09897c19",
+      "records": 81
+    },
+    {
+      "subject": "UMCU20",
+      "stimpair": "HF15-HF16",
+      "epoch_file": "sub-UMCU20__HF15-HF16.npz",
+      "epoch_sha256": "bfa5d57b77c42a372387fd6885fd4738a01edc9ce851249e861615ffcad16cb5",
+      "records": 81
+    },
+    {
+      "subject": "UMCU20",
+      "stimpair": "IH01-IH02",
+      "epoch_file": "sub-UMCU20__IH01-IH02.npz",
+      "epoch_sha256": "c042278cf2fa45b68e9f75e18d2c2313d5088fa81fe1a2af2e00e1d224b156b5",
+      "records": 81
+    },
+    {
+      "subject": "UMCU20",
+      "stimpair": "IH02-IH03",
+      "epoch_file": "sub-UMCU20__IH02-IH03.npz",
+      "epoch_sha256": "f7e306caf452a9397cfeceac1952ccf11fe9869e72eb393fa4810a713eaadf50",
+      "records": 81
+    },
+    {
+      "subject": "UMCU20",
+      "stimpair": "IH03-IH04",
+      "epoch_file": "sub-UMCU20__IH03-IH04.npz",
+      "epoch_sha256": "e600a68baa68a8e570e74f1d1596003209eefc388c5d68b29705b64ca2fd6577",
+      "records": 81
+    },
+    {
+      "subject": "UMCU20",
+      "stimpair": "IH04-IH05",
+      "epoch_file": "sub-UMCU20__IH04-IH05.npz",
+      "epoch_sha256": "9e5ad586e8e3a42a820fc471271e046997c2ef77f79a5aef111f326d0aae2ab6",
+      "records": 81
+    },
+    {
+      "subject": "UMCU20",
+      "stimpair": "IH05-IH06",
+      "epoch_file": "sub-UMCU20__IH05-IH06.npz",
+      "epoch_sha256": "b10f2888e5f3447d160fd1f9df093c6f7161a5b50abec678263bcbe84979c633",
+      "records": 81
+    },
+    {
+      "subject": "UMCU20",
+      "stimpair": "IH06-IH07",
+      "epoch_file": "sub-UMCU20__IH06-IH07.npz",
+      "epoch_sha256": "106d2462af93b68f48c8b77e7db6e0d4b538d70d4a6547addd8e4f36456db163",
+      "records": 81
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH01-CH02",
+      "epoch_file": "sub-UMCU21__CH01-CH02.npz",
+      "epoch_sha256": "227bc473122f032c51698d63ab6323a539678957dd021a90af9b76afc51de3f8",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH02-CH03",
+      "epoch_file": "sub-UMCU21__CH02-CH03.npz",
+      "epoch_sha256": "57c7429d91ca4875920175c51fa9b1e0a9f5ac87162d887410a0702f9df6f450",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH03-CH04",
+      "epoch_file": "sub-UMCU21__CH03-CH04.npz",
+      "epoch_sha256": "79b11afb64312b9b407a0e8d5b3249432c0acc5393073d4beefac917fa2bed01",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH04-CH05",
+      "epoch_file": "sub-UMCU21__CH04-CH05.npz",
+      "epoch_sha256": "bea8c17bf5a83bf504d0170f769094859d2fd869ab99a19eec68c414767b3831",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH05-CH06",
+      "epoch_file": "sub-UMCU21__CH05-CH06.npz",
+      "epoch_sha256": "d5fb051aa180b981e26034ccba69cb0b4f80ac77dadde4f26ec990cd2f21ad2e",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH06-CH07",
+      "epoch_file": "sub-UMCU21__CH06-CH07.npz",
+      "epoch_sha256": "b930bb98d1528de9bc1dd6b7460bf529fd0f945afd97ad4694b5740998c0be50",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH07-CH08",
+      "epoch_file": "sub-UMCU21__CH07-CH08.npz",
+      "epoch_sha256": "8b6451a7d967eea1d6f7dc4762707321980b1e32892bc0f3676dddf94d6fd613",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH09-CH10",
+      "epoch_file": "sub-UMCU21__CH09-CH10.npz",
+      "epoch_sha256": "f04792513de24bafdd9b2a261891aae881e5080e34dcce0c88f6bdaf00e1a6d9",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH10-CH11",
+      "epoch_file": "sub-UMCU21__CH10-CH11.npz",
+      "epoch_sha256": "a2dfb396f9505b6d66c582e6d323f57c469c49c0f4fbbe14950c67e1177e7ec3",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH11-CH12",
+      "epoch_file": "sub-UMCU21__CH11-CH12.npz",
+      "epoch_sha256": "154916421e9521098df3330488eb712b467eebf7cc74ff0a25d856f599b54404",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH12-CH13",
+      "epoch_file": "sub-UMCU21__CH12-CH13.npz",
+      "epoch_sha256": "87023e568a386875eab79da5912ef362be71c065fd467687f94755f324de38d0",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH13-CH14",
+      "epoch_file": "sub-UMCU21__CH13-CH14.npz",
+      "epoch_sha256": "a9622c3de7f63c4619c330911dae3e3a36a4baf42d7af354fd7c1eeb9a8ec2f7",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH14-CH15",
+      "epoch_file": "sub-UMCU21__CH14-CH15.npz",
+      "epoch_sha256": "1ecd998014adf5313e90ca7a78d4c582d166e6361cc6bc942e8d0976969d3f65",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CH15-CH16",
+      "epoch_file": "sub-UMCU21__CH15-CH16.npz",
+      "epoch_sha256": "3a023143cff6b37827afb63cc5dc641edd27050d807933add2667e38aa0481f6",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CL01-CL02",
+      "epoch_file": "sub-UMCU21__CL01-CL02.npz",
+      "epoch_sha256": "325bed0023815403bf5b497c0a9bae81d7467a059b946c9ded9f766351b06860",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CL02-CL03",
+      "epoch_file": "sub-UMCU21__CL02-CL03.npz",
+      "epoch_sha256": "bef8543a04886561938333ec19b7326a5911508cbe3b9a9de8f3bd62f8b7fb54",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CL03-CL04",
+      "epoch_file": "sub-UMCU21__CL03-CL04.npz",
+      "epoch_sha256": "559afad63e1731a7cca2762af77466de032bec32cace5ba83abc461e0d58c3a4",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CL04-CL05",
+      "epoch_file": "sub-UMCU21__CL04-CL05.npz",
+      "epoch_sha256": "3dd413d570d6477b1370041b1b2dd2c4037dcaef928b6aa5e524cf2ea13a8b91",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CL05-CL06",
+      "epoch_file": "sub-UMCU21__CL05-CL06.npz",
+      "epoch_sha256": "df5dfac1f68f237046f8423f141840ca9b3205ab66c067720edd1f32c8740884",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CL06-CL07",
+      "epoch_file": "sub-UMCU21__CL06-CL07.npz",
+      "epoch_sha256": "ca254004ba0f91d3b8f889659820b35e911b099d70ac753084631db21f035d2b",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CL07-CL08",
+      "epoch_file": "sub-UMCU21__CL07-CL08.npz",
+      "epoch_sha256": "6914d8148f57bf331afdcd2bde0c3857501c9dd51b75485d94fc449968d156bd",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CL09-CL10",
+      "epoch_file": "sub-UMCU21__CL09-CL10.npz",
+      "epoch_sha256": "ecfd16ca35b075bfa93a52e981233b87390f1b46f390fff483e5c2899d741725",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "CL10-CL11",
+      "epoch_file": "sub-UMCU21__CL10-CL11.npz",
+      "epoch_sha256": "cb6f050284c60c3ca2a228cb0c8c24425c00279a1350336d67c63183f608df15",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "IHm1-IHm2",
+      "epoch_file": "sub-UMCU21__IHm1-IHm2.npz",
+      "epoch_sha256": "b80db702e06ffa9c46cb85866f9984b2c05afcf9a0265a2f4f2bd53ca08a876c",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "IHm2-IHm3",
+      "epoch_file": "sub-UMCU21__IHm2-IHm3.npz",
+      "epoch_sha256": "4922b00e61e51f0b4f54a76c6bdf773bcb4bfc9b94843ed8883f1380551724bf",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "IHm3-IHm4",
+      "epoch_file": "sub-UMCU21__IHm3-IHm4.npz",
+      "epoch_sha256": "a18d47766e48f322c1fd12be4dde88deb0fe710ab2f3d7f49bf138063302db68",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "IHm4-IHm5",
+      "epoch_file": "sub-UMCU21__IHm4-IHm5.npz",
+      "epoch_sha256": "8694a63f46291facab8e5f776e7162b485c941e568e0c101f77f69759a693755",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "IHm5-IHm6",
+      "epoch_file": "sub-UMCU21__IHm5-IHm6.npz",
+      "epoch_sha256": "9f53c6632433eb2035246fb2a677fd297dbfa2d0763f3605a1d01c59f6bf6929",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "IHm6-IHm7",
+      "epoch_file": "sub-UMCU21__IHm6-IHm7.npz",
+      "epoch_sha256": "765f573bcdfba316f7506eccc32d99dfc0ce57627b803f84e1bebe22a3b369e5",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "IHv1-IHv2",
+      "epoch_file": "sub-UMCU21__IHv1-IHv2.npz",
+      "epoch_sha256": "7cc7823532c4d76c0d76898dd0b6e055bd9d949b7950b9878fc74464f176009b",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "IHv2-IHv3",
+      "epoch_file": "sub-UMCU21__IHv2-IHv3.npz",
+      "epoch_sha256": "8ef1408c7a16dbb817e662dc11bb1482549285e8b27189f25bfe617797d3ea3c",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "IHv3-IHv4",
+      "epoch_file": "sub-UMCU21__IHv3-IHv4.npz",
+      "epoch_sha256": "48a6d591686e65dd0d026ca02c067aac052b21c9c93d1bd4e257191c39990eb7",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "IHv6-IHv7",
+      "epoch_file": "sub-UMCU21__IHv6-IHv7.npz",
+      "epoch_sha256": "c5deff9d34b24a07a826c773ea9bca52cadbed3ffb348417d23de63bebd60866",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "iHa6-iHa7",
+      "epoch_file": "sub-UMCU21__iHa6-iHa7.npz",
+      "epoch_sha256": "733b71d1dde413ff338e368ba6a1b0614bba26552bc6a189f99c169451ea4c2e",
+      "records": 49
+    },
+    {
+      "subject": "UMCU21",
+      "stimpair": "iHa7-iHa8",
+      "epoch_file": "sub-UMCU21__iHa7-iHa8.npz",
+      "epoch_sha256": "45a73b718fa9a83fc3f1595ce3dbe1a49e47e3b4f49fdde56bd35302aa524554",
+      "records": 49
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "C01-C02",
+      "epoch_file": "sub-UMCU22__C01-C02.npz",
+      "epoch_sha256": "6d309417ca532200e94938d440e952cf0d1b48ae3d31eaa3401193bdb6690e33",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "C02-C03",
+      "epoch_file": "sub-UMCU22__C02-C03.npz",
+      "epoch_sha256": "ce3c2cb0071ada0050166bf525e2dc3252e036ab88cdf175c12bfd88260dd712",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "C03-C04",
+      "epoch_file": "sub-UMCU22__C03-C04.npz",
+      "epoch_sha256": "b81e89f7704eb5a15331fc93e4a3729271eae22aeb44291f503aff83c95b72c0",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "C04-C05",
+      "epoch_file": "sub-UMCU22__C04-C05.npz",
+      "epoch_sha256": "ec15bb5391d9aaad4fa6e93abaaee5ff225734a1c6f4ab1edb45386984d921f9",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "C05-C06",
+      "epoch_file": "sub-UMCU22__C05-C06.npz",
+      "epoch_sha256": "c1e6e29c3ef75ac48059893cc5b995b49e7726d283610f7ffbe7d1dc29808686",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "C06-C07",
+      "epoch_file": "sub-UMCU22__C06-C07.npz",
+      "epoch_sha256": "239b6758bf3c8385c3ae60b67ce804b87651185abe7c582ce45e3d72b933d5db",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "C07-C08",
+      "epoch_file": "sub-UMCU22__C07-C08.npz",
+      "epoch_sha256": "9990e09d29da6928a4224b21166c0a7598b4213995c0cb22b712ad91cd5c9a2e",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F03-F04",
+      "epoch_file": "sub-UMCU22__F03-F04.npz",
+      "epoch_sha256": "0d177bd7243f0f728ee534bf8776c70b7b54d4da4a6327b26bd82f2362b59b7f",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F04-F05",
+      "epoch_file": "sub-UMCU22__F04-F05.npz",
+      "epoch_sha256": "98a98012d31b5ee01a34238ffa165a0cf7f249d96bf2ea31c361d5834eed5eb0",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F05-F06",
+      "epoch_file": "sub-UMCU22__F05-F06.npz",
+      "epoch_sha256": "bc284a78759b6bd6d8fb91ef7c03cf72c266a0a89c09d9ce9caeaef98eae0d39",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F06-F07",
+      "epoch_file": "sub-UMCU22__F06-F07.npz",
+      "epoch_sha256": "dd03052f1137c80a84aa4fac13edf7047a2d5d2b50bd7068bd3038c1645ad3cf",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F07-F08",
+      "epoch_file": "sub-UMCU22__F07-F08.npz",
+      "epoch_sha256": "1b0984605e6cfc3b956f7737f8d2b6bd4285522c95aa36560d4a9c1e0ac08ac2",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F09-F10",
+      "epoch_file": "sub-UMCU22__F09-F10.npz",
+      "epoch_sha256": "1105154ac9a167d5db95ec04258ff8a74c4ace7076ee09a4071a84786172414a",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F10-F11",
+      "epoch_file": "sub-UMCU22__F10-F11.npz",
+      "epoch_sha256": "593b254c94dfb7a230382ef5e37a8457e5c9c0affd86b18374e4f5e7268b07f7",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F11-F12",
+      "epoch_file": "sub-UMCU22__F11-F12.npz",
+      "epoch_sha256": "d6d876d2cecffa400b26aeaecb035734c35de0d1480e81fe901e94d60d8c1058",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F12-F13",
+      "epoch_file": "sub-UMCU22__F12-F13.npz",
+      "epoch_sha256": "a8aaa1fae876d9697a64d0c509d0d3e26b5bb769f98f24d39f0f33f4647f326a",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F13-F14",
+      "epoch_file": "sub-UMCU22__F13-F14.npz",
+      "epoch_sha256": "d277aaf8d003193dc70dad2ea63751aee5aa9685a8b0c91f736a90f8ed102895",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F14-F15",
+      "epoch_file": "sub-UMCU22__F14-F15.npz",
+      "epoch_sha256": "09c58c152ebb872d42d65153c856945814b51103ca24280790f293d1e88db720",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F15-F16",
+      "epoch_file": "sub-UMCU22__F15-F16.npz",
+      "epoch_sha256": "b87e746b9faae0f8c5b7fd9cdfdb06b1a74c2245d265f6dd39a7acd09d691253",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F17-F18",
+      "epoch_file": "sub-UMCU22__F17-F18.npz",
+      "epoch_sha256": "96c78df2142780f1af44c48da39cda856db57d05aecf6392da3a8f244c9ddf9b",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F18-F19",
+      "epoch_file": "sub-UMCU22__F18-F19.npz",
+      "epoch_sha256": "2540159c0512cbb0273f689b84241512d85112b10fd5145f40ea42670e1af5a4",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F19-F20",
+      "epoch_file": "sub-UMCU22__F19-F20.npz",
+      "epoch_sha256": "d7d5b079594d439ef7054c535d5148d0564b518ae7d33a940748f66fe51e65ff",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F20-F21",
+      "epoch_file": "sub-UMCU22__F20-F21.npz",
+      "epoch_sha256": "79bfa0235e0dbcf99a60e2f838fb6b06fb80c9451a07a66ff742cbca0ba62faf",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F21-F22",
+      "epoch_file": "sub-UMCU22__F21-F22.npz",
+      "epoch_sha256": "bf008810041680190d0b8487b39e3ab79285d3faea6af82305605218215d369a",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F22-F23",
+      "epoch_file": "sub-UMCU22__F22-F23.npz",
+      "epoch_sha256": "b9a610834779e87b2ca44281b995cd92ee3d8e16a3cf78497e189f32bb12bed8",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F23-F24",
+      "epoch_file": "sub-UMCU22__F23-F24.npz",
+      "epoch_sha256": "e90812efee2a0079f8ad4bbb9f9cd45bfe4f0b1ce186e4b7c19c1f340befec54",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F26-F27",
+      "epoch_file": "sub-UMCU22__F26-F27.npz",
+      "epoch_sha256": "217fd12b15df88db494e34c330bc5853442aacef4cd57601a92a7470fbce94c9",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F27-F28",
+      "epoch_file": "sub-UMCU22__F27-F28.npz",
+      "epoch_sha256": "34bb06a904f30275bed98c9b08eba4871dc382c0c7086c8e93c52c7662d635e2",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F28-F29",
+      "epoch_file": "sub-UMCU22__F28-F29.npz",
+      "epoch_sha256": "427befb626c83b4468d751bca62bfdf4e13de29d5a407ceaa54d2e3b22369502",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F29-F30",
+      "epoch_file": "sub-UMCU22__F29-F30.npz",
+      "epoch_sha256": "f583d48ea25925fb6cc1328cce52e0c35f8b9a2aa02e3117b2a06cae20efd7ed",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F30-F31",
+      "epoch_file": "sub-UMCU22__F30-F31.npz",
+      "epoch_sha256": "4880918eab41d491dedf4a8a9f299af616b2dd2655678c7b5bc735011e5a9faf",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "F31-F32",
+      "epoch_file": "sub-UMCU22__F31-F32.npz",
+      "epoch_sha256": "53420ddac6d5be15871bfdab26a72ce774201a75a405b0a7b7d8550f153fbb01",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "IH1-IH2",
+      "epoch_file": "sub-UMCU22__IH1-IH2.npz",
+      "epoch_sha256": "87602c28138df5c7b72628ede0f7bbc1d7aa5be12dfc5b59181efac50492a36b",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "IH2-IH3",
+      "epoch_file": "sub-UMCU22__IH2-IH3.npz",
+      "epoch_sha256": "173d4e355f652e4e1ba8699c0f3b868991544843d5234af40b78936abe0dcdcb",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "IH3-IH4",
+      "epoch_file": "sub-UMCU22__IH3-IH4.npz",
+      "epoch_sha256": "c75afa3e867857f9bfbe532a1ca5b7b3017e382e598c14fa05e37d3e7ac50668",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "IH4-IH5",
+      "epoch_file": "sub-UMCU22__IH4-IH5.npz",
+      "epoch_sha256": "da9e909a8f621f69e191a71156b11e7012470a7698ab905943ab3947aced8d48",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "IH5-IH6",
+      "epoch_file": "sub-UMCU22__IH5-IH6.npz",
+      "epoch_sha256": "57d605f9d4dffcf47b64986336bb6f1e274033a6ad3e51ab845c4e169c3b62f5",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "IH6-IH7",
+      "epoch_file": "sub-UMCU22__IH6-IH7.npz",
+      "epoch_sha256": "2bb2b044ff97f09a486c015c67dbd57432a4e9cb60c6b66c79e76c8a817c14c5",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "IH7-IH8",
+      "epoch_file": "sub-UMCU22__IH7-IH8.npz",
+      "epoch_sha256": "a642a269f41058f7cb56c2738e6db202f8e9572e4295457a83428bb0d219212c",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T33-T34",
+      "epoch_file": "sub-UMCU22__T33-T34.npz",
+      "epoch_sha256": "cef316096fce79d902f059fe75aa1a8611ca2f95b1ffc24712f66befe7e9609e",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T34-T35",
+      "epoch_file": "sub-UMCU22__T34-T35.npz",
+      "epoch_sha256": "91e06864bbd0c47954db55f3030c6dda49d9ffbcedb86466e5afda4cb08dc668",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T35-T36",
+      "epoch_file": "sub-UMCU22__T35-T36.npz",
+      "epoch_sha256": "bdd2baed52fe3b3048b87bea75bcb53d46760cf84665a10065d2f8c69b0a4913",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T36-T37",
+      "epoch_file": "sub-UMCU22__T36-T37.npz",
+      "epoch_sha256": "219ebd2738e4cb6a2fba109beb4d1ddbd66a3bf278cc254b5048dc93fedbc684",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T37-T38",
+      "epoch_file": "sub-UMCU22__T37-T38.npz",
+      "epoch_sha256": "8f049c3d4182982b133c987fda5918ec0586c0b8b89e0d9a4da01e227a2f66f1",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T38-T39",
+      "epoch_file": "sub-UMCU22__T38-T39.npz",
+      "epoch_sha256": "28009ffcffd810fe8b6898368c568128359fa8fd16fe67cd6ffc1a0c9694d203",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T39-T40",
+      "epoch_file": "sub-UMCU22__T39-T40.npz",
+      "epoch_sha256": "a023481d1244683755334c444600da47646bb83374316d9197a8b399dc16b180",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T41-T42",
+      "epoch_file": "sub-UMCU22__T41-T42.npz",
+      "epoch_sha256": "875440858f57a78aa67c49f21e80b09a0e4bfd5f5c4112a0ac7149f867bfdf11",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T42-T43",
+      "epoch_file": "sub-UMCU22__T42-T43.npz",
+      "epoch_sha256": "a45860fd586b5933fb3b0ea621cef203e5812562729bd3e7bb594c4995b89975",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T43-T44",
+      "epoch_file": "sub-UMCU22__T43-T44.npz",
+      "epoch_sha256": "27fb3f1b01265f7ca8f2d6ebc5d716a37e8a230556bfd28a7989c390900fcefc",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T44-T45",
+      "epoch_file": "sub-UMCU22__T44-T45.npz",
+      "epoch_sha256": "80708cf60f8b5e2e4910e7425244d8b546621cb7ff5e5fd4617614a1499de86d",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T45-T46",
+      "epoch_file": "sub-UMCU22__T45-T46.npz",
+      "epoch_sha256": "1c83c6868f52d061abc0bf6a9a28c68f869b03fd3fc1470d630d6d4464211eef",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T46-T47",
+      "epoch_file": "sub-UMCU22__T46-T47.npz",
+      "epoch_sha256": "900ed77a824942d56200b4dc9521dea10bd88e673acbcba8a1836bd09152ce0a",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T47-T48",
+      "epoch_file": "sub-UMCU22__T47-T48.npz",
+      "epoch_sha256": "63876d5a0fbafb7bb73e45afc47d5ab91a0301cafa2e4505650d7995d858254e",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T49-T50",
+      "epoch_file": "sub-UMCU22__T49-T50.npz",
+      "epoch_sha256": "18846e3e8e604e940d93311b59980dc03c43f1b9196759ecb32eb99c75c2a6a8",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T50-T51",
+      "epoch_file": "sub-UMCU22__T50-T51.npz",
+      "epoch_sha256": "91057d1e88531510c0de84828f436abaf2308e4569b8f2f4c026dbd274665083",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T51-T52",
+      "epoch_file": "sub-UMCU22__T51-T52.npz",
+      "epoch_sha256": "e9609d65f5eb131a6fd06f654c9c6c4f7e5e776be39476c5be35a2052978a3c7",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T52-T53",
+      "epoch_file": "sub-UMCU22__T52-T53.npz",
+      "epoch_sha256": "3723190bc7280353e424dcf658b55b4156168d1830dc08e58976803b4133bb29",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T53-T54",
+      "epoch_file": "sub-UMCU22__T53-T54.npz",
+      "epoch_sha256": "7ec66337689daf7cdf5e57b5b786db933eec246c7cf40c89c347273c4c9495b6",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T54-T55",
+      "epoch_file": "sub-UMCU22__T54-T55.npz",
+      "epoch_sha256": "6319dc70e86f92b445ae53e1613a9f20deaf4c0f3f489ccf376e00b0d399aada",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T55-T56",
+      "epoch_file": "sub-UMCU22__T55-T56.npz",
+      "epoch_sha256": "2d9a6a23ffdde8af2398c3eaf67f686df39b8acd91f4d9ad7db5342429da1450",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T57-T58",
+      "epoch_file": "sub-UMCU22__T57-T58.npz",
+      "epoch_sha256": "5c032c00ffc793463593920ba5c35bdf7e1e218cd98879bc9998b9ddbcdd1ade",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T58-T59",
+      "epoch_file": "sub-UMCU22__T58-T59.npz",
+      "epoch_sha256": "2c189e5f66020fc9922e95fce5706a49fc487d47aced1a3755ec039a9818aa91",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T59-T60",
+      "epoch_file": "sub-UMCU22__T59-T60.npz",
+      "epoch_sha256": "c2a696fee2250c30160e030fd78a99d9881275b30f790ca5db3b2c22fbb938fb",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T60-T61",
+      "epoch_file": "sub-UMCU22__T60-T61.npz",
+      "epoch_sha256": "bc634ab66400d95b8bcd111b961982c1455dbf3add37508bf72cd6e2c81537db",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T61-T62",
+      "epoch_file": "sub-UMCU22__T61-T62.npz",
+      "epoch_sha256": "40ce878c6fce571336980be3431d89a5e604e0861dc7a8cdf06c6437a92a50f5",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T62-T63",
+      "epoch_file": "sub-UMCU22__T62-T63.npz",
+      "epoch_sha256": "3d1a4595b7cae89e5ea5816cfeb7925de684c86816684b1bdeb76c611160350f",
+      "records": 76
+    },
+    {
+      "subject": "UMCU22",
+      "stimpair": "T63-T64",
+      "epoch_file": "sub-UMCU22__T63-T64.npz",
+      "epoch_sha256": "20fe75f7eb91da29a92272e28d54068f166a7a4d4297e4a2b19de97e66e13b7d",
+      "records": 76
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C01-C02",
+      "epoch_file": "sub-UMCU23__C01-C02.npz",
+      "epoch_sha256": "021fe48b834f8917983910b6fdf71ec1bf24fccf31a128e73051e64029740fc0",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C02-C03",
+      "epoch_file": "sub-UMCU23__C02-C03.npz",
+      "epoch_sha256": "fa76f34f2293ed307c06907dbb9df1560eb9d0fccfc9bdcf0992ed8c58370b10",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C03-C04",
+      "epoch_file": "sub-UMCU23__C03-C04.npz",
+      "epoch_sha256": "3f3fddd99ebdee3c7c96d20fb5eb75837ea50761c5a94cecf98478c9ef2a3c4a",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C04-C05",
+      "epoch_file": "sub-UMCU23__C04-C05.npz",
+      "epoch_sha256": "b568d1e1571a9fe5cf9d63f2af96233fbfc208cd2f95b8702b926c58cf5d5c82",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C05-C06",
+      "epoch_file": "sub-UMCU23__C05-C06.npz",
+      "epoch_sha256": "59ba55a630b4c037829a57f315653eb9db56bdc9f6b20d12ee54e9b1fb473a31",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C06-C07",
+      "epoch_file": "sub-UMCU23__C06-C07.npz",
+      "epoch_sha256": "0e23a1dc6f813e2124d359c240daa61ecaaec624065089ed48d794240d00dcda",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C07-C08",
+      "epoch_file": "sub-UMCU23__C07-C08.npz",
+      "epoch_sha256": "ab14996c78630c482739afedf4663dd389635e5bd02a087351a613abfb107d49",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C10-C11",
+      "epoch_file": "sub-UMCU23__C10-C11.npz",
+      "epoch_sha256": "7911164450fbd04f52a5a73507e87f98c71bf761eea425b3c7e9e156efd9ffeb",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C11-C12",
+      "epoch_file": "sub-UMCU23__C11-C12.npz",
+      "epoch_sha256": "982982e6ef99b7e4e7a07ccd94e74dd2ad1e84ac906fac6124915eee43363508",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C12-C13",
+      "epoch_file": "sub-UMCU23__C12-C13.npz",
+      "epoch_sha256": "e20a3116b1f6cbe417ee609878f60a854684079300a92b9c6a7a12d0b5212024",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C15-C16",
+      "epoch_file": "sub-UMCU23__C15-C16.npz",
+      "epoch_sha256": "11161369431cb34462a309e85b3860285269f606c6a12b8427325160a80f3cb0",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C17-C18",
+      "epoch_file": "sub-UMCU23__C17-C18.npz",
+      "epoch_sha256": "ecb06da24173e63ee89916d4f777c2514a5597dd1b96af08f06064579c5ae9a4",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C18-C19",
+      "epoch_file": "sub-UMCU23__C18-C19.npz",
+      "epoch_sha256": "13ab4e9ad0359de095637533b0f0123e06890c3e9e9ed659e184f507d7fe5429",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C19-C20",
+      "epoch_file": "sub-UMCU23__C19-C20.npz",
+      "epoch_sha256": "c45331e7a52b7a3556af6eb51138f158f5bda99a67c0c20758e7c84e7ec00cca",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C20-C21",
+      "epoch_file": "sub-UMCU23__C20-C21.npz",
+      "epoch_sha256": "0458f646873d68d1fcd3d135c07018d830bdf815c0253beefcfab251c77519d2",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C21-C22",
+      "epoch_file": "sub-UMCU23__C21-C22.npz",
+      "epoch_sha256": "6388fc98645fe641ea544007525a8d598ef9dd8727f5205c860ca8bbd900fef1",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C22-C23",
+      "epoch_file": "sub-UMCU23__C22-C23.npz",
+      "epoch_sha256": "ee792f675e36ba218538adc279d0de47eb22628dccef8c3e36e0dac92ce61991",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C23-C24",
+      "epoch_file": "sub-UMCU23__C23-C24.npz",
+      "epoch_sha256": "9c5701ff384f719ddeeb05e865c3dcb54c2b8a805934a0251c4a60d8d05a1557",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C26-C27",
+      "epoch_file": "sub-UMCU23__C26-C27.npz",
+      "epoch_sha256": "b37fb829a16ab6e6edbb20ea9a034e54b2e2642e66c693f6ff7a87004f9287c4",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C27-C28",
+      "epoch_file": "sub-UMCU23__C27-C28.npz",
+      "epoch_sha256": "660179ca2cf2f7a00125244dcb0c76e92ae8a1fd989aef1631931751948aae08",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C28-C29",
+      "epoch_file": "sub-UMCU23__C28-C29.npz",
+      "epoch_sha256": "36a3586b5ac72220bba89701e46532edb5997ab5d551ad667d51a9867b43032e",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C29-C30",
+      "epoch_file": "sub-UMCU23__C29-C30.npz",
+      "epoch_sha256": "9bc02c94bcfca03f12581929689671b170b0cd89b72887b3e8ca656a24b11cc3",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C30-C31",
+      "epoch_file": "sub-UMCU23__C30-C31.npz",
+      "epoch_sha256": "b972cb98fec17ba139ff829fa9d5fa631aac26448cba4dceac02b693506bfb83",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "C31-C32",
+      "epoch_file": "sub-UMCU23__C31-C32.npz",
+      "epoch_sha256": "fef9593d5f130cb58a1ec0996b1a1073774d12f26576dcd72dcfa538aa3a7fec",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHH1-IHH2",
+      "epoch_file": "sub-UMCU23__IHH1-IHH2.npz",
+      "epoch_sha256": "18bc04bfcb2fec3bae90bcf7355d8a3769d6ae9d4099f745619d91240db2e74f",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHH2-IHH3",
+      "epoch_file": "sub-UMCU23__IHH2-IHH3.npz",
+      "epoch_sha256": "9de85994c6afe3cfe8c460abc1a1f30714ee0081f86a2239d226baff71378481",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHH3-IHH4",
+      "epoch_file": "sub-UMCU23__IHH3-IHH4.npz",
+      "epoch_sha256": "75f4750e90158e82ba208d3d5cc26430d5fbec601e9bb3da8fe6550531e08ea9",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHH4-IHH5",
+      "epoch_file": "sub-UMCU23__IHH4-IHH5.npz",
+      "epoch_sha256": "c758f3068bff5489929322e7e80b50b423311a1a9a9d50d9f39e8ddb13066403",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHH5-IHH6",
+      "epoch_file": "sub-UMCU23__IHH5-IHH6.npz",
+      "epoch_sha256": "39c113d299ef072a2bd1dc14f80af60aac8371f005542f7542fb30afbb35b7e3",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHH6-IHH7",
+      "epoch_file": "sub-UMCU23__IHH6-IHH7.npz",
+      "epoch_sha256": "8b67b3182f19be9a0fb830439ea28e19529fbd2a6cf17a5c86abfb51a21e16b8",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHH7-IHH8",
+      "epoch_file": "sub-UMCU23__IHH7-IHH8.npz",
+      "epoch_sha256": "552f4ec18b1f9f40f7d048b915da77aaf4ff97eda61328a165f6015f9b6f62ea",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL01-IHL02",
+      "epoch_file": "sub-UMCU23__IHL01-IHL02.npz",
+      "epoch_sha256": "f3817bc175005622f6df464fc909108c64f93864023721db9975f979c78f4e5e",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL02-IHL03",
+      "epoch_file": "sub-UMCU23__IHL02-IHL03.npz",
+      "epoch_sha256": "6681694a5fdda38d0bc37e7297e3e52576c0b4a6a02b50c6281c6972bc97617b",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL03-IHL04",
+      "epoch_file": "sub-UMCU23__IHL03-IHL04.npz",
+      "epoch_sha256": "a069d6979b7d628722fb5ac631ab8572b66ed8aa4730473b7db7f28c4e6c4414",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL04-IHL05",
+      "epoch_file": "sub-UMCU23__IHL04-IHL05.npz",
+      "epoch_sha256": "70ac43a5d814c036eb200decf928663711c4d82c6741ced3b1445ea7ca6905d2",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL05-IHL06",
+      "epoch_file": "sub-UMCU23__IHL05-IHL06.npz",
+      "epoch_sha256": "6e1cbe35a3d9745c9c57f28712da185eb124cad6354eb8e29b9a288f8e186235",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL06-IHL07",
+      "epoch_file": "sub-UMCU23__IHL06-IHL07.npz",
+      "epoch_sha256": "669aab10aba4b5b6bea7d1384d17bec33b2162a99bcd83f12873d1f795a56882",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL07-IHL08",
+      "epoch_file": "sub-UMCU23__IHL07-IHL08.npz",
+      "epoch_sha256": "bc85ec13c5168bca6e3a570ccf1c30c86aa827f6ae3287301ae218141698ad64",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL09-IHL10",
+      "epoch_file": "sub-UMCU23__IHL09-IHL10.npz",
+      "epoch_sha256": "c6f6089412b2f2a0248e4b9b25c8e14ff91c54e1264947fa88cc3243daa03d13",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL10-IHL11",
+      "epoch_file": "sub-UMCU23__IHL10-IHL11.npz",
+      "epoch_sha256": "04344c07d6c212ec836ebae4577173d269eb59ad35d46e0d308f49f9c28d35ec",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL11-IHL12",
+      "epoch_file": "sub-UMCU23__IHL11-IHL12.npz",
+      "epoch_sha256": "66652d281d767cece91b9b27acd5d87a30ec19d0cdb5fa492d270e74740f86d5",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL12-IHL13",
+      "epoch_file": "sub-UMCU23__IHL12-IHL13.npz",
+      "epoch_sha256": "9ad143399cdb1888071a1f45a6685ab396dc83516f864f00e5422a9713ccfbaa",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL13-IHL14",
+      "epoch_file": "sub-UMCU23__IHL13-IHL14.npz",
+      "epoch_sha256": "d13cb3c2cc6e11942320e2d6cc1e74d9396ce654f0aa5ed76d98cb3a74947f98",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL14-IHL15",
+      "epoch_file": "sub-UMCU23__IHL14-IHL15.npz",
+      "epoch_sha256": "90c55b3044d36ed16b90f006eacfd3405ba6981f6d6b18eec358942953017b5a",
+      "records": 51
+    },
+    {
+      "subject": "UMCU23",
+      "stimpair": "IHL15-IHL16",
+      "epoch_file": "sub-UMCU23__IHL15-IHL16.npz",
+      "epoch_sha256": "fafb189d81e070a98f9a23898cbdf643f55adb85484e88000d237511192d878a",
+      "records": 51
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "F49-F50",
+      "epoch_file": "sub-UMCU25__F49-F50.npz",
+      "epoch_sha256": "7be1feaaaa09e2b866f9a8b5972d4c7238d377903fcf6c22dd0921a5104042ae",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "F50-F51",
+      "epoch_file": "sub-UMCU25__F50-F51.npz",
+      "epoch_sha256": "42961b65a1d3b938c583bbe0b19e8d2abf0c5aaa24f2578b431bad094a212465",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "F51-F52",
+      "epoch_file": "sub-UMCU25__F51-F52.npz",
+      "epoch_sha256": "930668746eb3e57fabcce886279973d826d3bee5b8411c05a2ba401ed234b938",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "F52-F53",
+      "epoch_file": "sub-UMCU25__F52-F53.npz",
+      "epoch_sha256": "8ede21368d7a1f2f0cab1dd20502f808ab88af0bf77cec95251eacfd36a746a9",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T17-T18",
+      "epoch_file": "sub-UMCU25__T17-T18.npz",
+      "epoch_sha256": "1f32a71ddb115fe56b893ae226609e279097ddd5d380780c2a848d0f9a7be5e0",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T18-T19",
+      "epoch_file": "sub-UMCU25__T18-T19.npz",
+      "epoch_sha256": "0f7642a583303c50c1f9339da701414bd75d8e5d5a7543fcb48ecca58c5a9fe4",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T19-T20",
+      "epoch_file": "sub-UMCU25__T19-T20.npz",
+      "epoch_sha256": "23728aecdb95e99d79178fa1c896651a108d5943ea1cd92bbd21d2383c12b15d",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T20-T21",
+      "epoch_file": "sub-UMCU25__T20-T21.npz",
+      "epoch_sha256": "99aa2db344b762c27813366912c299b475d114fce19b34c0be009630c14cc660",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T21-T22",
+      "epoch_file": "sub-UMCU25__T21-T22.npz",
+      "epoch_sha256": "061101c5de5506fbfef0861b443d40e494aaaae405252a006bff319b6708cab2",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T22-T23",
+      "epoch_file": "sub-UMCU25__T22-T23.npz",
+      "epoch_sha256": "67df98c04c9b838730fd8f7f7e9e023ee598d5f0c57c425926257a897d883107",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T23-T24",
+      "epoch_file": "sub-UMCU25__T23-T24.npz",
+      "epoch_sha256": "ab6dad26e54e07f813eb3fba3883f5a0198e4159e7b7b2f09821c32a4225e641",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T26-T27",
+      "epoch_file": "sub-UMCU25__T26-T27.npz",
+      "epoch_sha256": "e9156dd267618b67210ee6dd8939f7f5bbe01d4935708cfc25117784d46e7d43",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T27-T28",
+      "epoch_file": "sub-UMCU25__T27-T28.npz",
+      "epoch_sha256": "8eae1f02e2952cf2767f147537f29065fa9230076453e2ac27c213db2b2bdc23",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T28-T29",
+      "epoch_file": "sub-UMCU25__T28-T29.npz",
+      "epoch_sha256": "676207c66089fd10b751ef631cba4e3271aaf14022339a7946e0f87facb790b4",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T29-T30",
+      "epoch_file": "sub-UMCU25__T29-T30.npz",
+      "epoch_sha256": "9398eb75a1104cb49c282651dba542bed61936ecb5b6190beaf24f4baa522ec4",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T30-T31",
+      "epoch_file": "sub-UMCU25__T30-T31.npz",
+      "epoch_sha256": "894835aeef65b24b6ac9440672f5a4dac04690bf7ec0600796a696bdf15b1731",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T31-T32",
+      "epoch_file": "sub-UMCU25__T31-T32.npz",
+      "epoch_sha256": "f3807c6c7c2435909d959bb684843f4b0ee37d8b47bba459b38ea73b712ed7a5",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T33-T34",
+      "epoch_file": "sub-UMCU25__T33-T34.npz",
+      "epoch_sha256": "3a50c82f06ac3db7f20495aca2a5ec2ea632b252c76b3afcca0b726e0cdee96b",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T34-T35",
+      "epoch_file": "sub-UMCU25__T34-T35.npz",
+      "epoch_sha256": "d43436fa004b026a17c9b898c5e0a06ed916d6fe8bf2c27ec31f26037603a664",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T35-T36",
+      "epoch_file": "sub-UMCU25__T35-T36.npz",
+      "epoch_sha256": "a2d17601bc5a767a5589197f060202883bed180b8d980538851e2de94c13e3fd",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T36-T37",
+      "epoch_file": "sub-UMCU25__T36-T37.npz",
+      "epoch_sha256": "e00b3648c8b8437d191179144cad8203b89944e217bc3d5b93b93c1f46c174a6",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T37-T38",
+      "epoch_file": "sub-UMCU25__T37-T38.npz",
+      "epoch_sha256": "3cd5d7baa3fa285b298b5e1a969a0498136134d388b94cda8a8a6b505ca4b352",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T38-T39",
+      "epoch_file": "sub-UMCU25__T38-T39.npz",
+      "epoch_sha256": "228fb7b6be6e5063619a55217820b4fcd7590899511b1f0d57557139d8a14947",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T39-T40",
+      "epoch_file": "sub-UMCU25__T39-T40.npz",
+      "epoch_sha256": "08993a183df3360301cb0a47883f9e3915435b6ace6d9f26bd55ba596cab0eac",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T41-T42",
+      "epoch_file": "sub-UMCU25__T41-T42.npz",
+      "epoch_sha256": "e6910182c32eed796588c412d6c270804d10b9dc11b569b65ae40dd917c09231",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T42-T43",
+      "epoch_file": "sub-UMCU25__T42-T43.npz",
+      "epoch_sha256": "e1b58340dff4150f7ebc1d646eea2f5a339bb8792754f481f67ced4107c64ead",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T43-T44",
+      "epoch_file": "sub-UMCU25__T43-T44.npz",
+      "epoch_sha256": "2d643647e3f95f5461e5213b9484ce21bf5232f1e054aadf8dc1d87a197904ff",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T44-T45",
+      "epoch_file": "sub-UMCU25__T44-T45.npz",
+      "epoch_sha256": "f3b4fe387eb65eca438c49ed95b245e2cdf276a1285f93a44190894b4cc36514",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T45-T46",
+      "epoch_file": "sub-UMCU25__T45-T46.npz",
+      "epoch_sha256": "49b87aa6fa99b6e77aa71f4581cb160f84d6c66e6ea913e25219c3720a021d4d",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T46-T47",
+      "epoch_file": "sub-UMCU25__T46-T47.npz",
+      "epoch_sha256": "7387d436b82567c530712bed60356fa83b73f6ef0ff43284086187f6e00c0f62",
+      "records": 73
+    },
+    {
+      "subject": "UMCU25",
+      "stimpair": "T47-T48",
+      "epoch_file": "sub-UMCU25__T47-T48.npz",
+      "epoch_sha256": "aba6d470979107361b0a31629a2571b21c31aa9edda9b29c6e8deb1797a52626",
+      "records": 73
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F03-F04",
+      "epoch_file": "sub-UMCU26__F03-F04.npz",
+      "epoch_sha256": "af34b9488f40f955ccd1df711b91a3cd49a526154a43a1b1da69c1d472f9527c",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F04-F05",
+      "epoch_file": "sub-UMCU26__F04-F05.npz",
+      "epoch_sha256": "4a3b9964b92cbb6354f0b621e0c1a699071a5bef220a484ef687227680aa1a27",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F05-F06",
+      "epoch_file": "sub-UMCU26__F05-F06.npz",
+      "epoch_sha256": "2b83df3ee072d62096a2cf3560015f9a19c3827cb4645497885bc608548feed3",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F06-F07",
+      "epoch_file": "sub-UMCU26__F06-F07.npz",
+      "epoch_sha256": "c6ef11127cd7b45a0167269600407e85e253457f320c58fefaa910afb123e7b9",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F07-F08",
+      "epoch_file": "sub-UMCU26__F07-F08.npz",
+      "epoch_sha256": "83c2c62a2394c7613475753bf092db2b979b36721312b3c4185f501da2b2d1b8",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F10-F11",
+      "epoch_file": "sub-UMCU26__F10-F11.npz",
+      "epoch_sha256": "b741b06507d19aaf4b9ffe16446bc88a19c5a0d835de48eb36d4c1a2dff150c1",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F14-F15",
+      "epoch_file": "sub-UMCU26__F14-F15.npz",
+      "epoch_sha256": "0f36bf786dbb39d99622451a32f8b92980e5128c3911ba84a8a9fda13de9234e",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F15-F16",
+      "epoch_file": "sub-UMCU26__F15-F16.npz",
+      "epoch_sha256": "302297e4519282fc904310994d8e411fb51bedc0038f987b98f3cbc333c7ae98",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F17-F18",
+      "epoch_file": "sub-UMCU26__F17-F18.npz",
+      "epoch_sha256": "ad7874100c63fe1cb06eb05b1a03fddfb99db26f3a7f611a1311c06e353b9ca2",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F18-F19",
+      "epoch_file": "sub-UMCU26__F18-F19.npz",
+      "epoch_sha256": "5c33b15949155415faae2cd5959f742dbca0bb21570001833cfcc7f01b002b56",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F19-F20",
+      "epoch_file": "sub-UMCU26__F19-F20.npz",
+      "epoch_sha256": "6731b28e11117a7cd98d1d74a5273e223fa078891e8d6687e22e29c58beee322",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F20-F21",
+      "epoch_file": "sub-UMCU26__F20-F21.npz",
+      "epoch_sha256": "4700a4d89d6160cb8628fb92fc91abd3bc2f22542436bac7e18a5bed0aaaf22d",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F21-F22",
+      "epoch_file": "sub-UMCU26__F21-F22.npz",
+      "epoch_sha256": "edad4d1de0af9b9925e806c53b826bebbd5a77b323398b6b2d8d5340ac740ff1",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F22-F23",
+      "epoch_file": "sub-UMCU26__F22-F23.npz",
+      "epoch_sha256": "1a92521af9e14e0d533e69daafbaa6e0e53eec7a3f47208fd4038074e85f5ca0",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F23-F24",
+      "epoch_file": "sub-UMCU26__F23-F24.npz",
+      "epoch_sha256": "d0bae00436ce70656fca5e8df98bb12b83ea55ea8b778fb1084d8018bc9c8148",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F26-F27",
+      "epoch_file": "sub-UMCU26__F26-F27.npz",
+      "epoch_sha256": "cbc94d81bc4e4213760c00ec42c5607e1d0bfddafaffd9574dbf460a7db71bd4",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F27-F28",
+      "epoch_file": "sub-UMCU26__F27-F28.npz",
+      "epoch_sha256": "7258f208c5e1113920b7d944f49a05be40ea3a1aa5bb9c859db2114b0643e1a4",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F28-F29",
+      "epoch_file": "sub-UMCU26__F28-F29.npz",
+      "epoch_sha256": "3e8c60b500ab37e2c02105c87257721c9cef3674921a202bda0f3bdb7cacc9c8",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F29-F30",
+      "epoch_file": "sub-UMCU26__F29-F30.npz",
+      "epoch_sha256": "e60ad556d183229ac90b25ecbfbded1442c47526fffb3f299063bd559b2f3758",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F30-F31",
+      "epoch_file": "sub-UMCU26__F30-F31.npz",
+      "epoch_sha256": "bc24c96e78fb3ff578262885553b105def449ebd9480c9d0ffaa284cc27c0881",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "F31-F32",
+      "epoch_file": "sub-UMCU26__F31-F32.npz",
+      "epoch_sha256": "7092533c2b1ca35b0550515b8cc37db739aadf4e6479eff08762462306d55d71",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL01-FL02",
+      "epoch_file": "sub-UMCU26__FL01-FL02.npz",
+      "epoch_sha256": "564827060cfc497c03836516acf54d280f26b6cdb6db99ec12d6c84d5320400e",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL02-FL03",
+      "epoch_file": "sub-UMCU26__FL02-FL03.npz",
+      "epoch_sha256": "090c1c8a1d28e6ae4abd4c27b8918ce63277a68416ce9af717506550d65f3d3b",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL03-FL04",
+      "epoch_file": "sub-UMCU26__FL03-FL04.npz",
+      "epoch_sha256": "e58f639da9a59b44d3374a2814ba1557ea8657a555038f8adba50e49f2ca481f",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL04-FL05",
+      "epoch_file": "sub-UMCU26__FL04-FL05.npz",
+      "epoch_sha256": "392a9e81339c06350137f5321aa0c99cf79e6d57c29439f185c52260c1207c95",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL05-FL06",
+      "epoch_file": "sub-UMCU26__FL05-FL06.npz",
+      "epoch_sha256": "42246d535034f8949459571ecd822093e358e4c642fa409841e69b55bae2b940",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL06-FL07",
+      "epoch_file": "sub-UMCU26__FL06-FL07.npz",
+      "epoch_sha256": "5241b01d49406a97aa824aa4a9cde08bff17a1f81108e9c16a96b3077419d19d",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL07-FL08",
+      "epoch_file": "sub-UMCU26__FL07-FL08.npz",
+      "epoch_sha256": "1352522f18bbdcad106e585ad0ba7f5aea3af5810fb5e924367cc9eb6c8827bf",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL09-FL10",
+      "epoch_file": "sub-UMCU26__FL09-FL10.npz",
+      "epoch_sha256": "692739fdc2dd7e99ced7da4fd0ae4fd5f056c88415bcf787179eea62f71fd90f",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL10-FL11",
+      "epoch_file": "sub-UMCU26__FL10-FL11.npz",
+      "epoch_sha256": "3769b956794a140b3ea7bdb448ccaf20fe45e79b5bcbb52dcb58aca88cc3345a",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL11-FL12",
+      "epoch_file": "sub-UMCU26__FL11-FL12.npz",
+      "epoch_sha256": "e1597c281cfbc519b35d5bace2a856dd7274bed4251907574051ca69ea968828",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL12-FL13",
+      "epoch_file": "sub-UMCU26__FL12-FL13.npz",
+      "epoch_sha256": "f6eebfcc5de865792adb4bf223102b81cd862e9d860d48f718c187d2372f0ac0",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL13-FL14",
+      "epoch_file": "sub-UMCU26__FL13-FL14.npz",
+      "epoch_sha256": "5cadedd42f9cc5c2eb041df5bb430de6ca24ef50ccc75c9a216fb307fdbe0fc6",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL14-FL15",
+      "epoch_file": "sub-UMCU26__FL14-FL15.npz",
+      "epoch_sha256": "81dd75f526793b2afb2f134722a7c9f94c8e0e7ae384af0c762ba5ccfb0ad10e",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "FL15-FL16",
+      "epoch_file": "sub-UMCU26__FL15-FL16.npz",
+      "epoch_sha256": "be2e925313b4e12e9d2013996cf4e36ad78379c0edf23d362d9733d9271fba1f",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "IHH5-IHH6",
+      "epoch_file": "sub-UMCU26__IHH5-IHH6.npz",
+      "epoch_sha256": "9dba35d330a0f2b0cb6616669169adadcd79ce141e7b52e2cfe527454797c41f",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "IHH6-IHH7",
+      "epoch_file": "sub-UMCU26__IHH6-IHH7.npz",
+      "epoch_sha256": "f2c00295d3d3eecb3f536e7ca01be5ab7ba28d2b313518a7dc814c853847181e",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "IHH7-IHH8",
+      "epoch_file": "sub-UMCU26__IHH7-IHH8.npz",
+      "epoch_sha256": "7b1e8c1240097e3f7946eb3df62af7d289be61f46c19a06848673b9a6c065d2d",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "IHL1-IHL2",
+      "epoch_file": "sub-UMCU26__IHL1-IHL2.npz",
+      "epoch_sha256": "6fad1e36c09b5238eddf358b8d2b0b80cd52513df6ea1aed87d27600ec7815ad",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "IHL2-IHL3",
+      "epoch_file": "sub-UMCU26__IHL2-IHL3.npz",
+      "epoch_sha256": "2c1d78aae799b4207ffd2b30198ab4537632b391a0e7bbbf7692207e85b20e83",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "IHL3-IHL4",
+      "epoch_file": "sub-UMCU26__IHL3-IHL4.npz",
+      "epoch_sha256": "a60f6813304c8a550d3a51e067daa526ef8f29d2e8a06e58b9d96e8074930f09",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "IHL4-IHL5",
+      "epoch_file": "sub-UMCU26__IHL4-IHL5.npz",
+      "epoch_sha256": "44173e48cd4368f73761c688ac1a15b4ab697540056ecafb65d8b5c0b820a462",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "IHL5-IHL6",
+      "epoch_file": "sub-UMCU26__IHL5-IHL6.npz",
+      "epoch_sha256": "046227ac5ee1ec96508cf2d375d4c9bdd16f4a97ff1832cdf1810750d90f7727",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "IHL6-IHL7",
+      "epoch_file": "sub-UMCU26__IHL6-IHL7.npz",
+      "epoch_sha256": "0aa2d90e4a611f3d2b2a294754e5b08eaaac022f07b2410cffd03ce731413bdb",
+      "records": 55
+    },
+    {
+      "subject": "UMCU26",
+      "stimpair": "IHL7-IHL8",
+      "epoch_file": "sub-UMCU26__IHL7-IHL8.npz",
+      "epoch_sha256": "097817ea8976fb8151daa39ab5b44df06974f9dc15c2c1c1754d669097fa17d8",
+      "records": 55
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F01-F02",
+      "epoch_file": "sub-UMCU59__F01-F02.npz",
+      "epoch_sha256": "b3c8c40499730c61a52d73a1122f06d67e1681ca7b7203718bbe107c3b998bfd",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F02-F03",
+      "epoch_file": "sub-UMCU59__F02-F03.npz",
+      "epoch_sha256": "d7deb33042f3b9f3fd82dcc1d5782651047f84b6d9bb2cdb9ae199b2a533b685",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F03-F04",
+      "epoch_file": "sub-UMCU59__F03-F04.npz",
+      "epoch_sha256": "c940674bafbfd19818b3f8165c29d529efddfe4518327b3401dd392f4003a05e",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F04-F05",
+      "epoch_file": "sub-UMCU59__F04-F05.npz",
+      "epoch_sha256": "5c11dd59752d325fd3a1fbfc0284141dc7ab5468d433fd251b9e0e72c5375ee5",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F05-F06",
+      "epoch_file": "sub-UMCU59__F05-F06.npz",
+      "epoch_sha256": "480f3ad766f52f736db5ed5e6bc5056cd1d59c9fc3beac0f596b6dfc37af5d39",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F06-F07",
+      "epoch_file": "sub-UMCU59__F06-F07.npz",
+      "epoch_sha256": "d445ee545d164afe031df1506d752cd9a863adaad61bf06d477236c7c19059c2",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F07-F08",
+      "epoch_file": "sub-UMCU59__F07-F08.npz",
+      "epoch_sha256": "7aa7c9ed1bc7c6bf603589c2a8c463798643b65acbd72b6601ae458576dfb4f3",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F09-F10",
+      "epoch_file": "sub-UMCU59__F09-F10.npz",
+      "epoch_sha256": "9b246e2f05b6f5d6f589fadc29facd1bbe5d9ad1f7e69f3b9cb2376f600c0363",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F10-F11",
+      "epoch_file": "sub-UMCU59__F10-F11.npz",
+      "epoch_sha256": "2f80d374883ccb2a510e10f84cf460d5678c7a6c9aa5300e9d8a6d7b6059c367",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F11-F12",
+      "epoch_file": "sub-UMCU59__F11-F12.npz",
+      "epoch_sha256": "865dd383ddd8bc490866b56a2eb8f68c98c81f6c00050bd3ea30e6f41df54c85",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F12-F13",
+      "epoch_file": "sub-UMCU59__F12-F13.npz",
+      "epoch_sha256": "289ed6573792031e93a75c93b2c268ba4150eb7a9dc5924dce148959d93e9479",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F13-F14",
+      "epoch_file": "sub-UMCU59__F13-F14.npz",
+      "epoch_sha256": "d940846f0dcc8c0bedbc7020ca1328f36060e2426e4db82f2acc154906003a16",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F14-F15",
+      "epoch_file": "sub-UMCU59__F14-F15.npz",
+      "epoch_sha256": "d68e2751f50a4e6e0d4f99c9133bc8700b64b3ebe79c6be8447efda4a0174dc6",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F15-F16",
+      "epoch_file": "sub-UMCU59__F15-F16.npz",
+      "epoch_sha256": "34a1d841db3931f204806e2700624ddff37cfe36588d1cfa922f944060374ccf",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F17-F18",
+      "epoch_file": "sub-UMCU59__F17-F18.npz",
+      "epoch_sha256": "68fc1e422d02b8c6ce7889add1689ec50a1dff6e5eb593ffdc6ec5ed612fa84d",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F18-F19",
+      "epoch_file": "sub-UMCU59__F18-F19.npz",
+      "epoch_sha256": "3219cb749b15b0faf9a5499c16f2c9b7537b7a0e758e1ccde4583ab66cd8001f",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F19-F20",
+      "epoch_file": "sub-UMCU59__F19-F20.npz",
+      "epoch_sha256": "5d94097b0bce9a9b471207ee25525a70cc926e5724536b9f61470675713a47bd",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F20-F21",
+      "epoch_file": "sub-UMCU59__F20-F21.npz",
+      "epoch_sha256": "ad89f9564c5501ea040603530f7170b7097fd688617454e5a3cc120d2079fab4",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F21-F22",
+      "epoch_file": "sub-UMCU59__F21-F22.npz",
+      "epoch_sha256": "13621ad25088b965bdda430f2e722b7a9cab796c67c193fa0f18a9f4a30e1999",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F22-F23",
+      "epoch_file": "sub-UMCU59__F22-F23.npz",
+      "epoch_sha256": "d54c8b84209e48033694e523f08badb53d967b909877c1fd329a5d2bb4c09bdf",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F23-F24",
+      "epoch_file": "sub-UMCU59__F23-F24.npz",
+      "epoch_sha256": "7a093c956ae7dc697b3097c5d7efede3e08c753f17fda9932c2524593964b939",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F25-F26",
+      "epoch_file": "sub-UMCU59__F25-F26.npz",
+      "epoch_sha256": "a4fb8692b9a824d0852d76b9982e393a3c757c6f77179026e5ede04dc47073a0",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F26-F27",
+      "epoch_file": "sub-UMCU59__F26-F27.npz",
+      "epoch_sha256": "069beb96403fdd5600d5f91ef08c5b6473fb3063d78d78b3e5923a248ceb4968",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F27-F28",
+      "epoch_file": "sub-UMCU59__F27-F28.npz",
+      "epoch_sha256": "23def266cab3a5ce02b24154a02121f982a2c4a68298c0d689a504d2762a053b",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F28-F29",
+      "epoch_file": "sub-UMCU59__F28-F29.npz",
+      "epoch_sha256": "31fae41f1916088f7f746e12327c87d3149fdc5e3502ef1420ac4fc6a768c9d2",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F29-F30",
+      "epoch_file": "sub-UMCU59__F29-F30.npz",
+      "epoch_sha256": "60ca51c59abba12c9189f8d7a7352f4a4ecf0cd98a10108b67d8c461cb4839ea",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "F30-F31",
+      "epoch_file": "sub-UMCU59__F30-F31.npz",
+      "epoch_sha256": "5816bd0b0dac0299e1d93f9b6d89afc0196d46f9494d051b5a10d14ae3e48150",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF01-HF02",
+      "epoch_file": "sub-UMCU59__HF01-HF02.npz",
+      "epoch_sha256": "9e5b757cf8f74c7c54ef25f154c1604e91f8d00e7ca494e97d274d0691d5513e",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF02-HF03",
+      "epoch_file": "sub-UMCU59__HF02-HF03.npz",
+      "epoch_sha256": "ba4a0261ddd0262e70a253566e2e38594a7145f5b36e93327cf15f4c5025632a",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF03-HF04",
+      "epoch_file": "sub-UMCU59__HF03-HF04.npz",
+      "epoch_sha256": "86c6058dd2dab55229a5a1687d324a57dec07bd2da746d70bfa402bae237c303",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF04-HF05",
+      "epoch_file": "sub-UMCU59__HF04-HF05.npz",
+      "epoch_sha256": "f9964c53bd0ca6023b4afbdd6349faa3a7767daf6fb8d742fc16001e56ada701",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF05-HF06",
+      "epoch_file": "sub-UMCU59__HF05-HF06.npz",
+      "epoch_sha256": "89dcbed165f82811f9dbd873fd3019c16aa53f6c8829b64f0a0560cab799bf7f",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF06-HF07",
+      "epoch_file": "sub-UMCU59__HF06-HF07.npz",
+      "epoch_sha256": "479db14476a948a400ee91706936160ce7a899581003f5dc4fe0811423bdac07",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF07-HF08",
+      "epoch_file": "sub-UMCU59__HF07-HF08.npz",
+      "epoch_sha256": "9c6487ab23eebd6f05f639d326f23158902fef6cdf556a76e36db5bbbe03197f",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF09-HF10",
+      "epoch_file": "sub-UMCU59__HF09-HF10.npz",
+      "epoch_sha256": "b8e0279a0ad3b32da37b2bcf9ce96ba22321eea496c758a90aee92dc96cefac5",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF10-HF11",
+      "epoch_file": "sub-UMCU59__HF10-HF11.npz",
+      "epoch_sha256": "527fde7973dc24d67f6d7f06ede3b69fcb66861d74b9a390d6574ec4ce7859ab",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF11-HF12",
+      "epoch_file": "sub-UMCU59__HF11-HF12.npz",
+      "epoch_sha256": "05a48ca3a66f98702b8322d264a617b4fa8019792db42009356878c11837781c",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF12-HF13",
+      "epoch_file": "sub-UMCU59__HF12-HF13.npz",
+      "epoch_sha256": "baf1f84bf17c61d173dddac31b8d8fb348d7d90e604546f9bab74874589a42b8",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF13-HF14",
+      "epoch_file": "sub-UMCU59__HF13-HF14.npz",
+      "epoch_sha256": "0932708122418502c39887e4c619008e39aeae45f025b7ff85a9469a2f04f5e0",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF14-HF15",
+      "epoch_file": "sub-UMCU59__HF14-HF15.npz",
+      "epoch_sha256": "6662d5a54834b382fd1554ebcc9163b3ba38efa9810ddd1e62deef990d1180a7",
+      "records": 45
+    },
+    {
+      "subject": "UMCU59",
+      "stimpair": "HF15-HF16",
+      "epoch_file": "sub-UMCU59__HF15-HF16.npz",
+      "epoch_sha256": "44a8b8d854b1198f3c624b13a2a851b97787eb3b5dc6b71b291426d13afdaa09",
+      "records": 45
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C01-C02",
+      "epoch_file": "sub-UMCU62__C01-C02.npz",
+      "epoch_sha256": "79c29f6af9cdd8353023006fd9789363a591bb4ea87d5b5702d9f06b33f8315d",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C02-C03",
+      "epoch_file": "sub-UMCU62__C02-C03.npz",
+      "epoch_sha256": "6c606679e73171d8bd31f87a0230d35e376c69c73f10ecc93489ec017930e3ef",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C03-C04",
+      "epoch_file": "sub-UMCU62__C03-C04.npz",
+      "epoch_sha256": "e655d6ce2e69fc7b6aa43cd31145acc5dd5ce948ed922623f27e055f6035fe01",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C04-C05",
+      "epoch_file": "sub-UMCU62__C04-C05.npz",
+      "epoch_sha256": "d7246ec86d08398ddf739b0bbceebc5430bf05b072265cc706c081c5dbbe6bd2",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C07-C08",
+      "epoch_file": "sub-UMCU62__C07-C08.npz",
+      "epoch_sha256": "2851399c9e88333cb8cab149066692ce19d25c836fd75eb9a399cf18dc47bc86",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C09-C10",
+      "epoch_file": "sub-UMCU62__C09-C10.npz",
+      "epoch_sha256": "9b28a5232df83fd5aad9b1e9a5206f8c1566c80493a75c0df23a50dfa2a59252",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C10-C11",
+      "epoch_file": "sub-UMCU62__C10-C11.npz",
+      "epoch_sha256": "d12ab38f5ff0e454424de87da735e3d4710d57281d02dc209241159fc88a87d9",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C11-C12",
+      "epoch_file": "sub-UMCU62__C11-C12.npz",
+      "epoch_sha256": "551883d80fc7cd0aa81f38d1aded49308bbe1ebeb4577636526aa93135256e27",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C12-C13",
+      "epoch_file": "sub-UMCU62__C12-C13.npz",
+      "epoch_sha256": "98c4426de866e8316b629f7ac14e2ca1aecf63e1ad4a866551126225c7e048b4",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C13-C14",
+      "epoch_file": "sub-UMCU62__C13-C14.npz",
+      "epoch_sha256": "83e5039e15b6a592b20913adf2e8fae3a57a7cf9bbb8617fa668199b47c8310b",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C14-C15",
+      "epoch_file": "sub-UMCU62__C14-C15.npz",
+      "epoch_sha256": "fffd7fd6558c0b083436047c3f49fc0845d18a22d02a229f78e79dc30c3faa8a",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C15-C16",
+      "epoch_file": "sub-UMCU62__C15-C16.npz",
+      "epoch_sha256": "03a4e1b3dc81f68a862507ba77d3ef1481c8b0bbafcdc48707e4971ea944e5d2",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C17-C18",
+      "epoch_file": "sub-UMCU62__C17-C18.npz",
+      "epoch_sha256": "2f97f96fd7469996108c0b4d92da601d8cffd2a3b7c9fdede9570760580106f2",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C18-C19",
+      "epoch_file": "sub-UMCU62__C18-C19.npz",
+      "epoch_sha256": "bc24917132b424662ee0df700299284caf45e2e8fc23a51d72be58723c26fdac",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C19-C20",
+      "epoch_file": "sub-UMCU62__C19-C20.npz",
+      "epoch_sha256": "6a0544d27c1c5705632d3b8c61da213cad2ec88f8d0b682ed1b3aba730dcf214",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C20-C21",
+      "epoch_file": "sub-UMCU62__C20-C21.npz",
+      "epoch_sha256": "88e449b46f683ac18eb96b468be3f5890efe2356b16bc94004b8b47332f86b43",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C21-C22",
+      "epoch_file": "sub-UMCU62__C21-C22.npz",
+      "epoch_sha256": "6c7b24c7a8005c375bebe80e966dad0e6202abf92bb5e72371601fcf361f9609",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C22-C23",
+      "epoch_file": "sub-UMCU62__C22-C23.npz",
+      "epoch_sha256": "e3a61c2f40f528f389005a7b461c6c753643ae68e148e1d93ad5a763b86573b7",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C23-C24",
+      "epoch_file": "sub-UMCU62__C23-C24.npz",
+      "epoch_sha256": "5b6d4685424b6fb07caed65028638f7bb36b3420d5d8ba71bc5156e945ebe82c",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C25-C26",
+      "epoch_file": "sub-UMCU62__C25-C26.npz",
+      "epoch_sha256": "68270abbe39b164812233c069c5bf39bf47c29fbcc8c34c1b0bc79a1e65daf2b",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C26-C27",
+      "epoch_file": "sub-UMCU62__C26-C27.npz",
+      "epoch_sha256": "ebaddfc2af4e79078de4996b194fb24295bb64acde8be22f8f82a9abef4391a3",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C27-C28",
+      "epoch_file": "sub-UMCU62__C27-C28.npz",
+      "epoch_sha256": "282f0c8ffaf9bec6164ba25419c5b99d00b3423445a140e498dee8229589938b",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C28-C29",
+      "epoch_file": "sub-UMCU62__C28-C29.npz",
+      "epoch_sha256": "bf2f8b373dd0442276926de3b9f15b27f6a2fbf021cb92dd7c5e8f4551914355",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C29-C30",
+      "epoch_file": "sub-UMCU62__C29-C30.npz",
+      "epoch_sha256": "3a7925b1c2755c4bac49d6e93005b48008564104592067cdd281b0b513b611e1",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C30-C31",
+      "epoch_file": "sub-UMCU62__C30-C31.npz",
+      "epoch_sha256": "9056286f16a47bc71c74d0d663a9446426f6af35245ff57b845bb6a0281b005a",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C31-C32",
+      "epoch_file": "sub-UMCU62__C31-C32.npz",
+      "epoch_sha256": "8b067738b12bb2ce620929263e2209a056e397370183142ea6ec8e0ddeef2e60",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C34-C35",
+      "epoch_file": "sub-UMCU62__C34-C35.npz",
+      "epoch_sha256": "fae7b540f50e0949839b5a85db610786b509ab40acc4201006901b6094ed228c",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C35-C36",
+      "epoch_file": "sub-UMCU62__C35-C36.npz",
+      "epoch_sha256": "adacb7005fedc6903ebfdcad76ba507a44aa586d052a90ff77a90058d04280fa",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C36-C37",
+      "epoch_file": "sub-UMCU62__C36-C37.npz",
+      "epoch_sha256": "9a7f299368d10754db22fe8cee3cd39e5e1136fb8379d268cca7f3e157d69e61",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C37-C38",
+      "epoch_file": "sub-UMCU62__C37-C38.npz",
+      "epoch_sha256": "976e3b4f4ff6f46adc46ac36676e994d47b2b9f8e811b250844ddbb680438e7a",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C38-C39",
+      "epoch_file": "sub-UMCU62__C38-C39.npz",
+      "epoch_sha256": "e87bc3fbf73ec59d2b5855c89365fc490e1d6c2f7d958ac4fa57ca274b03111d",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C39-C40",
+      "epoch_file": "sub-UMCU62__C39-C40.npz",
+      "epoch_sha256": "a7c97d298d810d70510924987c2e17e58883f6d8f67035f300a3d3acfb8216c6",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C41-C42",
+      "epoch_file": "sub-UMCU62__C41-C42.npz",
+      "epoch_sha256": "f36090caf1591a3aa623d13fbeec91ed60c7f354e0f04a8a51a9c0e45cd3490e",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C42-C43",
+      "epoch_file": "sub-UMCU62__C42-C43.npz",
+      "epoch_sha256": "3209b2cd09eacce6aee0d6fbf34ef377e0215372d18c8043648e3336319c2891",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C43-C44",
+      "epoch_file": "sub-UMCU62__C43-C44.npz",
+      "epoch_sha256": "ddece79c09854fa7c47f7898310f47b7f383ff4781bc25cbec63fda07a426c37",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C44-C45",
+      "epoch_file": "sub-UMCU62__C44-C45.npz",
+      "epoch_sha256": "68d2b6fd16b1485fea7060f1dfd3825b75defb6f978bd230a6d6800c5c62c2e0",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C45-C46",
+      "epoch_file": "sub-UMCU62__C45-C46.npz",
+      "epoch_sha256": "fd3e7cdcb82894b977080865d46dfcaedfe69d10e486a292327197359f4a0769",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C46-C47",
+      "epoch_file": "sub-UMCU62__C46-C47.npz",
+      "epoch_sha256": "0487b3cdac4350edf3ca1b5145fdb85d3b1b8a0dca903d725f57b4329ab75185",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "C47-C48",
+      "epoch_file": "sub-UMCU62__C47-C48.npz",
+      "epoch_sha256": "a16cfef350db47af9c3d58e98d711e69c762c7b865e9568ff52e2bd174baf950",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "F01-F02",
+      "epoch_file": "sub-UMCU62__F01-F02.npz",
+      "epoch_sha256": "3f9cd528e6a18a1434a67b2988384460c7b09366254c737ac5467299b6f3504f",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "F02-F03",
+      "epoch_file": "sub-UMCU62__F02-F03.npz",
+      "epoch_sha256": "e70e5e720fccb583efbaba6c5f128e4cc084d18a135a0a09316bc08b10895f8e",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "F03-F04",
+      "epoch_file": "sub-UMCU62__F03-F04.npz",
+      "epoch_sha256": "82aa93cf3ee21236de12f6a08ed7e7e5852f926c2cbea18907f622c67ad25cb3",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "F04-F05",
+      "epoch_file": "sub-UMCU62__F04-F05.npz",
+      "epoch_sha256": "07808b0aa7105a1a9e8b28b6a1c87fd021669628b7a0a7a4c51ff4f1e7e2d226",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "F05-F06",
+      "epoch_file": "sub-UMCU62__F05-F06.npz",
+      "epoch_sha256": "777b46f33ec0b1bcd6af84819c9f53646a42c04dc21831298f55ecfa17ec7ae3",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "F06-F07",
+      "epoch_file": "sub-UMCU62__F06-F07.npz",
+      "epoch_sha256": "b797b9f790a7b30b1e8399c73651f47ca6fca2ddff6911768c8c4072dbd55a00",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "F07-F08",
+      "epoch_file": "sub-UMCU62__F07-F08.npz",
+      "epoch_sha256": "49aa017060cac9343e4b3456d8571c257987606166dd93dfbb281a37da26da07",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "F09-F10",
+      "epoch_file": "sub-UMCU62__F09-F10.npz",
+      "epoch_sha256": "c093c3cc780124a63988220197b0f4c449ea55274f486a55f4ebd02d6b389e7b",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "F10-F11",
+      "epoch_file": "sub-UMCU62__F10-F11.npz",
+      "epoch_sha256": "f613a9a42b9e82a3a93ef547c4c03091535b73e70e668e7407b82c69f7b79547",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "F11-F12",
+      "epoch_file": "sub-UMCU62__F11-F12.npz",
+      "epoch_sha256": "a4a516c77efb0224f6ef6b506d69f7778a58f5e837dac6f2bdc45bb45e08b287",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "F12-F13",
+      "epoch_file": "sub-UMCU62__F12-F13.npz",
+      "epoch_sha256": "e4146581ffed42df4a42eb91ea918e567a02dc95f74a264a2bc358a24747315d",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "F13-F14",
+      "epoch_file": "sub-UMCU62__F13-F14.npz",
+      "epoch_sha256": "c6fcb68c4014888125f6ca675ee36e243c1b79f5c73bcece013b14315b17f771",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "F14-F15",
+      "epoch_file": "sub-UMCU62__F14-F15.npz",
+      "epoch_sha256": "030aba033a2963a060dde3f5a7cd16598e611b0c6b1b31cbe6f4920c64f5ec41",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "IH49-IH50",
+      "epoch_file": "sub-UMCU62__IH49-IH50.npz",
+      "epoch_sha256": "b997684b016a7514e1512b5636d638631064c1af16c1d91035ea02567878562a",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "IH50-IH51",
+      "epoch_file": "sub-UMCU62__IH50-IH51.npz",
+      "epoch_sha256": "03dd40b9adba3096d3820180615b0c4a7255bceab3e80fcc06835b335692a717",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "IH51-IH52",
+      "epoch_file": "sub-UMCU62__IH51-IH52.npz",
+      "epoch_sha256": "66913e21d858d7d3689b02f77b0d460f3ca7725410c714432b82f146243ded14",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "IH52-IH53",
+      "epoch_file": "sub-UMCU62__IH52-IH53.npz",
+      "epoch_sha256": "cf68a6d8194c25fdb4bee9a126f8543ee065d14be7368e4e218a7d380660b60d",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "IH53-IH54",
+      "epoch_file": "sub-UMCU62__IH53-IH54.npz",
+      "epoch_sha256": "9179946fc95460821174afc915580fc5b3ebeaba13d6b53f2ccf19373d239b85",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "IH54-IH55",
+      "epoch_file": "sub-UMCU62__IH54-IH55.npz",
+      "epoch_sha256": "8ad372899acd2278c339d39e72093440d6dd45782a4344cc6e44db84a6b2b2c8",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "IH55-IH56",
+      "epoch_file": "sub-UMCU62__IH55-IH56.npz",
+      "epoch_sha256": "011a8b988f63c61bb0041570dc1b9aea2d772eed39329072f0e6d14a5dff53cb",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "IH56-IH57",
+      "epoch_file": "sub-UMCU62__IH56-IH57.npz",
+      "epoch_sha256": "d8930a0492fbeabdccb36129c365e0e1e05bd8aca991f443f31498e42d30bc8e",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "IH57-IH58",
+      "epoch_file": "sub-UMCU62__IH57-IH58.npz",
+      "epoch_sha256": "0f215917024f6df51d27986e7764f4ec1fe0e75da768019769ea5bbf1cc97f2b",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "IH58-IH59",
+      "epoch_file": "sub-UMCU62__IH58-IH59.npz",
+      "epoch_sha256": "6babbae0b1ce6abb98369d857c4c2142688875469bf66e9a5cd2a4c33f140430",
+      "records": 72
+    },
+    {
+      "subject": "UMCU62",
+      "stimpair": "IH59-IH60",
+      "epoch_file": "sub-UMCU62__IH59-IH60.npz",
+      "epoch_sha256": "5557cf79a811710f7b0b261181d5a367da054972406af7630aa3595191ec24db",
+      "records": 72
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C01-C02",
+      "epoch_file": "sub-UMCU67__C01-C02.npz",
+      "epoch_sha256": "179b75d443020eab89496f1e0d72331787706c045784d910197958f7488a52dd",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C02-C03",
+      "epoch_file": "sub-UMCU67__C02-C03.npz",
+      "epoch_sha256": "4df82b27e40a21aa777b021d4d0b9fa03f566359e6c075c064cc65d19f7bd31e",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C03-C04",
+      "epoch_file": "sub-UMCU67__C03-C04.npz",
+      "epoch_sha256": "a2f94f14c0e0b9a0c3ae0fb8f3a85ab9780446d24b31522e779767ea07d05909",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C04-C05",
+      "epoch_file": "sub-UMCU67__C04-C05.npz",
+      "epoch_sha256": "0536faeb80d5cc324ec21d9356884a135e7fc68f9c6afb746f645646c75f9cb1",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C05-C06",
+      "epoch_file": "sub-UMCU67__C05-C06.npz",
+      "epoch_sha256": "b0ff05a4cad20c105a02784979466492ed1d6d1c7c251d906c63f21cbfd1e6c7",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C06-C07",
+      "epoch_file": "sub-UMCU67__C06-C07.npz",
+      "epoch_sha256": "17f76c5acaeb0a5601915de2a29d632be793c882bebbc8d90c5e35d69b25e8d9",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C07-C08",
+      "epoch_file": "sub-UMCU67__C07-C08.npz",
+      "epoch_sha256": "069669a3f802ab009381b8968a4d1973e23d01d994b71063547dbecfc51bfa46",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C09-C10",
+      "epoch_file": "sub-UMCU67__C09-C10.npz",
+      "epoch_sha256": "ed11684fba765507b4dab598585be0aa37ed3ec2544be6d74a96a1e70a688c4f",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C10-C11",
+      "epoch_file": "sub-UMCU67__C10-C11.npz",
+      "epoch_sha256": "092889d03213e5283e5c3d212d686fc25f89ade18e01a2a21198f8b00a90e6f7",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C11-C12",
+      "epoch_file": "sub-UMCU67__C11-C12.npz",
+      "epoch_sha256": "0fd489fe8782d7023dea7ef1b82a1f62ee5913a24f72eee9f653cc97e636b3a1",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C12-C13",
+      "epoch_file": "sub-UMCU67__C12-C13.npz",
+      "epoch_sha256": "58105724995916d76e9696a3265561e0ff91d41e49b9e325827e71298efa6b71",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C13-C14",
+      "epoch_file": "sub-UMCU67__C13-C14.npz",
+      "epoch_sha256": "3b713a407c26e8d0d293c0d533e5a9c1f228351877e11a65524fa897ce190048",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C14-C15",
+      "epoch_file": "sub-UMCU67__C14-C15.npz",
+      "epoch_sha256": "038792fd4b673fc38d41d0c5211990e4857de95c0161927041f31d72760f1adb",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C15-C16",
+      "epoch_file": "sub-UMCU67__C15-C16.npz",
+      "epoch_sha256": "e30b98db5e7f31327fecb5b387c41a5ef49fff61d1e1681a469174b014304a90",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C17-C18",
+      "epoch_file": "sub-UMCU67__C17-C18.npz",
+      "epoch_sha256": "68c213aaef3c5898d96a62fa9cbbebce8dbd552b9e1013c6e8d65dd6f446fa31",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C18-C19",
+      "epoch_file": "sub-UMCU67__C18-C19.npz",
+      "epoch_sha256": "f0bcc89c3d0818b1cec9ce1186928fd8042096e7c73de0e6d0ee8a8ada72f40e",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C19-C20",
+      "epoch_file": "sub-UMCU67__C19-C20.npz",
+      "epoch_sha256": "79bbd93dc5784a881128d690d6cfddd9e1ef68997140b1e5d601c753cea0a731",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C20-C21",
+      "epoch_file": "sub-UMCU67__C20-C21.npz",
+      "epoch_sha256": "52139155dea1cfe572e2bab21fb1bb494809ec39f025a2ebe88fcbfab4d50fc5",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C21-C22",
+      "epoch_file": "sub-UMCU67__C21-C22.npz",
+      "epoch_sha256": "85cb783f45d272a5a0db1437f07e0fc29bfb06bd9570841638b00c174dab465a",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C22-C23",
+      "epoch_file": "sub-UMCU67__C22-C23.npz",
+      "epoch_sha256": "fbe4f0be234fbbce313ae979a3f56e13ff92e502df0a86abd7c6d381c3f0476c",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C23-C24",
+      "epoch_file": "sub-UMCU67__C23-C24.npz",
+      "epoch_sha256": "01e4517187b9bb898d8356a85e640c57aa1eeb103a62966bcbef838b47b553c4",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C25-C26",
+      "epoch_file": "sub-UMCU67__C25-C26.npz",
+      "epoch_sha256": "5302388f99f6ce5a2232eb0f35958843ef8990f1be0518edf72fa83a0ecd6032",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C26-C27",
+      "epoch_file": "sub-UMCU67__C26-C27.npz",
+      "epoch_sha256": "04342a8c81b79a980314a2f0d8fdfada38641cbd5065e3bbc22aac8096794b6c",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C27-C28",
+      "epoch_file": "sub-UMCU67__C27-C28.npz",
+      "epoch_sha256": "67e5a9334be3cb162a36fb81b40a9df022092f77621a0bb35260054a1540bb8b",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C28-C29",
+      "epoch_file": "sub-UMCU67__C28-C29.npz",
+      "epoch_sha256": "45ef34be81a73d213d71b1d71cd7d21912dcac6e1ffec24be1b39973e537885b",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C29-C30",
+      "epoch_file": "sub-UMCU67__C29-C30.npz",
+      "epoch_sha256": "6d83fc1be0f8ad51830043e6d56454ad0c0ab44e65e05980bea505e1b2d51665",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C30-C31",
+      "epoch_file": "sub-UMCU67__C30-C31.npz",
+      "epoch_sha256": "72c87783f4a2448fab3e7a4c1e029cf5e6540283c836bf46a37ba4921cc5d505",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "C31-C32",
+      "epoch_file": "sub-UMCU67__C31-C32.npz",
+      "epoch_sha256": "4e2feafd5395ec8b1a0af836acb5de4f2aa3e98ab6dea2b5553cc1831a13e1eb",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL01-CL02",
+      "epoch_file": "sub-UMCU67__CL01-CL02.npz",
+      "epoch_sha256": "87cedaa190a873f8279aa819937c55fe8c108f24d4d96f01b30616c419bced30",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL02-CL03",
+      "epoch_file": "sub-UMCU67__CL02-CL03.npz",
+      "epoch_sha256": "60f8f24017bf26dbea9ade2b55ad06c0e1ee431e4773d5a862dea7aac27eb10c",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL03-CL04",
+      "epoch_file": "sub-UMCU67__CL03-CL04.npz",
+      "epoch_sha256": "4506580c2eb93a7ad4681cca0cea58532863bb0d9b870d2e0641e529e8ff47b1",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL04-CL05",
+      "epoch_file": "sub-UMCU67__CL04-CL05.npz",
+      "epoch_sha256": "0db85a71ed91df9731e6a3b916927635f88e7a9a55dc56f125fd11b392247060",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL05-CL06",
+      "epoch_file": "sub-UMCU67__CL05-CL06.npz",
+      "epoch_sha256": "efdf127310de05f644cce8966f6721fbfea653c10900db8df15c81747ba91825",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL06-CL07",
+      "epoch_file": "sub-UMCU67__CL06-CL07.npz",
+      "epoch_sha256": "51a81a5d33010e5b6b026488f726a7d6273311282cca39efa2d065dfcf399853",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL07-CL08",
+      "epoch_file": "sub-UMCU67__CL07-CL08.npz",
+      "epoch_sha256": "95fa6505758ce3331735b9edb6f1082564bfd0f4e9acc25a314f8f6ed459ab7e",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL09-CL10",
+      "epoch_file": "sub-UMCU67__CL09-CL10.npz",
+      "epoch_sha256": "55997f5960d3200794c0199fdc54d688ce6fd7ad7ef9a8d11050492762c17a69",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL10-CL11",
+      "epoch_file": "sub-UMCU67__CL10-CL11.npz",
+      "epoch_sha256": "e5333e675f02dd88ae07a16073f9921a258107001603ffd05bcf24fd7d1528ba",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL11-CL12",
+      "epoch_file": "sub-UMCU67__CL11-CL12.npz",
+      "epoch_sha256": "42d0ce6c3e2024cd1b83824f77de9d7e75f55b28770693f047d3dd119db08fac",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL12-CL13",
+      "epoch_file": "sub-UMCU67__CL12-CL13.npz",
+      "epoch_sha256": "6f856a316e007ffc60cfb7f9a02ce55f8cafe4307aaa572db3092bfe7ccd4746",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL13-CL14",
+      "epoch_file": "sub-UMCU67__CL13-CL14.npz",
+      "epoch_sha256": "b4618107ca0f5aad342568041f8f8eb22402993455796d1472f4cedd66472f52",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL14-CL15",
+      "epoch_file": "sub-UMCU67__CL14-CL15.npz",
+      "epoch_sha256": "bc1fe6d0e030f8671479913d5ad2b311ae65beeee0378b0b0e4f10400e65a1f5",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "CL15-CL16",
+      "epoch_file": "sub-UMCU67__CL15-CL16.npz",
+      "epoch_sha256": "55f5d649af251daf2eab3121854956e53282cb192c42e202dc2bbe468f46cc0a",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T01-T02",
+      "epoch_file": "sub-UMCU67__T01-T02.npz",
+      "epoch_sha256": "9ad187ff760273bf67e9eb404e1e5c1b6665f604ba404de6f454445a76b95f93",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T02-T03",
+      "epoch_file": "sub-UMCU67__T02-T03.npz",
+      "epoch_sha256": "7602ea47ceb8f46641d2dab09847ee14eba307fcd78ab41d73ed60151a95985c",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T03-T04",
+      "epoch_file": "sub-UMCU67__T03-T04.npz",
+      "epoch_sha256": "0a6149c7f6d7e6a39a39fd13da2068e8eeda024d8d9b997ca15327e7279eaf78",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T04-T05",
+      "epoch_file": "sub-UMCU67__T04-T05.npz",
+      "epoch_sha256": "192a5c27dac308ae3357ec22ab26099b17491bdef0c72ccc22ccda1a6f98ba7f",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T05-T06",
+      "epoch_file": "sub-UMCU67__T05-T06.npz",
+      "epoch_sha256": "3916716a056d140a55e4e2f5b36f38d5cf1c451f931b56720f996ce4f62f9089",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T06-T07",
+      "epoch_file": "sub-UMCU67__T06-T07.npz",
+      "epoch_sha256": "63c9d5570a7f916d3f75573ade2fbeb9c1590316e36a07095f2670def3899774",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T07-T08",
+      "epoch_file": "sub-UMCU67__T07-T08.npz",
+      "epoch_sha256": "df07e66fa5572283519b39ace4f68e173af571e4c95e34af9ae6a344f771fb51",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T09-T10",
+      "epoch_file": "sub-UMCU67__T09-T10.npz",
+      "epoch_sha256": "e4712b08f0ce9af7f7d1e864c89c073366b766eb3c1c8e15ec688d180cef9a18",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T10-T11",
+      "epoch_file": "sub-UMCU67__T10-T11.npz",
+      "epoch_sha256": "17935472cf6cb7a96b89127244c7c53f7eef8bdff305057f6c316342d9d54a32",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T11-T12",
+      "epoch_file": "sub-UMCU67__T11-T12.npz",
+      "epoch_sha256": "128e5e07b7020640f26fb90218f9a8509f9a9b4bcad3a03b8d8a057d44e5d46c",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T12-T13",
+      "epoch_file": "sub-UMCU67__T12-T13.npz",
+      "epoch_sha256": "74e1f65a854e051fbfd3fd2acbd8bce4a9f58883429851b559e441ad1c0fccb8",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T13-T14",
+      "epoch_file": "sub-UMCU67__T13-T14.npz",
+      "epoch_sha256": "f282261a55cddd91cec76e54ef7e6515ed2751aea3c02539c53baff5fe396ef2",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T14-T15",
+      "epoch_file": "sub-UMCU67__T14-T15.npz",
+      "epoch_sha256": "b84172549ba01d6cdb853eb287e24741c54d2689c939d7b212ba1f872cb59449",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "T15-T16",
+      "epoch_file": "sub-UMCU67__T15-T16.npz",
+      "epoch_sha256": "1acb2190ec93afeed3b1101e3dd1a58872d9fb39c34ae05a7610f880b40f041b",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "TA1-TA2",
+      "epoch_file": "sub-UMCU67__TA1-TA2.npz",
+      "epoch_sha256": "0012ca328a72b5cb4d54b17efd1e02bafa33bdeaa761158ad29375d12625a539",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "TA2-TA3",
+      "epoch_file": "sub-UMCU67__TA2-TA3.npz",
+      "epoch_sha256": "bc5268fed84ca426544e1cb1f714ad986f282e703363c9d6be6ddc30e0cab1c9",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "TA3-TA4",
+      "epoch_file": "sub-UMCU67__TA3-TA4.npz",
+      "epoch_sha256": "7d1a14dc632169ba054b1bbfeac792057afae61b3cb2671100bcd0c3fbe19dbc",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "TA4-TA5",
+      "epoch_file": "sub-UMCU67__TA4-TA5.npz",
+      "epoch_sha256": "b3a0e08497fa32b41a87d3138b43a8ce0bdf662e41c7a5859b0f47ddf3bf4ece",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "TA5-TA6",
+      "epoch_file": "sub-UMCU67__TA5-TA6.npz",
+      "epoch_sha256": "56c9c3c0b1ecd33478554171d1f7de6bd2efb4b813a6951f9a0bb81a8a89f8c3",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "TA6-TA7",
+      "epoch_file": "sub-UMCU67__TA6-TA7.npz",
+      "epoch_sha256": "04fd236371f77a9bac3b61e113900308e7e691725ba67f538ff18962d30f8549",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "TA7-TA8",
+      "epoch_file": "sub-UMCU67__TA7-TA8.npz",
+      "epoch_sha256": "35e56d933c090262748dd257eb810b8797683f791f88a620470b1c340bff143c",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "TV1-TV2",
+      "epoch_file": "sub-UMCU67__TV1-TV2.npz",
+      "epoch_sha256": "384837f3560620ba98ec5a0947642e1fa79384f29a6cbef9d37e9327a9f3dd08",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "TV2-TV3",
+      "epoch_file": "sub-UMCU67__TV2-TV3.npz",
+      "epoch_sha256": "9a85bf59ec84da48de7604c69d248c63ea2eddd747163bf2efa143ac5b126ee7",
+      "records": 78
+    },
+    {
+      "subject": "UMCU67",
+      "stimpair": "TV3-TV4",
+      "epoch_file": "sub-UMCU67__TV3-TV4.npz",
+      "epoch_sha256": "90ab8e1c24443b2a69e0ffcbf9f346e2f68e5b91f7c817e2a66974f74a932091",
+      "records": 78
+    }
+  ],
+  "output_sha256": "18177ea77d9dbd44afa7fa146aaef99b2fab31ef5a6c088aea9df1bcba2cbcaf"
+}

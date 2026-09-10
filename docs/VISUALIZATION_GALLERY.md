@@ -1,9 +1,21 @@
 # Visualization gallery
 
-The example notebooks are deliberately small, deterministic, and free of
-participant data. Keep the complete `notebooks/examples` folder because the
-notebooks import its `_synthetic.py` helper. From the repository root, start
-the first notebook with:
+Project: [ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis](../README.md).
+
+The example notebooks include executed tables and inline PNG figures that can
+be viewed directly on GitHub. The lead notebook 00 uses an actual deidentified
+recording from the CNS/ACC–PAG cohort, with anatomical display labels.
+Notebooks 01–06 use deterministic synthetic signals and fictitious coordinates.
+Notebook 07 runs a small, explicitly
+identified public OpenNeuro ds003708 recording subset. Notebook 08 applies a
+participant-held-out negative-N1 development model to actual public ds004774
+derived features, with input/model hash checks and no raw download. Its score
+is separate from general response p/q values. Earlier stored outputs retain
+their historical execution versions. Keep the complete
+`notebooks/examples` folder because the
+notebooks import its `_cohort.py` and `_synthetic.py` helpers. To rerun the lead
+recording, configure `ERPY_COHORT_EXAMPLE_DIR` to its authorized local source
+directory before starting Jupyter. From the repository root, open it with:
 
 ```text
 python -m pip install jupyterlab
@@ -22,14 +34,15 @@ provides the complete signatures and parameter descriptions.
 
 | Notebook | What it teaches |
 | --- | --- |
-| [`00_quickstart.ipynb`](../notebooks/examples/00_quickstart.ipynb) | One end-to-end synthetic response and summary panel. |
+| [`00_quickstart.ipynb`](../notebooks/examples/00_quickstart.ipynb) | Actual cohort trials, source QC, waveforms, and freshly computed single-contact reproducibility/energy evidence. |
 | [`01_waveform_visualizations.ipynb`](../notebooks/examples/01_waveform_visualizations.ipynb) | Means/SEM, trials, heatmaps, comparisons, ranked and grouped grids. |
 | [`02_detection_qc_and_crp.ipynb`](../notebooks/examples/02_detection_qc_and_crp.ipynb) | Artifact reasons, detector matrices, response metrics, and CRP panels. |
 | [`03_spectral_visualizations.ipynb`](../notebooks/examples/03_spectral_visualizations.ipynb) | PSD, ERSP/TFR, ITPC, PLV, PAC, and phase coupling. |
 | [`04_network_visualizations.ipynb`](../notebooks/examples/04_network_visualizations.ipynb) | Edge tables, adjacency/response matrices, topology, coordinates, and graph metrics. |
 | [`05_brain_and_interactive_visualizations.ipynb`](../notebooks/examples/05_brain_and_interactive_visualizations.ipynb) | MNI glass-brain, Plotly, animation, and opt-in surface recipes. |
 | [`06_exporting_figures.ipynb`](../notebooks/examples/06_exporting_figures.ipynb) | High quality layout checks and reproducible PNG/PDF export. |
-| [`07_public_ds003708_recipe.ipynb`](../notebooks/examples/07_public_ds003708_recipe.ipynb) | Rebuild the public-data gallery without committing downloads. |
+| [`07_public_ds003708_recipe.ipynb`](../notebooks/examples/07_public_ds003708_recipe.ipynb) | Run a public recording subset and view input provenance, detector results, and waveform figures. |
+| [`08_n1_development.ipynb`](../notebooks/examples/08_n1_development.ipynb) | Verify an actual public record and held-out N1 model, reproduce its score, round-trip model save/load, and inspect signed logit contributions. |
 
 ## Waveform and response views
 
@@ -55,7 +68,7 @@ provides the complete signatures and parameter descriptions.
 | `plot_method_significance_counts` | 02 | Per-method positive-channel counts. |
 | `plot_detection_summary` | 02 | Combined agreement matrix and counts. |
 | `choose_significant_and_nonsignificant_channels` | 02 | Deterministic illustrative-channel helper. |
-| `plot_published_detector_diagnostic` | 02 | Source-native detector quantities; opt-in because it recomputes SIGNI permutations. |
+| `plot_published_detector_diagnostic` | 02 | Executed source-native detector diagnostic with 1,000 SIGNI permutations. |
 | `plot_within_stim_zscore_bars`, `plot_within_stim_zscore_heatmap` | 02 | Within-stimulation response metric normalization. |
 | `plot_crp_curve`, `plot_crp_projections` | 02 | Canonical waveform and trial coefficients. |
 | `plot_crp_weight_timecourse` | 02 | Sliding canonical expression, raw or baseline z-scored. |
@@ -92,7 +105,7 @@ constructs its constituent panels separately so every parameter is visible.
 | `plot_node_metric_glass_brain` | 05 | Node metric on a glass brain. |
 | `plot_interactive_connectome` | 05 | Rotatable Plotly connectome. |
 | `plot_evoked_response_graph` | 05 | Time-resolved single-stimulation Plotly graph. |
-| `plot_aggregate_evoked_response_graph` | 05 | Multi-stimulation animation recipe. |
+| `plot_aggregate_evoked_response_graph` | 05 | Executed aggregate animation with a static preview. |
 | `plot_template_brain_network`, `plot_node_metric_template_brain` | 05 | Template cortical views; opt-in template assets. |
 | `plot_region_connectome`, `plot_electrode_connectome` | 05 | Nilearn region/electrode connectomes; opt-in recipe. |
 | `plot_surface_connectome` | 05 | FreeSurfer/MNE/PyVista surface; requires `subjects_dir`. |
@@ -119,7 +132,7 @@ monitor. The export is local; it does not transmit the figure or source data.
 - Plotly/Nilearn views require the `viz` extra.
 - FreeSurfer surface rendering requires the `surface` extra plus local surface
   assets and a known coordinate frame.
-- Public validation data are downloaded only when notebook 07's command is run;
+- Public validation data are downloaded when notebook 07 is executed;
   workspaces remain outside version control.
 
 From a source checkout with the environment active, install coordinate-based
@@ -128,8 +141,36 @@ FreeSurfer/MNE/PyVista renderer, use
 `python -m pip install ".[viz,surface]"` instead.
 
 Notebook 07 also needs the public-validation dependencies. Install them from
-the same source checkout before running its terminal command:
+the same source checkout before executing its cells:
 
 ```text
 python -m pip install ".[validation]"
 ```
+
+## Running the worked notebooks
+
+Notebook 00 requires authorized access to the documented cohort trial export.
+Set `ERPY_COHORT_EXAMPLE_DIR` to its local method-example directory before
+starting Jupyter. The loader checks the input checksum,
+reads only the numeric trial export, and uses generic anatomical display labels.
+Restricted recordings and private locator metadata are not distributed in this
+repository. The stored lead figures can be viewed without those inputs. The
+lead contact was selected previously for method illustration; its unadjusted
+results are not an acquisition-wide response call or an accuracy benchmark.
+It does not substitute a synthetic or OpenNeuro signal when input is missing.
+
+The recorded outputs are real cell executions. Execution counts, source hashes,
+Python version, and key package versions are retained in each notebook's
+`erpy_execution` metadata. Machine paths and execution timing are removed.
+Warnings that affect interpretation remain visible. The public example also
+displays its source URLs and the SHA-256 hash of its downloaded window CSV.
+
+With the authorized cohort input configured, open a worked notebook in Jupyter
+and run its cells from top to bottom with a fresh kernel. Install its optional
+dependencies as described above. Save a separate copy when changing the inputs
+or analysis settings so the stored example remains available for comparison.
+
+Plotly PNG export uses Kaleido and requires Chrome or Chromium. In Jupyter,
+call `interactive.show()` or `animated.show()` to rotate/play those figures;
+GitHub displays the stored PNG snapshots. Template/FreeSurfer surface recipes
+remain explicitly opt-in because they need separately installed assets.

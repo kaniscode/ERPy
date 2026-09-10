@@ -1,0 +1,159 @@
+{
+  "created_utc": "2026-09-08T06:45:46.460857+00:00",
+  "status": "Explicit amendment AFTER unweighted results and BEFORE any weighted results. Internal plan, not formal preregistration.",
+  "candidate": "One final optional fixed-weight bank, weights early .1, late .1, broad .8; original default retained unless supported; no further optimization search",
+  "windows_seconds": [
+    [
+      0.01,
+      0.09
+    ],
+    [
+      0.09,
+      0.3
+    ],
+    [
+      0.01,
+      0.3
+    ]
+  ],
+  "single_reference_windows_seconds": {
+    "early": [
+      0.01,
+      0.09
+    ],
+    "broad": [
+      0.015,
+      0.3
+    ]
+  },
+  "diagnostic_single_windows_seconds": {
+    "late": [
+      0.09,
+      0.3
+    ],
+    "matched_broad": [
+      0.01,
+      0.3
+    ]
+  },
+  "baseline_window_seconds": [
+    -0.5,
+    -0.02
+  ],
+  "artifact_interval_seconds": [
+    0,
+    0.009
+  ],
+  "sfreq": 500,
+  "time_axis": "integer indices \u2212300 through160 divided by500; realized endpoints saved",
+  "min_clean_trials": 8,
+  "n_permutations": 5000,
+  "max_exact_projection_trials": 12,
+  "max_exact_energy_trials": 16,
+  "alpha": 0.05,
+  "family_contacts": 4,
+  "family_bh_policy": "all four predeclared contacts, unavailable contact/window p=1 with unavailable flag retained",
+  "master_seed": 20260908,
+  "power": {
+    "trial_counts": [
+      8,
+      12,
+      24
+    ],
+    "signal_rms_to_noise_sd": [
+      0.5,
+      1,
+      2
+    ],
+    "morphologies": [
+      "early_40ms_sd12ms",
+      "narrow_25ms_sd4ms",
+      "late_180ms_sd25ms",
+      "biphasic_negative45ms_sd12ms_positive125ms_sd25ms_weight0.8"
+    ],
+    "leading_polarities": [
+      -1,
+      1
+    ],
+    "replicates_per_cell": 20,
+    "families": 1440,
+    "signal_definition": "Injected waveform RMS over10\u2013300ms equals10\u00b5V\u00d7ratio\u00d7clipped N(1,.15\u00b2) trial multiplier; independent N(0,(3ms)\u00b2) latency jitter; each shifted template renormalized on broad grid"
+  },
+  "noise_only": {
+    "trial_counts": [
+      8,
+      12,
+      24
+    ],
+    "replicates_per_cell": 80,
+    "families": 240
+  },
+  "component_nulls": {
+    "trial_counts": [
+      12
+    ],
+    "replicates_per_arm": 160,
+    "families": 320,
+    "projection_alt_energy_null": "Independent positive exchangeable lognormal slope pairs for target baseline and response linear sample-index ramps. Every equal-length segment has centered RMS slope\u00d7sqrt((L\u00b2\u22121)/12); exchanging slopes negates paired log-RMS differences in every window, including epsilon. Strong positive common ramps provide projection alignment. Deliberately nonphysiological null stress.",
+    "energy_alt_projection_null": "Independent centrally symmetric Gaussian AR(1) baseline/response noise plus a randomly signed full-response template independently across trials; coordinate-wise whole-trial sign invariance holds jointly for all windows."
+  },
+  "noise_model": "Independent stationary Gaussian AR(1), phi .85, marginalSD10\u00b5V, burn-in via existing benchmark helper; independent mean-one lognormal trial/contact scale with logSD .18",
+  "total_families": 2000,
+  "matched_methods": "Same complete four-contact family and same per-contact/per-window random seeds across every method; window results computed once and reused in fixed3 Bonferroni and single-window summaries. Distinct design cells use independent generated families.",
+  "primary_outputs": [
+    "every contact/window component p and availability reason",
+    "every method p/q and call",
+    "all power and null cells, including zero/unavailable/failed cells",
+    "paired recovery differences against early and broad",
+    "family-wise any-null-call frequencies and target/null-contact rates",
+    "confidence intervals and workload/timing measured during this execution"
+  ],
+  "uncertainty": "Wilson95% intervals for per-cell binary recovery and any-family false call; stratified paired family bootstrap2000 resamples seed20260909 for pooled fixed-grid recovery differences, not clinical performance. No claim of validation across arbitrary dependent noise/missingness.",
+  "n8_resolution": "Equal-weight bank isolated q floor12/128=.09375; weighted broad isolated q floor4/(128*.8)=.0390625; early/late floors4/(128*.1)=.3125. Other discoveries can change BH ranks, so these are isolated-target bounds.",
+  "unavailable_windows": "Never reduce multiplicity based on observed evaluability. Retain raw unavailability and contribute conservative p=1.",
+  "real_baseline_optional": {
+    "selection": "ExcludeMAYO01; choose first lexicographic participant, pair and non-stimulation good ECoG contact per site with\u226510 finite native trials over[-1,-.1), without annotation/poststimulus selection. Use earliest10 native finite trials. If either site fails\u226510, omit that site without another relaxation.",
+    "design": "Use n8 and10 native trials without replacement; only prestimulation blocks supply pseudo-baseline/response. Independently randomize whole-trial polarity to construct a controlled projection-null source-resampled family, then inject four shapes and both polarities at ratios1/2,10replicates per cell. No pseudo-24-trial claim; reused source waveforms across scenarios/replicates are disclosed and are not independent clinical observations. Semisynthetic conditional characterization only.",
+    "failure_policy": "If verified source fixture is unavailable, record omission and do not silently use an unverifiable historical cache.",
+    "controlled_null": "Additionally80 controlled whole-trial-sign-randomized null families per site and n8/10, declared before any candidate or injection outcome. These assess the imposed projection-null construction, not natural recorded-noise false-positive rates.",
+    "family_count_if_two_sites": 960,
+    "source_blocks": "First and last146 samples of the prestimulation-only segment after polyphase resampling to500Hz; disjoint blocks are randomly swapped and whole-trial signs independently randomized for each synthetic contact. Ten native trials are sampled without replacement within each contact."
+  },
+  "decision_rule": "No weight, window, threshold or generator tuning after this amendment; no candidate search after this bounded confirmation. Report all results including inferiority. Main interpretation based on fresh confirmation, with conditional grid uncertainty and no clinical/general superiority claim.",
+  "amendments": [
+    {
+      "utc": "2026-09-08T06:27:49.408422+00:00",
+      "stage": "Before candidate outcomes; source metadata only",
+      "reason": "Annotation-blind inventory found no source pair with24 native trials (Mayo max15,UMCU max11). Optional fixture selection changes to\u226510 native finite trials; if this fails, omit that site. No repetition to claim larger native sample size."
+    },
+    {
+      "utc": "2026-09-08T06:35:57.094914+00:00",
+      "stage": "Before candidate outcomes",
+      "reason": "Document exact prestimulation block recipe and controlled-null companion already planned qualitatively; adds320 explicit null families to640 source-injection families, two sites total960. Primary2000 unchanged."
+    },
+    {
+      "utc": "2026-09-08T06:45:46.460857+00:00",
+      "stage": "After unweighted results; before all weighted outcomes",
+      "reason": "Observed unweighted eight-trial failure was predicted by the exact resolution bound. Assigning .8 to broad permits isolated n8 broad evidence:4/(128*.8)=.0390625; .1 to each narrower window retains a predetermined search allowance. Weight choice is an author-requested mathematical amendment after unweighted outcomes, not an independent first candidate."
+    }
+  ],
+  "common_trial_rule": "All bank windows use the same finite-trial mask over union of the available declared response/matched-baseline supports. Single-window references use this same complete-case set in the comparison.",
+  "parent_plan_sha256": "70c671ffbddd093662ed2d150a45081adca42fa2b3af037e5df0f436ee0ba6a4",
+  "parent_results_sha256": "4bf11dd524ae4a6a502d08e9370b1c3b5875c86fd7c7b29af55eff20c9a1f34e",
+  "weights": [
+    0.1,
+    0.1,
+    0.8
+  ],
+  "combination": "p=min(1,min_w p_joint,w/weight_w); unavailable window p=1, original weights fixed without renormalization; BH once across all four declared contacts",
+  "reason": "Observed unweighted eight-trial failure was predicted by the exact resolution bound. Assigning .8 to broad permits isolated n8 broad evidence:4/(128*.8)=.0390625; .1 to each narrower window retains a predetermined search allowance. Weight choice is an author-requested mathematical amendment after unweighted outcomes, not an independent first candidate.",
+  "confirmation_namespace": "weighted-confirmation-20260908-01",
+  "confirmation_seed_rule": "Add the frozen confirmation_namespace to every scenario before SHA256-based seed generation. Same full 2000-family grid, wholly new family seeds; verify no seed overlap with development before execution.",
+  "analysis_stages": [
+    "Freeze this amendment before weighted outcomes",
+    "Calculate weighted development outcomes from preserved window p-values; label as development",
+    "Generate one fresh independently seeded 2000-family confirmation, report all six methods and all cells regardless of outcome",
+    "Optional existing source-injection weighted summaries remain conditional reused-source secondary data",
+    "Stop candidate search; retain original default if no clear benefit"
+  ]
+}

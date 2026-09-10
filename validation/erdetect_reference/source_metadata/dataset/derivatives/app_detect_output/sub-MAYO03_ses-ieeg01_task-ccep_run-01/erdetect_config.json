@@ -1,0 +1,66 @@
+{
+    "preprocess": {
+        "high_pass":                        false,
+        "early_re_referencing": {
+            "enabled":                      false,
+            "method":                       "CAR",
+            "stim_excl_epoch":              [-1.0,        2.0],
+            "channel_types":                ["ECOG", "SEEG", "DBS"]
+        },
+        "line_noise_removal":               "off",
+        "late_re_referencing": {
+            "enabled":                      false,
+            "method":                       "CAR",
+            "stim_excl_epoch":              [-1.0,        2.0],
+            "channel_types":                ["ECOG", "SEEG", "DBS"]
+        }
+    },
+
+    "trials": {
+        "trial_epoch":                      [-1.0,        2.0],
+        "out_of_bounds_handling":           "first_last_only",
+        "baseline_epoch":                   [-0.5,      -0.02],
+        "baseline_norm":                    "median",
+        "concat_bidirectional_pairs":       true,
+        "minimum_stimpair_trials":          5
+    },
+
+    "channels": {
+        "measured_types":                   ["ECOG", "SEEG", "DBS"],
+        "stim_types":                       ["ECOG", "SEEG", "DBS"]
+    },
+
+    "metrics": {
+        "cross_proj": {
+            "enabled":                      true,
+            "epoch":                        [ 0.012,     0.09]
+        },
+        "waveform": {
+            "enabled":                      true,
+            "epoch":                        [ 0.012,     0.09],
+            "bandpass":                     [ 10,          30]
+        }
+    },
+
+    "detection": {
+        "negative":                         true,
+        "positive":                         false,
+        "peak_search_epoch":                [ 0,          0.5],
+        "response_search_epoch":            [ 0.009,     0.09],
+        "method":                           "std_base",
+        "std_base": {
+            "baseline_epoch":               [-1,         -0.1],
+            "baseline_threshold_factor":    3.4
+        }
+    },
+
+    "visualization": {
+        "negative":                         true,
+        "positive":                         false,
+        "x_axis_epoch":                     [-0.2,        1.0],
+        "blank_stim_epoch":                 [-0.015,   0.0025],
+        "generate_electrode_images":        true,
+        "generate_stimpair_images":         true,
+        "generate_matrix_images":           true
+    }
+}

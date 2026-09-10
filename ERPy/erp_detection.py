@@ -1233,8 +1233,9 @@ def _detect_signi(
             polarity_labels=params.get("polarity_labels"),
         )
     except Exception as exc:
-        frame["notes"] = str(exc)
-        return frame
+        return _unavailable_signi_frame(
+            features, detector_input=detector_input, reason=str(exc)
+        )
     native["channel"] = [channels[int(index)] for index in native["channel_index"]]
     native["signi_p_value_bonferroni"] = np.minimum(
         pd.to_numeric(native["signi_p_value_raw"], errors="coerce") * len(channels),
@@ -1337,6 +1338,68 @@ def _crp_significance_from_array(
     return result.score, result.p_value
 
 
+
+def _standalone_comparator_summary(
+    detections: pd.DataFrame,
+    channels: Iterable[str],
+    *,
+    crp_adjustment: dict | None = None,
+) -> pd.DataFrame:
+    """Report comparator calls only when explicit availability and evidence agree.
+
+    Missing method metadata or required quantities is unavailable, not a negative
+    call. ``crp_adjustment`` supplies the waveform audit's existing BH results;
+    this helper never recalculates or changes any detector decision.
+    """
+    index = pd.Index(list(map(str, channels)), name="channel")
+    result = pd.DataFrame(index=index)
+    methods = (
+        ("crp", "crp_significance", "crp_fdr_significant", ("crp_q_value",)),
+        ("kundu", "kundu_rolston", "significant",
+         ("kundu_baseline_median_uv", "kundu_post_median_uv",
+          "kundu_longest_suprathreshold_ms", "kundu_n_valid_trials")),
+    )
+    for short, method, call_column, required in methods:
+        prefix = f"comparator_{short}"
+        calls = pd.Series(pd.NA, index=index, dtype="boolean")
+        available = pd.Series(False, index=index, dtype=bool)
+        reasons = pd.Series("not_run", index=index, dtype=object)
+        if {"method", "channel"}.issubset(detections.columns):
+            rows = detections[detections["method"].astype(str).eq(method)].copy()
+            rows["channel"] = rows["channel"].astype(str)
+            rows = rows.drop_duplicates("channel").set_index("channel")
+            for channel in index.intersection(rows.index):
+                row = rows.loc[channel].copy()
+                if short == "crp" and crp_adjustment is not None:
+                    row["crp_q_value"] = crp_adjustment["q_value"].get(channel, np.nan)
+                    row[call_column] = crp_adjustment["significant"].get(channel, pd.NA)
+                flag = row.get("method_available", pd.NA)
+                if pd.isna(flag) or flag not in (True, False):
+                    reasons[channel] = "availability_not_recorded"
+                    continue
+                if not bool(flag):
+                    reason = row.get("availability_reason", "")
+                    reasons[channel] = str(reason) if pd.notna(reason) and str(reason) else "method_unavailable"
+                    continue
+                quantities = pd.to_numeric(pd.Series([row.get(c, np.nan) for c in required]), errors="coerce")
+                call = row.get(call_column, pd.NA)
+                valid = np.isfinite(quantities.to_numpy(dtype=float)).all()
+                if short == "crp":
+                    valid = valid and 0 <= quantities.iloc[0] <= 1
+                else:
+                    valid = valid and quantities.iloc[-1] > 0
+                if not valid or pd.isna(call) or call not in (True, False):
+                    reasons[channel] = "comparator_evidence_unavailable"
+                    continue
+                calls[channel] = bool(call)
+                available[channel] = True
+                reasons[channel] = ""
+        result[f"{prefix}_pass"] = calls
+        result[f"{prefix}_available"] = available
+        result[f"{prefix}_availability_reason"] = reasons
+    return result
+
+
 def detect_erp_all(
     epochs,
     methods: Iterable[str] | None = None,
@@ -1354,7 +1417,16 @@ def detect_erp_all(
     ``primary_significant`` field is the BH-adjusted CRP-energy
     intersection-union conjunction. The historical CRP-plus-Kundu
     ``shape_magnitude_significant`` field remains available as a legacy
-    selection summary. Artifact eligibility is applied by :func:`ERPy.audit_waveforms`
+    selection summary. Default component flags are
+    ``primary_reproducibility_pass`` and ``primary_energy_pass``; they are
+    unadjusted component decisions, whereas ``primary_significant`` uses joint BH.
+    ``comparator_crp_pass`` and ``comparator_kundu_pass`` describe the standalone
+    CRP and Kundu comparators. Their nullable calls are missing when the method
+    was not run or its explicit availability/evidence is insufficient; consult
+    the matching ``comparator_*_available`` and ``*_availability_reason`` fields.
+    ``primary_shape_pass`` and ``primary_magnitude_pass`` are deprecated aliases
+    for those nullable comparator calls, not default-detector components.
+    Artifact eligibility is applied by :func:`ERPy.audit_waveforms`
     or the batch QC layer.
     """
 
@@ -1563,8 +1635,12 @@ def detect_erp_all(
     output["primary_significant"] = (
         output["channel"].map(primary).fillna(False).astype(bool)
     )
-    output["primary_shape_pass"] = output["channel"].map(crp_pass).fillna(False).astype(bool)
-    output["primary_magnitude_pass"] = output["channel"].map(kundu_pass).fillna(False).astype(bool)
+    comparators = _standalone_comparator_summary(output, channels)
+    for column in comparators:
+        output[column] = output["channel"].map(comparators[column])
+    # Deprecated names remain aliases, including the explicit unavailable state.
+    output["primary_shape_pass"] = output["comparator_crp_pass"]
+    output["primary_magnitude_pass"] = output["comparator_kundu_pass"]
     output["shape_magnitude_significant"] = output["channel"].map(historical_shape_magnitude).fillna(False).astype(bool)
     return output
 

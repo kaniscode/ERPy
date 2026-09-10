@@ -1,0 +1,233 @@
+{
+  "created_utc": "2026-09-08T06:51:36.382439+00:00",
+  "checks": [
+    {
+      "check": "original_detector: scientific artifact hashes",
+      "pass_": true,
+      "details": 9
+    },
+    {
+      "check": "original_detector: completed declared grid",
+      "pass_": true,
+      "details": 2000
+    },
+    {
+      "check": "original_detector: no recorded warnings",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "original_detector: component conjunction",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "original_detector: complete detector availability",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "original_detector: independent BH and call arithmetic",
+      "pass_": true,
+      "details": 40000
+    },
+    {
+      "check": "original_detector: replay executes 3548091541",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "original_detector: replay executes 4260881279",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "original_detector: replay executes 3614839807",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "original_detector: replay executes 3436911850",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "original_detector: replay executes 4133225853",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "original_detector: replay executes 4146799018",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "original_detector: replay executes 3076694467",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "original_detector: replay executes 946960098",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "original_detector: exact raw-data method replay",
+      "pass_": true,
+      "details": 8
+    },
+    {
+      "check": "real_baseline: scientific artifact hashes",
+      "pass_": true,
+      "details": 8
+    },
+    {
+      "check": "real_baseline: completed declared grid",
+      "pass_": true,
+      "details": 960
+    },
+    {
+      "check": "real_baseline: no recorded warnings",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "real_baseline: component conjunction",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "real_baseline: complete detector availability",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "real_baseline: independent BH and call arithmetic",
+      "pass_": true,
+      "details": 19200
+    },
+    {
+      "check": "real_baseline: replay executes 4016915133",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "real_baseline: replay executes 1883310640",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "real_baseline: replay executes 2685474648",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "real_baseline: replay executes 4028416105",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "real_baseline: exact raw-data method replay",
+      "pass_": true,
+      "details": 4
+    },
+    {
+      "check": "weighted_confirmation: scientific artifact hashes",
+      "pass_": true,
+      "details": 9
+    },
+    {
+      "check": "weighted_confirmation: completed declared grid",
+      "pass_": true,
+      "details": 2000
+    },
+    {
+      "check": "weighted_confirmation: no recorded warnings",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "weighted_confirmation: component conjunction",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "weighted_confirmation: complete detector availability",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "weighted_confirmation: independent BH and call arithmetic",
+      "pass_": true,
+      "details": 48000
+    },
+    {
+      "check": "weighted_confirmation: replay executes 3292253826",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "weighted_confirmation: replay executes 3896529426",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "weighted_confirmation: replay executes 2152637514",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "weighted_confirmation: replay executes 3630133575",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "weighted_confirmation: replay executes 1087807048",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "weighted_confirmation: replay executes 2398319334",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "weighted_confirmation: replay executes 3164910175",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "weighted_confirmation: replay executes 528740627",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "weighted_confirmation: exact raw-data method replay",
+      "pass_": true,
+      "details": 8
+    },
+    {
+      "check": "development and confirmation seeds disjoint",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "weighted_development: derivation hashes",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "weighted_real_baseline: derivation hashes",
+      "pass_": true,
+      "details": null
+    },
+    {
+      "check": "pre-weighting amendment hash retained",
+      "pass_": true,
+      "details": null
+    }
+  ],
+  "all_pass": true,
+  "focused_tests_passed": 31,
+  "original_log_hash_caveat": "Original manifests are preserved; growing progress logs were excluded from scientific artifact verification. Future runner uses explicit result artifacts."
+}

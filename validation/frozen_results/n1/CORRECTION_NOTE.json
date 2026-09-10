@@ -1,0 +1,7 @@
+{
+  "status": "superseded_due_to_confirmed_identifier_join_bug",
+  "recorded_utc": "2026-09-08T06:32:00.928832+00:00",
+  "issue": "Feature extractor retains source pair order, while frozen scorer sorts the undirected pair lexicographically. Missing canonicalization in the feature join falsely marked1670 available records unavailable. All other settings, features, model objectives, hyperparameters and cohort definitions are retained.",
+  "correction": "Canonicalize feature identifiers with the exact frozen scorer canonicalize function, reject duplicate canonical identities, and rerun the complete nested procedure in n1_nested_v2. Prior output files remain unchanged for audit.",
+  "outcomes_seen": "The preliminary v1 metrics were viewed before this deterministic identity audit, so v2 is disclosed as corrected post hoc development, not untouched external validation."
+}

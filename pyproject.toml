@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "erpy-neuro"
-version = "1.0.0"
-description = "ERPy: open-source software for automated stimulation-evoked intracranial response analysis"
+version = "1.1.0rc1"
+description = "ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis"
 readme = "README.md"
 requires-python = ">=3.9"
 license = "MIT"
@@ -19,7 +19,9 @@ classifiers = [
 ]
 
 dependencies = [
-    "numpy>=1.22",
+    # Python 3.9 uses PyTables 3.9 wheels, which require the NumPy 1.x ABI.
+    "numpy>=1.22,<2; python_version < '3.10'",
+    "numpy>=1.22; python_version >= '3.10'",
     "pandas>=1.5",
     "scipy>=1.9",
     "matplotlib>=3.6",
@@ -36,7 +38,8 @@ nwb = ["pynwb>=2.5"]
 viz = ["seaborn>=0.12", "nilearn>=0.10", "plotly>=5.18"]
 surface = ["mne>=1.6", "pyvista>=0.43"]
 validation = ["mne>=1.6", "requests>=2.28", "pynwb>=2.5"]
-dev = ["pytest>=7", "build>=1.0", "twine>=4.0", "mne>=1.6", "plotly>=5.18", "pynwb>=2.5"]
+n1-training = ["scikit-learn>=1.2"]
+dev = ["pytest>=7", "build>=1.0", "twine>=4.0", "mne>=1.6", "plotly>=5.18", "pynwb>=2.5", "scikit-learn>=1.2"]
 
 [project.urls]
 Homepage = "https://github.com/kaniscode/ERPy"

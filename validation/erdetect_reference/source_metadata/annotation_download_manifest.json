@@ -1,0 +1,184 @@
+[
+  {
+    "path": "derivatives/annots/sub-MAYO01_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "bytes": 1868,
+    "sha256": "37eaee04498f979fe050a91b8e869a32f191af7e00b0e7a381386758e6a45f79",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-MAYO01_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "version_id": "Jngr0OJ2hO6BewUsQTdmUGgdcwvK2KRQ"
+  },
+  {
+    "path": "derivatives/annots/sub-MAYO02_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "bytes": 1595,
+    "sha256": "e5eac566cb939b8289da268a97c87da3fa51b4e3fec39921e4408dc4448d84bd",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-MAYO02_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "version_id": "SMOKk6mNkfHOf8sEN5KD.SwtsWpttlxR"
+  },
+  {
+    "path": "derivatives/annots/sub-MAYO03_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "bytes": 988,
+    "sha256": "1ac2cdbb7b59985217325929b1389015de26646278d6198e4873016173b29b5e",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-MAYO03_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "version_id": "kkODEaQTiz2xKcx_nwueaknbflEnlhDS"
+  },
+  {
+    "path": "derivatives/annots/sub-MAYO04_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "bytes": 666,
+    "sha256": "12470760b4a4fa3c04ed65c0ca23ff650f23176cdd8a691fc1f1a074f56763c6",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-MAYO04_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "version_id": "_p2Rg0vr9.Yjca1fqD3JQtJgMh_qOdBA"
+  },
+  {
+    "path": "derivatives/annots/sub-MAYO04_ses-ieeg01_task-ccep_run-01_annot_SB.mat",
+    "bytes": 676,
+    "sha256": "8ecd0c849f94ddda58f8fa6a2df2f321a74ca5a45eb3bf701495c7f2eeb37be6",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-MAYO04_ses-ieeg01_task-ccep_run-01_annot_SB.mat",
+    "version_id": "HZxWKO9dumtQ9NddrgjgnDAB9u.yI6nn"
+  },
+  {
+    "path": "derivatives/annots/sub-MAYO05_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "bytes": 2134,
+    "sha256": "c009fe0397f5f3eb36a20b4250abc07d37d86d03c72089314ceeb8b520aabe33",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-MAYO05_ses-ieeg01_task-ccep_run-01_annot_MvdB_clin.mat",
+    "version_id": "7x52oNrBOaVxBgoXwitSuPSoaOg6BGaQ"
+  },
+  {
+    "path": "derivatives/annots/sub-MAYO05_ses-ieeg01_task-ccep_run-01_annot_SB.mat",
+    "bytes": 1967,
+    "sha256": "db5bf31593fcbcda71b494fbae4758cb5b1628bdb6e0e71d5e4117a173300126",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-MAYO05_ses-ieeg01_task-ccep_run-01_annot_SB.mat",
+    "version_id": "QkFKYcPtoaEeTGX7bWixBRmHtxUIqjaW"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU20_ses-1_task-SPESclin_run-011757_annot_DvB.mat",
+    "bytes": 1856,
+    "sha256": "45bc67c9b23fc2127dad23aa50c5c8b08f290ca3f857993bc462b508ce135897",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU20_ses-1_task-SPESclin_run-011757_annot_DvB.mat",
+    "version_id": "5xux8XhR_kZNcTUuWIUrHXi2dpprR0xh"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU20_ses-1_task-SPESclin_run-011757_annot_MvdB.mat",
+    "bytes": 898,
+    "sha256": "bb5f51574e9abbca6be3908e1ff01b2bf3614c0213b6c6d835572670d6da3ef4",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU20_ses-1_task-SPESclin_run-011757_annot_MvdB.mat",
+    "version_id": "QTarTxVYlwj3x_wjeWw04J.IYR56G3fJ"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU21_ses-1_task-SPESclin_run-021525_annot_DvB.mat",
+    "bytes": 1405,
+    "sha256": "29b6f415c68482cf0a6c71addfa9c584d2ea857fca25c81bc041643cf1e23c1f",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU21_ses-1_task-SPESclin_run-021525_annot_DvB.mat",
+    "version_id": "vvfZ.9yYMfU2DIXZb_yFelHcoTYGBjtE"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU21_ses-1_task-SPESclin_run-021525_annot_MvdB.mat",
+    "bytes": 1630,
+    "sha256": "166192194229e3db1802f57f7964eedfa4723c15dfe8710c18514f91ae5beb5a",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU21_ses-1_task-SPESclin_run-021525_annot_MvdB.mat",
+    "version_id": "lpvLJQ5yatsn44seeAKY0lOHwqvKki8E"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU21_ses-1_task-SPESclin_run-021525_annot_SB.mat",
+    "bytes": 1618,
+    "sha256": "23dddb238c7493246f6fdb98630457205eba9d4ab0ce9b38f0794a775caa4a54",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU21_ses-1_task-SPESclin_run-021525_annot_SB.mat",
+    "version_id": "5HCzQpTrIFyN9GApKZR5IvbmefjZooR1"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU22_ses-1_task-SPESclin_run-011714_annot_DvB.mat",
+    "bytes": 1874,
+    "sha256": "f1548afd0c475697f27fc86281ce56e7b4c4ce484f865f12dc7babdea9a2639a",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU22_ses-1_task-SPESclin_run-011714_annot_DvB.mat",
+    "version_id": "tZJfEtIY68hkor.c1Lo.eDVIAg4Q3sh6"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU22_ses-1_task-SPESclin_run-011714_annot_MvdB.mat",
+    "bytes": 2641,
+    "sha256": "db4ebecd84aa8b209b0aa8dc04f31ed8e28a9081158bdbacbcb9d8be3e5db1b5",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU22_ses-1_task-SPESclin_run-011714_annot_MvdB.mat",
+    "version_id": "yNsjDIB9Nv.qNfc5d9hMaQiTq_4WmikQ"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU23_ses-1_task-SPESclin_run-021706_annot_DvB.mat",
+    "bytes": 1175,
+    "sha256": "c31edefb6585885e058f7b2b1a956b9d1c9002152d7efab5f9a48004587d80e0",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU23_ses-1_task-SPESclin_run-021706_annot_DvB.mat",
+    "version_id": "j7O6HFI7Y9vzDzU_RXiyj6scF2cdGIb8"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU23_ses-1_task-SPESclin_run-021706_annot_MvdB.mat",
+    "bytes": 1789,
+    "sha256": "99d42eff6c2bfb4fc5ae1c601bcedc6d009ed700c0409b372ddd1bcb195ae9e5",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU23_ses-1_task-SPESclin_run-021706_annot_MvdB.mat",
+    "version_id": "4zTCgte6vYO1e3DcHS54VYHQLofTHahh"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU25_ses-1_task-SPESclin_run-031729_annot_DvB.mat",
+    "bytes": 1449,
+    "sha256": "efef2970ac7e046d40dbb5e6084df01b607b8e399eab7e75d952485e0c27c2d3",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU25_ses-1_task-SPESclin_run-031729_annot_DvB.mat",
+    "version_id": "4dbxa4v_Tg6wvx.wgEplE.PVz1XVHnPV"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU25_ses-1_task-SPESclin_run-031729_annot_MvdB.mat",
+    "bytes": 1968,
+    "sha256": "e9b89a9a9586132cf0fcfba250a7b82be5a619be1380eac610dcc4f004025778",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU25_ses-1_task-SPESclin_run-031729_annot_MvdB.mat",
+    "version_id": "F4DOq22xXTur5l38FcWLbqw.ZniZ__jV"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU26_ses-1_task-SPESclin_run-011555_annot_DvB.mat",
+    "bytes": 1415,
+    "sha256": "085ab51745c9fa822f817128442005ef688a90c21a471364cc665549dc9cb1a4",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU26_ses-1_task-SPESclin_run-011555_annot_DvB.mat",
+    "version_id": "vxB43kJUeIzztWE6lQC_MBKi7fhgw3yP"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU26_ses-1_task-SPESclin_run-011555_annot_MvdB.mat",
+    "bytes": 1900,
+    "sha256": "de6f22199d37836c5b59e08c74db36842522104e6e7b159a5377c6304331b074",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU26_ses-1_task-SPESclin_run-011555_annot_MvdB.mat",
+    "version_id": "AOsXYw3t.VsZkiJu9khjczvLhKHspj83"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU59_ses-1_task-SPESclin_run-041501_annot_JvdA.mat",
+    "bytes": 1048,
+    "sha256": "acb91654291c5a6f55de5fba0184e8b3d219d9c96f6e2304a6725e529ea2e352",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU59_ses-1_task-SPESclin_run-041501_annot_JvdA.mat",
+    "version_id": "LS3CP7QuKL5F_KTiNYFhiGIcK7co4GCb"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU59_ses-1_task-SPESclin_run-041501_annot_MvdB.mat",
+    "bytes": 1657,
+    "sha256": "3aef40428689dfd4a1799575b4eae561eb365d684ea362b74902183d702f70f2",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU59_ses-1_task-SPESclin_run-041501_annot_MvdB.mat",
+    "version_id": "eQwE0umMQi6t_.eVIUfsizE8ulbA3n_Y"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU62_ses-1b_task-SPESclin_run-050941_annot_JvdA.mat",
+    "bytes": 1956,
+    "sha256": "af8822b8119332c1f785238b7d17c31ecea227fa3a8309133cd362d90cbdff16",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU62_ses-1b_task-SPESclin_run-050941_annot_JvdA.mat",
+    "version_id": "drFLBCZO0ec9Cz3nwh2X2kDl7xFWJwW1"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU62_ses-1b_task-SPESclin_run-050941_annot_MvdB.mat",
+    "bytes": 2062,
+    "sha256": "a23f81d13e6a1ac1c918f95ffaad01037416a7013701e2994f695b7bda69390c",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU62_ses-1b_task-SPESclin_run-050941_annot_MvdB.mat",
+    "version_id": "XqInztStYk1IkId4hrqb.VAaG0cWeGeF"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU67_ses-1_task-SPESclin_run-021704_annot_JvdA.mat",
+    "bytes": 1988,
+    "sha256": "b8d94908ada73795705ea00a5b1e106da12087c48640fe309227c0632ff8b6d7",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU67_ses-1_task-SPESclin_run-021704_annot_JvdA.mat",
+    "version_id": "EwgGPF6nj9iTOjHDxJk4rhazuvffD0xO"
+  },
+  {
+    "path": "derivatives/annots/sub-UMCU67_ses-1_task-SPESclin_run-021704_annot_MvdB.mat",
+    "bytes": 1514,
+    "sha256": "96b2b673784601f34668d545fcb8d0a1dd128bc9bed22727c7fc553f7191fab1",
+    "url": "https://s3.amazonaws.com/openneuro.org/ds004774/derivatives/annots/sub-UMCU67_ses-1_task-SPESclin_run-021704_annot_MvdB.mat",
+    "version_id": "eK.TRpeFyB1.2g.9UzhbtJF0KRswiBKt"
+  }
+]

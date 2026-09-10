@@ -1,9 +1,8 @@
 cff-version: 1.2.0
 message: "If you use ERPy in research, please cite it as below."
 type: software
-title: "ERPy: open-source software for automated stimulation-evoked intracranial response analysis"
-version: 1.0.0
-date-released: 2026-09-01
+title: "ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis"
+version: 1.1.0rc1
 license: MIT
 authors:
   - family-names: Kanungo

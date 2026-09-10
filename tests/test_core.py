@@ -704,7 +704,7 @@ def test_patient_analyze_returns_auditable_result(tmp_path):
     assert not result.artifact_summary.empty
     assert not result.significant.empty
     assert result.metadata["audit_schema_version"] == 1
-    assert result.metadata["erpy_version"] == "1.0.0"
+    assert result.metadata["erpy_version"] == ep.__version__
     assert result.metadata["erpy_compatibility_id"] == ep.CHECKPOINT_COMPATIBILITY_ID
     assert result.metadata["epoch"]["tmin"] == -0.25
     assert result.metadata["epoch"]["baseline"] == (-0.25, -0.05)

@@ -1,0 +1,86 @@
+{
+  "feature_names": [
+    "log_negative_peak_z",
+    "log_negative_prominence_z",
+    "peak_latency_fraction",
+    "log_peak_width_ms",
+    "negative_area_fraction",
+    "trial_negative_fraction",
+    "trial_cosine",
+    "log_preceding_positive_z",
+    "log_response_rms_z",
+    "log_baseline_std_uv",
+    "log_negative_peak_uv",
+    "log_n_feature_trials"
+  ],
+  "mean": [
+    1.077749094011836,
+    0.7925080268454685,
+    0.4761948657202446,
+    1.892279939705519,
+    0.509837242482512,
+    0.6076564381072943,
+    0.28846767518484423,
+    0.5307081846456323,
+    1.1422026004308155,
+    3.1585708612683825,
+    3.2451599205832813,
+    2.384468386094542
+  ],
+  "scale": [
+    0.9049789073631949,
+    0.825390284236053,
+    0.23884664270539563,
+    1.2599903955044474,
+    0.3994300023654876,
+    0.3156034273287908,
+    0.3818424791625693,
+    0.6969656727392564,
+    0.658475217011585,
+    0.5467910405529126,
+    1.848929132364983,
+    0.055718932464976195
+  ],
+  "coefficients": [
+    0.06827110270616894,
+    1.6193007473966627,
+    -0.20739163297071192,
+    -0.8090137826570643,
+    -0.10711228694629579,
+    -0.8392267565072186,
+    1.6139915823935296,
+    0.040248258492179084,
+    0.20947398126818667,
+    0.5502502971110194,
+    1.312902516019097,
+    0.010311829551939595
+  ],
+  "intercept": -3.757593889399538,
+  "threshold": 0.5037298121924655,
+  "provenance": {
+    "training_subjects": [
+      "MAYO02",
+      "MAYO03",
+      "MAYO04",
+      "MAYO05",
+      "UMCU20",
+      "UMCU22",
+      "UMCU23",
+      "UMCU25",
+      "UMCU26",
+      "UMCU59",
+      "UMCU62",
+      "UMCU67"
+    ],
+    "excluded_subjects": [
+      "UMCU21"
+    ],
+    "status": "post_hoc_development_not_independent_external_validation",
+    "regularization_C": 1.0,
+    "feature_manifest_sha256": "420e2b826da3699d059e9ae5de7bb4fda6134d61715b5529c2d3187bbf7db63d",
+    "run_protocol_sha256": "90296e4afb4de38bc8d67b7278d5e5d9bee3a0c0fa76146841fbe7ce2733433d"
+  },
+  "feature_version": "0.1.0-development",
+  "expected_feature_config_sha256": "44cf76c4f0d2ee2fcea72159e4cc77b104b0f2bbc189459c6bb243b5c70dd5ab",
+  "voltage_unit": "uV"
+}

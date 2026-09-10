@@ -1,0 +1,23 @@
+# Preserve checksum-pinned evidence bytes on every platform, including Windows.
+erdetect_reference/source_metadata/** -text
+erdetect_reference/artifact_manifest.json -text
+frozen_results/** -text
+# Runtime sources whose exact bytes are checked by the N1 replay contract.
+N1_OPTIMIZATION_PROTOCOL.md -text
+extract_n1_features.py -text
+optimize_n1.py -text
+predict_erdetect_epochs.py -text
+score_erdetect_validation.py -text
+summarize_n1_development.py -text
+benchmark_multiscale.py -text
+benchmark_crp_energy.py -text
+# Current verification supplements also retain exact source/evidence bytes.
+*.py -text
+multiscale_interval_precision/** -text
+n1_timing_reporting/** -text
+public_workflow_completion/** -text
+public_ds003708_source_manifest.json -text
+n1_input_contract/** -text
+annotation_agreement/** -text
+n1_comparison/** -text
+n1_label_free/** -text

@@ -1,0 +1,18 @@
+onset	duration	trial_type	electrodes_involved_onset	electrodes_involved_offset	sample_start	sample_end	electrical_stimulation_type	electrical_stimulation_site	electrical_stimulation_site_num	electrical_stimulation_current	notes	status	status_description
+510.07373046875	0.0002	electrical_stimulation			1044631		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+594.72705078125	0.0002	electrical_stimulation			1218001		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+601.4365234375	0.0002	electrical_stimulation			1231742		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+606.86376953125	0.0002	electrical_stimulation			1242857		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+612.99462890625	0.0002	electrical_stimulation			1255413		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+618.35400390625	0.0002	electrical_stimulation			1266389		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+624.25537109375	0.0002	electrical_stimulation			1278475		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+629.95849609375	0.0002	electrical_stimulation			1290155		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+635.41162109375	0.0002	electrical_stimulation			1301323		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+639.88427734375	0.0002	electrical_stimulation			1310483		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+645.5517578125	0.0002	electrical_stimulation			1322090		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+650.70263671875	0.0002	electrical_stimulation			1332639		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+657.0576171875	0.0002	electrical_stimulation			1345654		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+662.19775390625	0.0002	electrical_stimulation			1356181		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+667.41650390625	0.0002	electrical_stimulation			1366869		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+673.18212890625	0.0002	electrical_stimulation			1378677		biphasic	LTG1-LTG2	13-14	6.0 mA		good	
+678.3330078125	0.0002	electrical_stimulation			1389226		biphasic	LTG1-LTG2	13-14	6.0 mA		good	

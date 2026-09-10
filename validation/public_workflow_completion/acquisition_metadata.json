@@ -1,0 +1,790 @@
+{
+  "artifact_qc": {
+    "effective_options": {
+      "absolute_peak_uv": null,
+      "absolute_ptp_uv": null,
+      "baseline_window": [
+        -0.5,
+        -0.03
+      ],
+      "extreme_zscore_threshold": 12.0,
+      "late_high_frequency_zscore_threshold": null,
+      "max_nan_fraction": 0.02,
+      "plateau_epsilon_uv": null,
+      "plateau_fraction": 0.015,
+      "plateau_min_run_s": 0.003,
+      "rail_epsilon_fraction": 0.002,
+      "rail_epsilon_uv": null,
+      "rail_fraction": 0.02,
+      "rail_limits_uv": null,
+      "response_window": [
+        0.005,
+        0.5
+      ],
+      "ringing_zscore_threshold": 6.0,
+      "saturation_fraction": 0.02,
+      "zscore_threshold": 3.0
+    },
+    "eligibility": {
+      "exclude_boundary_peaks": true,
+      "max_bad_response_fraction": 0.25,
+      "max_hard_artifact_fraction": 0.1,
+      "min_clean_responses": 8
+    },
+    "hard_artifact_reasons": [
+      "absolute_peak",
+      "absolute_ptp",
+      "extreme_amplitude_outlier",
+      "plateau_clipping",
+      "rail_clipping",
+      "saturation_or_clipping"
+    ],
+    "max_bad_channel_fraction": 0.25,
+    "reject_mode": "nan_response",
+    "requested_options": {
+      "zscore_threshold": 3.0
+    }
+  },
+  "artifact_reject": "nan_response",
+  "audit_schema_version": 1,
+  "detection": {
+    "effective_core": {
+      "baseline_window": [
+        -0.5,
+        -0.03
+      ],
+      "detector_input": "primary_epochs",
+      "methods": [
+        "crp_energy"
+      ],
+      "min_consensus": 2,
+      "response_boundary_guard_s": 0.002,
+      "response_window": [
+        0.01,
+        0.3
+      ]
+    },
+    "method_overrides": {
+      "crp_energy": {
+        "random_state": 42,
+        "return_arrays": true
+      }
+    },
+    "method_parameter_records": [
+      {
+        "baseline_window": [
+          -0.314941245,
+          -0.030273422
+        ],
+        "detector_definition": "intersection-union conjunction of fixed-window whole-trial sign-flip reproducibility and separately demeaned matched-window excess energy; BH adjustment is applied to max(p_crp, p_energy)",
+        "detector_input": "primary_epochs",
+        "detector_reference": "CRP-derived fixed-window whole-trial reproducibility and separately demeaned paired log-RMS energy joined by an intersection-union test; data-selected CRP duration remains descriptive",
+        "detector_version": "1.0.0",
+        "energy_n_permutations": 32767,
+        "method": "crp_energy",
+        "multiple_comparison_correction": "fdr_bh",
+        "parameters": "{\"alpha\":0.05,\"artifact_interval\":[0.0,0.015],\"baseline_window\":[-0.5,-0.03],\"canonical_energy_cv\":true,\"correction\":\"fdr_bh\",\"eps\":1e-12,\"max_exact_reproducibility_trials\":12,\"max_exact_trials\":16,\"min_clean_trials\":8,\"n_permutations\":5000,\"projection_start_s\":0.01,\"projection_step_s\":0.005,\"random_state\":4168391814062992379,\"response_window\":[0.01,0.3]}",
+        "random_state_effective": "4168391814062992379",
+        "random_state_root": "42",
+        "random_stream_derivation": "sha256-v1(root-seed,channel-label;63-bit)",
+        "reproducibility_n_randomizations": 5000,
+        "reproducibility_test_exact": false,
+        "response_window": [
+          0.015136711,
+          0.299804534
+        ],
+        "testing_family_size": 86,
+        "threshold": 0.05
+      }
+    ],
+    "requested_options": {
+      "crp_energy": {
+        "random_state": 42,
+        "return_arrays": true
+      }
+    },
+    "shared_overrides": {}
+  },
+  "epoch": {
+    "additional_options": {
+      "input_source": "raw"
+    },
+    "artifact_anchor_params": null,
+    "baseline": [
+      -0.5,
+      -0.03
+    ],
+    "cache": false,
+    "event_method": "auto",
+    "pipeline": [
+      [
+        "reject_bad_channels",
+        {
+          "bad_channels": [
+            "EKG"
+          ],
+          "method": "drop"
+        }
+      ],
+      [
+        "reject_bad_channels",
+        {
+          "bad_channels": "auto",
+          "detection_params": {
+            "zscore_threshold": 8.0
+          },
+          "method": "drop"
+        }
+      ],
+      [
+        "artifact_blank",
+        {
+          "width_s": 0.004
+        }
+      ],
+      [
+        "notch_filter",
+        {
+          "bw": 2.0,
+          "harm": true,
+          "notch_freq": 60.0
+        }
+      ],
+      [
+        "bandpass_filter",
+        {
+          "highcut": 80.0,
+          "lowcut": 0.5,
+          "order": 3
+        }
+      ]
+    ],
+    "resolved_pipeline_steps": [
+      [
+        "reject_bad_channels",
+        {
+          "bad_channels": [
+            "EKG"
+          ],
+          "method": "drop"
+        }
+      ],
+      [
+        "reject_bad_channels",
+        {
+          "bad_channels": "auto",
+          "detection_params": {
+            "zscore_threshold": 8.0
+          },
+          "method": "drop"
+        }
+      ],
+      [
+        "artifact_blank",
+        {
+          "width_s": 0.004
+        }
+      ],
+      [
+        "notch_filter",
+        {
+          "bw": 2.0,
+          "harm": true,
+          "notch_freq": 60.0
+        }
+      ],
+      [
+        "bandpass_filter",
+        {
+          "highcut": 80.0,
+          "lowcut": 0.5,
+          "order": 3
+        }
+      ]
+    ],
+    "save_epochs": false,
+    "tmax": 0.6,
+    "tmin": -0.5,
+    "zero_time": "post_artifact"
+  },
+  "epoch_metadata": {
+    "artifact_anchor_params": {},
+    "common_anchor_time_s": 0.00976562,
+    "epoch_cache_identity": {
+      "events_sha256": "0723367161f8740707efbeab8417264e228b90e3f7cf2abd6f9609a10d091d99",
+      "implementation_sha256": "03abdebd42a4801708836dac1cc3fa2e3e1d49dcac269c32d3b4c9a1d65a3098",
+      "schema": "erpy-facade-epoch-content-v1",
+      "settings_sha256": "c9a208daa1d608ff8b65d2b65ea0e3f18ca60d0d1440385dad6b581762be6091",
+      "source_kind": "raw",
+      "source_sha256": "eb62bf7bd84e234f7d5799747f8acab5581244db2cf213385efb0539f6a84411"
+    },
+    "epoch_source_kind": "raw",
+    "n_epochs": 17,
+    "n_events_input": 17,
+    "patient_id": "DS003708",
+    "pipeline_id": "be9435dac1",
+    "pipeline_steps": [
+      [
+        "reject_bad_channels",
+        {
+          "bad_channels": [
+            "EKG"
+          ],
+          "method": "drop"
+        }
+      ],
+      [
+        "reject_bad_channels",
+        {
+          "bad_channels": "auto",
+          "detection_params": {
+            "zscore_threshold": 8.0
+          },
+          "method": "drop"
+        }
+      ],
+      [
+        "artifact_blank",
+        {
+          "width_s": 0.004
+        }
+      ],
+      [
+        "notch_filter",
+        {
+          "bw": 2.0,
+          "harm": true,
+          "notch_freq": 60.0
+        }
+      ],
+      [
+        "bandpass_filter",
+        {
+          "highcut": 80.0,
+          "lowcut": 0.5,
+          "order": 3
+        }
+      ]
+    ],
+    "post_baseline_samples": 10,
+    "post_baseline_window_s": 0.00488281,
+    "processing_margin_s": null,
+    "reference_channels": null,
+    "reference_method": null,
+    "reference_zscore_threshold": null,
+    "session_id": "A",
+    "signal_units": "uV",
+    "stim_pair": "LTG_1_2",
+    "value_scale_to_uv_applied": 1.0,
+    "zero_anchor_reports": [
+      {
+        "anchor_index": 1045,
+        "anchor_score_z": 4.35296321387281,
+        "anchor_slope_z": 0.03148910605270353,
+        "anchor_time_s": 0.010253901,
+        "artifact_peak_score_z": 40.89324445166319,
+        "artifact_peak_time_s": 0.001953124,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 0,
+        "method": "fallback_quietest_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": true,
+        "onset_score_z": 33.74359252057813,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": false,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1042,
+        "anchor_score_z": 1.8621682448517798,
+        "anchor_slope_z": 0.6261093027639527,
+        "anchor_time_s": 0.008789058,
+        "artifact_peak_score_z": 14.028774584266445,
+        "artifact_peak_time_s": 0.001953124,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 1,
+        "method": "post_artifact_settled_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": true,
+        "onset_score_z": 11.834160444256854,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": true,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1039,
+        "anchor_score_z": 2.4929661292796657,
+        "anchor_slope_z": 0.007272370193375106,
+        "anchor_time_s": 0.007324215,
+        "artifact_peak_score_z": 6.617302068198656,
+        "artifact_peak_time_s": 0.001953124,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 2,
+        "method": "fallback_quietest_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": false,
+        "onset_score_z": 5.791507511826115,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": false,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1035,
+        "anchor_score_z": 1.709934155842553,
+        "anchor_slope_z": 0.26644353616469235,
+        "anchor_time_s": 0.005371091,
+        "artifact_peak_score_z": 2.967198815388564,
+        "artifact_peak_time_s": 0.002441405,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 3,
+        "method": "post_artifact_settled_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": false,
+        "onset_score_z": 1.4558170985531063,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": true,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1040,
+        "anchor_score_z": 1.3432843722082848,
+        "anchor_slope_z": 0.858163291796951,
+        "anchor_time_s": 0.007812496,
+        "artifact_peak_score_z": 12.738866696235757,
+        "artifact_peak_time_s": 0.002441405,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 4,
+        "method": "post_artifact_settled_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": true,
+        "onset_score_z": 9.607891169587583,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": true,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1046,
+        "anchor_score_z": 2.77323290638562,
+        "anchor_slope_z": 0.015202417280420964,
+        "anchor_time_s": 0.010742182,
+        "artifact_peak_score_z": 30.367987169217717,
+        "artifact_peak_time_s": 0.001953124,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 5,
+        "method": "fallback_quietest_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": true,
+        "onset_score_z": 25.451012876721375,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": false,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1043,
+        "anchor_score_z": 1.742668986173929,
+        "anchor_slope_z": 0.4275545633741224,
+        "anchor_time_s": 0.009277339,
+        "artifact_peak_score_z": 8.054945984659684,
+        "artifact_peak_time_s": 0.002441405,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 6,
+        "method": "post_artifact_settled_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": true,
+        "onset_score_z": 6.123978863021636,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": true,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1038,
+        "anchor_score_z": 1.4770706640928402,
+        "anchor_slope_z": 0.6464613629811721,
+        "anchor_time_s": 0.006835934,
+        "artifact_peak_score_z": 9.160149683460158,
+        "artifact_peak_time_s": 0.001953124,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 7,
+        "method": "post_artifact_settled_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": true,
+        "onset_score_z": 7.108596076981196,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": true,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1043,
+        "anchor_score_z": 3.2707674250260204,
+        "anchor_slope_z": 0.09428893548926148,
+        "anchor_time_s": 0.009277339,
+        "artifact_peak_score_z": 22.617619946712225,
+        "artifact_peak_time_s": 0.001953124,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 8,
+        "method": "fallback_quietest_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": true,
+        "onset_score_z": 17.14997053011259,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": false,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1038,
+        "anchor_score_z": 1.4588699032328372,
+        "anchor_slope_z": 0.5221655972564339,
+        "anchor_time_s": 0.006835934,
+        "artifact_peak_score_z": 9.489043655624744,
+        "artifact_peak_time_s": 0.001464843,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 9,
+        "method": "post_artifact_settled_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": true,
+        "onset_score_z": 8.49075375451886,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": true,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1053,
+        "anchor_score_z": 2.9935443708443574,
+        "anchor_slope_z": 0.004923581393794369,
+        "anchor_time_s": 0.014160149,
+        "artifact_peak_score_z": 13.321385512771855,
+        "artifact_peak_time_s": 0.002441405,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 10,
+        "method": "fallback_quietest_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": true,
+        "onset_score_z": 11.284280038639427,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": false,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1047,
+        "anchor_score_z": 1.939440859760019,
+        "anchor_slope_z": 0.22120078533653306,
+        "anchor_time_s": 0.011230463,
+        "artifact_peak_score_z": 7.193310098998558,
+        "artifact_peak_time_s": 0.003417967,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 11,
+        "method": "post_artifact_settled_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": false,
+        "onset_score_z": 5.689501618598761,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": true,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1041,
+        "anchor_score_z": 1.8979485649822496,
+        "anchor_slope_z": 0.04657347678336619,
+        "anchor_time_s": 0.008300777,
+        "artifact_peak_score_z": 3.9419401333968933,
+        "artifact_peak_time_s": 0.003417967,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 12,
+        "method": "fallback_amplitude_return",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": false,
+        "onset_score_z": 3.176191322384331,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": false,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1045,
+        "anchor_score_z": 1.811764689024062,
+        "anchor_slope_z": 0.1808199800793248,
+        "anchor_time_s": 0.010253901,
+        "artifact_peak_score_z": 11.53811484266657,
+        "artifact_peak_time_s": 0.001953124,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 13,
+        "method": "post_artifact_settled_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": true,
+        "onset_score_z": 9.718060969532447,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": true,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1042,
+        "anchor_score_z": 4.5164533241010725,
+        "anchor_slope_z": 0.07893691810919284,
+        "anchor_time_s": 0.008789058,
+        "artifact_peak_score_z": 21.47694316783318,
+        "artifact_peak_time_s": 0.002441405,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 14,
+        "method": "fallback_quietest_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": true,
+        "onset_score_z": 16.76493553271275,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": false,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1034,
+        "anchor_score_z": 1.7668345472412987,
+        "anchor_slope_z": 0.5029930707309787,
+        "anchor_time_s": 0.00488281,
+        "artifact_peak_score_z": 3.730798163079191,
+        "artifact_peak_time_s": 0.001953124,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 15,
+        "method": "post_artifact_settled_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": false,
+        "onset_score_z": 2.717543499886763,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": true,
+        "zero_time_strategy": "post_artifact"
+      },
+      {
+        "anchor_index": 1040,
+        "anchor_score_z": 1.4734159985828077,
+        "anchor_slope_z": 0.5596156268343063,
+        "anchor_time_s": 0.007812496,
+        "artifact_peak_score_z": 21.76951382327625,
+        "artifact_peak_time_s": 0.001953124,
+        "common_anchor_index": 1044,
+        "common_anchor_time_s": 0.00976562,
+        "epoch": 16,
+        "method": "post_artifact_settled_sample",
+        "min_anchor_time_s": 0.003,
+        "n_settle_samples": 4,
+        "onset_is_artifact": true,
+        "onset_score_z": 17.185275991069275,
+        "post_baseline_window_s": 0.00488281,
+        "reference_channels": "LAS1,LAS2,LAS3,LAS4,LMS1,LMS2,LMS3,LMS4,LPS1,LPS2,LPS3,LPS4,LTG3,LTG4,LTG5,LTG6,LTG7,LTG8,LTG9,LTG10,LTG11,LTG12,LTG13,LTG14,LTG15,LTG16,LTG17,LTG18,LTG19,LTG20,LTG21,LTG22,LTG23,LTG24,LTG25,LTG26,LTG27,LTG28,LTG29,LTG30,LTG31,LTG32,LTG33,LTG34,LTG35,LTG36,LTG37,LTG38,LTG39,LTG40,LTG41,LTG42,LTG43,LTG44,LTG45,LTG46,LTG47,LTG48,LAG49,LAG50,LAG51,LAG52,LAG53,LAG54,LAG55,LAG56,LAG57,LAG58,LAG59,LAG60,LAG61,LAG62,LAG63,LAG64,LAD1,LAD2,LAD3,LAD4,LSD1,LSD2,LSD3,LSD4,LPD1,LPD2,LPD3,LPD4",
+        "search_window_start_s": -0.002,
+        "search_window_stop_s": 0.02,
+        "settle_duration_s": 0.002,
+        "settle_slope_z": 2.0,
+        "settle_z": 2.0,
+        "settled": true,
+        "zero_time_strategy": "post_artifact"
+      }
+    ],
+    "zero_time": "post_artifact",
+    "zero_time_strategy": "post_artifact"
+  },
+  "erpy_compatibility_id": "415a636abd5b9a28",
+  "erpy_version": "1.1.0rc1",
+  "methods": [
+    "crp_energy"
+  ],
+  "min_consensus": 2,
+  "patient_id": "DS003708",
+  "persistent_channel_qc": {
+    "configured": true,
+    "note": "Persistent-channel rejection was configured in the preprocessing pipeline.",
+    "steps": [
+      {
+        "parameters": {
+          "bad_channels": [
+            "EKG"
+          ],
+          "method": "drop"
+        },
+        "step": "reject_bad_channels"
+      },
+      {
+        "parameters": {
+          "bad_channels": "auto",
+          "detection_params": {
+            "zscore_threshold": 8.0
+          },
+          "method": "drop"
+        },
+        "step": "reject_bad_channels"
+      }
+    ]
+  },
+  "pipeline": [
+    [
+      "reject_bad_channels",
+      {
+        "bad_channels": [
+          "EKG"
+        ],
+        "method": "drop"
+      }
+    ],
+    [
+      "reject_bad_channels",
+      {
+        "bad_channels": "auto",
+        "detection_params": {
+          "zscore_threshold": 8.0
+        },
+        "method": "drop"
+      }
+    ],
+    [
+      "artifact_blank",
+      {
+        "width_s": 0.004
+      }
+    ],
+    [
+      "notch_filter",
+      {
+        "bw": 2.0,
+        "harm": true,
+        "notch_freq": 60.0
+      }
+    ],
+    [
+      "bandpass_filter",
+      {
+        "highcut": 80.0,
+        "lowcut": 0.5,
+        "order": 3
+      }
+    ]
+  ],
+  "qc_exclude_boundary_peaks": true,
+  "qc_max_bad_response_fraction": 0.25,
+  "qc_max_hard_artifact_fraction": 0.1,
+  "qc_min_clean_responses": 8,
+  "session_id": "A",
+  "stim_pair": "LTG_1_2"
+}

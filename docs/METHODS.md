@@ -1,5 +1,7 @@
 # Methods and mathematical definitions
 
+Project: [ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis](../README.md).
+
 This document specifies the analysis quantities implemented in ERPy 1.0.0.
 Defaults are stated where they define the released workflow; every result table
 also records detector parameters. Time is in seconds relative to stimulation

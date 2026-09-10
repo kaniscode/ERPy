@@ -82,7 +82,9 @@ def exact_sign_flip_test(
 
     The test is exact when the number of finite observations does not exceed
     ``max_exact_observations``. For larger samples, deterministic Monte Carlo
-    resampling is used by default.
+    resampling is used by default. Monte Carlo signs are sampled uniformly
+    with replacement; the observed assignment is additionally counted with
+    the plus-one correction, so a sampled p-value cannot be zero.
     """
 
     alternative = str(alternative).lower()
@@ -126,7 +128,10 @@ def exact_sign_flip_test(
         extreme = null_statistics >= observed - 1e-15
     else:
         extreme = null_statistics <= observed + 1e-15
-    p_value = float(np.mean(extreme))
+    if exact:
+        p_value = float(np.mean(extreme))
+    else:
+        p_value = float((1 + np.count_nonzero(extreme)) / (1 + len(extreme)))
     return SignFlipResult(
         statistic=observed,
         p_value=p_value,

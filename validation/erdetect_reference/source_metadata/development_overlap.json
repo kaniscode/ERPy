@@ -1,0 +1,15 @@
+{
+  "datasets": [
+    "ds003708 sub-01",
+    "ds004774 sub-MAYO01"
+  ],
+  "event_rows_original": 425,
+  "event_rows_validation": 495,
+  "onsets_identical": false,
+  "all_common_fields_identical": false,
+  "interpretation": "This validation participant overlaps the prior public demonstration and must not be described as a new held-out participant.",
+  "selected_good_events_original": 17,
+  "selected_good_events_validation": 17,
+  "selected_onset_max_difference_seconds": 0.0,
+  "selected_common_event_fields_identical": true
+}

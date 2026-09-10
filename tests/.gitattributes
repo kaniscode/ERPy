@@ -1,0 +1,10 @@
+# Focused tests referenced by the current scientific verification receipts.
+test_n1_features.py -text
+test_exact_multiscale_bootstrap.py -text
+test_public_workflow_completion.py -text
+test_n1_input_contract.py -text
+test_annotation_agreement.py -text
+test_n1_label_free.py -text
+test_n1_label_free_scoring.py -text
+test_n1_label_free_calibration.py -text
+test_n1_label_free_verification.py -text

@@ -1,0 +1,14 @@
+subject,stimpair,archived_pair_comparable,reason,actual_missing_raw,cache_available,missing_epoch_count
+UMCU25,F52-F53,False,partial_trial_set_due_to_unavailable_raw_epoch,True,True,1
+UMCU25,F53-F54,False,all_requested_epochs_outside_available_raw,True,False,10
+UMCU25,F54-F55,False,all_requested_epochs_outside_available_raw,True,False,10
+UMCU25,F57-F58,False,all_requested_epochs_outside_available_raw,True,False,10
+UMCU25,F58-F59,False,all_requested_epochs_outside_available_raw,True,False,10
+UMCU25,F59-F60,False,all_requested_epochs_outside_available_raw,True,False,10
+UMCU25,F60-F61,False,all_requested_epochs_outside_available_raw,True,False,10
+UMCU25,F61-F62,False,all_requested_epochs_outside_available_raw,True,False,10
+UMCU25,F62-F63,False,all_requested_epochs_outside_available_raw,True,False,10
+UMCU25,sT2-sT3,False,all_requested_epochs_outside_available_raw,True,False,3
+UMCU25,vT1-vT2,False,all_requested_epochs_outside_available_raw,True,False,10
+UMCU25,vT2-vT3,False,all_requested_epochs_outside_available_raw,True,False,6
+UMCU21,IHm6-IHm7,False,pair_absent_from_archived_output_source_trials_below_5,False,True,0

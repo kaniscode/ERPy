@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-09-08T09:39:51.801088+00:00",
+  "purpose": "Precision supplement to the unchanged frozen 2,000-resample confirmation summaries",
+  "bootstrap_law": "Independent empirical resampling of 20 paired target-family deltas within each n_trials/morphology/polarity/snr cell; retain fixed cell sizes and pool by family count",
+  "arithmetic": "Exact integer polynomial convolution; rational inverse-CDF comparisons",
+  "quantile_definition": "Q(p)=min{s in integer support: F(s)>=p}; p=1/40 and 39/40; divide count quantiles by the number of families",
+  "interpretation": "Exact distribution of the specified empirical bootstrap conditional on the observed fixed grid; not exact frequentist or clinical-population coverage",
+  "compared_rows": 24,
+  "all_saved_2000_intervals_reproduced": true,
+  "frozen_inputs_modified": false,
+  "artifacts": [
+    {
+      "path": "../frozen_results/multiscale/weighted_confirmation/method_results.csv.gz",
+      "bytes": 461826,
+      "sha256": "1cf152f23e96f273c026cf0bc9361b80ead8d682edc62359f1ef67b8217df835"
+    },
+    {
+      "path": "../frozen_results/multiscale/weighted_confirmation/paired_recovery.csv",
+      "bytes": 3009,
+      "sha256": "288fea5ed53b4e19a7eba33a832fb349b8e44a31a04f0a12d92eaded5a849ce8"
+    },
+    {
+      "path": "../frozen_results/multiscale/weighted_confirmation/analysis_plan.json",
+      "bytes": 9444,
+      "sha256": "c674080dbc5bd33de91e4c9242882293c2b0e7ce13d0b67d98bd03a781ece9ab"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3617,
+      "sha256": "284e6fc168e075c1cb1786603d65c39bb1ca11877a6d6439e28b63381e7175f9"
+    },
+    {
+      "path": "exact_confirmation_intervals.csv",
+      "bytes": 8589,
+      "sha256": "94243104ffd90d632da2541e39efccd428a26c8c4cdb05f5d4b263fa3134bf7a"
+    }
+  ]
+}

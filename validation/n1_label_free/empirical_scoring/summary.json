@@ -1,0 +1,115 @@
+{
+  "status": "passed",
+  "protocol_sha256": "7b8170a51b118078c5567592b3cd1be12ef70db008cd0b02d422a629df201d21",
+  "comparison": "fixed label-free primary; archived ER-detect comparator; supervised saved models secondary",
+  "human_reference_source": "raw_annotation in rater_label_joins only; record total weight1",
+  "rater_input_columns": [
+    "subject",
+    "stimpair",
+    "channel",
+    "rater",
+    "configuration",
+    "raw_annotation"
+  ],
+  "algorithm_reference_columns_used": [],
+  "reconstructed_reference_matches_frozen": true,
+  "paired_records": 32048,
+  "participants": [
+    "MAYO02",
+    "MAYO03",
+    "MAYO04",
+    "MAYO05",
+    "UMCU20",
+    "UMCU21",
+    "UMCU22",
+    "UMCU23",
+    "UMCU25",
+    "UMCU26",
+    "UMCU59",
+    "UMCU62",
+    "UMCU67"
+  ],
+  "coverage": {
+    "eligible_human_reference_records": 33694,
+    "original_inference_available": 32121,
+    "proposed_available": 32121,
+    "proposed_calls": 2718
+  },
+  "weighted_reference_positive": 4186.666666666666,
+  "weighted_reference_negative": 27861.333333333336,
+  "estimates": {
+    "label_free_N1": {
+      "sensitivity": 0.5480095541401274,
+      "specificity": 0.9850090926493108,
+      "balanced_accuracy": 0.7665093233947191,
+      "ppv": 0.8459931170108161,
+      "npv": 0.9354945004999546,
+      "accuracy": 0.9279206190713928,
+      "kappa": 0.6268228451428752,
+      "coverage": 1.0
+    },
+    "archived_ER_detect": {
+      "sensitivity": 0.6760748407643313,
+      "specificity": 0.9764368778713629,
+      "balanced_accuracy": 0.8262558593178471,
+      "ppv": 0.8117292801835388,
+      "npv": 0.9525168353115554,
+      "accuracy": 0.9371983691129973,
+      "kappa": 0.7023827830727339,
+      "coverage": 1.0
+    },
+    "baseline_only_N1_screen": {
+      "sensitivity": 0.6724124203821656,
+      "specificity": 0.9522695731240429,
+      "balanced_accuracy": 0.8123409967531043,
+      "ppv": 0.6791716928025734,
+      "npv": 0.9508475791133569,
+      "accuracy": 0.915709768680313,
+      "kappa": 0.6273345924400563,
+      "coverage": 1.0
+    },
+    "N1_logistic_morphology": {
+      "sensitivity": 0.6728105095541401,
+      "specificity": 0.9748337002297089,
+      "balanced_accuracy": 0.8238221048919245,
+      "ppv": 0.8006916808792874,
+      "npv": 0.9519862133426803,
+      "accuracy": 0.935378182725911,
+      "kappa": 0.6947904553681914,
+      "coverage": 1.0
+    },
+    "N1_logistic_hybrid": {
+      "sensitivity": 0.6739251592356689,
+      "specificity": 0.9796312691424196,
+      "balanced_accuracy": 0.8267782141890443,
+      "ppv": 0.8325464738861021,
+      "npv": 0.9523651674284983,
+      "accuracy": 0.9396946247295724,
+      "kappa": 0.711120028976069,
+      "coverage": 1.0
+    }
+  },
+  "bootstrap": {
+    "seed": 20260908,
+    "resamples": 2000,
+    "strata": "site",
+    "unit": "whole participant",
+    "quantile": "linear .025/.975",
+    "conditional_fixed_predictions": true
+  },
+  "posthoc_development": true,
+  "threshold_selection": false,
+  "models_retrained": false,
+  "hypothesis_limit": "p/q concern original response conjunction; not N1-truth FDR",
+  "input_hashes": {
+    "prediction_manifest": "98a3bc35ff495c896ef6ed740c195d1805ff4ba92470e20dcd512c6e6411945c",
+    "records": "773927fb3bf76f3a1a249e5092f077ba25a3046e4c0385deb442849bc771b48a",
+    "raters": "916c76fc6935913a2eb6a589797a2745092488d1ba5893da7f6bc17ef19dc8fc",
+    "saved_models_predictions": "7fd37ffc162e1eab62ebbc83563806a2ef42f350edcc7806949b18ecbff8d56a"
+  },
+  "source_hashes": {
+    "validation/score_n1_label_free.py": "1d407715c9c020020a7176b6a2627cd580d59e7745ced6e613c6949490a778a3",
+    "validation/predict_n1_label_free.py": "b0e708b0365ac8b0ea5bb7007cbbdc246b89a8f68328e9fbbfadc78ef2a203ff",
+    "validation/score_erdetect_validation.py": "b728e9a17eadd03a3e527f6c54b236cbb48f9a32f69ef89ad53a2d190335d82c"
+  }
+}

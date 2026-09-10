@@ -1,0 +1,11 @@
+{
+  "outputs": {
+    "nominal_stage_records.csv.gz": "b5819584b81c335af40c325dfdb7fa8ade9d1b6268db654213be3623faca1ccb",
+    "operating_points.csv": "d981dbaa43b91c7e87ccccef13cafbf8b930db27013bbd08763dff1138147ad2",
+    "paired_differences.csv": "c04ce2bb29789d69a9480c79de2075a227541823d5bdb8123593f41b1ac7fdce",
+    "participant_metrics.csv": "d0fac9f82c21fd08973fe7da0ad868a13801d6b4ecd25f65392fb69793fe607f",
+    "summary.json": "d5298e3f5d79231f1ef4b1f4188a35dc5110c6c52b5cf835ff022c94dad09daf"
+  },
+  "primary_protocol_sha256": "7b8170a51b118078c5567592b3cd1be12ef70db008cd0b02d422a629df201d21",
+  "role": "post_result_nominal_screen_diagnostic"
+}

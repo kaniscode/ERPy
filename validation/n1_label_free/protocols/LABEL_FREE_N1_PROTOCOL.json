@@ -1,0 +1,156 @@
+{
+  "protocol_version": "1.0",
+  "created_utc": "2026-09-09T00:20:50.776332+00:00",
+  "status": "fixed_pending_parent_acknowledgment_before_calls",
+  "source_checkpoint": "9842e022d2ffe950df2a938a1263a5e55498bee6",
+  "new_calls_or_human_label_scoring_performed": false,
+  "cohort_already_examined": true,
+  "primary_method": "label_free_N1",
+  "supervised_models_role": "unchanged secondary development comparisons",
+  "primary_gate": {
+    "peak": "strongest strictly interior negative local peak from existing extract_n1_features",
+    "response_window_s": [
+      0.01,
+      0.09
+    ],
+    "sample_window": "native uniform grid, rounded half-open indices",
+    "baseline_window_s": [
+      -1.0,
+      -0.1
+    ],
+    "normalization_window_s": [
+      -0.5,
+      -0.02
+    ],
+    "normalization": "per-trial median subtraction",
+    "min_finite_trials": 8,
+    "units": "uV",
+    "noise": "sample SD (ddof=1) of mean-waveform baseline",
+    "threshold_formula": "negative_peak_uv >= 3.4 * max(baseline_std_uv, 50.0)",
+    "require_negative_peak_present": true,
+    "amplitude_factor": 3.4,
+    "baseline_sd_floor_uv": 50.0,
+    "saturation_ceiling": null,
+    "smoothing": null,
+    "extra_peak_selectivity": null,
+    "label_based_parameter_selection": false
+  },
+  "inference": {
+    "response_window_s": [
+      0.01,
+      0.09
+    ],
+    "candidate_baseline_s": [
+      -1.0,
+      -0.1
+    ],
+    "artifact_interval_s": [
+      0.0,
+      0.009
+    ],
+    "min_clean_trials": 8,
+    "n_permutations": 5000,
+    "max_exact_reproducibility_trials": 12,
+    "max_exact_energy_trials": 16,
+    "joint_formula": "max(p_reproducibility,p_energy)",
+    "canonical_energy_cv": false,
+    "existing_sample_selection_and_test_numerics": "unchanged",
+    "source_epoch_identity": "must match morphology; finite masks retained separately where known",
+    "randomization": "preserve exact per-record stored seeds; new-array seed explicit"
+  },
+  "multiplicity": {
+    "family": "all original retained good ECoG non-stimulation contacts with finite early p_joint for each subject/stimulation pair",
+    "finite_family_count": 577,
+    "finite_contacts": 34926,
+    "retained_prediction_records": 36016,
+    "include_unannotated": true,
+    "include_scoring_ineligible": true,
+    "p_screened": "p_joint if available morphology passes primary gate, else1 for original-finite contacts; preserve nonfinite original inference as unavailable",
+    "correction": "fdr_bh",
+    "alpha": 0.05,
+    "recompute_full_family": true,
+    "availability_separate": true,
+    "claim": "screened p marginally valid under original projection-energy union null if original p valid; BH assumptions must apply to screened vector; no N1-truth FDR guarantee"
+  },
+  "sole_ablation": {
+    "name": "baseline_only_N1_screen",
+    "difference": "baseline_sd_floor_uv=0.0; all other settings and family identical",
+    "selection_after_results": false
+  },
+  "evaluation": {
+    "prediction_phase_inputs": "only identity, epoch, finite family, original inference and morphology columns; no labels or archived/model calls",
+    "reference": "human raw-rater joins only; code1=N1; codes0/2=N1-negative; omit missing votes; each record total weight1",
+    "primary_comparison_frame": "fixed paired comparison frame, 32048records/13participants; early configuration; scoring_eligible & evaluable & archived_record_present & archived_pair_comparable & reference_positive.notna & not development_overlap",
+    "excluded_overlap_subject": "MAYO01",
+    "additional_coverage": "report eligible human-reference frame and unavailable counts separately; no family filtering for scoring",
+    "comparators": [
+      "archived_ER_detect",
+      "saved_heldout_N1_logistic_morphology",
+      "saved_heldout_N1_logistic_hybrid"
+    ],
+    "metrics": [
+      "sensitivity",
+      "specificity",
+      "ppv",
+      "npv",
+      "balanced_accuracy",
+      "kappa"
+    ],
+    "intervals": {
+      "method": "whole-participant percentile bootstrap stratified by site; shared draws for paired differences",
+      "draws": 2000,
+      "seed": 20260908,
+      "participants_per_site": {
+        "Mayo": 4,
+        "UMCU": 9
+      },
+      "quantiles": [
+        0.025,
+        0.975
+      ],
+      "quantile_method": "linear",
+      "interpretation": "conditional fixed predictions on previously examined cohort; no training uncertainty for fixed rule; saved supervised predictions remain conditional on fitted folds",
+      "significance_display": "nominal interval includes/excludes0; no bootstrap-tail p values or independent-record tests"
+    },
+    "subgroups": "fixed participant and site descriptions without training or threshold changes",
+    "decision_stages": [
+      "inference_unavailable",
+      "morphology_unavailable",
+      "no_negative_interior_peak",
+      "amplitude_gate_failed",
+      "gate_pass_joint_p_above_0.05",
+      "gate_pass_joint_p_at_most_0.05_but_screened_q_above_0.05",
+      "final_pass"
+    ],
+    "stage_weighting": "total count plus fractional human N1+/N1- weight and per-subject counts; preserve measured peak latency and p/q for explanations",
+    "broad_response_comparison": "unchanged; its reference remains human annotators",
+    "posthoc_disclosure": true,
+    "all_candidates_preserved": true
+  },
+  "checks": [
+    "valid matched full family",
+    "config/epoch/units mismatch rejects",
+    "threshold equality passes",
+    "boundary-only and absent peaks",
+    "morphology-unavailable finite-p retained as1",
+    "nonfinite inference remains unavailable",
+    "unannotated contact changes BH",
+    "p_screened>=p_joint and q_screened>=original q",
+    "final calls subset original early calls",
+    "no labels accepted in prediction phase"
+  ],
+  "frozen_inputs": {
+    "validation/frozen_results/erdetect/record_predictions_and_labels.csv.gz": "773927fb3bf76f3a1a249e5092f077ba25a3046e4c0385deb442849bc771b48a",
+    "validation/frozen_results/n1/features/n1_features.csv.gz": "18177ea77d9dbd44afa7fa146aaef99b2fab31ef5a6c088aea9df1bcba2cbcaf",
+    "validation/frozen_results/n1/features/feature_manifest.json": "420e2b826da3699d059e9ae5de7bb4fda6134d61715b5529c2d3187bbf7db63d",
+    "ERPy/n1.py": "bb18ac73fd52fcefee1f031e108a10f0d308bc0aea73546d4852089fcf72e7bf",
+    "ERPy/crp_energy.py": "07590e407bd0d7dd53dd1cb745e9e0004b15b0310c5cd15737c5d9a7c229f9f7",
+    "ERPy/inference.py": "fc94b5c22c7eccdc8b511c7b93ec62ea39811b0362dd1a39370e85dbbe429e1d"
+  },
+  "provenance_receipts": {
+    "family_coverage.json": "387baa4560ca241cb56ffcc790e4332f5df97c272e4d9e41fd316e4adb7ff702",
+    "archived_rule_provenance.json": "d1301929a865481ebb82ac53b7b23e884dafed9812e8545ce075190d37ce264a",
+    "erdetect_detection_47f58d1.py": "5f2132189a609aac0ec0d5018c8297d9d038d7bd5fb8933f915de77ef953b2b6",
+    "erdetect_baseline_minimum_config_change.json": "4c4cbd0fd85c4595bd8861d08ddce267384a5e7b9efb562faa5e2ed35b1edfa5"
+  }
+}

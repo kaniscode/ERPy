@@ -2,11 +2,13 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
+from urllib.parse import quote
 
 import numpy as np
 import pandas as pd
@@ -137,19 +139,39 @@ def _finalize_public_detection_availability(
     return output
 
 
-def download_events(ds: PublicDataset) -> pd.DataFrame:
+def _verify_source_bytes(payload: bytes, expected_sha256: str | None, label: str) -> None:
+    if expected_sha256 is not None and hashlib.sha256(payload).hexdigest() != expected_sha256:
+        raise ValueError(f"Pinned public source checksum mismatch: {label}")
+
+
+def _pin_dataset(ds: PublicDataset, manifest: dict, settings: dict) -> PublicDataset:
+    """Bind the notebook recipe to explicit public object versions and settings."""
+    if manifest.get("dataset_id") != ds.dataset_id or manifest.get("settings") != settings:
+        raise ValueError("Pinned public recipe dataset/settings mismatch")
+    urls = {}
+    for key in ("events_url", "vhdr_url", "eeg_url", "electrodes_url"):
+        source = manifest["objects"][key]
+        if source["url"] != getattr(ds, key) or not source.get("version_id"):
+            raise ValueError(f"Missing or inconsistent pinned source identity: {key}")
+        urls[key] = source["url"] + "?versionId=" + quote(source["version_id"], safe="")
+    return replace(ds, **urls)
+
+
+def download_events(ds: PublicDataset, expected_sha256: str | None = None) -> pd.DataFrame:
     response = requests.get(ds.events_url, timeout=60)
     response.raise_for_status()
+    _verify_source_bytes(response.content, expected_sha256, "events")
     from io import StringIO
 
     return pd.read_csv(StringIO(response.text), sep="\t")
 
 
-def download_electrodes(url: str | None) -> pd.DataFrame:
+def download_electrodes(url: str | None, expected_sha256: str | None = None) -> pd.DataFrame:
     if not url:
         return pd.DataFrame()
     response = requests.get(url, timeout=60)
     response.raise_for_status()
+    _verify_source_bytes(response.content, expected_sha256, "electrodes")
     from io import StringIO
 
     return pd.read_csv(StringIO(response.text), sep="\t")
@@ -199,8 +221,12 @@ def fetch_range(url: str, start_byte: int, stop_byte_exclusive: int) -> bytes:
     headers = {"Range": f"bytes={start_byte}-{stop_byte_exclusive - 1}"}
     response = requests.get(url, headers=headers, timeout=120)
     response.raise_for_status()
-    if response.status_code not in {200, 206}:
+    if response.status_code != 206:
         raise RuntimeError(f"Unexpected HTTP status for range request: {response.status_code}")
+    expected_range = f"bytes {start_byte}-{stop_byte_exclusive - 1}/"
+    if (not response.headers.get("Content-Range", "").startswith(expected_range)
+            or len(response.content) != stop_byte_exclusive - start_byte):
+        raise ValueError("Public signal range does not match requested byte interval")
     return response.content
 
 
@@ -246,8 +272,13 @@ def create_signal_from_public_raw(
     tmax: float = 0.75,
     max_events: int = 8,
     max_channels: int = 32,
+    source_manifest: dict | None = None,
 ) -> tuple[pd.Timestamp, pd.Timestamp, float, list[str], dict]:
-    vhdr_text = requests.get(ds.vhdr_url, timeout=60).text
+    response = requests.get(ds.vhdr_url, timeout=60)
+    response.raise_for_status()
+    expected_header = source_manifest["objects"]["vhdr_url"]["sha256"] if source_manifest else None
+    _verify_source_bytes(response.content, expected_header, "BrainVision header")
+    vhdr_text = response.text
     header = parse_brainvision_header(vhdr_text)
     sfreq = float(header["sfreq"])
     n_channels = int(header["n_channels"])
@@ -289,6 +320,16 @@ def create_signal_from_public_raw(
     raw.insert(0, "times", pd.DatetimeIndex(base + pd.to_timedelta(seconds, unit="s")))
     out_csv.parent.mkdir(parents=True, exist_ok=True)
     raw.to_csv(out_csv, index=False)
+    if source_manifest:
+        expected_window = source_manifest["window"]
+        if [start_sample, stop_sample] != expected_window["sample_range"]:
+            raise ValueError("Pinned public signal sample interval changed")
+        with out_csv.open("rb") as stream:
+            digest = hashlib.sha256()
+            for chunk in iter(lambda: stream.read(8 * 1024 * 1024), b""):
+                digest.update(chunk)
+        if digest.hexdigest() != expected_window["csv_sha256"]:
+            raise ValueError("Pinned public signal window checksum mismatch; analysis was not run")
     meta = {
         "source_start_second": start_s,
         "source_stop_second": stop_s,
@@ -298,6 +339,11 @@ def create_signal_from_public_raw(
         "source_channels_total": n_channels,
         "channels_kept": keep,
     }
+    if source_manifest:
+        meta.update(source_identity_verified=True,
+                    source_snapshot_commit=source_manifest["snapshot_git_commit"],
+                    source_window_expected_sha256=source_manifest["window"]["csv_sha256"],
+                    source_range_sha256=hashlib.sha256(payload).hexdigest())
     return (
         base + pd.to_timedelta(start_s, unit="s"),
         base + pd.to_timedelta(stop_s, unit="s"),
@@ -673,6 +719,7 @@ def run_site(
     max_events: int = 8,
     max_channels: int = 32,
     make_figures: bool = False,
+    source_manifest: dict | None = None,
 ) -> dict:
     stim_pair = normalize_stim_pair(site)
     patient_id = ds.dataset_id.replace("ds", "DS")
@@ -692,8 +739,11 @@ def run_site(
             raw_csv,
             max_events=max_events,
             max_channels=max_channels,
+            source_manifest=source_manifest,
         )
     except requests.RequestException:
+        if source_manifest:
+            raise  # A pinned recipe must not fall back to unverified caches.
         raw_meta_path = meta_dir / "raw_metadata.csv"
         if not raw_csv.exists() or not raw_meta_path.exists():
             raise
@@ -745,12 +795,15 @@ def run_site(
     ).to_csv(meta_dir / "stim_metadata.csv", index=False)
     elec_meta_path = meta_dir / "electrode_metadata.csv"
     try:
-        electrodes = download_electrodes(ds.electrodes_url)
+        expected_electrodes = source_manifest["objects"]["electrodes_url"]["sha256"] if source_manifest else None
+        electrodes = download_electrodes(ds.electrodes_url, expected_electrodes)
         electrode_metadata_for_channels(electrodes, kept_channels, patient_id, session_id).to_csv(
             elec_meta_path,
             index=False,
         )
     except requests.RequestException:
+        if source_manifest:
+            raise
         if not elec_meta_path.exists():
             raise
     config = {
@@ -1477,7 +1530,13 @@ def run_dataset(
     max_channels: int = 32,
     make_figures: bool = False,
     prefer_cache: bool = False,
+    source_manifest: dict | None = None,
 ) -> list[dict]:
+    if source_manifest:
+        if prefer_cache:
+            raise ValueError("Pinned public recipes require verified source retrieval, not summary-cache reuse")
+        ds = _pin_dataset(ds, source_manifest, dict(min_events=min_events, max_events=max_events,
+                                                  max_sites=max_sites, max_channels=max_channels))
     if prefer_cache:
         summaries = _load_cached_summaries(out_root / ds.dataset_id, max_sites=max_sites)
         if summaries:
@@ -1488,8 +1547,11 @@ def run_dataset(
                     write_dataset_aggregate_figure_suite(out_root / ds.dataset_id, summaries)
             return summaries
     try:
-        events = download_events(ds)
+        expected_events = source_manifest["objects"]["events_url"]["sha256"] if source_manifest else None
+        events = download_events(ds, expected_events)
     except requests.RequestException:
+        if source_manifest:
+            raise
         summaries = _load_cached_summaries(out_root / ds.dataset_id, max_sites=max_sites)
         if not summaries:
             raise
@@ -1499,7 +1561,8 @@ def run_dataset(
             if len(summaries) > 1:
                 write_dataset_aggregate_figure_suite(out_root / ds.dataset_id, summaries)
         return summaries
-    blocks = select_event_blocks(events, min_events=min_events, max_sites=max_sites)
+    blocks = select_event_blocks(events, min_events=min_events, max_sites=max_sites,
+                                 stim_site=source_manifest["stim_site"] if source_manifest else None)
     summaries = [
         run_site(
             ds,
@@ -1509,6 +1572,7 @@ def run_dataset(
             max_events=max_events,
             max_channels=max_channels,
             make_figures=make_figures,
+            source_manifest=source_manifest,
         )
         for site, block in blocks
     ]

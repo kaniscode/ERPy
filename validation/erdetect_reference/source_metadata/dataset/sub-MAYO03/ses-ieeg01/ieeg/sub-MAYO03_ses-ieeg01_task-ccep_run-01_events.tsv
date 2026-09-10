@@ -1,0 +1,375 @@
+onset	duration	trial_type	electrical_stimulation_type	electrical_stimulation_site	electrical_stimulation_current	status	status_description
+340.36572265625	0.0002	electrical_stimulation	biphasic	RG1-RG2	6.0 mA	good	n/a
+347.13134765625	0.0002	electrical_stimulation	biphasic	RG1-RG2	6.0 mA	good	n/a
+355.0185546875	0.0002	electrical_stimulation	biphasic	RG1-RG2	6.0 mA	good	n/a
+360.107421875	0.0002	electrical_stimulation	biphasic	RG1-RG2	6.0 mA	good	n/a
+366.50927734375	0.0002	electrical_stimulation	biphasic	RG1-RG2	6.0 mA	good	n/a
+371.80078125	0.0002	electrical_stimulation	biphasic	RG1-RG2	6.0 mA	bad	n/a
+376.80615234375	0.0002	electrical_stimulation	biphasic	RG1-RG2	6.0 mA	good	n/a
+382.20654296875	0.0002	electrical_stimulation	biphasic	RG1-RG2	6.0 mA	good	n/a
+387.55029296875	0.0002	electrical_stimulation	biphasic	RG1-RG2	6.0 mA	good	n/a
+393.529296875	0.0002	electrical_stimulation	biphasic	RG1-RG2	6.0 mA	good	n/a
+419.34375	0.0002	electrical_stimulation	biphasic	RG2-RG3	6.0 mA	good	n/a
+424.2333984375	0.0002	electrical_stimulation	biphasic	RG2-RG3	6.0 mA	good	n/a
+429.34228515625	0.0002	electrical_stimulation	biphasic	RG2-RG3	6.0 mA	good	n/a
+433.33642578125	0.0002	electrical_stimulation	biphasic	RG2-RG3	6.0 mA	good	n/a
+437.35009765625	0.0002	electrical_stimulation	biphasic	RG2-RG3	6.0 mA	good	n/a
+441.662109375	0.0002	electrical_stimulation	biphasic	RG2-RG3	6.0 mA	good	n/a
+445.791015625	0.0002	electrical_stimulation	biphasic	RG2-RG3	6.0 mA	good	n/a
+449.82080078125	0.0002	electrical_stimulation	biphasic	RG2-RG3	6.0 mA	good	n/a
+455.0126953125	0.0002	electrical_stimulation	biphasic	RG2-RG3	6.0 mA	good	n/a
+459.38671875	0.0002	electrical_stimulation	biphasic	RG2-RG3	6.0 mA	good	n/a
+478.52587890625	0.0002	electrical_stimulation	biphasic	RG3-RG4	6.0 mA	good	n/a
+483.3857421875	0.0002	electrical_stimulation	biphasic	RG3-RG4	6.0 mA	good	n/a
+487.39453125	0.0002	electrical_stimulation	biphasic	RG3-RG4	6.0 mA	good	n/a
+491.64892578125	0.0002	electrical_stimulation	biphasic	RG3-RG4	6.0 mA	good	n/a
+495.58935546875	0.0002	electrical_stimulation	biphasic	RG3-RG4	6.0 mA	good	n/a
+499.3125	0.0002	electrical_stimulation	biphasic	RG3-RG4	6.0 mA	good	n/a
+503.2060546875	0.0002	electrical_stimulation	biphasic	RG3-RG4	6.0 mA	good	n/a
+508.6181640625	0.0002	electrical_stimulation	biphasic	RG3-RG4	6.0 mA	good	n/a
+513.6337890625	0.0002	electrical_stimulation	biphasic	RG3-RG4	6.0 mA	good	n/a
+519.08056640625	0.0002	electrical_stimulation	biphasic	RG3-RG4	6.0 mA	good	n/a
+537.91796875	0.0002	electrical_stimulation	biphasic	RG4-RG5	6.0 mA	good	n/a
+541.671875	0.0002	electrical_stimulation	biphasic	RG4-RG5	6.0 mA	good	n/a
+546.2119140625	0.0002	electrical_stimulation	biphasic	RG4-RG5	6.0 mA	good	n/a
+550.30517578125	0.0002	electrical_stimulation	biphasic	RG4-RG5	6.0 mA	good	n/a
+554.9501953125	0.0002	electrical_stimulation	biphasic	RG4-RG5	6.0 mA	good	n/a
+558.60400390625	0.0002	electrical_stimulation	biphasic	RG4-RG5	6.0 mA	good	n/a
+562.08203125	0.0002	electrical_stimulation	biphasic	RG4-RG5	6.0 mA	good	n/a
+566.34130859375	0.0002	electrical_stimulation	biphasic	RG4-RG5	6.0 mA	good	n/a
+570.0732421875	0.0002	electrical_stimulation	biphasic	RG4-RG5	6.0 mA	good	n/a
+574.89111328125	0.0002	electrical_stimulation	biphasic	RG4-RG5	6.0 mA	good	n/a
+593.0556640625	0.0002	electrical_stimulation	biphasic	RG5-RG6	6.0 mA	bad	n/a
+598.08642578125	0.0002	electrical_stimulation	biphasic	RG5-RG6	6.0 mA	good	n/a
+604.55615234375	0.0002	electrical_stimulation	biphasic	RG5-RG6	6.0 mA	good	n/a
+609.05029296875	0.0002	electrical_stimulation	biphasic	RG5-RG6	6.0 mA	good	n/a
+613.87255859375	0.0002	electrical_stimulation	biphasic	RG5-RG6	6.0 mA	good	n/a
+617.91259765625	0.0002	electrical_stimulation	biphasic	RG5-RG6	6.0 mA	good	n/a
+622.16650390625	0.0002	electrical_stimulation	biphasic	RG5-RG6	6.0 mA	good	n/a
+626.69775390625	0.0002	electrical_stimulation	biphasic	RG5-RG6	6.0 mA	good	n/a
+632.05126953125	0.0002	electrical_stimulation	biphasic	RG5-RG6	6.0 mA	good	n/a
+637.6611328125	0.0002	electrical_stimulation	biphasic	RG5-RG6	6.0 mA	good	n/a
+659.958984375	0.0002	electrical_stimulation	biphasic	RG7-RG8	6.0 mA	good	n/a
+666.24658203125	0.0002	electrical_stimulation	biphasic	RG7-RG8	6.0 mA	good	n/a
+670.04150390625	0.0002	electrical_stimulation	biphasic	RG7-RG8	6.0 mA	good	n/a
+674.6083984375	0.0002	electrical_stimulation	biphasic	RG7-RG8	6.0 mA	good	n/a
+679.35791015625	0.0002	electrical_stimulation	biphasic	RG7-RG8	6.0 mA	good	n/a
+683.99755859375	0.0002	electrical_stimulation	biphasic	RG7-RG8	6.0 mA	good	n/a
+687.57421875	0.0002	electrical_stimulation	biphasic	RG7-RG8	6.0 mA	good	n/a
+691.64599609375	0.0002	electrical_stimulation	biphasic	RG7-RG8	6.0 mA	good	n/a
+696.6767578125	0.0002	electrical_stimulation	biphasic	RG7-RG8	6.0 mA	good	n/a
+701.4833984375	0.0002	electrical_stimulation	biphasic	RG7-RG8	6.0 mA	good	n/a
+719.361328125	0.0002	electrical_stimulation	biphasic	RG8-RG9	6.0 mA	good	n/a
+723.5517578125	0.0002	electrical_stimulation	biphasic	RG8-RG9	6.0 mA	good	n/a
+728.078125	0.0002	electrical_stimulation	biphasic	RG8-RG9	6.0 mA	good	n/a
+732.09814453125	0.0002	electrical_stimulation	biphasic	RG8-RG9	6.0 mA	good	n/a
+736.142578125	0.0002	electrical_stimulation	biphasic	RG8-RG9	6.0 mA	good	n/a
+740.3291015625	0.0002	electrical_stimulation	biphasic	RG8-RG9	6.0 mA	good	n/a
+744.10400390625	0.0002	electrical_stimulation	biphasic	RG8-RG9	6.0 mA	good	n/a
+747.55517578125	0.0002	electrical_stimulation	biphasic	RG8-RG9	6.0 mA	good	n/a
+752.283203125	0.0002	electrical_stimulation	biphasic	RG8-RG9	6.0 mA	good	n/a
+757.36669921875	0.0002	electrical_stimulation	biphasic	RG8-RG9	6.0 mA	good	n/a
+821.37109375	0.0002	electrical_stimulation	biphasic	RG9-RG10	6.0 mA	good	n/a
+827.048828125	0.0002	electrical_stimulation	biphasic	RG9-RG10	6.0 mA	good	n/a
+831.31298828125	0.0002	electrical_stimulation	biphasic	RG9-RG10	6.0 mA	good	n/a
+835.619140625	0.0002	electrical_stimulation	biphasic	RG9-RG10	6.0 mA	good	n/a
+845.12353515625	0.0002	electrical_stimulation	biphasic	RG9-RG10	6.0 mA	good	n/a
+850.19580078125	0.0002	electrical_stimulation	biphasic	RG9-RG10	6.0 mA	good	n/a
+854.66357421875	0.0002	electrical_stimulation	biphasic	RG9-RG10	6.0 mA	good	n/a
+859.11572265625	0.0002	electrical_stimulation	biphasic	RG9-RG10	6.0 mA	good	n/a
+863.4951171875	0.0002	electrical_stimulation	biphasic	RG9-RG10	6.0 mA	good	n/a
+882.7021484375	0.0002	electrical_stimulation	biphasic	RG10-RG11	6.0 mA	good	n/a
+889.3701171875	0.0002	electrical_stimulation	biphasic	RG10-RG11	6.0 mA	good	n/a
+895.5478515625	0.0002	electrical_stimulation	biphasic	RG10-RG11	6.0 mA	good	n/a
+900.80224609375	0.0002	electrical_stimulation	biphasic	RG10-RG11	6.0 mA	good	n/a
+906.08935546875	0.0002	electrical_stimulation	biphasic	RG10-RG11	6.0 mA	good	n/a
+912.16796875	0.0002	electrical_stimulation	biphasic	RG10-RG11	6.0 mA	good	n/a
+916.818359375	0.0002	electrical_stimulation	biphasic	RG10-RG11	6.0 mA	good	n/a
+921.55712890625	0.0002	electrical_stimulation	biphasic	RG10-RG11	6.0 mA	good	n/a
+926.31689453125	0.0002	electrical_stimulation	biphasic	RG10-RG11	6.0 mA	good	n/a
+930.72216796875	0.0002	electrical_stimulation	biphasic	RG10-RG11	6.0 mA	bad	n/a
+961.5595703125	0.0002	electrical_stimulation	biphasic	RG11-RG12	6.0 mA	good	n/a
+966.595703125	0.0002	electrical_stimulation	biphasic	RG11-RG12	6.0 mA	good	n/a
+971.7255859375	0.0002	electrical_stimulation	biphasic	RG11-RG12	6.0 mA	good	n/a
+983.9921875	0.0002	electrical_stimulation	biphasic	RG11-RG12	6.0 mA	bad	n/a
+990.27490234375	0.0002	electrical_stimulation	biphasic	RG11-RG12	6.0 mA	good	n/a
+1033.11376953125	0.0002	electrical_stimulation	biphasic	RG13-RG14	6.0 mA	good	n/a
+1042.2734375	0.0002	electrical_stimulation	biphasic	RG13-RG14	6.0 mA	good	n/a
+1049.478515625	0.0002	electrical_stimulation	biphasic	RG13-RG14	6.0 mA	good	n/a
+1057.76806640625	0.0002	electrical_stimulation	biphasic	RG13-RG14	6.0 mA	good	n/a
+1064.0498046875	0.0002	electrical_stimulation	biphasic	RG13-RG14	6.0 mA	good	n/a
+1070.40478515625	0.0002	electrical_stimulation	biphasic	RG13-RG14	6.0 mA	good	n/a
+1086.60791015625	0.0002	electrical_stimulation	biphasic	RG13-RG14	6.0 mA	good	n/a
+1093.1396484375	0.0002	electrical_stimulation	biphasic	RG13-RG14	6.0 mA	good	n/a
+1099.265625	0.0002	electrical_stimulation	biphasic	RG13-RG14	6.0 mA	good	n/a
+1103.9052734375	0.0002	electrical_stimulation	biphasic	RG13-RG14	6.0 mA	good	n/a
+1132.642578125	0.0002	electrical_stimulation	biphasic	RG14-RG15	6.0 mA	good	n/a
+1138.001953125	0.0002	electrical_stimulation	biphasic	RG14-RG15	6.0 mA	good	n/a
+1143.0224609375	0.0002	electrical_stimulation	biphasic	RG14-RG15	6.0 mA	good	n/a
+1148.986328125	0.0002	electrical_stimulation	biphasic	RG14-RG15	6.0 mA	good	n/a
+1156.31640625	0.0002	electrical_stimulation	biphasic	RG14-RG15	6.0 mA	good	n/a
+1186.80859375	0.0002	electrical_stimulation	biphasic	RG14-RG15	6.0 mA	good	n/a
+1194.86865234375	0.0002	electrical_stimulation	biphasic	RG14-RG15	6.0 mA	good	n/a
+1202.0419921875	0.0002	electrical_stimulation	biphasic	RG14-RG15	6.0 mA	good	n/a
+1208.13720703125	0.0002	electrical_stimulation	biphasic	RG14-RG15	6.0 mA	good	n/a
+1215.96728515625	0.0002	electrical_stimulation	biphasic	RG14-RG15	6.0 mA	good	n/a
+1243.14013671875	0.0002	electrical_stimulation	biphasic	RG15-RG16	6.0 mA	good	n/a
+1248.29052734375	0.0002	electrical_stimulation	biphasic	RG15-RG16	6.0 mA	good	n/a
+1253.74365234375	0.0002	electrical_stimulation	biphasic	RG15-RG16	6.0 mA	good	n/a
+1259.2490234375	0.0002	electrical_stimulation	biphasic	RG15-RG16	6.0 mA	good	n/a
+1265.57275390625	0.0002	electrical_stimulation	biphasic	RG15-RG16	6.0 mA	good	n/a
+1270.2958984375	0.0002	electrical_stimulation	biphasic	RG15-RG16	6.0 mA	good	n/a
+1274.16455078125	0.0002	electrical_stimulation	biphasic	RG15-RG16	6.0 mA	good	n/a
+1278.3193359375	0.0002	electrical_stimulation	biphasic	RG15-RG16	6.0 mA	good	n/a
+1282.740234375	0.0002	electrical_stimulation	biphasic	RG15-RG16	6.0 mA	good	n/a
+1286.8486328125	0.0002	electrical_stimulation	biphasic	RG15-RG16	6.0 mA	good	n/a
+1307.5986328125	0.0002	electrical_stimulation	biphasic	RG16-RG17	6.0 mA	good	n/a
+1313.140625	0.0002	electrical_stimulation	biphasic	RG16-RG17	6.0 mA	good	n/a
+1317.70751953125	0.0002	electrical_stimulation	biphasic	RG16-RG17	6.0 mA	good	n/a
+1323.22314453125	0.0002	electrical_stimulation	biphasic	RG16-RG17	6.0 mA	good	n/a
+1327.26904296875	0.0002	electrical_stimulation	biphasic	RG16-RG17	6.0 mA	good	n/a
+1333.08154296875	0.0002	electrical_stimulation	biphasic	RG16-RG17	6.0 mA	good	n/a
+1338.34716796875	0.0002	electrical_stimulation	biphasic	RG16-RG17	6.0 mA	good	n/a
+1343.3935546875	0.0002	electrical_stimulation	biphasic	RG16-RG17	6.0 mA	good	n/a
+1348.62744140625	0.0002	electrical_stimulation	biphasic	RG16-RG17	6.0 mA	good	n/a
+1353.79931640625	0.0002	electrical_stimulation	biphasic	RG16-RG17	6.0 mA	good	n/a
+1379.21630859375	0.0002	electrical_stimulation	biphasic	RG17-RG18	6.0 mA	good	n/a
+1383.51220703125	0.0002	electrical_stimulation	biphasic	RG17-RG18	6.0 mA	good	n/a
+1387.9794921875	0.0002	electrical_stimulation	biphasic	RG17-RG18	6.0 mA	good	n/a
+1391.4306640625	0.0002	electrical_stimulation	biphasic	RG17-RG18	6.0 mA	good	n/a
+1395.43994140625	0.0002	electrical_stimulation	biphasic	RG17-RG18	6.0 mA	good	n/a
+1398.443359375	0.0002	electrical_stimulation	biphasic	RG17-RG18	6.0 mA	good	n/a
+1402.0869140625	0.0002	electrical_stimulation	biphasic	RG17-RG18	6.0 mA	good	n/a
+1406.3408203125	0.0002	electrical_stimulation	biphasic	RG17-RG18	6.0 mA	good	n/a
+1410.07373046875	0.0002	electrical_stimulation	biphasic	RG17-RG18	6.0 mA	good	n/a
+1413.947265625	0.0002	electrical_stimulation	biphasic	RG17-RG18	6.0 mA	good	n/a
+1509.294921875	0.0002	electrical_stimulation	biphasic	RG19-RG20	6.0 mA	good	n/a
+1513.486328125	0.0002	electrical_stimulation	biphasic	RG19-RG20	6.0 mA	good	n/a
+1517.630859375	0.0002	electrical_stimulation	biphasic	RG19-RG20	6.0 mA	good	n/a
+1522.26611328125	0.0002	electrical_stimulation	biphasic	RG19-RG20	6.0 mA	good	n/a
+1529.20458984375	0.0002	electrical_stimulation	biphasic	RG19-RG20	6.0 mA	good	n/a
+1534.13671875	0.0002	electrical_stimulation	biphasic	RG19-RG20	6.0 mA	good	n/a
+1539.63134765625	0.0002	electrical_stimulation	biphasic	RG19-RG20	6.0 mA	good	n/a
+1546.9091796875	0.0002	electrical_stimulation	biphasic	RG19-RG20	6.0 mA	good	n/a
+1550.3603515625	0.0002	electrical_stimulation	biphasic	RG19-RG20	6.0 mA	good	n/a
+1556.27734375	0.0002	electrical_stimulation	biphasic	RG19-RG20	6.0 mA	good	n/a
+1578.97802734375	0.0002	electrical_stimulation	biphasic	RG20-RG21	6.0 mA	good	n/a
+1583.4404296875	0.0002	electrical_stimulation	biphasic	RG20-RG21	6.0 mA	good	n/a
+1588.27294921875	0.0002	electrical_stimulation	biphasic	RG20-RG21	6.0 mA	good	n/a
+1591.787109375	0.0002	electrical_stimulation	biphasic	RG20-RG21	6.0 mA	good	n/a
+1596.072265625	0.0002	electrical_stimulation	biphasic	RG20-RG21	6.0 mA	good	n/a
+1599.55419921875	0.0002	electrical_stimulation	biphasic	RG20-RG21	6.0 mA	good	n/a
+1602.9375	0.0002	electrical_stimulation	biphasic	RG20-RG21	6.0 mA	good	n/a
+1607.056640625	0.0002	electrical_stimulation	biphasic	RG20-RG21	6.0 mA	good	n/a
+1610.654296875	0.0002	electrical_stimulation	biphasic	RG20-RG21	6.0 mA	good	n/a
+1615.2314453125	0.0002	electrical_stimulation	biphasic	RG20-RG21	6.0 mA	good	n/a
+1632.04541015625	0.0002	electrical_stimulation	biphasic	RG21-RG22	6.0 mA	good	n/a
+1636.55615234375	0.0002	electrical_stimulation	biphasic	RG21-RG22	6.0 mA	good	n/a
+1640.8037109375	0.0002	electrical_stimulation	biphasic	RG21-RG22	6.0 mA	good	n/a
+1645.38671875	0.0002	electrical_stimulation	biphasic	RG21-RG22	6.0 mA	good	n/a
+1650.63623046875	0.0002	electrical_stimulation	biphasic	RG21-RG22	6.0 mA	good	n/a
+1655.5419921875	0.0002	electrical_stimulation	biphasic	RG21-RG22	6.0 mA	good	n/a
+1659.4521484375	0.0002	electrical_stimulation	biphasic	RG21-RG22	6.0 mA	good	n/a
+1663.30517578125	0.0002	electrical_stimulation	biphasic	RG21-RG22	6.0 mA	good	n/a
+1667.42333984375	0.0002	electrical_stimulation	biphasic	RG21-RG22	6.0 mA	good	n/a
+1673.01708984375	0.0002	electrical_stimulation	biphasic	RG21-RG22	6.0 mA	good	n/a
+1728.154296875	0.0002	electrical_stimulation	biphasic	RG22-RG23	6.0 mA	good	n/a
+1732.14794921875	0.0002	electrical_stimulation	biphasic	RG22-RG23	6.0 mA	good	n/a
+1736.91796875	0.0002	electrical_stimulation	biphasic	RG22-RG23	6.0 mA	good	n/a
+1741.240234375	0.0002	electrical_stimulation	biphasic	RG22-RG23	6.0 mA	good	n/a
+1745.6337890625	0.0002	electrical_stimulation	biphasic	RG22-RG23	6.0 mA	good	n/a
+1750.62890625	0.0002	electrical_stimulation	biphasic	RG22-RG23	6.0 mA	good	n/a
+1755.43017578125	0.0002	electrical_stimulation	biphasic	RG22-RG23	6.0 mA	good	n/a
+1759.3876953125	0.0002	electrical_stimulation	biphasic	RG22-RG23	6.0 mA	good	n/a
+1763.58935546875	0.0002	electrical_stimulation	biphasic	RG22-RG23	6.0 mA	good	n/a
+1769.25634765625	0.0002	electrical_stimulation	biphasic	RG22-RG23	6.0 mA	good	n/a
+1792.69140625	0.0002	electrical_stimulation	biphasic	RG23-RG24	6.0 mA	good	n/a
+1796.7109375	0.0002	electrical_stimulation	biphasic	RG23-RG24	6.0 mA	good	n/a
+1801.15771484375	0.0002	electrical_stimulation	biphasic	RG23-RG24	6.0 mA	good	n/a
+1805.30224609375	0.0002	electrical_stimulation	biphasic	RG23-RG24	6.0 mA	good	n/a
+1809.55126953125	0.0002	electrical_stimulation	biphasic	RG23-RG24	6.0 mA	good	n/a
+1814.25341796875	0.0002	electrical_stimulation	biphasic	RG23-RG24	6.0 mA	good	n/a
+1817.9970703125	0.0002	electrical_stimulation	biphasic	RG23-RG24	6.0 mA	good	n/a
+1822.7568359375	0.0002	electrical_stimulation	biphasic	RG23-RG24	6.0 mA	good	n/a
+1827.5166015625	0.0002	electrical_stimulation	biphasic	RG23-RG24	6.0 mA	good	n/a
+1831.353515625	0.0002	electrical_stimulation	biphasic	RG23-RG24	6.0 mA	good	n/a
+1874.9326171875	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	bad	channels RG25-36 are bad
+1881.40283203125	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	bad	channels RG25-36 are bad
+1886.1103515625	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	bad	channels RG25-36 are bad
+1891.583984375	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	bad	channels RG25-36 are bad
+1897.09423828125	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	bad	channels RG25-36 are bad
+1904.2109375	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	bad	channels RG25-36 are bad
+1909.7890625	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	bad	channels RG25-36 are bad
+1915.40380859375	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	bad	channels RG25-36 are bad
+1921.44580078125	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	bad	channels RG25-36 are bad
+1925.93505859375	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	bad	channels RG25-36 are bad
+1954.9013671875	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	bad	channels RG25-36 are bad
+1960.3076171875	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	bad	channels RG25-36 are bad
+1966.40673828125	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	bad	channels RG25-36 are bad
+1969.7275390625	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	bad	channels RG25-36 are bad
+1973.27783203125	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	bad	channels RG25-36 are bad
+1977.98583984375	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	bad	channels RG25-36 are bad
+1981.796875	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	bad	channels RG25-36 are bad
+1986.01416015625	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	bad	channels RG25-36 are bad
+1988.7724609375	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	bad	channels RG25-36 are bad
+1992.119140625	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	bad	channels RG25-36 are bad
+2012.99951171875	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	bad	channels RG25-36 are bad
+2017.65966796875	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	bad	channels RG25-36 are bad
+2022.06005859375	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	bad	channels RG25-36 are bad
+2027.2373046875	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	bad	channels RG25-36 are bad
+2031.78857421875	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	bad	channels RG25-36 are bad
+2036.89794921875	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	bad	channels RG25-36 are bad
+2041.6572265625	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	bad	channels RG25-36 are bad
+2044.68115234375	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	bad	channels RG25-36 are bad
+2048.53369140625	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	bad	channels RG25-36 are bad
+2052.8193359375	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	bad	channels RG25-36 are bad
+2074.1845703125	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	bad	channels RG25-36 are bad
+2080.87890625	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	bad	channels RG25-36 are bad
+2085.2724609375	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	bad	channels RG25-36 are bad
+2089.6943359375	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	bad	channels RG25-36 are bad
+2094.521484375	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	bad	channels RG25-36 are bad
+2099.802734375	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	bad	channels RG25-36 are bad
+2106.67333984375	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	bad	channels RG25-36 are bad
+2110.8857421875	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	bad	channels RG25-36 are bad
+2114.36376953125	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	bad	channels RG25-36 are bad
+2118.4404296875	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	bad	channels RG25-36 are bad
+2123.2421875	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	bad	channels RG25-36 are bad
+2147.515625	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	bad	channels RG25-36 are bad
+2151.88427734375	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	bad	channels RG25-36 are bad
+2156.01416015625	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	bad	channels RG25-36 are bad
+2159.84619140625	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	bad	channels RG25-36 are bad
+2163.72998046875	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	bad	channels RG25-36 are bad
+2168.87548828125	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	bad	channels RG25-36 are bad
+2173.28515625	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	bad	channels RG25-36 are bad
+2177.57568359375	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	bad	channels RG25-36 are bad
+2182.44580078125	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	bad	channels RG25-36 are bad
+2186.00146484375	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	bad	channels RG25-36 are bad
+2190.15576171875	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	bad	channels RG25-36 are bad
+2282.130859375	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	bad	channels RG25-36 are bad
+2287.2138671875	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	bad	channels RG25-36 are bad
+2291.44189453125	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	bad	channels RG25-36 are bad
+2295.78466796875	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	bad	channels RG25-36 are bad
+2299.29833984375	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	bad	channels RG25-36 are bad
+2302.78076171875	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	bad	channels RG25-36 are bad
+2306.654296875	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	bad	channels RG25-36 are bad
+2309.90234375	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	bad	channels RG25-36 are bad
+2312.89453125	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	bad	channels RG25-36 are bad
+2316.31982421875	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	bad	channels RG25-36 are bad
+2339.47314453125	0.0002	electrical_stimulation	biphasic	RG32-RG34	6.0 mA	bad	channels RG25-36 are bad
+2343.8271484375	0.0002	electrical_stimulation	biphasic	RG32-RG34	6.0 mA	bad	channels RG25-36 are bad
+2348.28857421875	0.0002	electrical_stimulation	biphasic	RG32-RG34	6.0 mA	bad	channels RG25-36 are bad
+2354.451171875	0.0002	electrical_stimulation	biphasic	RG32-RG34	6.0 mA	bad	channels RG25-36 are bad
+2359.53955078125	0.0002	electrical_stimulation	biphasic	RG32-RG34	6.0 mA	bad	channels RG25-36 are bad
+2363.84619140625	0.0002	electrical_stimulation	biphasic	RG32-RG34	6.0 mA	bad	channels RG25-36 are bad
+2368.8828125	0.0002	electrical_stimulation	biphasic	RG32-RG34	6.0 mA	bad	channels RG25-36 are bad
+2374.83544921875	0.0002	electrical_stimulation	biphasic	RG32-RG34	6.0 mA	bad	channels RG25-36 are bad
+2378.109375	0.0002	electrical_stimulation	biphasic	RG32-RG34	6.0 mA	bad	channels RG25-36 are bad
+2393.5927734375	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	bad	channels RG25-36 are bad
+2398.0712890625	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	bad	channels RG25-36 are bad
+2402.96142578125	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	bad	channels RG25-36 are bad
+2406.73046875	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	bad	channels RG25-36 are bad
+2409.8896484375	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	bad	channels RG25-36 are bad
+2412.93408203125	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	bad	channels RG25-36 are bad
+2415.90087890625	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	bad	channels RG25-36 are bad
+2419.53955078125	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	bad	channels RG25-36 are bad
+2441.07080078125	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	good	n/a
+2502.583984375	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	good	n/a
+2506.58203125	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	good	n/a
+2509.564453125	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	good	n/a
+2512.80712890625	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	good	n/a
+2516.25341796875	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	good	n/a
+2519.7314453125	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	good	n/a
+2522.5458984375	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	good	n/a
+2525.6318359375	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	good	n/a
+2529.2392578125	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	good	n/a
+2534.35400390625	0.0002	electrical_stimulation	biphasic	RG25-RG26	6.0 mA	good	n/a
+2547.7529296875	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	good	n/a
+2551.36572265625	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	good	n/a
+2555.59375	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	good	n/a
+2558.9619140625	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	good	n/a
+2562.04248046875	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	good	n/a
+2565.29052734375	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	good	n/a
+2568.34033203125	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	good	n/a
+2572.22998046875	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	good	n/a
+2575.2587890625	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	good	n/a
+2579.2099609375	0.0002	electrical_stimulation	biphasic	RG26-RG27	6.0 mA	good	n/a
+2600.17333984375	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	good	n/a
+2603.89013671875	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	good	n/a
+2607.80029296875	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	good	n/a
+2611.64697265625	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	good	n/a
+2614.7236328125	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	good	n/a
+2618.1748046875	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	good	n/a
+2621.7197265625	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	good	n/a
+2625.00927734375	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	good	n/a
+2627.94921875	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	good	n/a
+2631.740234375	0.0002	electrical_stimulation	biphasic	RG27-RG28	6.0 mA	good	n/a
+2648.642578125	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	good	n/a
+2652.13134765625	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	good	n/a
+2655.435546875	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	good	n/a
+2659.189453125	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	good	n/a
+2662.671875	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	good	n/a
+2666.919921875	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	good	n/a
+2670.8671875	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	good	n/a
+2674.21435546875	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	good	n/a
+2677.154296875	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	good	n/a
+2680.427734375	0.0002	electrical_stimulation	biphasic	RG28-RG29	6.0 mA	good	n/a
+2697.68603515625	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	good	n/a
+2701.2412109375	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	good	n/a
+2705.2607421875	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	good	n/a
+2708.56591796875	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	good	n/a
+2712.158203125	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	good	n/a
+2714.81201171875	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	good	n/a
+2718.2890625	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	good	n/a
+2721.2197265625	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	good	n/a
+2723.5126953125	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	good	n/a
+2727.27685546875	0.0002	electrical_stimulation	biphasic	RG29-RG30	6.0 mA	good	n/a
+2744.31494140625	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	good	RG31 bad channel
+2748.33984375	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	good	RG31 bad channel
+2753.95458984375	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	good	RG31 bad channel
+2758.53271484375	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	good	RG31 bad channel
+2762.73388671875	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	good	RG31 bad channel
+2766.2529296875	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	good	RG31 bad channel
+2770.61669921875	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	good	RG31 bad channel
+2773.45263671875	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	good	RG31 bad channel
+2777.451171875	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	good	RG31 bad channel
+2780.26025390625	0.0002	electrical_stimulation	biphasic	RG31-RG32	6.0 mA	good	RG31 bad channel
+2802.20947265625	0.0002	electrical_stimulation	biphasic	RG32-RG33	6.0 mA	good	RG31-RG33 bad channels
+2806.37451171875	0.0002	electrical_stimulation	biphasic	RG32-RG33	6.0 mA	good	RG31-RG33 bad channels
+2811.13427734375	0.0002	electrical_stimulation	biphasic	RG32-RG33	6.0 mA	good	RG31-RG33 bad channels
+2815.78466796875	0.0002	electrical_stimulation	biphasic	RG32-RG33	6.0 mA	good	RG31-RG33 bad channels
+2819.85595703125	0.0002	electrical_stimulation	biphasic	RG32-RG33	6.0 mA	good	RG31-RG33 bad channels
+2824.31884765625	0.0002	electrical_stimulation	biphasic	RG32-RG33	6.0 mA	good	RG32-RG33 bad channel
+2827.92626953125	0.0002	electrical_stimulation	biphasic	RG32-RG33	6.0 mA	good	RG32-RG33 bad channels
+2836.99755859375	0.0002	electrical_stimulation	biphasic	RG32-RG33	6.0 mA	good	RG32-RG33 bad channels
+2840.2353515625	0.0002	electrical_stimulation	biphasic	RG32-RG33	6.0 mA	good	RG32-RG33 bad channels
+2844.18701171875	0.0002	electrical_stimulation	biphasic	RG32-RG33	6.0 mA	good	RG32-RG33 bad channels
+2859.7392578125	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	good	RG32-RG33 bad channels
+2863.54443359375	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	good	RG32-RG33 bad channels
+2867.21533203125	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	good	RG32-RG33 bad channels
+2870.8125	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	good	RG32-RG33 bad channels
+2874.0400390625	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	good	RG32-RG33 bad channels
+2877.42822265625	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	good	RG33-RG34 bad channels
+2880.70654296875	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	good	RG33-RG34 bad channels
+2884.3671875	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	good	RG33-RG34 bad channels
+2887.62548828125	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	good	RG33-RG34 bad channels
+2891.822265625	0.0002	electrical_stimulation	biphasic	RG33-RG34	6.0 mA	good	RG33-RG34 bad channels
+2906.9736328125	0.0002	electrical_stimulation	biphasic	RG34-RG35	6.0 mA	good	RG33-RG35 bad channels
+2910.3310546875	0.0002	electrical_stimulation	biphasic	RG34-RG35	6.0 mA	good	RG33-RG35 bad channels
+2914.61083984375	0.0002	electrical_stimulation	biphasic	RG34-RG35	6.0 mA	good	RG33-RG35 bad channels
+2919.3857421875	0.0002	electrical_stimulation	biphasic	RG34-RG35	6.0 mA	good	RG33-RG35 bad channels
+2922.83251953125	0.0002	electrical_stimulation	biphasic	RG34-RG35	6.0 mA	good	RG34-RG35 bad channels
+2926.1064453125	0.0002	electrical_stimulation	biphasic	RG34-RG35	6.0 mA	good	RG35 bad channel
+2929.08251953125	0.0002	electrical_stimulation	biphasic	RG34-RG35	6.0 mA	good	RG35 bad channel
+2932.5703125	0.0002	electrical_stimulation	biphasic	RG34-RG35	6.0 mA	good	RG35 bad channel
+2936.1630859375	0.0002	electrical_stimulation	biphasic	RG34-RG35	6.0 mA	good	RG35 bad channel
+2939.9580078125	0.0002	electrical_stimulation	biphasic	RG34-RG35	6.0 mA	good	RG35 bad channel
+2969.87939453125	0.0002	electrical_stimulation	biphasic	RG35-RG36	6.0 mA	good	RG35-RG36 bad channels
+2973.90869140625	0.0002	electrical_stimulation	biphasic	RG35-RG36	6.0 mA	good	RG35-RG36 bad channels
+2977.89697265625	0.0002	electrical_stimulation	biphasic	RG35-RG36	6.0 mA	good	RG35-RG36 bad channels
+2981.0146484375	0.0002	electrical_stimulation	biphasic	RG35-RG36	6.0 mA	good	RG35-RG36 bad channels
+2984.5126953125	0.0002	electrical_stimulation	biphasic	RG35-RG36	6.0 mA	good	RG35-RG36 bad channels
+2987.041015625	0.0002	electrical_stimulation	biphasic	RG35-RG36	6.0 mA	good	RG35-RG36 bad channels
+2990.2470703125	0.0002	electrical_stimulation	biphasic	RG35-RG36	6.0 mA	good	RG35-RG36 bad channels
+2993.64111328125	0.0002	electrical_stimulation	biphasic	RG35-RG36	6.0 mA	good	RG35-RG36 bad channels
+2997.759765625	0.0002	electrical_stimulation	biphasic	RG35-RG36	6.0 mA	good	RG35-RG36 bad channels
+3001.78466796875	0.0002	electrical_stimulation	biphasic	RG35-RG36	6.0 mA	good	RG35-RG36 bad channels

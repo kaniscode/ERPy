@@ -1,0 +1,14 @@
+{
+  "outputs": {
+    "all_candidate_metrics.csv": "42e4582c125954e38c76fa64d8f56bfb7611c106253e26ffe31cfc21a2d5ab21",
+    "decision_stage_counts.csv": "ca84fa022e13e0485f0ea4b29b9dfd378794d2d71fffe6e9febea9f314327935",
+    "operating_points.csv": "e6b35b2eba12795c611e7062f3c99a6bf2bd8534a1fdae4c323478aeaf30bddb",
+    "paired_differences.csv": "8111f41115ee15131c5468e061274bfedd159b15e7f4478c430c057a8e18a604",
+    "paired_records.csv.gz": "554e7cfdf161e3a61e3b39a7eac0d95d3068176f104e4b0219d9aa735f24fa33",
+    "participant_metrics.csv": "6bcd437b3284ef2c8e67751852358573f13073a63adf52c1dbc5c1bf90fccf84",
+    "secondary_paired_differences.csv": "255c95d89397958ce1c093c6e019ce217a739be270473ec8a7f1c593507e40a8",
+    "site_descriptives.csv": "32b17407a12c70255e785e91202e60d7de21da5ee4bb88ee68fda6bb8c9926b4",
+    "summary.json": "c4a1ae12cf66538f9d731eaaea058e56f508d96f226d6dad7e40b6fcf036247d"
+  },
+  "protocol_sha256": "7b8170a51b118078c5567592b3cd1be12ef70db008cd0b02d422a629df201d21"
+}

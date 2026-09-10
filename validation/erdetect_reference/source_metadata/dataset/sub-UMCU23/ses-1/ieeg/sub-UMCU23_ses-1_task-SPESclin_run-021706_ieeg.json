@@ -1,0 +1,43 @@
+{
+	"TaskName": "task-SPESclin",
+	"SamplingFrequency": 2048,
+	"PowerLineFrequency": 50,
+	"SoftwareFilters": "n\/a",
+	"DCOffsetCorrection": "n\/a",
+	"HardwareFilters": {
+		"HighpassFilter": {
+			"CutoffFrequency": 0.15
+		},
+		"LowpassFilter": {
+			"CutoffFrequency": 468
+		}
+	},
+	"Manufacturer": "Micromed",
+	"ManufacturersModelName": "LTM64 Express",
+	"TaskDescription": "No task, electrical stimulation is performed. Patient is resting with eyes open\/closed. The latter is not always specified.",
+	"Instructions": "No instruction is given",
+	"InstitutionName": "University Medical Center Utrecht, Division Brain, Clinical Neurophysiology Department",
+	"InstitutionAddress": "Heidelberglaan 100, 3584 CX Utrecht",
+	"DeviceSerialNumber": "n\/a",
+	"ECOGChannelCount": 56,
+	"SEEGChannelCount": 0,
+	"EEGChannelCount": 0,
+	"EOGChannelCount": 0,
+	"ECGChannelCount": 1,
+	"EMGChannelCount": 1,
+	"MiscChannelCount": 0,
+	"TriggerChannelCount": 1,
+	"RecordingDuration": 2548,
+	"RecordingType": "continuous",
+	"EpochLength": 0,
+	"SubjectArtefactDescription": "artefacts are annotated manually when patient moves (which gives artefacts in all electrodes), or when an electrode is malfunctioning for a short period of time",
+	"SoftwareVersions": "4",
+	"iEEGReference": "probably mastoid",
+	"ElectrodeManufacturer": "AdTech",
+	"ElectrodeManufacturersModelName": "n\/a",
+	"iEEGGround": "top of forehead or mastoid",
+	"iEEGPlacementScheme": "right",
+	"iEEGElectrodeGroups": "ECoG;IHL[2x8];C[4x8];strip;IHH[1x8];",
+	"ElectricalStimulation": true,
+	"ElectricalStimulationParameters": "See for more detail the events.tsv"
+}

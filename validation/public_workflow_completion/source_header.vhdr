@@ -1,0 +1,114 @@
+Brain Vision Data Exchange Header File Version 1.0
+; Written using pybv 0.7.5
+
+[Common Infos]
+Codepage=UTF-8
+DataFile=sub-01_ses-ieeg01_task-ccep_run-01_ieeg.eeg
+MarkerFile=sub-01_ses-ieeg01_task-ccep_run-01_ieeg.vmrk
+DataFormat=BINARY
+; Data orientation: MULTIPLEXED=ch1,pt1, ch2,pt1 ...
+DataOrientation=MULTIPLEXED
+NumberOfChannels=89
+; Sampling interval in microseconds
+SamplingInterval=488.28125
+
+[Binary Infos]
+BinaryFormat=IEEE_FLOAT_32
+
+[Channel Infos]
+; Each entry: Ch<Channel number>=<Name>,<Reference channel name>,
+; <Resolution in "Unit">,<Unit>, Future extensions..
+; Fields are delimited by commas, some fields might be omitted (empty).
+; Commas in channel names are coded as "\1".
+Ch1=LAS1,,0.1,µV
+Ch2=LAS2,,0.1,µV
+Ch3=LAS3,,0.1,µV
+Ch4=LAS4,,0.1,µV
+Ch5=LMS1,,0.1,µV
+Ch6=LMS2,,0.1,µV
+Ch7=LMS3,,0.1,µV
+Ch8=LMS4,,0.1,µV
+Ch9=LPS1,,0.1,µV
+Ch10=LPS2,,0.1,µV
+Ch11=LPS3,,0.1,µV
+Ch12=LPS4,,0.1,µV
+Ch13=LTG1,,0.1,µV
+Ch14=LTG2,,0.1,µV
+Ch15=LTG3,,0.1,µV
+Ch16=LTG4,,0.1,µV
+Ch17=LTG5,,0.1,µV
+Ch18=LTG6,,0.1,µV
+Ch19=LTG7,,0.1,µV
+Ch20=LTG8,,0.1,µV
+Ch21=LTG9,,0.1,µV
+Ch22=LTG10,,0.1,µV
+Ch23=LTG11,,0.1,µV
+Ch24=LTG12,,0.1,µV
+Ch25=LTG13,,0.1,µV
+Ch26=LTG14,,0.1,µV
+Ch27=LTG15,,0.1,µV
+Ch28=LTG16,,0.1,µV
+Ch29=LTG17,,0.1,µV
+Ch30=LTG18,,0.1,µV
+Ch31=LTG19,,0.1,µV
+Ch32=LTG20,,0.1,µV
+Ch33=LTG21,,0.1,µV
+Ch34=LTG22,,0.1,µV
+Ch35=LTG23,,0.1,µV
+Ch36=LTG24,,0.1,µV
+Ch37=LTG25,,0.1,µV
+Ch38=LTG26,,0.1,µV
+Ch39=LTG27,,0.1,µV
+Ch40=LTG28,,0.1,µV
+Ch41=LTG29,,0.1,µV
+Ch42=LTG30,,0.1,µV
+Ch43=LTG31,,0.1,µV
+Ch44=LTG32,,0.1,µV
+Ch45=LTG33,,0.1,µV
+Ch46=LTG34,,0.1,µV
+Ch47=LTG35,,0.1,µV
+Ch48=LTG36,,0.1,µV
+Ch49=LTG37,,0.1,µV
+Ch50=LTG38,,0.1,µV
+Ch51=LTG39,,0.1,µV
+Ch52=LTG40,,0.1,µV
+Ch53=LTG41,,0.1,µV
+Ch54=LTG42,,0.1,µV
+Ch55=LTG43,,0.1,µV
+Ch56=LTG44,,0.1,µV
+Ch57=LTG45,,0.1,µV
+Ch58=LTG46,,0.1,µV
+Ch59=LTG47,,0.1,µV
+Ch60=LTG48,,0.1,µV
+Ch61=LAG49,,0.1,µV
+Ch62=LAG50,,0.1,µV
+Ch63=LAG51,,0.1,µV
+Ch64=LAG52,,0.1,µV
+Ch65=LAG53,,0.1,µV
+Ch66=LAG54,,0.1,µV
+Ch67=LAG55,,0.1,µV
+Ch68=LAG56,,0.1,µV
+Ch69=LAG57,,0.1,µV
+Ch70=LAG58,,0.1,µV
+Ch71=LAG59,,0.1,µV
+Ch72=LAG60,,0.1,µV
+Ch73=LAG61,,0.1,µV
+Ch74=LAG62,,0.1,µV
+Ch75=LAG63,,0.1,µV
+Ch76=LAG64,,0.1,µV
+Ch77=LAD1,,0.1,µV
+Ch78=LAD2,,0.1,µV
+Ch79=LAD3,,0.1,µV
+Ch80=LAD4,,0.1,µV
+Ch81=LSD1,,0.1,µV
+Ch82=LSD2,,0.1,µV
+Ch83=LSD3,,0.1,µV
+Ch84=LSD4,,0.1,µV
+Ch85=LPD1,,0.1,µV
+Ch86=LPD2,,0.1,µV
+Ch87=LPD3,,0.1,µV
+Ch88=LPD4,,0.1,µV
+Ch89=EKG,,0.1,µV
+
+[Comment]
+

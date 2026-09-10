@@ -1,0 +1,28 @@
+{
+	"TaskName": "CCEP",
+	"InstitutionName": "Mayo Clinic",
+	"Manufacturer": "Natus Medical Inc",
+	"TaskDescription": "Bipolar corticocortical stimulation",
+	"Instructions": "rest",
+	"iEEGReference": "intracranial",
+	"SamplingFrequency": 2048,
+	"PowerLineFrequency": 60,
+	"SoftwareFilters": "n/a",
+	"HardwareFilters": {
+		"HighpassFilter": {
+			"CutoffFrequency": 0.01
+		},
+		"LowpassFilter": {
+			"CutoffFrequency": 878
+		}
+	},
+	"ElectrodeManufacturer": "",
+	"RecordingDuration": 1433.31,
+	"RecordingType": "continuous",
+	"iEEGGround": "",
+	"iEEGPlacementScheme": "",
+	"iEEGElectrodeGroups": "",
+	"SubjectArtefactDescription": "",
+	"ElectricalStimulation": true,
+	"ElectricalStimulationParameters": "Single pulse stimulation with a square wave biphasic pulse, 200 microsecond duration, 6mA amplitude, delivered about every 5 seconds"
+}

@@ -223,6 +223,8 @@ class CRPEnergyResult:
     parameters: str
     detector_version: str = CRP_ENERGY_DETECTOR_VERSION
     notes: str = ""
+    n_response_samples: int = 0
+    n_baseline_samples: int = 0
 
     def to_record(self, *, include_arrays: bool = True) -> dict[str, Any]:
         """Return a detector-table record with optionally compact array fields."""
@@ -305,6 +307,9 @@ def fixed_window_reproducibility_sign_flip_test(
     The statistic is the mean of all ordered, semi-normalized cross-trial
     projections. Whole-trial Rademacher signs preserve every trial norm and
     account for the dependence among projections that share trials. The
+    null requires joint invariance of the response vectors under independent
+    whole-trial sign changes; independent centrally symmetric trials suffice.
+    This condition must hold after preprocessing and trial selection. The
     response window must be fixed before this function is called; a
     data-selected CRP duration must not define this inferential array.
 
@@ -407,7 +412,12 @@ def paired_log_rms_sign_flip_test(
     max_exact_trials: int = 16,
     random_state: int | np.random.Generator | None = 42,
 ) -> tuple[float, float, bool, int]:
-    """One-sided paired sign-flip test of mean log RMS ratio against zero.
+    """Upper-tail sign-flip test of paired log RMS differences.
+
+    Null validity requires joint invariance under coordinate-wise sign
+    changes, as supplied by independent centrally symmetric differences.
+    It is not an unrestricted finite-sample test of every distribution with
+    a nonpositive mean difference.
 
     Exact enumeration omits the observed all-positive assignment and adds it
     back through the standard plus-one formula. This is algebraically the
@@ -480,7 +490,10 @@ def run_crp_energy_array(
     Whole-trial sign flips supply the reproducibility component over the full
     declared response window. Matched response and baseline segments are each
     demeaned separately before paired log-RMS sign flips. A descriptive CRP
-    model is fitted independently of the inferential window selection.
+    model is fitted independently of the inferential window selection. An
+    unavailable descriptive model does not discard valid component p-values.
+    Epochs must cover the effective response window within half a sample;
+    truncated windows return an unavailable result rather than a shorter test.
     """
 
     config = config or CRPEnergyConfig()
@@ -513,13 +526,29 @@ def run_crp_energy_array(
     )
     response_stop = float(config.response_window[1])
     baseline_start, baseline_stop = map(float, config.baseline_window)
+    parameter_json = _parameter_json(config)
+    coverage_tolerance = median_step / 2.0 + 1e-12
+    if (
+        time_values[0] > response_start + coverage_tolerance
+        or time_values[-1] < response_stop - coverage_tolerance
+    ):
+        return _empty_result(
+            channel=channel,
+            n_trials_total=values.shape[0],
+            response_window=(response_start, response_stop),
+            baseline_window=(baseline_start, baseline_stop),
+            parameters=parameter_json,
+            notes=(
+                "Declared response window is unavailable: epoch times must "
+                "cover both effective endpoints within half a sample"
+            ),
+        )
     response_indices = np.flatnonzero(
         (time_values >= response_start) & (time_values <= response_stop)
     )
     baseline_candidates = np.flatnonzero(
         (time_values >= baseline_start) & (time_values <= baseline_stop)
     )
-    parameter_json = _parameter_json(config)
     if not response_indices.size or len(baseline_candidates) < len(response_indices):
         return _empty_result(
             channel=channel,
@@ -552,6 +581,8 @@ def run_crp_energy_array(
             n_trials_total=values.shape[0],
             n_trials_clean=len(clean_indices),
             clean_trial_indices=clean_indices,
+            n_response_samples=len(response_indices),
+            n_baseline_samples=len(baseline_indices),
             response_window=matched_response_window,
             baseline_window=matched_baseline_window,
             parameters=parameter_json,
@@ -639,9 +670,16 @@ def run_crp_energy_array(
     rms_baseline = float(np.exp(np.mean(np.log(baseline_rms + eps))))
     rms_ratio_db = float(20.0 / np.log(10.0) * energy_statistic)
 
-    if crp_result is None or reproducibility_result is None:
+    if reproducibility_result is None:
         p_crp = np.nan
         crp_statistic = np.nan
+        qc_status = "reproducibility_unavailable"
+    else:
+        p_crp = float(reproducibility_result.p_value)
+        crp_statistic = float(reproducibility_result.statistic)
+        qc_status = "pass"
+
+    if crp_result is None:
         duration = np.nan
         waveform = np.array([], dtype=float)
         waveform_times = np.array([], dtype=float)
@@ -650,14 +688,7 @@ def run_crp_energy_array(
         snr = np.nan
         canonical_energy = np.nan
         canonical_fraction = np.nan
-        qc_status = (
-            "crp_unavailable"
-            if crp_result is None
-            else "reproducibility_unavailable"
-        )
     else:
-        p_crp = float(reproducibility_result.p_value)
-        crp_statistic = float(reproducibility_result.statistic)
         duration = float(crp_result.response_duration_s)
         waveform = np.asarray(crp_result.canonical_waveform, dtype=float)
         waveform_times = np.asarray(crp_result.times, dtype=float)
@@ -670,17 +701,20 @@ def run_crp_energy_array(
             cross_validated=bool(config.canonical_energy_cv),
             eps=eps,
         )
-        qc_status = "pass"
 
     crp_pass = bool(np.isfinite(p_crp) and p_crp <= float(config.alpha))
     energy_pass = bool(
         np.isfinite(p_energy) and p_energy <= float(config.alpha)
     )
-    classification = _classification(crp_pass, energy_pass)
     p_joint = (
         float(max(p_crp, p_energy))
         if np.isfinite(p_crp) and np.isfinite(p_energy)
         else np.nan
+    )
+    classification = (
+        _classification(crp_pass, energy_pass)
+        if np.isfinite(p_joint)
+        else "insufficient_data"
     )
     return CRPEnergyResult(
         channel=str(channel),
@@ -727,6 +761,8 @@ def run_crp_energy_array(
         response_window=matched_response_window,
         baseline_window=matched_baseline_window,
         qc_status=qc_status,
+        n_response_samples=len(response_indices),
+        n_baseline_samples=len(baseline_indices),
         parameters=parameter_json,
         notes="; ".join(
             note
@@ -757,7 +793,9 @@ def _canonical_energy_effects(
                 full_matrices=False,
             )
             if not singular_values.size or singular_values[0] <= eps:
-                continue
+                # A held-out fold without a defined training direction does
+                # not supply the canonical vector required by the estimand.
+                return np.nan, np.nan
             canonical = right_vectors[0]
             if float(np.dot(canonical, np.mean(training, axis=0))) < 0:
                 canonical = -canonical
@@ -828,6 +866,8 @@ def _empty_result(
     notes: str,
     n_trials_clean: int = 0,
     clean_trial_indices: np.ndarray | None = None,
+    n_response_samples: int = 0,
+    n_baseline_samples: int = 0,
 ) -> CRPEnergyResult:
     return CRPEnergyResult(
         channel=str(channel),
@@ -866,6 +906,8 @@ def _empty_result(
         response_window=response_window,
         baseline_window=baseline_window,
         qc_status="insufficient_data",
+        n_response_samples=int(n_response_samples),
+        n_baseline_samples=int(n_baseline_samples),
         parameters=parameters,
         notes=str(notes),
     )

@@ -627,6 +627,66 @@ def test_sign_flip_helpers_bound_enumeration_and_mark_empty_as_not_run() -> None
     assert empty.energy_n_permutations == 0
 
 
+def test_crp_energy_does_not_infer_from_a_truncated_declared_window() -> None:
+    times = np.arange(-500, 101, dtype=float) / 1000.0
+    rng = np.random.default_rng(6006)
+    values = rng.normal(0.0, 0.2, (12, len(times)))
+    values += 8.0 * np.exp(-0.5 * ((times - 0.045) / 0.008) ** 2)
+    config = ep.CRPEnergyConfig(
+        response_window=(0.015, 0.3),
+        baseline_window=(-0.5, -0.02),
+        canonical_energy_cv=False,
+    )
+    result = ep.run_crp_energy_array(values, times, config=config)
+
+    assert result.qc_status == "insufficient_data"
+    assert result.classification == "insufficient_data"
+    assert not result.significant
+    assert np.isnan(result.p_crp) and np.isnan(result.p_energy)
+    assert np.isnan(result.p_joint) and np.isnan(result.q_joint)
+    assert result.response_window == config.response_window
+    assert result.n_response_samples == result.n_baseline_samples == 0
+    assert result.reproducibility_n_randomizations == 0
+    assert result.energy_n_permutations == 0
+    assert "Declared response window is unavailable" in result.notes
+
+    # An explicitly declared shorter test remains valid on the same data.
+    shorter = ep.run_crp_energy_array(
+        values, times,
+        config=ep.CRPEnergyConfig(
+            response_window=(0.015, 0.1),
+            baseline_window=(-0.5, -0.02),
+            canonical_energy_cv=False,
+        ),
+    )
+    assert shorter.qc_status == "pass"
+    assert shorter.significant
+    assert shorter.n_response_samples == shorter.n_baseline_samples == 86
+
+
+@pytest.mark.parametrize(
+    ("declared_stop", "available"),
+    [(0.3, True), (0.3005, True), (0.3006, False)],
+)
+def test_crp_energy_window_coverage_allows_only_sample_grid_rounding(
+    declared_stop: float, available: bool,
+) -> None:
+    times = np.arange(-500, 301, dtype=float) / 1000.0
+    rng = np.random.default_rng(6060)
+    values = rng.normal(0.0, 0.2, (8, len(times)))
+    values += 8.0 * np.exp(-0.5 * ((times - 0.045) / 0.008) ** 2)
+    result = ep.run_crp_energy_array(
+        values, times,
+        config=ep.CRPEnergyConfig(
+            response_window=(0.015, declared_stop),
+            baseline_window=(-0.5, -0.02),
+            canonical_energy_cv=False,
+        ),
+    )
+    assert np.isfinite(result.p_joint) == available
+    assert (result.qc_status == "pass") == available
+
+
 def test_crp_energy_detector_error_retains_schema_and_parameters(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

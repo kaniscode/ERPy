@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-09-09T01:08:13.391555+00:00",
+  "package_version": "1.1.0rc1",
+  "python": "3.12.5",
+  "package_versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "scipy": "1.13.1",
+    "h5py": "3.11.0",
+    "tables": "3.9.2"
+  },
+  "source_git_commit": "21c2718459b5f4fa05a5a7305574bbbe1a5ef433",
+  "source_git_commit_role": "Contextual HEAD; manifest hashes identify the executed working tree",
+  "source_identity": {
+    "dataset_id": "ds003708",
+    "snapshot": "1.0.4",
+    "snapshot_git_commit": "eb80e3d2f13e066c387ef8d101a290d18a40eb27",
+    "settings": {
+      "min_events": 8,
+      "max_events": 17,
+      "max_sites": 1,
+      "max_channels": 32
+    },
+    "stim_site": "LTG1-LTG2",
+    "objects": {
+      "events_url": {
+        "url": "https://s3.amazonaws.com/openneuro.org/ds003708/derivatives/preprocessed/sub-01/ses-ieeg01/ieeg/sub-01_ses-ieeg01_task-ccep_run-01_events.tsv",
+        "version_id": "Vrluqey2gIp00yvaxuJKeaYDYcabHSJg",
+        "bytes": 48216,
+        "etag": "\"c66d60bf7714e3723f312d8bb0b27110\"",
+        "sha256": "f4767c8d6f25a641e706d5bee7dfc928b9ca4501c54bf33b67e96dc5562a9aab",
+        "md5": "c66d60bf7714e3723f312d8bb0b27110",
+        "snapshot_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003708/eb80e3d2f13e066c387ef8d101a290d18a40eb27/derivatives/preprocessed/sub-01/ses-ieeg01/ieeg/sub-01_ses-ieeg01_task-ccep_run-01_events.tsv",
+        "snapshot_identical": true
+      },
+      "vhdr_url": {
+        "url": "https://s3.amazonaws.com/openneuro.org/ds003708/derivatives/preprocessed/sub-01/ses-ieeg01/ieeg/sub-01_ses-ieeg01_task-ccep_run-01_ieeg.vhdr",
+        "version_id": "ITdjxKOYNezaMpu1eDdHQCHb37lAdFcj",
+        "bytes": 2444,
+        "etag": "\"ad1d7dfc78deb403ad099f57e1534795\"",
+        "sha256": "5551a8ca58fe16f489956981ab6437ae65c041891273c08fbea13dfab70cef4a",
+        "md5": "ad1d7dfc78deb403ad099f57e1534795",
+        "snapshot_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003708/eb80e3d2f13e066c387ef8d101a290d18a40eb27/derivatives/preprocessed/sub-01/ses-ieeg01/ieeg/sub-01_ses-ieeg01_task-ccep_run-01_ieeg.vhdr",
+        "snapshot_annex_pointer": "../../../../../.git/annex/objects/jZ/4P/MD5E-s2444--ad1d7dfc78deb403ad099f57e1534795.vhdr/MD5E-s2444--ad1d7dfc78deb403ad099f57e1534795.vhdr"
+      },
+      "electrodes_url": {
+        "url": "https://s3.amazonaws.com/openneuro.org/ds003708/derivatives/preprocessed/sub-01/ses-ieeg01/ieeg/sub-01_ses-ieeg01_space-MNI152NLin6Sym_electrodes.tsv",
+        "version_id": "arWPo1k3Qdhc155mIzOY.WSx2HTBzo9g",
+        "bytes": 6772,
+        "etag": "\"8f1bc27766d6eb148a56160a8ab805a3\"",
+        "sha256": "6606045c8881d7ed1ef15990c9160e2884bec8789b59aeb9bd5dba709a4b6aec",
+        "md5": "8f1bc27766d6eb148a56160a8ab805a3",
+        "snapshot_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003708/eb80e3d2f13e066c387ef8d101a290d18a40eb27/derivatives/preprocessed/sub-01/ses-ieeg01/ieeg/sub-01_ses-ieeg01_space-MNI152NLin6Sym_electrodes.tsv",
+        "snapshot_identical": true
+      },
+      "eeg_url": {
+        "url": "https://s3.amazonaws.com/openneuro.org/ds003708/derivatives/preprocessed/sub-01/ses-ieeg01/ieeg/sub-01_ses-ieeg01_task-ccep_run-01_ieeg.eeg",
+        "version_id": "ekxCFJH.NE2DhaUDkQ_Nc0iIxeHeLgF4",
+        "bytes": 2899637088,
+        "etag": "\"9832a1868bff527620c3cec91df4bb81-3\"",
+        "snapshot_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003708/eb80e3d2f13e066c387ef8d101a290d18a40eb27/derivatives/preprocessed/sub-01/ses-ieeg01/ieeg/sub-01_ses-ieeg01_task-ccep_run-01_ieeg.eeg",
+        "snapshot_annex_pointer": "../../../../../.git/annex/objects/V4/Fw/MD5E-s2899637088--4baa7662c4ed61fc21a1bbebb7575364.eeg/MD5E-s2899637088--4baa7662c4ed61fc21a1bbebb7575364.eeg"
+      }
+    },
+    "window": {
+      "sample_range": [
+        1043299,
+        1390762
+      ],
+      "csv_sha256": "44366721db57a472c5e737598d72641f0b754c2955bfaeef25fe51abceb195ad",
+      "csv_bytes": 216191975
+    },
+    "verification_scope": "All downloads use explicit immutable S3 version IDs. Events and electrodes match the Git snapshot bytes; the header matches its annex MD5 identity. The selected 32-channel CSV must match the previously executed notebook output and preserved source window before analysis. Full 2.9GB EEG was not rehashed; its annex MD5 is recorded as a snapshot locator, not claimed independently verified. The retrieved byte-range SHA256 is additionally recorded in each run.",
+    "established_utc": "2026-09-08T06:40:31.199970+00:00",
+    "historical_window_evidence": "Original executed notebook07 stored downloaded_window_sha256; independently confirmed against its preserved 216191975-byte CSV before this source-lock revision."
+  },
+  "full_range": {
+    "sample_start": 1043299,
+    "sample_stop_exclusive": 1390762,
+    "byte_start": 371414444,
+    "byte_stop_exclusive": 495111272,
+    "bytes": 123696828,
+    "sha256": "134ec1b0c9b80101596fc38343eb300e4ab0d104a35d8a4ab3b252856a4abb5b"
+  },
+  "local_BrainVision_rebase": "Binary samples unchanged; only DataFile renamed and unused MarkerFile cleared; first sample timestamp = synthetic clock + source sample_start /2048",
+  "synthetic_clock": "2026-01-01 is an arbitrary software clock, not the actual recording date",
+  "sample_grid": {
+    "header_sfreq_hz": 2048.0,
+    "epoch_sfreq_hz": 2048.001048576537,
+    "samples_per_epoch": 2254,
+    "minimum_time_s": -0.499999744,
+    "maximum_time_s": 0.600097349,
+    "source_event_sample_offsets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "note": "The native loader uses nanosecond timestamps; current preprocessing infers a rate from that grid. The exact realized epoch times and detector windows are retained, rather than silently substituting nominal header times."
+  },
+  "processing": {
+    "pipeline": [
+      [
+        "reject_bad_channels",
+        {
+          "bad_channels": [
+            "EKG"
+          ],
+          "method": "drop"
+        }
+      ],
+      [
+        "reject_bad_channels",
+        {
+          "bad_channels": "auto",
+          "method": "drop",
+          "detection_params": {
+            "zscore_threshold": 8.0
+          }
+        }
+      ],
+      [
+        "artifact_blank",
+        {
+          "width_s": 0.004
+        }
+      ],
+      [
+        "notch_filter",
+        {
+          "notch_freq": 60.0,
+          "bw": 2.0,
+          "harm": true
+        }
+      ],
+      [
+        "bandpass_filter",
+        {
+          "lowcut": 0.5,
+          "highcut": 80.0,
+          "order": 3
+        }
+      ]
+    ],
+    "recording_analyze_metadata": "acquisition_metadata.json",
+    "event_onset_samples_verified": true,
+    "cache": false,
+    "historical_epochs_reused": false
+  },
+  "local_input_artifacts": [
+    {
+      "name": "signal_range.eeg",
+      "bytes": 123696828,
+      "sha256": "134ec1b0c9b80101596fc38343eb300e4ab0d104a35d8a4ab3b252856a4abb5b"
+    },
+    {
+      "name": "signal_range.vhdr",
+      "bytes": 2373,
+      "sha256": "b6187a1fefeb0063ba224133b47c63d5bfcc4f3986fa6ee2a612f009a0eef7d2"
+    },
+    {
+      "name": "LTG_1_2_events.csv",
+      "bytes": 516,
+      "sha256": "0723367161f8740707efbeab8417264e228b90e3f7cf2abd6f9609a10d091d99"
+    },
+    {
+      "name": "electrode_metadata.csv",
+      "bytes": 7461,
+      "sha256": "31dcad162dd6263b7d33c66b266354856b18278f3c5ac787ccaedfb551bf27ad"
+    },
+    {
+      "name": "raw_metadata.csv",
+      "bytes": 162,
+      "sha256": "6bd07f5b3459ca4ab247e4dc30988cc781f81f5bfeb3abecc1f92aaed57925e7"
+    },
+    {
+      "name": "stim_metadata.csv",
+      "bytes": 161,
+      "sha256": "8bcd98abe45b684aa9b49c1ba5a71dcde347a64743a41af0d983fbdf7aafe28d"
+    }
+  ],
+  "source_objects": [
+    {
+      "key": "vhdr_url",
+      "bytes": 2444,
+      "sha256": "5551a8ca58fe16f489956981ab6437ae65c041891273c08fbea13dfab70cef4a"
+    },
+    {
+      "key": "events_url",
+      "bytes": 48216,
+      "sha256": "f4767c8d6f25a641e706d5bee7dfc928b9ca4501c54bf33b67e96dc5562a9aab"
+    },
+    {
+      "key": "electrodes_url",
+      "bytes": 6772,
+      "sha256": "6606045c8881d7ed1ef15990c9160e2884bec8789b59aeb9bd5dba709a4b6aec"
+    }
+  ],
+  "notes": "All89 header channels are accounted for. EKG is excluded by its source label before persistent screening; stimulation contacts are excluded from the testing family. No record was selected by its detector result."
+}

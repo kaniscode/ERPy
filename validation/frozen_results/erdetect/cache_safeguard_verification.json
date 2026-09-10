@@ -1,0 +1,353 @@
+{
+  "generated_at_utc": "2026-09-08T05:27:19.666118+00:00",
+  "purpose": "Verify prediction cache provenance/integrity safeguards without changing detector inference or original frozen predictions.",
+  "dataset": "OpenNeuro ds004774",
+  "epoch_identifier": "epochs/MAYO04/LG2-LG3.npz",
+  "epoch_sha256": "5d4120c4159c3a95e6a31373cd9e55a9cc915249ec0838b7aec7399323607640",
+  "frozen_archive": "validation/frozen_results/erdetect/prediction_files.tar.gz",
+  "frozen_archive_sha256": "45da56b4f833ea4ed84db3f7479fbf52dc337fea2f48d31e7b7c8c1a71082647",
+  "frozen_archive_member": "predictions/MAYO04/LG2-LG3.csv",
+  "frozen_csv_sha256": "47a32914a411bcb1944827951a53fc0972204d6e01509c01bc49eaecdad45f1a",
+  "fresh_csv_sha256": "0003ca7c357b4b387a205d7031b1ef82d97953ebfdaa12efbf4fa0f2f83e25d9",
+  "fresh_receipt_schema": 1,
+  "fresh_fingerprint_sha256": "9b7dea350b1101a3c215f8bf033091859fa7a718375d804aa8a0e29d2a352bba",
+  "prediction_fingerprint": {
+    "code_sha256": {
+      "ERPy/__init__.py": "2d830448c46b2dd7b32f164801f4d7602cb6993cac2d8dd68e5b8b5cf83669f2",
+      "ERPy/analysis.py": "13f1b2a1f8d77fe038815c53e173d42fa2f56c645461277688b01f7deef300c6",
+      "ERPy/artifact_anchor.py": "4ff5bb32fc866f192ef3f9c976e4d6789642702009f789cf7ca1fd94c15c11ea",
+      "ERPy/bad_channels.py": "eae924e9b10dde9c1273428457b038e54bd86d96fb63b377e2ec1e64b931759d",
+      "ERPy/baseline.py": "39f00de63aac71cc81f530e91b847b1ff0be63d0dc094f99201dd2db87fc954c",
+      "ERPy/bids.py": "ba538033edc3ccc02be94f94164d957231983881da8119d4600ed9919ae986e1",
+      "ERPy/cli.py": "7a65def455ff45671d11b3e762e67b6a9092911e17086369cedd9b8375cd95c7",
+      "ERPy/connectivity.py": "69ec4313cd5d8fb5e6879c792b6277636f44b13994d3a5dba7e3905627b11874",
+      "ERPy/coordinates.py": "e62a68ed3330b2d61330caa299052462f60bda65d1f6b2e88d6d1e58eebaabab",
+      "ERPy/crp.py": "3e10af052790cf72a4f1c248f617435a25db65d20ee9fd92d57df778e49591cc",
+      "ERPy/crp_energy.py": "5a26ca705f0117b56de9d35f2a8a197c36c8451063aabcbcdfa64e8d72d96455",
+      "ERPy/dataloader.py": "6576f723f844faba22ec6926924e568a30ef36645c0efe30b4eac58df82e3490",
+      "ERPy/epochs.py": "b1d4c1261a82213b029decd380449d3b3799e5896ed28758a6f19c56273a62c1",
+      "ERPy/erp_detection.py": "01f32987d5eaa6e3c4be77a21e2301daf25b8867ef9ba2fc67fc2b8b0e26ac91",
+      "ERPy/events.py": "d1939ddff7db78d4e1f1ad3fc02a5f0f8b8c420cd5f051739c14062e380e3493",
+      "ERPy/facade.py": "19edbe8e6babfe443760a97d4ab9c4e7ced641a4ae70b3711db2a9d84911d06d",
+      "ERPy/graph_metrics.py": "591de3c2409379cc8f3f9862ca13b9f78431d71f538de7d15868ddbf5d40ab12",
+      "ERPy/inference.py": "fc94b5c22c7eccdc8b511c7b93ec62ea39811b0362dd1a39370e85dbbe429e1d",
+      "ERPy/io.py": "22a5618f901bd627eb2916e492b80a446722959bbaebfd1e1dd617e811a67b3f",
+      "ERPy/pipeline.py": "c1acfe99d19563ff525d31256b38e14de493968abeae12da441ec558aaf2c2aa",
+      "ERPy/response_metrics.py": "97cba515c2587a6b899da5ae622e4526d6730274703c5b1f4cba584c147f8963",
+      "ERPy/spectral.py": "38ed1ceef8c41f23c6322fd8ae735eb96c71c075bee58f008f666f003f8ec8b3",
+      "ERPy/stats_utils.py": "5fc00bba0d3e18da3c55db76e06c1057f025901ee6f59945c00faf09748887a6",
+      "ERPy/storage.py": "e870afecaca3453215c9c85be6eec576213e2cc62ef0b69fb4c9b5f4ba85a2ec",
+      "ERPy/traveling_waves.py": "e4abe6d8e19bea3791c362477a53d595538adecc99079f55cc25ed113df7e6d3",
+      "ERPy/utils/__init__.py": "10fa3df73853582fd34e6f080b6ec53f710e8e840994969f15c0647f4b3ec0d5",
+      "ERPy/utils/events.py": "0bc6c842920805c9e2116dff370a0bd9c5b57e37732a1a37b6f2074b7961e515",
+      "ERPy/utils/jobrunner.py": "58d3406d5d4763636d359a1a6ab20725b6090a1ca60decb5b3cabb7b4286e9d0",
+      "ERPy/utils/preproc.py": "1d1c7dddc162abd56edef322f6d9bd59b18a43fc87d840060908a6745cbfab2a",
+      "ERPy/utils/utils.py": "c7beb64011986532284a3f5a8d3cc56493439f2448c12a8841888212a5c0705e",
+      "ERPy/viz/__init__.py": "00f74409efc09b32efc084c020e2604e7a8396bb0749c9000341c55b2e1a9167",
+      "ERPy/viz/anatomy.py": "c5f5c9bb3ee04adc017668c50af91a3578375833590a524fc949c65406ff9140",
+      "ERPy/viz/crp.py": "3574581780ed8dc1ac0d6b344aa2d6a535483c1f6127bc3a98314dd0f8f4e262",
+      "ERPy/viz/crp_plots.py": "79446e734cc677a2775ad627fd57af594a21eb1f8e5cfae081a1bc4e5cad7291",
+      "ERPy/viz/detections.py": "8f99d85cf0b7c227e6c4d8323239ce9e210082d73ff25857a23ffe78b92b7582",
+      "ERPy/viz/erp_plots.py": "6978c610c03ac0eafce0de0422fc8f32c35e165b0ab520fee5231aa0b0ac5714",
+      "ERPy/viz/graph_metrics.py": "8a9d54045a5bf262a4bc0bd91a4a476064d361838242151f7c34127fdc74d0cf",
+      "ERPy/viz/heatmaps.py": "24573ca826ddbfd199427e47e17f06306ff0d765eea44be7a7b513551db040dc",
+      "ERPy/viz/io.py": "96ead2714f8d877f74d3c6fbae27bee8f52d7d8dc482879f9755f245337444d0",
+      "ERPy/viz/networks.py": "620738c8eb6d113e030951ca25610e36d2a32ad9b586e19a991a7726a25292df",
+      "ERPy/viz/quick.py": "9e33625d73e633f70cb53e19d7c1931490d7e42d838d7e4399708378dd9d8a23",
+      "ERPy/viz/response_metrics.py": "f367ad456353e9b504bebe2a5d6bc377a07f5f444f231ed9910dd9f9b9e0a98e",
+      "ERPy/viz/spectral.py": "2f198ca0bef693d8625e4287eff91c253a6e9a71e6fb12812fd2234d31985ca2",
+      "ERPy/viz/stim_order.py": "ffad0867a69c0e416d0ea8d3bea83bed3c390a853d6508030bbea2aa9a916fb4",
+      "ERPy/viz/theme.py": "a79b45290a37a74476f09764dac4ebbbf8ea2df393fc54e26818b5573332217a",
+      "ERPy/viz/waveforms.py": "ca0d9ebf884a58841fbdfc9b36fe36475a8ce21938627171bf66bcb885ee29cc",
+      "ERPy/warmup.py": "1deb96b906789e6b20c3138f2b6e01d8f34485adbbc61d66ab42d7faa65d7cca",
+      "ERPy/waveform_qc.py": "9fd31f255bf9f69522348292307ca8015a913a45fcf9e2a2d4c7ed1f8945ac5d",
+      "validation/predict_erdetect_epochs.py": "76616617e272b4e0e8a1d64eb490a929b754e46c01907f468b5f4566942bb18d"
+    },
+    "configuration_order": [
+      "broad_15_300ms",
+      "early_10_90ms"
+    ],
+    "configurations": {
+      "broad_15_300ms": {
+        "alpha": 0.05,
+        "artifact_interval": [
+          0.0,
+          0.015
+        ],
+        "baseline_window": [
+          -1.0,
+          -0.1
+        ],
+        "canonical_energy_cv": false,
+        "correction": "fdr_bh",
+        "eps": 1e-12,
+        "max_exact_reproducibility_trials": 12,
+        "max_exact_trials": 16,
+        "min_clean_trials": 8,
+        "n_permutations": 5000,
+        "projection_start_s": 0.01,
+        "projection_step_s": 0.005,
+        "random_state": 42,
+        "response_window": [
+          0.015,
+          0.3
+        ]
+      },
+      "early_10_90ms": {
+        "alpha": 0.05,
+        "artifact_interval": [
+          0.0,
+          0.009
+        ],
+        "baseline_window": [
+          -1.0,
+          -0.1
+        ],
+        "canonical_energy_cv": false,
+        "correction": "fdr_bh",
+        "eps": 1e-12,
+        "max_exact_reproducibility_trials": 12,
+        "max_exact_trials": 16,
+        "min_clean_trials": 8,
+        "n_permutations": 5000,
+        "projection_start_s": 0.01,
+        "projection_step_s": 0.005,
+        "random_state": 42,
+        "response_window": [
+          0.01,
+          0.09
+        ]
+      }
+    },
+    "dependencies": {
+      "byteorder": "little",
+      "implementation": "CPython",
+      "machine": "arm64",
+      "numerical_builds": {
+        "numpy": "Build Dependencies:\n  blas:\n    detection method: pkgconfig\n    found: true\n    include directory: /opt/anaconda3/include\n    lib directory: /opt/anaconda3/lib\n    name: openblas\n    openblas configuration: USE_64BITINT= DYNAMIC_ARCH=1 DYNAMIC_OLDER= NO_CBLAS=\n      NO_LAPACK=0 NO_LAPACKE= NO_AFFINITY=1 USE_OPENMP=0 VORTEX MAX_THREADS=128\n    pc file directory: /opt/anaconda3/lib/pkgconfig\n    version: 0.3.21\n  lapack:\n    detection method: internal\n    found: true\n    include directory: unknown\n    lib directory: unknown\n    name: dep4347739648\n    openblas configuration: unknown\n    pc file directory: unknown\n    version: 1.26.4\nCompilers:\n  c:\n    args: -ftree-vectorize, -fPIC, -fPIE, -fstack-protector-strong, -O2, -pipe, -isystem,\n      /opt/anaconda3/include, -fdebug-prefix-map=/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_a51i_mbs7m/croot/numpy_and_numpy_base_1708638620867/work=/usr/local/src/conda/numpy-base-1.26.4,\n      -fdebug-prefix-map=/opt/anaconda3=/usr/local/src/conda-prefix, -D_FORTIFY_SOURCE=2,\n      -isystem, /opt/anaconda3/include, -mmacosx-version-min=11.1\n    commands: arm64-apple-darwin20.0.0-clang\n    linker: ld64\n    linker args: -Wl,-pie, -Wl,-headerpad_max_install_names, -Wl,-dead_strip_dylibs,\n      -Wl,-rpath,/opt/anaconda3/lib, -L/opt/anaconda3/lib, -ftree-vectorize, -fPIC,\n      -fPIE, -fstack-protector-strong, -O2, -pipe, -isystem, /opt/anaconda3/include,\n      -fdebug-prefix-map=/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_a51i_mbs7m/croot/numpy_and_numpy_base_1708638620867/work=/usr/local/src/conda/numpy-base-1.26.4,\n      -fdebug-prefix-map=/opt/anaconda3=/usr/local/src/conda-prefix, -D_FORTIFY_SOURCE=2,\n      -isystem, /opt/anaconda3/include, -mmacosx-version-min=11.1\n    name: clang\n    version: 14.0.6\n  c++:\n    args: -ftree-vectorize, -fPIC, -fPIE, -fstack-protector-strong, -O2, -pipe, -stdlib=libc++,\n      -fvisibility-inlines-hidden, -fmessage-length=0, -isystem, /opt/anaconda3/include,\n      -fdebug-prefix-map=/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_a51i_mbs7m/croot/numpy_and_numpy_base_1708638620867/work=/usr/local/src/conda/numpy-base-1.26.4,\n      -fdebug-prefix-map=/opt/anaconda3=/usr/local/src/conda-prefix, -D_FORTIFY_SOURCE=2,\n      -isystem, /opt/anaconda3/include, -mmacosx-version-min=11.1\n    commands: arm64-apple-darwin20.0.0-clang++\n    linker: ld64\n    linker args: -Wl,-pie, -Wl,-headerpad_max_install_names, -Wl,-dead_strip_dylibs,\n      -Wl,-rpath,/opt/anaconda3/lib, -L/opt/anaconda3/lib, -ftree-vectorize, -fPIC,\n      -fPIE, -fstack-protector-strong, -O2, -pipe, -stdlib=libc++, -fvisibility-inlines-hidden,\n      -fmessage-length=0, -isystem, /opt/anaconda3/include, -fdebug-prefix-map=/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_a51i_mbs7m/croot/numpy_and_numpy_base_1708638620867/work=/usr/local/src/conda/numpy-base-1.26.4,\n      -fdebug-prefix-map=/opt/anaconda3=/usr/local/src/conda-prefix, -D_FORTIFY_SOURCE=2,\n      -isystem, /opt/anaconda3/include, -mmacosx-version-min=11.1\n    name: clang\n    version: 14.0.6\n  cython:\n    commands: cython\n    linker: cython\n    name: cython\n    version: 3.0.8\nMachine Information:\n  build:\n    cpu: aarch64\n    endian: little\n    family: aarch64\n    system: darwin\n  host:\n    cpu: aarch64\n    endian: little\n    family: aarch64\n    system: darwin\nPython Information:\n  path: /opt/anaconda3/bin/python\n  version: '3.12'\nSIMD Extensions:\n  baseline:\n  - NEON\n  - NEON_FP16\n  - NEON_VFPV4\n  - ASIMD\n  found:\n  - ASIMDHP\n  not found:\n  - ASIMDFHM\n\n",
+        "scipy": "Build Dependencies:\n  blas:\n    detection method: pkgconfig\n    found: true\n    include directory: /opt/anaconda3/include\n    lib directory: /opt/anaconda3/lib\n    name: openblas\n    openblas configuration: USE_64BITINT= DYNAMIC_ARCH=1 DYNAMIC_OLDER= NO_CBLAS=\n      NO_LAPACK=0 NO_LAPACKE= NO_AFFINITY=1 USE_OPENMP=0 VORTEX MAX_THREADS=128\n    pc file directory: /opt/anaconda3/lib/pkgconfig\n    version: 0.3.21\n  lapack:\n    detection method: pkgconfig\n    found: true\n    include directory: /opt/anaconda3/include\n    lib directory: /opt/anaconda3/lib\n    name: openblas\n    openblas configuration: USE_64BITINT= DYNAMIC_ARCH=1 DYNAMIC_OLDER= NO_CBLAS=\n      NO_LAPACK=0 NO_LAPACKE= NO_AFFINITY=1 USE_OPENMP=0 VORTEX MAX_THREADS=128\n    pc file directory: /opt/anaconda3/lib/pkgconfig\n    version: 0.3.21\n  pybind11:\n    detection method: pkgconfig\n    include directory: /opt/anaconda3/include\n    name: pybind11\n    version: 2.12.0\nCompilers:\n  c:\n    args: -ftree-vectorize, -fPIC, -fPIE, -fstack-protector-strong, -O2, -pipe, -isystem,\n      /opt/anaconda3/include, -fdebug-prefix-map=/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b9t0odioph/croot/scipy_1717521487325/work=/usr/local/src/conda/scipy-1.13.1,\n      -fdebug-prefix-map=/opt/anaconda3=/usr/local/src/conda-prefix, -D_FORTIFY_SOURCE=2,\n      -isystem, /opt/anaconda3/include, -mmacosx-version-min=11.1\n    commands: arm64-apple-darwin20.0.0-clang\n    linker: ld64\n    linker args: -Wl,-pie, -Wl,-headerpad_max_install_names, -Wl,-dead_strip_dylibs,\n      -Wl,-rpath,/opt/anaconda3/lib, -L/opt/anaconda3/lib, -ftree-vectorize, -fPIC,\n      -fPIE, -fstack-protector-strong, -O2, -pipe, -isystem, /opt/anaconda3/include,\n      -fdebug-prefix-map=/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b9t0odioph/croot/scipy_1717521487325/work=/usr/local/src/conda/scipy-1.13.1,\n      -fdebug-prefix-map=/opt/anaconda3=/usr/local/src/conda-prefix, -D_FORTIFY_SOURCE=2,\n      -isystem, /opt/anaconda3/include, -mmacosx-version-min=11.1\n    name: clang\n    version: 14.0.6\n  c++:\n    args: -ftree-vectorize, -fPIC, -fPIE, -fstack-protector-strong, -O2, -pipe, -stdlib=libc++,\n      -fvisibility-inlines-hidden, -fmessage-length=0, -isystem, /opt/anaconda3/include,\n      -fdebug-prefix-map=/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b9t0odioph/croot/scipy_1717521487325/work=/usr/local/src/conda/scipy-1.13.1,\n      -fdebug-prefix-map=/opt/anaconda3=/usr/local/src/conda-prefix, -D_FORTIFY_SOURCE=2,\n      -isystem, /opt/anaconda3/include, -mmacosx-version-min=11.1\n    commands: arm64-apple-darwin20.0.0-clang++\n    linker: ld64\n    linker args: -Wl,-pie, -Wl,-headerpad_max_install_names, -Wl,-dead_strip_dylibs,\n      -Wl,-rpath,/opt/anaconda3/lib, -L/opt/anaconda3/lib, -ftree-vectorize, -fPIC,\n      -fPIE, -fstack-protector-strong, -O2, -pipe, -stdlib=libc++, -fvisibility-inlines-hidden,\n      -fmessage-length=0, -isystem, /opt/anaconda3/include, -fdebug-prefix-map=/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b9t0odioph/croot/scipy_1717521487325/work=/usr/local/src/conda/scipy-1.13.1,\n      -fdebug-prefix-map=/opt/anaconda3=/usr/local/src/conda-prefix, -D_FORTIFY_SOURCE=2,\n      -isystem, /opt/anaconda3/include, -mmacosx-version-min=11.1\n    name: clang\n    version: 14.0.6\n  cython:\n    commands: cython\n    linker: cython\n    name: cython\n    version: 3.0.10\n  fortran:\n    args: -march=armv8-a, -ftree-vectorize, -fPIC, -fno-stack-protector, -O2, -pipe,\n      -isystem, /opt/anaconda3/include, -fdebug-prefix-map=/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b9t0odioph/croot/scipy_1717521487325/work=/usr/local/src/conda/scipy-1.13.1,\n      -fdebug-prefix-map=/opt/anaconda3=/usr/local/src/conda-prefix\n    commands: /var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b9t0odioph/croot/scipy_1717521487325/_build_env/bin/arm64-apple-darwin20.0.0-gfortran\n    linker: ld64\n    linker args: -Wl,-pie, -Wl,-headerpad_max_install_names, -Wl,-dead_strip_dylibs,\n      -Wl,-rpath,/opt/anaconda3/lib, -L/opt/anaconda3/lib, -march=armv8-a, -ftree-vectorize,\n      -fPIC, -fno-stack-protector, -O2, -pipe, -isystem, /opt/anaconda3/include, -fdebug-prefix-map=/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b9t0odioph/croot/scipy_1717521487325/work=/usr/local/src/conda/scipy-1.13.1,\n      -fdebug-prefix-map=/opt/anaconda3=/usr/local/src/conda-prefix\n    name: gcc\n    version: 11.2.0\n  pythran:\n    include directory: ../../../../../../../../../../../opt/anaconda3/lib/python3.12/site-packages/pythran\n    version: 0.15.0\nMachine Information:\n  build:\n    cpu: aarch64\n    endian: little\n    family: aarch64\n    system: darwin\n  cross-compiled: false\n  host:\n    cpu: aarch64\n    endian: little\n    family: aarch64\n    system: darwin\nPython Information:\n  path: /opt/anaconda3/bin/python\n  version: '3.12'\n\n"
+      },
+      "python": "3.12.5",
+      "system": "Darwin",
+      "thread_environment": {
+        "BLIS_NUM_THREADS": null,
+        "MKL_NUM_THREADS": null,
+        "NUMEXPR_NUM_THREADS": null,
+        "OMP_NUM_THREADS": null,
+        "OPENBLAS_NUM_THREADS": null,
+        "VECLIB_MAXIMUM_THREADS": null
+      },
+      "versions": {
+        "numpy": "1.26.4",
+        "pandas": "2.2.2",
+        "scipy": "1.13.1"
+      }
+    },
+    "epoch_sha256": "5d4120c4159c3a95e6a31373cd9e55a9cc915249ec0838b7aec7399323607640",
+    "family": {
+      "alpha": 0.05,
+      "method": "fdr_bh",
+      "scope": "all retained non-stimulation contacts per pair and configuration; finite p_joint"
+    },
+    "normalization": {
+      "baseline_s": [
+        -0.5,
+        -0.02
+      ],
+      "operation": "per-trial nanmedian; half-open rounded sample slice"
+    },
+    "retained_channels": [
+      "LG1",
+      "LG2",
+      "LG3",
+      "LG4",
+      "LG5",
+      "LG7",
+      "LG8",
+      "LG9",
+      "LG10",
+      "LG11",
+      "LG12",
+      "LG13",
+      "LG14",
+      "LG15",
+      "LG16",
+      "LG18",
+      "LG19",
+      "LG20",
+      "LG22",
+      "LG23",
+      "LG24"
+    ],
+    "seed_policy": {
+      "algorithm": "SHA256 UTF-8 namespace|subject|pair|channel; first 8 bytes big-endian; mask to 63 bits",
+      "channel_seeds": {
+        "LG1": 2527714676435406694,
+        "LG10": 1561070023732367562,
+        "LG11": 2316413441601384547,
+        "LG12": 5017352331057964824,
+        "LG13": 2838497911068119478,
+        "LG14": 862959242828358355,
+        "LG15": 328690724645935520,
+        "LG16": 17650495458601575,
+        "LG18": 5013737485291864794,
+        "LG19": 5237018062192804478,
+        "LG20": 1265677867172217045,
+        "LG22": 1857650384279659448,
+        "LG23": 5097037083545322340,
+        "LG24": 650596792991780203,
+        "LG4": 3924904575892973966,
+        "LG5": 1899804107155604601,
+        "LG7": 6352305043524336995,
+        "LG8": 721895682519211438,
+        "LG9": 4103998405111327395
+      },
+      "configuration_sharing": "same channel seed in both configurations; overrides config random_state",
+      "namespace": "ERPy-ds004774-v1|20260907"
+    },
+    "stimpair": "LG2-LG3",
+    "subject": "MAYO04"
+  },
+  "comparison": {
+    "rows": 38,
+    "all_compared_columns_exact": true,
+    "compared_columns": [
+      "subject",
+      "site",
+      "stimpair",
+      "channel",
+      "configuration",
+      "n_trials_total",
+      "n_trials_clean",
+      "p_reproducibility",
+      "p_energy",
+      "p_joint",
+      "rms_ratio_db",
+      "reproducibility_statistic",
+      "energy_statistic",
+      "component_classification",
+      "qc_status",
+      "notes",
+      "projection_exact",
+      "energy_exact",
+      "random_seed",
+      "epoch_sha256",
+      "q_joint",
+      "detected",
+      "evaluable",
+      "family_size"
+    ],
+    "excluded_columns": [
+      "elapsed_seconds"
+    ],
+    "numerical_columns": {
+      "n_trials_total": {
+        "exact_equal_including_nonfinite_locations": true,
+        "finite_values": 38,
+        "nonfinite_values": 0,
+        "max_absolute_difference": 0.0
+      },
+      "n_trials_clean": {
+        "exact_equal_including_nonfinite_locations": true,
+        "finite_values": 38,
+        "nonfinite_values": 0,
+        "max_absolute_difference": 0.0
+      },
+      "p_reproducibility": {
+        "exact_equal_including_nonfinite_locations": true,
+        "finite_values": 38,
+        "nonfinite_values": 0,
+        "max_absolute_difference": 0.0
+      },
+      "p_energy": {
+        "exact_equal_including_nonfinite_locations": true,
+        "finite_values": 38,
+        "nonfinite_values": 0,
+        "max_absolute_difference": 0.0
+      },
+      "p_joint": {
+        "exact_equal_including_nonfinite_locations": true,
+        "finite_values": 38,
+        "nonfinite_values": 0,
+        "max_absolute_difference": 0.0
+      },
+      "rms_ratio_db": {
+        "exact_equal_including_nonfinite_locations": true,
+        "finite_values": 38,
+        "nonfinite_values": 0,
+        "max_absolute_difference": 0.0
+      },
+      "reproducibility_statistic": {
+        "exact_equal_including_nonfinite_locations": true,
+        "finite_values": 38,
+        "nonfinite_values": 0,
+        "max_absolute_difference": 0.0
+      },
+      "energy_statistic": {
+        "exact_equal_including_nonfinite_locations": true,
+        "finite_values": 38,
+        "nonfinite_values": 0,
+        "max_absolute_difference": 0.0
+      },
+      "notes": {
+        "exact_equal_including_nonfinite_locations": true,
+        "finite_values": 0,
+        "nonfinite_values": 38,
+        "max_absolute_difference": null
+      },
+      "random_seed": {
+        "exact_equal_including_nonfinite_locations": true,
+        "finite_values": 38,
+        "nonfinite_values": 0,
+        "max_absolute_difference": 0.0
+      },
+      "q_joint": {
+        "exact_equal_including_nonfinite_locations": true,
+        "finite_values": 38,
+        "nonfinite_values": 0,
+        "max_absolute_difference": 0.0
+      },
+      "family_size": {
+        "exact_equal_including_nonfinite_locations": true,
+        "finite_values": 38,
+        "nonfinite_values": 0,
+        "max_absolute_difference": 0.0
+      }
+    },
+    "cache_reuse_after_fresh_inference": true,
+    "scope_limit": "One public pair with eight trials; does not assert a fresh execution of every public pair."
+  },
+  "tests": {
+    "command": "python -m pytest",
+    "python_version": "3.12.5",
+    "passed": 219,
+    "new_cache_and_workspace_tests": 26,
+    "seconds": 11.45,
+    "covered_failures": [
+      "missing receipt",
+      "missing CSV",
+      "changed epoch",
+      "changed response window with same configuration name",
+      "changed resolved default setting",
+      "changed inference code hash",
+      "changed dependency version",
+      "changed seed policy",
+      "changed numerical CSV field",
+      "missing row or column",
+      "truncated CSV",
+      "malformed receipt",
+      "incomplete grid with updated CSV hash",
+      "interruption between CSV and receipt publication",
+      "workspace conflict before copying",
+      "unmanifested or modified bundled metadata",
+      "frozen restoration combined with detector stage"
+    ],
+    "workspace_check": {
+      "verified_bundled_artifacts": 154,
+      "frozen_prediction_csvs_restored": 577,
+      "fabricated_prediction_receipts": 0,
+      "repeat_initialization_passed": true
+    }
+  },
+  "original_frozen_prediction_files_modified": false
+}

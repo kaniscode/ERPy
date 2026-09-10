@@ -1,0 +1,573 @@
+onset	duration	trial_type	electrical_stimulation_type	electrical_stimulation_site	electrical_stimulation_current	status	status_description
+270.32275390625	0.0002	electrical_stimulation	biphasic	LG1-LG2	6.0 mA	good	noisy channels
+275.25341796875	0.0002	electrical_stimulation	biphasic	LG1-LG2	6.0 mA	good	noisy channels
+281.06640625	0.0002	electrical_stimulation	biphasic	LG1-LG2	6.0 mA	good	noisy channels
+286.5048828125	0.0002	electrical_stimulation	biphasic	LG1-LG2	6.0 mA	good	noisy channels
+291.44189453125	0.0002	electrical_stimulation	biphasic	LG1-LG2	6.0 mA	good	noisy channels
+296.8310546875	0.0002	electrical_stimulation	biphasic	LG1-LG2	6.0 mA	good	noisy channels
+302.00927734375	0.0002	electrical_stimulation	biphasic	LG1-LG2	6.0 mA	good	noisy channels
+306.79931640625	0.0002	electrical_stimulation	biphasic	LG1-LG2	6.0 mA	good	noisy channels
+311.43505859375	0.0002	electrical_stimulation	biphasic	LG1-LG2	6.0 mA	good	noisy channels
+316.95068359375	0.0002	electrical_stimulation	biphasic	LG1-LG2	6.0 mA	good	noisy channels
+348.2001953125	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+354.4658203125	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+360.06982421875	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+364.142578125	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+368.6572265625	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+373.34912109375	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+378.14990234375	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+383.6708984375	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+388.0341796875	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+393.33740234375	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+397.87255859375	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+402.46044921875	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+406.53125	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+411.0830078125	0.0002	electrical_stimulation	biphasic	LG2-LG3	6.0 mA	good	noisy channels
+451.46142578125	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	good	noisy channels
+456.58642578125	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	good	noisy channels
+461.2314453125	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	good	noisy channels
+465.84521484375	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	good	noisy channels
+470.9384765625	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	good	noisy channels
+477.3037109375	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	good	noisy channels
+481.97412109375	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	good	noisy channels
+486.25	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	good	noisy channels
+490.5615234375	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	good	noisy channels
+495.67041015625	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	good	noisy channels
+514.97119140625	0.0002	electrical_stimulation	biphasic	LG4-LG5	6.0 mA	good	noisy channels
+520.08056640625	0.0002	electrical_stimulation	biphasic	LG4-LG5	6.0 mA	good	noisy channels
+524.630859375	0.0002	electrical_stimulation	biphasic	LG4-LG5	6.0 mA	good	noisy channels
+529.35400390625	0.0002	electrical_stimulation	biphasic	LG4-LG5	6.0 mA	good	noisy channels
+533.80712890625	0.0002	electrical_stimulation	biphasic	LG4-LG5	6.0 mA	good	noisy channels
+538.2021484375	0.0002	electrical_stimulation	biphasic	LG4-LG5	6.0 mA	good	noisy channels
+541.9814453125	0.0002	electrical_stimulation	biphasic	LG4-LG5	6.0 mA	good	noisy channels
+546.46533203125	0.0002	electrical_stimulation	biphasic	LG4-LG5	6.0 mA	good	noisy channels
+550.8330078125	0.0002	electrical_stimulation	biphasic	LG4-LG5	6.0 mA	good	noisy channels
+554.83251953125	0.0002	electrical_stimulation	biphasic	LG4-LG5	6.0 mA	good	noisy channels
+580.57177734375	0.0002	electrical_stimulation	biphasic	LG5-LG6	6.0 mA	good	noisy channels
+585.02392578125	0.0002	electrical_stimulation	biphasic	LG5-LG6	6.0 mA	good	noisy channels
+589.345703125	0.0002	electrical_stimulation	biphasic	LG5-LG6	6.0 mA	good	noisy channels
+593.06298828125	0.0002	electrical_stimulation	biphasic	LG5-LG6	6.0 mA	good	noisy channels
+599.44921875	0.0002	electrical_stimulation	biphasic	LG5-LG6	6.0 mA	good	noisy channels
+604.380859375	0.0002	electrical_stimulation	biphasic	LG5-LG6	6.0 mA	good	noisy channels
+610.56396484375	0.0002	electrical_stimulation	biphasic	LG5-LG6	6.0 mA	good	noisy channels
+615.7353515625	0.0002	electrical_stimulation	biphasic	LG5-LG6	6.0 mA	good	noisy channels
+621.4599609375	0.0002	electrical_stimulation	biphasic	LG5-LG6	6.0 mA	good	noisy channels
+626.12548828125	0.0002	electrical_stimulation	biphasic	LG5-LG6	6.0 mA	good	noisy channels
+643.2265625	0.0002	electrical_stimulation	biphasic	LG6-LG7	6.0 mA	bad	noisy channels
+648.13330078125	0.0002	electrical_stimulation	biphasic	LG6-LG7	6.0 mA	bad	noisy channels
+712.82373046875	0.0002	electrical_stimulation	biphasic	LG6-LG7	6.0 mA	bad	noisy channels
+716.681640625	0.0002	electrical_stimulation	biphasic	LG6-LG7	6.0 mA	bad	noisy channels
+721.33935546875	0.0002	electrical_stimulation	biphasic	LG6-LG7	6.0 mA	good	noisy channels
+725.56005859375	0.0002	electrical_stimulation	biphasic	LG6-LG7	6.0 mA	good	noisy channels
+730.2255859375	0.0002	electrical_stimulation	biphasic	LG6-LG7	6.0 mA	bad	noisy channels
+734.47998046875	0.0002	electrical_stimulation	biphasic	LG6-LG7	6.0 mA	good	noisy channels
+738.5048828125	0.0002	electrical_stimulation	biphasic	LG6-LG7	6.0 mA	good	noisy channels
+742.01416015625	0.0002	electrical_stimulation	biphasic	LG6-LG7	6.0 mA	bad	noisy channels
+746.033203125	0.0002	electrical_stimulation	biphasic	LG6-LG7	6.0 mA	good	noisy channels
+748.99951171875	0.0002	electrical_stimulation	biphasic	LG6-LG7	6.0 mA	good	noisy channels
+774.81640625	0.0002	electrical_stimulation	biphasic	LG7-LG8	6.0 mA	bad	noisy channels
+780.263671875	0.0002	electrical_stimulation	biphasic	LG7-LG8	6.0 mA	good	noisy channels
+784.94091796875	0.0002	electrical_stimulation	biphasic	LG7-LG8	6.0 mA	good	noisy channels
+789.34619140625	0.0002	electrical_stimulation	biphasic	LG7-LG8	6.0 mA	good	noisy channels
+793.7978515625	0.0002	electrical_stimulation	biphasic	LG7-LG8	6.0 mA	good	noisy channels
+800.298828125	0.0002	electrical_stimulation	biphasic	LG7-LG8	6.0 mA	bad	noisy channels
+804.52734375	0.0002	electrical_stimulation	biphasic	LG7-LG8	6.0 mA	good	noisy channels
+808.98486328125	0.0002	electrical_stimulation	biphasic	LG7-LG8	6.0 mA	good	noisy channels
+812.60791015625	0.0002	electrical_stimulation	biphasic	LG7-LG8	6.0 mA	good	noisy channels
+816.58544921875	0.0002	electrical_stimulation	biphasic	LG7-LG8	6.0 mA	good	noisy channels
+835.4853515625	0.0002	electrical_stimulation	biphasic	LG9-LG10	6.0 mA	good	noisy channels
+839.98974609375	0.0002	electrical_stimulation	biphasic	LG9-LG10	6.0 mA	good	noisy channels
+844.17578125	0.0002	electrical_stimulation	biphasic	LG9-LG10	6.0 mA	good	noisy channels
+848.35205078125	0.0002	electrical_stimulation	biphasic	LG9-LG10	6.0 mA	good	noisy channels
+851.58935546875	0.0002	electrical_stimulation	biphasic	LG9-LG10	6.0 mA	good	noisy channels
+858.16259765625	0.0002	electrical_stimulation	biphasic	LG9-LG10	6.0 mA	good	noisy channels
+861.1767578125	0.0002	electrical_stimulation	biphasic	LG9-LG10	6.0 mA	good	noisy channels
+865.123046875	0.0002	electrical_stimulation	biphasic	LG9-LG10	6.0 mA	good	noisy channels
+869.79931640625	0.0002	electrical_stimulation	biphasic	LG9-LG10	6.0 mA	good	noisy channels
+874.4384765625	0.0002	electrical_stimulation	biphasic	LG9-LG10	6.0 mA	good	noisy channels
+896.04443359375	0.0002	electrical_stimulation	biphasic	LG10-LG11	6.0 mA	good	noisy channels
+900.0537109375	0.0002	electrical_stimulation	biphasic	LG10-LG11	6.0 mA	good	noisy channels
+904.03125	0.0002	electrical_stimulation	biphasic	LG10-LG11	6.0 mA	good	noisy channels
+907.1279296875	0.0002	electrical_stimulation	biphasic	LG10-LG11	6.0 mA	good	noisy channels
+910.47412109375	0.0002	electrical_stimulation	biphasic	LG10-LG11	6.0 mA	good	noisy channels
+913.2119140625	0.0002	electrical_stimulation	biphasic	LG10-LG11	6.0 mA	good	noisy channels
+917.4765625	0.0002	electrical_stimulation	biphasic	LG10-LG11	6.0 mA	good	noisy channels
+921.7724609375	0.0002	electrical_stimulation	biphasic	LG10-LG11	6.0 mA	good	noisy channels
+926.05810546875	0.0002	electrical_stimulation	biphasic	LG10-LG11	6.0 mA	good	noisy channels
+930.67138671875	0.0002	electrical_stimulation	biphasic	LG10-LG11	6.0 mA	good	noisy channels
+951.22802734375	0.0002	electrical_stimulation	biphasic	LG11-LG12	6.0 mA	bad	noisy channels
+956.8427734375	0.0002	electrical_stimulation	biphasic	LG11-LG12	6.0 mA	bad	noisy channels
+961.39501953125	0.0002	electrical_stimulation	biphasic	LG11-LG12	6.0 mA	good	noisy channels
+966.12255859375	0.0002	electrical_stimulation	biphasic	LG11-LG12	6.0 mA	good	noisy channels
+970.7099609375	0.0002	electrical_stimulation	biphasic	LG11-LG12	6.0 mA	good	noisy channels
+975.38720703125	0.0002	electrical_stimulation	biphasic	LG11-LG12	6.0 mA	bad	noisy channels
+980.48681640625	0.0002	electrical_stimulation	biphasic	LG11-LG12	6.0 mA	good	noisy channels
+984.296875	0.0002	electrical_stimulation	biphasic	LG11-LG12	6.0 mA	good	noisy channels
+989.1611328125	0.0002	electrical_stimulation	biphasic	LG11-LG12	6.0 mA	good	noisy channels
+993.37841796875	0.0002	electrical_stimulation	biphasic	LG11-LG12	6.0 mA	good	noisy channels
+998.02880859375	0.0002	electrical_stimulation	biphasic	LG11-LG12	6.0 mA	good	noisy channels
+1022.63134765625	0.0002	electrical_stimulation	biphasic	LG12-LG13	6.0 mA	bad	noisy channels
+1026.95849609375	0.0002	electrical_stimulation	biphasic	LG12-LG13	6.0 mA	good	noisy channels
+1030.66455078125	0.0002	electrical_stimulation	biphasic	LG12-LG13	6.0 mA	good	noisy channels
+1035.4033203125	0.0002	electrical_stimulation	biphasic	LG12-LG13	6.0 mA	bad	noisy channels
+1039.376953125	0.0002	electrical_stimulation	biphasic	LG12-LG13	6.0 mA	good	noisy channels
+1042.337890625	0.0002	electrical_stimulation	biphasic	LG12-LG13	6.0 mA	good	noisy channels
+1045.4921875	0.0002	electrical_stimulation	biphasic	LG12-LG13	6.0 mA	good	noisy channels
+1049.87646484375	0.0002	electrical_stimulation	biphasic	LG12-LG13	6.0 mA	bad	noisy channels
+1053.88037109375	0.0002	electrical_stimulation	biphasic	LG12-LG13	6.0 mA	bad	noisy channels
+1058.6767578125	0.0002	electrical_stimulation	biphasic	LG12-LG13	6.0 mA	bad	noisy channels
+1084.01953125	0.0002	electrical_stimulation	biphasic	LG13-LG14	6.0 mA	good	noisy channels
+1087.8984375	0.0002	electrical_stimulation	biphasic	LG13-LG14	6.0 mA	bad	noisy channels
+1092.626953125	0.0002	electrical_stimulation	biphasic	LG13-LG14	6.0 mA	bad	noisy channels
+1097.3291015625	0.0002	electrical_stimulation	biphasic	LG13-LG14	6.0 mA	good	noisy channels
+1101.2548828125	0.0002	electrical_stimulation	biphasic	LG13-LG14	6.0 mA	good	noisy channels
+1103.98681640625	0.0002	electrical_stimulation	biphasic	LG13-LG14	6.0 mA	good	noisy channels
+1108.30859375	0.0002	electrical_stimulation	biphasic	LG13-LG14	6.0 mA	bad	noisy channels
+1111.04541015625	0.0002	electrical_stimulation	biphasic	LG13-LG14	6.0 mA	good	noisy channels
+1115.1328125	0.0002	electrical_stimulation	biphasic	LG13-LG14	6.0 mA	good	noisy channels
+1119.24609375	0.0002	electrical_stimulation	biphasic	LG13-LG14	6.0 mA	good	noisy channels
+1136.091796875	0.0002	electrical_stimulation	biphasic	LG14-LG15	6.0 mA	bad	noisy channels
+1140.517578125	0.0002	electrical_stimulation	biphasic	LG14-LG15	6.0 mA	bad	noisy channels
+1145.0166015625	0.0002	electrical_stimulation	biphasic	LG14-LG15	6.0 mA	good	noisy channels
+1148.23828125	0.0002	electrical_stimulation	biphasic	LG14-LG15	6.0 mA	good	noisy channels
+1151.96630859375	0.0002	electrical_stimulation	biphasic	LG14-LG15	6.0 mA	good	noisy channels
+1156.37646484375	0.0002	electrical_stimulation	biphasic	LG14-LG15	6.0 mA	bad	noisy channels
+1160.32177734375	0.0002	electrical_stimulation	biphasic	LG14-LG15	6.0 mA	good	noisy channels
+1164.837890625	0.0002	electrical_stimulation	biphasic	LG14-LG15	6.0 mA	good	noisy channels
+1168.4765625	0.0002	electrical_stimulation	biphasic	LG14-LG15	6.0 mA	good	noisy channels
+1173.30419921875	0.0002	electrical_stimulation	biphasic	LG14-LG15	6.0 mA	good	noisy channels
+1198.40234375	0.0002	electrical_stimulation	biphasic	LG15-LG16	6.0 mA	good	noisy channels
+1203.265625	0.0002	electrical_stimulation	biphasic	LG15-LG16	6.0 mA	good	noisy channels
+1206.86865234375	0.0002	electrical_stimulation	biphasic	LG15-LG16	6.0 mA	good	noisy channels
+1210.951171875	0.0002	electrical_stimulation	biphasic	LG15-LG16	6.0 mA	good	noisy channels
+1215.28857421875	0.0002	electrical_stimulation	biphasic	LG15-LG16	6.0 mA	good	noisy channels
+1218.55712890625	0.0002	electrical_stimulation	biphasic	LG15-LG16	6.0 mA	good	noisy channels
+1222.44091796875	0.0002	electrical_stimulation	biphasic	LG15-LG16	6.0 mA	good	noisy channels
+1226.345703125	0.0002	electrical_stimulation	biphasic	LG15-LG16	6.0 mA	good	noisy channels
+1231.13671875	0.0002	electrical_stimulation	biphasic	LG15-LG16	6.0 mA	good	noisy channels
+1235.48486328125	0.0002	electrical_stimulation	biphasic	LG15-LG16	6.0 mA	good	noisy channels
+1253.296875	0.0002	electrical_stimulation	biphasic	LG17-LG18	6.0 mA	good	noisy channels
+1257.89794921875	0.0002	electrical_stimulation	biphasic	LG17-LG18	6.0 mA	bad	noisy channels
+1262.65185546875	0.0002	electrical_stimulation	biphasic	LG17-LG18	6.0 mA	bad	noisy channels
+1267.42822265625	0.0002	electrical_stimulation	biphasic	LG17-LG18	6.0 mA	good	noisy channels
+1271.20166015625	0.0002	electrical_stimulation	biphasic	LG17-LG18	6.0 mA	good	noisy channels
+1275.4453125	0.0002	electrical_stimulation	biphasic	LG17-LG18	6.0 mA	good	noisy channels
+1278.66796875	0.0002	electrical_stimulation	biphasic	LG17-LG18	6.0 mA	good	noisy channels
+1283.04638671875	0.0002	electrical_stimulation	biphasic	LG17-LG18	6.0 mA	good	noisy channels
+1287.5830078125	0.0002	electrical_stimulation	biphasic	LG17-LG18	6.0 mA	good	noisy channels
+1294.7822265625	0.0002	electrical_stimulation	biphasic	LG17-LG18	6.0 mA	good	noisy channels
+1311.0595703125	0.0002	electrical_stimulation	biphasic	LG18-LG19	6.0 mA	good	noisy channels
+1316.814453125	0.0002	electrical_stimulation	biphasic	LG18-LG19	6.0 mA	good	noisy channels
+1322.41943359375	0.0002	electrical_stimulation	biphasic	LG18-LG19	6.0 mA	good	noisy channels
+1328.138671875	0.0002	electrical_stimulation	biphasic	LG18-LG19	6.0 mA	good	noisy channels
+1333.6279296875	0.0002	electrical_stimulation	biphasic	LG18-LG19	6.0 mA	good	noisy channels
+1337.47021484375	0.0002	electrical_stimulation	biphasic	LG18-LG19	6.0 mA	good	noisy channels
+1342.3603515625	0.0002	electrical_stimulation	biphasic	LG18-LG19	6.0 mA	good	noisy channels
+1354.04248046875	0.0002	electrical_stimulation	biphasic	LG18-LG19	6.0 mA	good	noisy channels
+1358.7822265625	0.0002	electrical_stimulation	biphasic	LG18-LG19	6.0 mA	good	noisy channels
+1364.5478515625	0.0002	electrical_stimulation	biphasic	LG18-LG19	6.0 mA	good	noisy channels
+1370.50146484375	0.0002	electrical_stimulation	biphasic	LG18-LG19	6.0 mA	good	noisy channels
+1417.318359375	0.0002	electrical_stimulation	biphasic	LG19-LG20	6.0 mA	good	noisy channels
+1423.97021484375	0.0002	electrical_stimulation	biphasic	LG19-LG20	6.0 mA	good	noisy channels
+1428.17236328125	0.0002	electrical_stimulation	biphasic	LG19-LG20	6.0 mA	good	noisy channels
+1432.33251953125	0.0002	electrical_stimulation	biphasic	LG19-LG20	6.0 mA	good	noisy channels
+1437.525390625	0.0002	electrical_stimulation	biphasic	LG19-LG20	6.0 mA	good	noisy channels
+1442.27978515625	0.0002	electrical_stimulation	biphasic	LG19-LG20	6.0 mA	good	noisy channels
+1446.7890625	0.0002	electrical_stimulation	biphasic	LG19-LG20	6.0 mA	good	noisy channels
+1451.3603515625	0.0002	electrical_stimulation	biphasic	LG19-LG20	6.0 mA	good	noisy channels
+1456.04833984375	0.0002	electrical_stimulation	biphasic	LG19-LG20	6.0 mA	good	noisy channels
+1463.96728515625	0.0002	electrical_stimulation	biphasic	LG19-LG20	6.0 mA	bad	noisy channels
+1484.34130859375	0.0002	electrical_stimulation	biphasic	LG20-LG21	6.0 mA	good	noisy channels
+1488.93408203125	0.0002	electrical_stimulation	biphasic	LG20-LG21	6.0 mA	good	noisy channels
+1493.92822265625	0.0002	electrical_stimulation	biphasic	LG20-LG21	6.0 mA	good	noisy channels
+1500.0341796875	0.0002	electrical_stimulation	biphasic	LG20-LG21	6.0 mA	bad	noisy channels
+1505.55908203125	0.0002	electrical_stimulation	biphasic	LG20-LG21	6.0 mA	good	noisy channels
+1514.90185546875	0.0002	electrical_stimulation	biphasic	LG20-LG21	6.0 mA	good	noisy channels
+1520.43359375	0.0002	electrical_stimulation	biphasic	LG20-LG21	6.0 mA	bad	noisy channels
+1525.57373046875	0.0002	electrical_stimulation	biphasic	LG20-LG21	6.0 mA	good	noisy channels
+1529.74951171875	0.0002	electrical_stimulation	biphasic	LG20-LG21	6.0 mA	good	noisy channels
+1534.72314453125	0.0002	electrical_stimulation	biphasic	LG20-LG21	6.0 mA	bad	noisy channels
+1616.86474609375	0.0002	electrical_stimulation	biphasic	LG21-LG22	6.0 mA	bad	noisy channels
+1621.05126953125	0.0002	electrical_stimulation	biphasic	LG21-LG22	6.0 mA	good	noisy channels
+1627.1513671875	0.0002	electrical_stimulation	biphasic	LG21-LG22	6.0 mA	good	noisy channels
+1631.2060546875	0.0002	electrical_stimulation	biphasic	LG21-LG22	6.0 mA	good	noisy channels
+1635.12744140625	0.0002	electrical_stimulation	biphasic	LG21-LG22	6.0 mA	good	noisy channels
+1638.0107421875	0.0002	electrical_stimulation	biphasic	LG21-LG22	6.0 mA	good	noisy channels
+1643.07763671875	0.0002	electrical_stimulation	biphasic	LG21-LG22	6.0 mA	good	noisy channels
+1647.63916015625	0.0002	electrical_stimulation	biphasic	LG21-LG22	6.0 mA	good	noisy channels
+1652.35205078125	0.0002	electrical_stimulation	biphasic	LG21-LG22	6.0 mA	good	noisy channels
+1656.39794921875	0.0002	electrical_stimulation	biphasic	LG21-LG22	6.0 mA	good	noisy channels
+1677.2626953125	0.0002	electrical_stimulation	biphasic	LG22-LG23	6.0 mA	good	noisy channels
+1681.57421875	0.0002	electrical_stimulation	biphasic	LG22-LG23	6.0 mA	good	noisy channels
+1686.07861328125	0.0002	electrical_stimulation	biphasic	LG22-LG23	6.0 mA	good	noisy channels
+1690.48388671875	0.0002	electrical_stimulation	biphasic	LG22-LG23	6.0 mA	good	noisy channels
+1695.08203125	0.0002	electrical_stimulation	biphasic	LG22-LG23	6.0 mA	bad	noisy channels
+1699.31005859375	0.0002	electrical_stimulation	biphasic	LG22-LG23	6.0 mA	good	noisy channels
+1703.75732421875	0.0002	electrical_stimulation	biphasic	LG22-LG23	6.0 mA	bad	noisy channels
+1709.0068359375	0.0002	electrical_stimulation	biphasic	LG22-LG23	6.0 mA	bad	noisy channels
+1714.0478515625	0.0002	electrical_stimulation	biphasic	LG22-LG23	6.0 mA	good	noisy channels
+1718.880859375	0.0002	electrical_stimulation	biphasic	LG22-LG23	6.0 mA	good	noisy channels
+1758.56103515625	0.0002	electrical_stimulation	biphasic	LG23-LG24	6.0 mA	bad	noisy channels
+1763.0908203125	0.0002	electrical_stimulation	biphasic	LG23-LG24	6.0 mA	good	noisy channels
+1767.27685546875	0.0002	electrical_stimulation	biphasic	LG23-LG24	6.0 mA	good	noisy channels
+1771.212890625	0.0002	electrical_stimulation	biphasic	LG23-LG24	6.0 mA	good	noisy channels
+1775.45654296875	0.0002	electrical_stimulation	biphasic	LG23-LG24	6.0 mA	good	noisy channels
+1779.2783203125	0.0002	electrical_stimulation	biphasic	LG23-LG24	6.0 mA	good	noisy channels
+1782.8232421875	0.0002	electrical_stimulation	biphasic	LG23-LG24	6.0 mA	good	noisy channels
+1786.06591796875	0.0002	electrical_stimulation	biphasic	LG23-LG24	6.0 mA	bad	noisy channels
+1790.47119140625	0.0002	electrical_stimulation	biphasic	LG23-LG24	6.0 mA	bad	noisy channels
+1795.2353515625	0.0002	electrical_stimulation	biphasic	LG23-LG24	6.0 mA	good	noisy channels
+1812.9423828125	0.0002	electrical_stimulation	biphasic	LG25-LG26	6.0 mA	bad	noisy channels
+1817.98291015625	0.0002	electrical_stimulation	biphasic	LG25-LG26	6.0 mA	bad	noisy channels
+1853.25048828125	0.0002	electrical_stimulation	biphasic	LG25-LG26	6.0 mA	bad	n/a
+1857.85498046875	0.0002	electrical_stimulation	biphasic	LG25-LG26	6.0 mA	bad	n/a
+1863.08349609375	0.0002	electrical_stimulation	biphasic	LG25-LG26	6.0 mA	good	n/a
+1868.77099609375	0.0002	electrical_stimulation	biphasic	LG25-LG26	6.0 mA	good	n/a
+1873.11328125	0.0002	electrical_stimulation	biphasic	LG25-LG26	6.0 mA	good	n/a
+1876.8359375	0.0002	electrical_stimulation	biphasic	LG25-LG26	6.0 mA	good	n/a
+1904.388671875	0.0002	electrical_stimulation	biphasic	LG26-LG27	6.0 mA	good	n/a
+1909.62353515625	0.0002	electrical_stimulation	biphasic	LG26-LG27	6.0 mA	good	n/a
+1915.05078125	0.0002	electrical_stimulation	biphasic	LG26-LG27	6.0 mA	good	n/a
+1919.46044921875	0.0002	electrical_stimulation	biphasic	LG26-LG27	6.0 mA	good	n/a
+1924.13720703125	0.0002	electrical_stimulation	biphasic	LG26-LG27	6.0 mA	bad	n/a
+1930.47705078125	0.0002	electrical_stimulation	biphasic	LG26-LG27	6.0 mA	bad	n/a
+1934.7509765625	0.0002	electrical_stimulation	biphasic	LG26-LG27	6.0 mA	good	n/a
+1940.09033203125	0.0002	electrical_stimulation	biphasic	LG26-LG27	6.0 mA	good	n/a
+1945.04833984375	0.0002	electrical_stimulation	biphasic	LG26-LG27	6.0 mA	good	n/a
+1950.42822265625	0.0002	electrical_stimulation	biphasic	LG26-LG27	6.0 mA	good	n/a
+1971.5537109375	0.0002	electrical_stimulation	biphasic	LG27-LG28	6.0 mA	good	n/a
+1977.1630859375	0.0002	electrical_stimulation	biphasic	LG27-LG28	6.0 mA	good	n/a
+1981.85986328125	0.0002	electrical_stimulation	biphasic	LG27-LG28	6.0 mA	good	n/a
+1986.99560546875	0.0002	electrical_stimulation	biphasic	LG27-LG28	6.0 mA	bad	n/a
+1991.35498046875	0.0002	electrical_stimulation	biphasic	LG27-LG28	6.0 mA	good	n/a
+1995.59765625	0.0002	electrical_stimulation	biphasic	LG27-LG28	6.0 mA	good	n/a
+2000.22119140625	0.0002	electrical_stimulation	biphasic	LG27-LG28	6.0 mA	good	n/a
+2004.470703125	0.0002	electrical_stimulation	biphasic	LG27-LG28	6.0 mA	good	n/a
+2008.2548828125	0.0002	electrical_stimulation	biphasic	LG27-LG28	6.0 mA	good	n/a
+2011.75390625	0.0002	electrical_stimulation	biphasic	LG27-LG28	6.0 mA	good	n/a
+2033.515625	0.0002	electrical_stimulation	biphasic	LG28-LG29	6.0 mA	good	n/a
+2037.61279296875	0.0002	electrical_stimulation	biphasic	LG28-LG29	6.0 mA	good	n/a
+2042.1123046875	0.0002	electrical_stimulation	biphasic	LG28-LG29	6.0 mA	good	n/a
+2047.11181640625	0.0002	electrical_stimulation	biphasic	LG28-LG29	6.0 mA	good	n/a
+2052.05419921875	0.0002	electrical_stimulation	biphasic	LG28-LG29	6.0 mA	good	n/a
+2057.95458984375	0.0002	electrical_stimulation	biphasic	LG28-LG29	6.0 mA	good	n/a
+2062.80908203125	0.0002	electrical_stimulation	biphasic	LG28-LG29	6.0 mA	good	n/a
+2067.6259765625	0.0002	electrical_stimulation	biphasic	LG28-LG29	6.0 mA	good	n/a
+2072.27294921875	0.0002	electrical_stimulation	biphasic	LG28-LG29	6.0 mA	good	n/a
+2076.19677734375	0.0002	electrical_stimulation	biphasic	LG28-LG29	6.0 mA	good	n/a
+2100.4033203125	0.0002	electrical_stimulation	biphasic	LG29-LG30	6.0 mA	bad	n/a
+2105.52734375	0.0002	electrical_stimulation	biphasic	LG29-LG30	6.0 mA	good	n/a
+2109.96435546875	0.0002	electrical_stimulation	biphasic	LG29-LG30	6.0 mA	good	n/a
+2114.38037109375	0.0002	electrical_stimulation	biphasic	LG29-LG30	6.0 mA	good	n/a
+2118.9580078125	0.0002	electrical_stimulation	biphasic	LG29-LG30	6.0 mA	good	n/a
+2122.71142578125	0.0002	electrical_stimulation	biphasic	LG29-LG30	6.0 mA	good	n/a
+2125.67236328125	0.0002	electrical_stimulation	biphasic	LG29-LG30	6.0 mA	good	n/a
+2130.3125	0.0002	electrical_stimulation	biphasic	LG29-LG30	6.0 mA	good	n/a
+2135.38525390625	0.0002	electrical_stimulation	biphasic	LG29-LG30	6.0 mA	good	n/a
+2140.01953125	0.0002	electrical_stimulation	biphasic	LG29-LG30	6.0 mA	bad	n/a
+2145.353515625	0.0002	electrical_stimulation	biphasic	LG29-LG30	6.0 mA	bad	n/a
+2163.44921875	0.0002	electrical_stimulation	biphasic	LG30-LG31	6.0 mA	good	n/a
+2169.1474609375	0.0002	electrical_stimulation	biphasic	LG30-LG31	6.0 mA	good	n/a
+2174.07421875	0.0002	electrical_stimulation	biphasic	LG30-LG31	6.0 mA	good	n/a
+2179.61083984375	0.0002	electrical_stimulation	biphasic	LG30-LG31	6.0 mA	good	n/a
+2184.17236328125	0.0002	electrical_stimulation	biphasic	LG30-LG31	6.0 mA	good	n/a
+2188.8740234375	0.0002	electrical_stimulation	biphasic	LG30-LG31	6.0 mA	good	n/a
+2193.12890625	0.0002	electrical_stimulation	biphasic	LG30-LG31	6.0 mA	good	n/a
+2197.810546875	0.0002	electrical_stimulation	biphasic	LG30-LG31	6.0 mA	good	n/a
+2201.31396484375	0.0002	electrical_stimulation	biphasic	LG30-LG31	6.0 mA	good	n/a
+2206.27197265625	0.0002	electrical_stimulation	biphasic	LG30-LG31	6.0 mA	good	n/a
+2210.66650390625	0.0002	electrical_stimulation	biphasic	LG30-LG31	6.0 mA	good	n/a
+2228.94775390625	0.0002	electrical_stimulation	biphasic	LG31-LG32	6.0 mA	good	n/a
+2235.55078125	0.0002	electrical_stimulation	biphasic	LG31-LG32	6.0 mA	bad	n/a
+2242.07275390625	0.0002	electrical_stimulation	biphasic	LG31-LG32	6.0 mA	good	n/a
+2248.427734375	0.0002	electrical_stimulation	biphasic	LG31-LG32	6.0 mA	good	n/a
+2253.44287109375	0.0002	electrical_stimulation	biphasic	LG31-LG32	6.0 mA	good	n/a
+2258.49462890625	0.0002	electrical_stimulation	biphasic	LG31-LG32	6.0 mA	good	n/a
+2263.3115234375	0.0002	electrical_stimulation	biphasic	LG31-LG32	6.0 mA	good	n/a
+2267.9404296875	0.0002	electrical_stimulation	biphasic	LG31-LG32	6.0 mA	good	n/a
+2272.9921875	0.0002	electrical_stimulation	biphasic	LG31-LG32	6.0 mA	good	n/a
+2277.76318359375	0.0002	electrical_stimulation	biphasic	LG31-LG32	6.0 mA	good	n/a
+2303.5751953125	0.0002	electrical_stimulation	biphasic	LG33-LG34	6.0 mA	good	n/a
+2308.798828125	0.0002	electrical_stimulation	biphasic	LG33-LG34	6.0 mA	bad	n/a
+2312.583984375	0.0002	electrical_stimulation	biphasic	LG33-LG34	6.0 mA	good	n/a
+2319.75732421875	0.0002	electrical_stimulation	biphasic	LG33-LG34	6.0 mA	good	n/a
+2324.10009765625	0.0002	electrical_stimulation	biphasic	LG33-LG34	6.0 mA	good	n/a
+2331.03076171875	0.0002	electrical_stimulation	biphasic	LG33-LG34	6.0 mA	good	n/a
+2334.4638671875	0.0002	electrical_stimulation	biphasic	LG33-LG34	6.0 mA	good	n/a
+2338.67626953125	0.0002	electrical_stimulation	biphasic	LG33-LG34	6.0 mA	good	n/a
+2342.50341796875	0.0002	electrical_stimulation	biphasic	LG33-LG34	6.0 mA	good	n/a
+2346.13134765625	0.0002	electrical_stimulation	biphasic	LG33-LG34	6.0 mA	good	n/a
+2350.2783203125	0.0002	electrical_stimulation	biphasic	LG33-LG34	6.0 mA	good	n/a
+2369.916015625	0.0002	electrical_stimulation	biphasic	LG34-LG35	6.0 mA	good	n/a
+2374.46728515625	0.0002	electrical_stimulation	biphasic	LG34-LG35	6.0 mA	bad	n/a
+2379.57080078125	0.0002	electrical_stimulation	biphasic	LG34-LG35	6.0 mA	bad	n/a
+2384.251953125	0.0002	electrical_stimulation	biphasic	LG34-LG35	6.0 mA	good	n/a
+2388.68310546875	0.0002	electrical_stimulation	biphasic	LG34-LG35	6.0 mA	good	n/a
+2394.52783203125	0.0002	electrical_stimulation	biphasic	LG34-LG35	6.0 mA	good	n/a
+2400.31494140625	0.0002	electrical_stimulation	biphasic	LG34-LG35	6.0 mA	good	n/a
+2405.810546875	0.0002	electrical_stimulation	biphasic	LG34-LG35	6.0 mA	good	n/a
+2410.876953125	0.0002	electrical_stimulation	biphasic	LG34-LG35	6.0 mA	bad	n/a
+2415.93310546875	0.0002	electrical_stimulation	biphasic	LG34-LG35	6.0 mA	good	n/a
+2420.26025390625	0.0002	electrical_stimulation	biphasic	LG34-LG35	6.0 mA	good	n/a
+2444.0390625	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	n/a
+2448.8935546875	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	good	n/a
+2452.99658203125	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	good	n/a
+2457.32275390625	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	good	n/a
+2463	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	good	n/a
+2468.23486328125	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	good	n/a
+2473.55712890625	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	good	n/a
+2477.12353515625	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	good	n/a
+2481.58642578125	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	good	n/a
+2486.5859375	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	good	n/a
+2490.3759765625	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	good	n/a
+2512.4140625	0.0002	electrical_stimulation	biphasic	LG36-LG37	6.0 mA	good	n/a
+2516.62109375	0.0002	electrical_stimulation	biphasic	LG36-LG37	6.0 mA	good	n/a
+2521.77099609375	0.0002	electrical_stimulation	biphasic	LG36-LG37	6.0 mA	good	n/a
+2526.6826171875	0.0002	electrical_stimulation	biphasic	LG36-LG37	6.0 mA	good	n/a
+2531.24951171875	0.0002	electrical_stimulation	biphasic	LG36-LG37	6.0 mA	bad	n/a
+2535.029296875	0.0002	electrical_stimulation	biphasic	LG36-LG37	6.0 mA	good	n/a
+2538.29296875	0.0002	electrical_stimulation	biphasic	LG36-LG37	6.0 mA	bad	n/a
+2541.916015625	0.0002	electrical_stimulation	biphasic	LG36-LG37	6.0 mA	bad	n/a
+2546.5302734375	0.0002	electrical_stimulation	biphasic	LG36-LG37	6.0 mA	bad	n/a
+2550.58056640625	0.0002	electrical_stimulation	biphasic	LG36-LG37	6.0 mA	bad	n/a
+2568.072265625	0.0002	electrical_stimulation	biphasic	LG37-LG38	6.0 mA	good	n/a
+2572.40478515625	0.0002	electrical_stimulation	biphasic	LG37-LG38	6.0 mA	good	n/a
+2576.16357421875	0.0002	electrical_stimulation	biphasic	LG37-LG38	6.0 mA	good	n/a
+2580.39697265625	0.0002	electrical_stimulation	biphasic	LG37-LG38	6.0 mA	good	n/a
+2584.0517578125	0.0002	electrical_stimulation	biphasic	LG37-LG38	6.0 mA	good	n/a
+2588.4306640625	0.0002	electrical_stimulation	biphasic	LG37-LG38	6.0 mA	good	n/a
+2592.90869140625	0.0002	electrical_stimulation	biphasic	LG37-LG38	6.0 mA	bad	n/a
+2597.40283203125	0.0002	electrical_stimulation	biphasic	LG37-LG38	6.0 mA	good	n/a
+2601.76611328125	0.0002	electrical_stimulation	biphasic	LG37-LG38	6.0 mA	good	n/a
+2605.76953125	0.0002	electrical_stimulation	biphasic	LG37-LG38	6.0 mA	good	n/a
+2625.2578125	0.0002	electrical_stimulation	biphasic	LG38-LG39	6.0 mA	good	n/a
+2628.90283203125	0.0002	electrical_stimulation	biphasic	LG38-LG39	6.0 mA	bad	n/a
+2632.39111328125	0.0002	electrical_stimulation	biphasic	LG38-LG39	6.0 mA	bad	n/a
+2636.57177734375	0.0002	electrical_stimulation	biphasic	LG38-LG39	6.0 mA	bad	n/a
+2640.50341796875	0.0002	electrical_stimulation	biphasic	LG38-LG39	6.0 mA	bad	n/a
+2644.28759765625	0.0002	electrical_stimulation	biphasic	LG38-LG39	6.0 mA	good	n/a
+2647.994140625	0.0002	electrical_stimulation	biphasic	LG38-LG39	6.0 mA	good	n/a
+2652.07080078125	0.0002	electrical_stimulation	biphasic	LG38-LG39	6.0 mA	good	n/a
+2656.24072265625	0.0002	electrical_stimulation	biphasic	LG38-LG39	6.0 mA	good	n/a
+2660.61572265625	0.0002	electrical_stimulation	biphasic	LG38-LG39	6.0 mA	good	n/a
+2681.2978515625	0.0002	electrical_stimulation	biphasic	LG39-LG40	6.0 mA	good	n/a
+2686.97509765625	0.0002	electrical_stimulation	biphasic	LG39-LG40	6.0 mA	good	n/a
+2692.46923828125	0.0002	electrical_stimulation	biphasic	LG39-LG40	6.0 mA	good	n/a
+2698.626953125	0.0002	electrical_stimulation	biphasic	LG39-LG40	6.0 mA	good	n/a
+2703.0166015625	0.0002	electrical_stimulation	biphasic	LG39-LG40	6.0 mA	good	n/a
+2707.38037109375	0.0002	electrical_stimulation	biphasic	LG39-LG40	6.0 mA	good	n/a
+2711.06591796875	0.0002	electrical_stimulation	biphasic	LG39-LG40	6.0 mA	good	n/a
+2715.02392578125	0.0002	electrical_stimulation	biphasic	LG39-LG40	6.0 mA	good	n/a
+2719.1474609375	0.0002	electrical_stimulation	biphasic	LG39-LG40	6.0 mA	bad	n/a
+2723.11865234375	0.0002	electrical_stimulation	biphasic	LG39-LG40	6.0 mA	good	n/a
+2750.87890625	0.0002	electrical_stimulation	biphasic	LG41-LG42	6.0 mA	good	n/a
+2755.9775390625	0.0002	electrical_stimulation	biphasic	LG41-LG42	6.0 mA	good	n/a
+2759.9560546875	0.0002	electrical_stimulation	biphasic	LG41-LG42	6.0 mA	good	n/a
+2764.16259765625	0.0002	electrical_stimulation	biphasic	LG41-LG42	6.0 mA	good	n/a
+2768.41162109375	0.0002	electrical_stimulation	biphasic	LG41-LG42	6.0 mA	good	n/a
+2771.97705078125	0.0002	electrical_stimulation	biphasic	LG41-LG42	6.0 mA	good	n/a
+2775.3408203125	0.0002	electrical_stimulation	biphasic	LG41-LG42	6.0 mA	good	n/a
+2779.14208984375	0.0002	electrical_stimulation	biphasic	LG41-LG42	6.0 mA	good	n/a
+2782.46142578125	0.0002	electrical_stimulation	biphasic	LG41-LG42	6.0 mA	good	n/a
+2786.2626953125	0.0002	electrical_stimulation	biphasic	LG41-LG42	6.0 mA	good	n/a
+2804.55224609375	0.0002	electrical_stimulation	biphasic	LG42-LG43	6.0 mA	bad	n/a
+2809.03564453125	0.0002	electrical_stimulation	biphasic	LG42-LG43	6.0 mA	good	n/a
+2813.7744140625	0.0002	electrical_stimulation	biphasic	LG42-LG43	6.0 mA	bad	n/a
+2818.35791015625	0.0002	electrical_stimulation	biphasic	LG42-LG43	6.0 mA	good	n/a
+2822.57958984375	0.0002	electrical_stimulation	biphasic	LG42-LG43	6.0 mA	good	n/a
+2827.15185546875	0.0002	electrical_stimulation	biphasic	LG42-LG43	6.0 mA	good	n/a
+2831.0986328125	0.0002	electrical_stimulation	biphasic	LG42-LG43	6.0 mA	good	n/a
+2835.27880859375	0.0002	electrical_stimulation	biphasic	LG42-LG43	6.0 mA	good	n/a
+2839.91943359375	0.0002	electrical_stimulation	biphasic	LG42-LG43	6.0 mA	good	n/a
+2844.48046875	0.0002	electrical_stimulation	biphasic	LG42-LG43	6.0 mA	good	n/a
+2848.57861328125	0.0002	electrical_stimulation	biphasic	LG42-LG43	6.0 mA	good	n/a
+2876.34033203125	0.0002	electrical_stimulation	biphasic	LG43-LG44	6.0 mA	good	n/a
+2880.55322265625	0.0002	electrical_stimulation	biphasic	LG43-LG44	6.0 mA	good	n/a
+2885.087890625	0.0002	electrical_stimulation	biphasic	LG43-LG44	6.0 mA	good	n/a
+2889.525390625	0.0002	electrical_stimulation	biphasic	LG43-LG44	6.0 mA	good	n/a
+2893.87841796875	0.0002	electrical_stimulation	biphasic	LG43-LG44	6.0 mA	good	n/a
+2898.99755859375	0.0002	electrical_stimulation	biphasic	LG43-LG44	6.0 mA	good	n/a
+2903.01708984375	0.0002	electrical_stimulation	biphasic	LG43-LG44	6.0 mA	good	n/a
+2906.79150390625	0.0002	electrical_stimulation	biphasic	LG43-LG44	6.0 mA	good	n/a
+2910.80078125	0.0002	electrical_stimulation	biphasic	LG43-LG44	6.0 mA	bad	n/a
+2915.25830078125	0.0002	electrical_stimulation	biphasic	LG43-LG44	6.0 mA	good	n/a
+2938.64111328125	0.0002	electrical_stimulation	biphasic	LG44-LG45	6.0 mA	bad	n/a
+2942.806640625	0.0002	electrical_stimulation	biphasic	LG44-LG45	6.0 mA	bad	n/a
+2946.60205078125	0.0002	electrical_stimulation	biphasic	LG44-LG45	6.0 mA	good	n/a
+2950.59423828125	0.0002	electrical_stimulation	biphasic	LG44-LG45	6.0 mA	good	n/a
+2955.109375	0.0002	electrical_stimulation	biphasic	LG44-LG45	6.0 mA	good	n/a
+2958.728515625	0.0002	electrical_stimulation	biphasic	LG44-LG45	6.0 mA	good	n/a
+2962.88330078125	0.0002	electrical_stimulation	biphasic	LG44-LG45	6.0 mA	good	n/a
+2967.205078125	0.0002	electrical_stimulation	biphasic	LG44-LG45	6.0 mA	good	n/a
+2970.7490234375	0.0002	electrical_stimulation	biphasic	LG44-LG45	6.0 mA	good	n/a
+2975.1025390625	0.0002	electrical_stimulation	biphasic	LG44-LG45	6.0 mA	good	n/a
+2996.09814453125	0.0002	electrical_stimulation	biphasic	LG45-LG46	6.0 mA	good	n/a
+3002.56298828125	0.0002	electrical_stimulation	biphasic	LG45-LG46	6.0 mA	good	n/a
+3006.30615234375	0.0002	electrical_stimulation	biphasic	LG45-LG46	6.0 mA	good	n/a
+3010.423828125	0.0002	electrical_stimulation	biphasic	LG45-LG46	6.0 mA	good	n/a
+3015.14794921875	0.0002	electrical_stimulation	biphasic	LG45-LG46	6.0 mA	good	n/a
+3019.04638671875	0.0002	electrical_stimulation	biphasic	LG45-LG46	6.0 mA	good	n/a
+3022.904296875	0.0002	electrical_stimulation	biphasic	LG45-LG46	6.0 mA	good	n/a
+3026.8359375	0.0002	electrical_stimulation	biphasic	LG45-LG46	6.0 mA	good	n/a
+3030.4541015625	0.0002	electrical_stimulation	biphasic	LG45-LG46	6.0 mA	good	n/a
+3034.9375	0.0002	electrical_stimulation	biphasic	LG45-LG46	6.0 mA	good	n/a
+3039.83349609375	0.0002	electrical_stimulation	biphasic	LG45-LG46	6.0 mA	good	n/a
+3058.279296875	0.0002	electrical_stimulation	biphasic	LG46-LG47	6.0 mA	good	n/a
+3061.94384765625	0.0002	electrical_stimulation	biphasic	LG46-LG47	6.0 mA	good	n/a
+3065.73388671875	0.0002	electrical_stimulation	biphasic	LG46-LG47	6.0 mA	good	n/a
+3070.1337890625	0.0002	electrical_stimulation	biphasic	LG46-LG47	6.0 mA	good	n/a
+3073.79296875	0.0002	electrical_stimulation	biphasic	LG46-LG47	6.0 mA	good	n/a
+3077.771484375	0.0002	electrical_stimulation	biphasic	LG46-LG47	6.0 mA	good	n/a
+3081.994140625	0.0002	electrical_stimulation	biphasic	LG46-LG47	6.0 mA	good	n/a
+3085.4345703125	0.0002	electrical_stimulation	biphasic	LG46-LG47	6.0 mA	good	n/a
+3089.40771484375	0.0002	electrical_stimulation	biphasic	LG46-LG47	6.0 mA	good	n/a
+3093.89111328125	0.0002	electrical_stimulation	biphasic	LG46-LG47	6.0 mA	bad	n/a
+3099.91796875	0.0002	electrical_stimulation	biphasic	LG46-LG47	6.0 mA	bad	n/a
+3123.6552734375	0.0002	electrical_stimulation	biphasic	LG47-LG48	6.0 mA	bad	n/a
+3127.4345703125	0.0002	electrical_stimulation	biphasic	LG47-LG48	6.0 mA	good	n/a
+3131.00048828125	0.0002	electrical_stimulation	biphasic	LG47-LG48	6.0 mA	good	n/a
+3134.75341796875	0.0002	electrical_stimulation	biphasic	LG47-LG48	6.0 mA	bad	n/a
+3139.22705078125	0.0002	electrical_stimulation	biphasic	LG47-LG48	6.0 mA	good	n/a
+3143.5380859375	0.0002	electrical_stimulation	biphasic	LG47-LG48	6.0 mA	good	n/a
+3148.0634765625	0.0002	electrical_stimulation	biphasic	LG47-LG48	6.0 mA	bad	n/a
+3152.80712890625	0.0002	electrical_stimulation	biphasic	LG47-LG48	6.0 mA	good	n/a
+3157.9326171875	0.0002	electrical_stimulation	biphasic	LG47-LG48	6.0 mA	good	n/a
+3162.68115234375	0.0002	electrical_stimulation	biphasic	LG47-LG48	6.0 mA	good	n/a
+3166.93115234375	0.0002	electrical_stimulation	biphasic	LG47-LG48	6.0 mA	good	n/a
+3200.5009765625	0.0002	electrical_stimulation	biphasic	LST1-LST2	6.0 mA	good	n/a
+3205.19873046875	0.0002	electrical_stimulation	biphasic	LST1-LST2	6.0 mA	good	n/a
+3209.81787109375	0.0002	electrical_stimulation	biphasic	LST1-LST2	6.0 mA	bad	n/a
+3214.4462890625	0.0002	electrical_stimulation	biphasic	LST1-LST2	6.0 mA	good	n/a
+3219.033203125	0.0002	electrical_stimulation	biphasic	LST1-LST2	6.0 mA	bad	n/a
+3223.30908203125	0.0002	electrical_stimulation	biphasic	LST1-LST2	6.0 mA	bad	n/a
+3227.65625	0.0002	electrical_stimulation	biphasic	LST1-LST2	6.0 mA	bad	n/a
+3231.46142578125	0.0002	electrical_stimulation	biphasic	LST1-LST2	6.0 mA	good	n/a
+3235.40380859375	0.0002	electrical_stimulation	biphasic	LST1-LST2	6.0 mA	good	n/a
+3240.4345703125	0.0002	electrical_stimulation	biphasic	LST1-LST2	6.0 mA	bad	n/a
+3258.01513671875	0.0002	electrical_stimulation	biphasic	LST2-LST3	6.0 mA	good	n/a
+3263.369140625	0.0002	electrical_stimulation	biphasic	LST2-LST3	6.0 mA	good	n/a
+3267.10205078125	0.0002	electrical_stimulation	biphasic	LST2-LST3	6.0 mA	good	n/a
+3271.14208984375	0.0002	electrical_stimulation	biphasic	LST2-LST3	6.0 mA	good	n/a
+3275.33935546875	0.0002	electrical_stimulation	biphasic	LST2-LST3	6.0 mA	good	n/a
+3278.5400390625	0.0002	electrical_stimulation	biphasic	LST2-LST3	6.0 mA	good	n/a
+3282.111328125	0.0002	electrical_stimulation	biphasic	LST2-LST3	6.0 mA	good	n/a
+3285.958984375	0.0002	electrical_stimulation	biphasic	LST2-LST3	6.0 mA	good	n/a
+3289.23681640625	0.0002	electrical_stimulation	biphasic	LST2-LST3	6.0 mA	good	n/a
+3292.8818359375	0.0002	electrical_stimulation	biphasic	LST2-LST3	6.0 mA	good	n/a
+3313.76220703125	0.0002	electrical_stimulation	biphasic	LST3-LST4	6.0 mA	good	n/a
+3319.41357421875	0.0002	electrical_stimulation	biphasic	LST3-LST4	6.0 mA	good	n/a
+3324.30322265625	0.0002	electrical_stimulation	biphasic	LST3-LST4	6.0 mA	good	n/a
+3328.57275390625	0.0002	electrical_stimulation	biphasic	LST3-LST4	6.0 mA	good	n/a
+3333.7451171875	0.0002	electrical_stimulation	biphasic	LST3-LST4	6.0 mA	good	n/a
+3338.66650390625	0.0002	electrical_stimulation	biphasic	LST3-LST4	6.0 mA	bad	n/a
+3343.2802734375	0.0002	electrical_stimulation	biphasic	LST3-LST4	6.0 mA	good	n/a
+3347.2841796875	0.0002	electrical_stimulation	biphasic	LST3-LST4	6.0 mA	good	n/a
+3351.23583984375	0.0002	electrical_stimulation	biphasic	LST3-LST4	6.0 mA	good	n/a
+3355.6357421875	0.0002	electrical_stimulation	biphasic	LST3-LST4	6.0 mA	good	n/a
+3381.63037109375	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3386.01953125	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3390.46142578125	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3394.01708984375	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3397.697265625	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	bad	n/a
+3402.09765625	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3405.46533203125	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3409.529296875	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	bad	n/a
+3413.57177734375	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3417.4560546875	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3455.80078125	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3460.6025390625	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	bad	n/a
+3464.12158203125	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	bad	n/a
+3467.74609375	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3471.4677734375	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3475.919921875	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	bad	n/a
+3479.77783203125	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3484.2041015625	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3488.24951171875	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3492.107421875	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3521.2197265625	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	bad	n/a
+3525.77783203125	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3530.14501953125	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3534.1337890625	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3538.08544921875	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3542.02685546875	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3545.85888671875	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3549.89404296875	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3553.9609375	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3557.95849609375	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	bad	n/a
+3587.93701171875	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	bad	n/a
+3593.47802734375	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+3597.6083984375	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+3601.7470703125	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+3606.41845703125	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+3609.92236328125	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+3614.12890625	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+3617.626953125	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	bad	n/a
+3621.21435546875	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+3625.2275390625	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+3628.982421875	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	bad	n/a
+3647.7666015625	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	n/a
+3652.80224609375	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	n/a
+3657.31640625	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	bad	n/a
+3661.4609375	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	n/a
+3665.0068359375	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	bad	ep acctivity during onset
+3668.54052734375	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	bad	n/a
+3672.57666015625	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	bad	n/a
+3675.72021484375	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	n/a
+3679.10888671875	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	bad	n/a
+3683.11181640625	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	n/a
+3686.01123046875	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	n/a
+3708.1533203125	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	bad	n/a
+3712.0791015625	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	bad	n/a
+3716.3583984375	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	n/a
+3720.18603515625	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	n/a
+3723.876953125	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	n/a
+3727.48974609375	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	n/a
+3731.33251953125	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	n/a
+3735.19384765625	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	bad	n/a
+3738.81298828125	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	n/a
+3742.67626953125	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	bad	n/a
+3863.5068359375	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3873.2392578125	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3879.046875	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3885.10498046875	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3889.90625	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3894.5146484375	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3898.30419921875	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3903.03369140625	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3906.9697265625	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3911.546875	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3947.5625	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3951.759765625	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3955.763671875	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3959.14208984375	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3962.447265625	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3965.50146484375	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3970.6533203125	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3974.57373046875	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3978.22265625	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3981.78369140625	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+3985.94921875	0.0002	electrical_stimulation	biphasic	LG3-LG4	6.0 mA	bad	double pulse stim
+4076.875	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4084.2314453125	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4091.46240234375	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4096.95751953125	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4101.7998046875	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	good	n/a
+4152.55810546875	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4157.8544921875	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4162.53662109375	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4167.30712890625	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4171.73828125	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	noisy channels bef 2nd pulse
+4176.79443359375	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	ep activity bef 2nd pulse
+4183.9326171875	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4187.76416015625	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4191.486328125	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4208.40283203125	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4213.2041015625	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4217.64599609375	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4220.81591796875	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4224.65283203125	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4229.09375	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4232.92041015625	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4236.55419921875	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4240.62109375	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim
+4244.10302734375	0.0002	electrical_stimulation	biphasic	LG35-LG36	6.0 mA	bad	double pulse stim

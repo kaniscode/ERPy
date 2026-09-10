@@ -1,0 +1,8 @@
+{
+    "IntendedFor": "/derivatives/freesurfer/sub-MAYO01/pial.L.surf.gii",
+    "iEEGCoordinateSystem": "Other",
+    "iEEGCoordinateUnits": "mm",
+    "iEEGCoordinateSystemDescription": "0 0 0 close to the AC, X axis pointing right, Y axis pointing forward, Z axis pointing upwards",
+    "iEEGCoordinateProcessingDescription": "surface projection",
+    "iEEGCoordinateProcessingReference": "Hermes et al., 2010 Journal of Neuroscience Methods"
+}

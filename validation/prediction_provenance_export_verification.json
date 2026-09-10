@@ -1,0 +1,46 @@
+{
+  "scope": "Actual public MAYO02 LAS1-LAS2 input rerun with corrected current detector and provenance exporter; all historical scientific columns compared, elapsed time excluded.",
+  "input_sha256": "b16c5dbcd7a3ca0789c8a00817abb988737837e9cfdf640341c597515ee1c33d",
+  "records": 108,
+  "all_old_scientific_columns_equal_within_1e12": true,
+  "numeric_max_abs_differences": {
+    "n_trials_total": 0.0,
+    "n_trials_clean": 0.0,
+    "p_reproducibility": 0.0,
+    "p_energy": 0.0,
+    "p_joint": 0.0,
+    "rms_ratio_db": 0.0,
+    "reproducibility_statistic": 0.0,
+    "energy_statistic": 0.0,
+    "notes": 0.0,
+    "projection_exact": 0.0,
+    "energy_exact": 0.0,
+    "random_seed": 0.0,
+    "q_joint": 0.0,
+    "detected": 0.0,
+    "evaluable": 0.0,
+    "family_size": 0.0
+  },
+  "new_provenance_columns": [
+    "response_start_s",
+    "response_stop_s",
+    "baseline_start_s",
+    "baseline_stop_s",
+    "n_response_samples",
+    "n_baseline_samples",
+    "clean_trial_indices"
+  ],
+  "same_matched_sample_count": true,
+  "clean_trial_indices_count_matches": true,
+  "cache_schema_version": 2,
+  "new_csv_sha256": "6fca819c0b8baaeec8d92b5c237c0f894d2ce195dfb0365889344413322eca85",
+  "source_sha256": {
+    "ERPy/crp_energy.py": "07590e407bd0d7dd53dd1cb745e9e0004b15b0310c5cd15737c5d9a7c229f9f7",
+    "validation/predict_erdetect_epochs.py": "4bf38a4ce99c9bd946bd580605ffff360b06649826578f7996a7066180923e9d"
+  },
+  "full_suite": {
+    "passed": 298,
+    "warnings": 2,
+    "scope": "Two expected SciPy precision warnings in deliberately identical-trial multiscale fixtures."
+  }
+}

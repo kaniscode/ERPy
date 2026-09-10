@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "script_sha256": "88a51610da5d8c0d08ff67f0ae22150c73a22c127c3d7d9e02cf1f4ee2530bf5",
+  "input_sha256": {
+    "validation/frozen_results/erdetect/record_predictions_and_labels.csv.gz": "773927fb3bf76f3a1a249e5092f077ba25a3046e4c0385deb442849bc771b48a",
+    "validation/frozen_results/erdetect/rater_label_joins.csv.gz": "916c76fc6935913a2eb6a589797a2745092488d1ba5893da7f6bc17ef19dc8fc",
+    "validation/frozen_results/erdetect/metrics.csv": "a3e932b306da2e91c0a6c58a0bd6202c5319191222cef3a21d00c5cf77a3214e",
+    "validation/frozen_results/erdetect/summary.json": "f8e740dfa1146da88165d274af5afc6211e9463047cfd1297dda40665b9d6d26",
+    "validation/predict_erdetect_epochs.py": "dc9cc02292c5cdd674c235dcbf12f0daf9b734595802e5ccadf250297f1e266c",
+    "validation/score_erdetect_validation.py": "b728e9a17eadd03a3e527f6c54b236cbb48f9a32f69ef89ad53a2d190335d82c",
+    "ERPy/crp_energy.py": "07590e407bd0d7dd53dd1cb745e9e0004b15b0310c5cd15737c5d9a7c229f9f7",
+    "validation/frozen_results/erdetect/coverage_audit/annotation_source_flow.json": "c230348aa6c314ebe81432e30b104daaeec7e4b8b1f40176b55d6c91cae45741",
+    "validation/frozen_results/n1/nested/paired_differences.csv": "90cc4983f533d0bee60d5a4f7e1cb3ad2a757a594f7f7cb95514b9c675332745",
+    "validation/frozen_results/n1/secondary/hybrid_vs_morphology.csv": "8e69b92ba6dee9d83fc510da013c69910127315af8e6f61752218388968ed622"
+  },
+  "source_trace_manifest_sha256": "b82ac8132b5dddb9b75a7860c1442c53ec516907b00d9f67395b1b3876cffa7d",
+  "outputs": {
+    "annotation_group_contrasts.csv": {
+      "bytes": 451,
+      "sha256": "1b527a7c2706710522ddec6519cf35de5cfe7e4c016e1ecd12c70e38732e8ad9"
+    },
+    "annotation_group_rates.csv": {
+      "bytes": 615,
+      "sha256": "daf071dd670a27dba8df5c7cc6870a6e1bab043061c7ee175ab358a42c305531"
+    },
+    "crossclassification.csv": {
+      "bytes": 519,
+      "sha256": "6ac120153f1d8da1270f2106c84a5e7f87b03698e73c6f1f5f309ec3b4cb7efb"
+    },
+    "exemplar_selection.csv": {
+      "bytes": 2232,
+      "sha256": "9e3ad13d388d20cc843233f8973f5eb98e9caaebfa1482394c7e7d7a9cf9945d"
+    },
+    "exemplar_source_provenance.json": {
+      "bytes": 80370,
+      "sha256": "3957380b292706619106c5983e7fffafb0f4abe37c4cc45681f721ed4103fc3e"
+    },
+    "exemplar_traces.csv.gz": {
+      "bytes": 70741,
+      "sha256": "817ccf0a4a81d9597c952ad2ecda503e6923b2ff785062658dab8ba9f6181b4d"
+    },
+    "observed_annotation_codes_by_rater.csv": {
+      "bytes": 338,
+      "sha256": "2254bb72c9754fe08f6de175f9b63297299ce75a16c3ce311a1c5e2413e901ab"
+    },
+    "record_classification.csv.gz": {
+      "bytes": 1364929,
+      "sha256": "d122216302032888456eaac90de85ce9861960d16705cecefe21799ffdcd730e"
+    },
+    "subject_annotation_group_rates.csv": {
+      "bytes": 3304,
+      "sha256": "6751afd3097aa9e2cfd7f45601a1716388886eb6b768ae138b5d594511e6c1fb"
+    },
+    "subject_metrics.csv": {
+      "bytes": 3241,
+      "sha256": "664b0ba2e9eea8d0366f2cc21d451593edcbe48cff562466b2014cc02fc514b6"
+    },
+    "subject_three_annotation_group_rates.csv": {
+      "bytes": 2525,
+      "sha256": "cadd89a1b7e9c18d11a952cf30985b11a24bbec8470fb37f49c4328de1972252"
+    },
+    "summary.json": {
+      "bytes": 4111,
+      "sha256": "fb680c1f847569255f7890366ba6bfe54a751581998761dd70fb9fb88f08c262"
+    },
+    "supervised_paired_intervals.csv": {
+      "bytes": 873,
+      "sha256": "4be01e5f852e6a5d58c9cfbce4bdac4a388314e081d71860717817f79fe0ce97"
+    },
+    "three_annotation_group_rates.csv": {
+      "bytes": 408,
+      "sha256": "4b44f53b68fd8be2b661e0f7befaf419a7fc9da40a5065e904c6b984798e3132"
+    }
+  },
+  "source_epoch_sha256": {
+    "epochs/UMCU22/sub-UMCU22__C04-C05.npz": "ec15bb5391d9aaad4fa6e93abaaee5ff225734a1c6f4ab1edb45386984d921f9",
+    "epochs/UMCU25/sub-UMCU25__T35-T36.npz": "a2d17601bc5a767a5589197f060202883bed180b8d980538851e2de94c13e3fd",
+    "epochs/UMCU26/sub-UMCU26__FL12-FL13.npz": "f6eebfcc5de865792adb4bf223102b81cd862e9d860d48f718c187d2372f0ac0",
+    "epochs/UMCU62/sub-UMCU62__C12-C13.npz": "98c4426de866e8316b629f7ac14e2ca1aecf63e1ad4a866551126225c7e048b4"
+  },
+  "no_input_mutations": true
+}
