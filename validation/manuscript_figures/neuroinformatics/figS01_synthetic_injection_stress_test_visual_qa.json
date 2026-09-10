@@ -1,0 +1,25 @@
+{
+  "journal": "neuroinformatics",
+  "number": "S1",
+  "status": "pass",
+  "role": "Exact public copy of author-inspected two-panel PNG/native PDF; original calibration results unchanged",
+  "producer_visual_qa_sha256": "a6714e67c434af74ebec9070039a39e817e51aace8129b6038631464e7e50f0a",
+  "artwork_and_caption_bytes_equal_inspected_source": true,
+  "width_mm": 174.0,
+  "height_mm": 126.36266666666666,
+  "minimum_font_pt": 8.0,
+  "visible_stroke_min_pt": 2,
+  "all_96_cell_annotations_inside_cells": true,
+  "source_results_unchanged": true,
+  "pure_null_results_retained_in_tables_not_plotted": true,
+  "files": {
+    "figS01_synthetic_injection_stress_test.pdf": "391efaaabee7853b41ee615b373fe68a7b53e0542304edfb0199887b6197109a",
+    "figS01_synthetic_injection_stress_test.png": "4bdb4a2f944e12cf90c85b37ae63dcc10560b01df44468baf03cf037165e1d8b",
+    "figS01_synthetic_injection_stress_test.svg": "d162c7e43dfe0dc9136ce0bf471b055a91acbd4b99840012ab9bf8e5cf254f35",
+    "figS01_synthetic_injection_stress_test.tiff": "e0dbb38a08d8d6d00bfeae81bda07a02f046d8d0fc84ce7acea90956c1b84533",
+    "figS01_synthetic_injection_stress_test_alt.txt": "f1925fa1232e023d7891c3b2d1f2152df7438046656631c9ccfe7258b70852a7",
+    "figS01_synthetic_injection_stress_test_caption.md": "a2b2a4df222626da22b6719c953621ca4345575a65be0c03e25529cd70505f99",
+    "figS01_synthetic_injection_stress_test_data.csv": "f010e290ab45a66a23d5e0cdb46d2c33325a9d4c69ba821a09740fc435da3f7e",
+    "figS01_synthetic_injection_stress_test_plot_manifest.json": "d5933bf65cfb28ee3dbd68f3bee56eae933e4a7e2f9d8ad01c047530ff2101a4"
+  }
+}

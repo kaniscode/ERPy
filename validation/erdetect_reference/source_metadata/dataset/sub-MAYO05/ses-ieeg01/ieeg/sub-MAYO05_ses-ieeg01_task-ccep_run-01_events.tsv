@@ -1,0 +1,563 @@
+onset	duration	trial_type	electrical_stimulation_type	electrical_stimulation_site	electrical_stimulation_current	status	status_description
+116.654296875	0.0002	electrical_stimulation	biphasic	LPS1-LPS2	6.0 mA	good	n/a
+124.7822265625	0.0002	electrical_stimulation	biphasic	LPS1-LPS2	6.0 mA	bad	n/a
+130.63134765625	0.0002	electrical_stimulation	biphasic	LPS1-LPS2	6.0 mA	good	odd peaks on the bottom
+178.31298828125	0.0002	electrical_stimulation	biphasic	LPG1-LPG2	6.0 mA	good	n/a
+183.20361328125	0.0002	electrical_stimulation	biphasic	LPG1-LPG2	6.0 mA	good	n/a
+187.837890625	0.0002	electrical_stimulation	biphasic	LPG1-LPG2	6.0 mA	good	n/a
+192.19091796875	0.0002	electrical_stimulation	biphasic	LPG1-LPG2	6.0 mA	good	n/a
+196.42431640625	0.0002	electrical_stimulation	biphasic	LPG1-LPG2	6.0 mA	good	n/a
+201.142578125	0.0002	electrical_stimulation	biphasic	LPG1-LPG2	6.0 mA	good	n/a
+204.57275390625	0.0002	electrical_stimulation	biphasic	LPG1-LPG2	6.0 mA	good	n/a
+208.82666015625	0.0002	electrical_stimulation	biphasic	LPG1-LPG2	6.0 mA	bad	n/a
+212.404296875	0.0002	electrical_stimulation	biphasic	LPG1-LPG2	6.0 mA	good	n/a
+217.01708984375	0.0002	electrical_stimulation	biphasic	LPG1-LPG2	6.0 mA	good	n/a
+234.3095703125	0.0002	electrical_stimulation	biphasic	LPG1-LPG2	6.0 mA	good	n/a
+263.390625	0.0002	electrical_stimulation	biphasic	LPG2-LPG3	6.0 mA	good	n/a
+267.96337890625	0.0002	electrical_stimulation	biphasic	LPG2-LPG3	6.0 mA	good	n/a
+272.1611328125	0.0002	electrical_stimulation	biphasic	LPG2-LPG3	6.0 mA	good	n/a
+275.611328125	0.0002	electrical_stimulation	biphasic	LPG2-LPG3	6.0 mA	good	n/a
+280.22509765625	0.0002	electrical_stimulation	biphasic	LPG2-LPG3	6.0 mA	good	n/a
+284.0673828125	0.0002	electrical_stimulation	biphasic	LPG2-LPG3	6.0 mA	bad	n/a
+288.2587890625	0.0002	electrical_stimulation	biphasic	LPG2-LPG3	6.0 mA	good	n/a
+292.01220703125	0.0002	electrical_stimulation	biphasic	LPG2-LPG3	6.0 mA	good	n/a
+296.4072265625	0.0002	electrical_stimulation	biphasic	LPG2-LPG3	6.0 mA	good	n/a
+300.734375	0.0002	electrical_stimulation	biphasic	LPG2-LPG3	6.0 mA	good	n/a
+323.76708984375	0.0002	electrical_stimulation	biphasic	LPG3-LPG4	6.0 mA	good	n/a
+327.2236328125	0.0002	electrical_stimulation	biphasic	LPG3-LPG4	6.0 mA	good	epileptic activity
+330.84765625	0.0002	electrical_stimulation	biphasic	LPG3-LPG4	6.0 mA	good	n/a
+334.49169921875	0.0002	electrical_stimulation	biphasic	LPG3-LPG4	6.0 mA	good	n/a
+338.6884765625	0.0002	electrical_stimulation	biphasic	LPG3-LPG4	6.0 mA	good	n/a
+342.81103515625	0.0002	electrical_stimulation	biphasic	LPG3-LPG4	6.0 mA	good	n/a
+346.6171875	0.0002	electrical_stimulation	biphasic	LPG3-LPG4	6.0 mA	good	n/a
+350.01171875	0.0002	electrical_stimulation	biphasic	LPG3-LPG4	6.0 mA	good	n/a
+354.046875	0.0002	electrical_stimulation	biphasic	LPG3-LPG4	6.0 mA	good	n/a
+357.33544921875	0.0002	electrical_stimulation	biphasic	LPG3-LPG4	6.0 mA	good	small artif after 2s
+376.29296875	0.0002	electrical_stimulation	biphasic	LPG5-LPG6	6.0 mA	good	n/a
+379.6767578125	0.0002	electrical_stimulation	biphasic	LPG5-LPG6	6.0 mA	good	waveforms on the bottom
+383.70654296875	0.0002	electrical_stimulation	biphasic	LPG5-LPG6	6.0 mA	good	n/a
+387.595703125	0.0002	electrical_stimulation	biphasic	LPG5-LPG6	6.0 mA	good	n/a
+390.51513671875	0.0002	electrical_stimulation	biphasic	LPG5-LPG6	6.0 mA	good	n/a
+394.373046875	0.0002	electrical_stimulation	biphasic	LPG5-LPG6	6.0 mA	good	n/a
+397.94921875	0.0002	electrical_stimulation	biphasic	LPG5-LPG6	6.0 mA	good	n/a
+401.65625	0.0002	electrical_stimulation	biphasic	LPG5-LPG6	6.0 mA	good	waveforms on the bottom
+405.38818359375	0.0002	electrical_stimulation	biphasic	LPG5-LPG6	6.0 mA	good	waveforms on the bottom
+409.19970703125	0.0002	electrical_stimulation	biphasic	LPG5-LPG6	6.0 mA	good	epileptic activity
+438.33837890625	0.0002	electrical_stimulation	biphasic	LPG6-LPG7	6.0 mA	good	n/a
+442.0751953125	0.0002	electrical_stimulation	biphasic	LPG6-LPG7	6.0 mA	good	n/a
+445.45361328125	0.0002	electrical_stimulation	biphasic	LPG6-LPG7	6.0 mA	good	n/a
+448.92626953125	0.0002	electrical_stimulation	biphasic	LPG6-LPG7	6.0 mA	good	n/a
+452.3896484375	0.0002	electrical_stimulation	biphasic	LPG6-LPG7	6.0 mA	bad	n/a
+457.08447265625	0.0002	electrical_stimulation	biphasic	LPG6-LPG7	6.0 mA	bad	n/a
+463.65283203125	0.0002	electrical_stimulation	biphasic	LPG6-LPG7	6.0 mA	good	n/a
+467.2607421875	0.0002	electrical_stimulation	biphasic	LPG6-LPG7	6.0 mA	good	n/a
+471.81298828125	0.0002	electrical_stimulation	biphasic	LPG6-LPG7	6.0 mA	good	n/a
+476.85302734375	0.0002	electrical_stimulation	biphasic	LPG6-LPG7	6.0 mA	good	n/a
+501.83740234375	0.0002	electrical_stimulation	biphasic	LFG7-LPG8	6.0 mA	good	n/a
+520.25	0.0002	electrical_stimulation	biphasic	LPG7-LPG8	6.0 mA	good	n/a
+538.892578125	0.0002	electrical_stimulation	biphasic	LPG7-LPG8	6.0 mA	good	n/a
+559.73095703125	0.0002	electrical_stimulation	biphasic	LPG7-LPG8	6.0 mA	good	n/a
+564.80859375	0.0002	electrical_stimulation	biphasic	LPG7-LPG8	6.0 mA	good	n/a
+569.09326171875	0.0002	electrical_stimulation	biphasic	LPG7-LPG8	6.0 mA	good	n/a
+573.41064453125	0.0002	electrical_stimulation	biphasic	LPG7-LPG8	6.0 mA	good	n/a
+579.03564453125	0.0002	electrical_stimulation	biphasic	LPG7-LPG8	6.0 mA	good	n/a
+582.080078125	0.0002	electrical_stimulation	biphasic	LPG7-LPG8	6.0 mA	good	artifact after 3s
+586.7666015625	0.0002	electrical_stimulation	biphasic	LPG7-LPG8	6.0 mA	bad	n/a
+591.2978515625	0.0002	electrical_stimulation	biphasic	LPG7-LPG8	6.0 mA	good	n/a
+596.615234375	0.0002	electrical_stimulation	biphasic	LPG7-LPG8	6.0 mA	good	n/a
+601.318359375	0.0002	electrical_stimulation	biphasic	LPG7-LPG8	6.0 mA	good	n/a
+621.56689453125	0.0002	electrical_stimulation	biphasic	LPG9-LPG10	6.0 mA	good	n/a
+625.46142578125	0.0002	electrical_stimulation	biphasic	LPG9-LPG10	6.0 mA	good	n/a
+628.8544921875	0.0002	electrical_stimulation	biphasic	LPG9-LPG10	6.0 mA	good	n/a
+632.7548828125	0.0002	electrical_stimulation	biphasic	LPG9-LPG10	6.0 mA	good	n/a
+636.22705078125	0.0002	electrical_stimulation	biphasic	LPG9-LPG10	6.0 mA	good	n/a
+640.4853515625	0.0002	electrical_stimulation	biphasic	LPG9-LPG10	6.0 mA	good	n/a
+644.8134765625	0.0002	electrical_stimulation	biphasic	LPG9-LPG10	6.0 mA	good	n/a
+648.791015625	0.0002	electrical_stimulation	biphasic	LPG9-LPG10	6.0 mA	good	n/a
+652.96142578125	0.0002	electrical_stimulation	biphasic	LPG9-LPG10	6.0 mA	good	n/a
+656.58935546875	0.0002	electrical_stimulation	biphasic	LPG9-LPG10	6.0 mA	good	n/a
+676.00537109375	0.0002	electrical_stimulation	biphasic	LPG10-LPG11	6.0 mA	good	n/a
+681.25048828125	0.0002	electrical_stimulation	biphasic	LPG10-LPG11	6.0 mA	good	noisy&artifact by the end
+686.07763671875	0.0002	electrical_stimulation	biphasic	LPG10-LPG11	6.0 mA	good	n/a
+690.529296875	0.0002	electrical_stimulation	biphasic	LPG10-LPG11	6.0 mA	good	n/a
+695.68017578125	0.0002	electrical_stimulation	biphasic	LPG10-LPG11	6.0 mA	good	epileptic activity
+700.189453125	0.0002	electrical_stimulation	biphasic	LPG10-LPG11	6.0 mA	bad	EpAct before stim
+705.673828125	0.0002	electrical_stimulation	biphasic	LPG10-LPG11	6.0 mA	good	n/a
+708.84912109375	0.0002	electrical_stimulation	biphasic	LPG10-LPG11	6.0 mA	bad	odd waveforms
+713.84912109375	0.0002	electrical_stimulation	biphasic	LPG10-LPG11	6.0 mA	bad	noisy bef-stim
+722.16943359375	0.0002	electrical_stimulation	biphasic	LPG10-LPG11	6.0 mA	good	n/a
+729.96826171875	0.0002	electrical_stimulation	biphasic	LPG10-LPG11	6.0 mA	good	n/a
+758.6318359375	0.0002	electrical_stimulation	biphasic	LPG11-LPG12	6.0 mA	good	n/a
+763.63671875	0.0002	electrical_stimulation	biphasic	LPG11-LPG12	6.0 mA	good	n/a
+770.29931640625	0.0002	electrical_stimulation	biphasic	LPG11-LPG12	6.0 mA	good	n/a
+775.82080078125	0.0002	electrical_stimulation	biphasic	LPG11-LPG12	6.0 mA	good	epileptic activity
+781.0751953125	0.0002	electrical_stimulation	biphasic	LPG11-LPG12	6.0 mA	good	n/a
+786.18408203125	0.0002	electrical_stimulation	biphasic	LPG11-LPG12	6.0 mA	good	n/a
+791.4404296875	0.0002	electrical_stimulation	biphasic	LPG11-LPG12	6.0 mA	good	n/a
+796.255859375	0.0002	electrical_stimulation	biphasic	LPG11-LPG12	6.0 mA	good	n/a
+800.72900390625	0.0002	electrical_stimulation	biphasic	LPG11-LPG12	6.0 mA	good	n/a
+805.8798828125	0.0002	electrical_stimulation	biphasic	LPG11-LPG12	6.0 mA	good	n/a
+829.63916015625	0.0002	electrical_stimulation	biphasic	LPG13-LPG14	6.0 mA	good	n/a
+832.9443359375	0.0002	electrical_stimulation	biphasic	LPG13-LPG14	6.0 mA	good	n/a
+837.490234375	0.0002	electrical_stimulation	biphasic	LPG13-LPG14	6.0 mA	good	n/a
+843.00634765625	0.0002	electrical_stimulation	biphasic	LPG13-LPG14	6.0 mA	bad	n/a
+847.54150390625	0.0002	electrical_stimulation	biphasic	LPG13-LPG14	6.0 mA	bad	n/a
+852.78662109375	0.0002	electrical_stimulation	biphasic	LPG13-LPG14	6.0 mA	good	n/a
+856.7744140625	0.0002	electrical_stimulation	biphasic	LPG13-LPG14	6.0 mA	good	n/a
+862.41015625	0.0002	electrical_stimulation	biphasic	LPG13-LPG14	6.0 mA	good	n/a
+865.71533203125	0.0002	electrical_stimulation	biphasic	LPG13-LPG14	6.0 mA	good	n/a
+870.61083984375	0.0002	electrical_stimulation	biphasic	LPG13-LPG14	6.0 mA	good	n/a
+886.330078125	0.0002	electrical_stimulation	biphasic	LPG14-LPG15	6.0 mA	good	n/a
+891.7412109375	0.0002	electrical_stimulation	biphasic	LPG14-LPG15	6.0 mA	good	n/a
+896.65771484375	0.0002	electrical_stimulation	biphasic	LPG14-LPG15	6.0 mA	good	n/a
+902.939453125	0.0002	electrical_stimulation	biphasic	LPG14-LPG15	6.0 mA	good	artifact after 2.5s
+908.89453125	0.0002	electrical_stimulation	biphasic	LPG14-LPG15	6.0 mA	bad	n/a
+916.77490234375	0.0002	electrical_stimulation	biphasic	LPG14-LPG15	6.0 mA	good	n/a
+922.0673828125	0.0002	electrical_stimulation	biphasic	LPG14-LPG15	6.0 mA	good	epileptic activity
+926.91552734375	0.0002	electrical_stimulation	biphasic	LPG14-LPG15	6.0 mA	bad	wrong stim onset
+931.75830078125	0.0002	electrical_stimulation	biphasic	LPG14-LPG15	6.0 mA	good	n/a
+937.10693359375	0.0002	electrical_stimulation	biphasic	LPG14-LPG15	6.0 mA	good	n/a
+959.7724609375	0.0002	electrical_stimulation	biphasic	LPG15-LPG16	6.0 mA	good	n/a
+964.85546875	0.0002	electrical_stimulation	biphasic	LPG15-LPG16	6.0 mA	good	n/a
+968.9375	0.0002	electrical_stimulation	biphasic	LPG15-LPG16	6.0 mA	good	n/a
+972.0595703125	0.0002	electrical_stimulation	biphasic	LPG15-LPG16	6.0 mA	good	n/a
+976.63330078125	0.0002	electrical_stimulation	biphasic	LPG15-LPG16	6.0 mA	good	waveforms on the bottom
+980.7666015625	0.0002	electrical_stimulation	biphasic	LPG15-LPG16	6.0 mA	bad	n/a
+985.13525390625	0.0002	electrical_stimulation	biphasic	LPG15-LPG16	6.0 mA	good	n/a
+990.353515625	0.0002	electrical_stimulation	biphasic	LPG15-LPG16	6.0 mA	good	odd peaks on the bottom
+994.83203125	0.0002	electrical_stimulation	biphasic	LPG15-LPG16	6.0 mA	good	n/a
+999.16943359375	0.0002	electrical_stimulation	biphasic	LPG15-LPG16	6.0 mA	good	odd peaks on the bottom
+1022.65576171875	0.0002	electrical_stimulation	biphasic	LFG1-LFG2	6.0 mA	good	n/a
+1027.19775390625	0.0002	electrical_stimulation	biphasic	LFG1-LFG2	6.0 mA	good	n/a
+1032.7119140625	0.0002	electrical_stimulation	biphasic	LFG1-LFG2	6.0 mA	good	n/a
+1037.38330078125	0.0002	electrical_stimulation	biphasic	LFG1-LFG2	6.0 mA	good	n/a
+1042.24755859375	0.0002	electrical_stimulation	biphasic	LFG1-LFG2	6.0 mA	good	n/a
+1046.04345703125	0.0002	electrical_stimulation	biphasic	LFG1-LFG2	6.0 mA	good	n/a
+1049.2138671875	0.0002	electrical_stimulation	biphasic	LFG1-LFG2	6.0 mA	good	n/a
+1054.3994140625	0.0002	electrical_stimulation	biphasic	LFG1-LFG2	6.0 mA	good	n/a
+1058.56103515625	0.0002	electrical_stimulation	biphasic	LFG1-LFG2	6.0 mA	good	n/a
+1063.78857421875	0.0002	electrical_stimulation	biphasic	LFG1-LFG2	6.0 mA	good	n/a
+1078.5966796875	0.0002	electrical_stimulation	biphasic	LFG2-LFG3	6.0 mA	good	n/a
+1083.4599609375	0.0002	electrical_stimulation	biphasic	LFG2-LFG3	6.0 mA	good	n/a
+1087.833984375	0.0002	electrical_stimulation	biphasic	LFG2-LFG3	6.0 mA	good	n/a
+1092.48486328125	0.0002	electrical_stimulation	biphasic	LFG2-LFG3	6.0 mA	good	n/a
+1096.46728515625	0.0002	electrical_stimulation	biphasic	LFG2-LFG3	6.0 mA	good	n/a
+1100.23193359375	0.0002	electrical_stimulation	biphasic	LFG2-LFG3	6.0 mA	good	n/a
+1104.79296875	0.0002	electrical_stimulation	biphasic	LFG2-LFG3	6.0 mA	good	n/a
+1108.75048828125	0.0002	electrical_stimulation	biphasic	LFG2-LFG3	6.0 mA	good	n/a
+1113.7294921875	0.0002	electrical_stimulation	biphasic	LFG2-LFG3	6.0 mA	good	n/a
+1117.83154296875	0.0002	electrical_stimulation	biphasic	LFG2-LFG3	6.0 mA	good	n/a
+1133.9208984375	0.0002	electrical_stimulation	biphasic	LFG3-LFG4	6.0 mA	good	n/a
+1138.65966796875	0.0002	electrical_stimulation	biphasic	LFG3-LFG4	6.0 mA	good	n/a
+1141.82421875	0.0002	electrical_stimulation	biphasic	LFG3-LFG4	6.0 mA	bad	odd peaks/noisy by the end
+1145.77099609375	0.0002	electrical_stimulation	biphasic	LFG3-LFG4	6.0 mA	bad	n/a
+1150.03515625	0.0002	electrical_stimulation	biphasic	LFG3-LFG4	6.0 mA	good	n/a
+1154.1494140625	0.0002	electrical_stimulation	biphasic	LFG3-LFG4	6.0 mA	good	n/a
+1158.9189453125	0.0002	electrical_stimulation	biphasic	LFG3-LFG4	6.0 mA	good	n/a
+1162.11962890625	0.0002	electrical_stimulation	biphasic	LFG3-LFG4	6.0 mA	good	n/a
+1166.3330078125	0.0002	electrical_stimulation	biphasic	LFG3-LFG4	6.0 mA	good	n/a
+1170.0283203125	0.0002	electrical_stimulation	biphasic	LFG3-LFG4	6.0 mA	good	n/a
+1191.39892578125	0.0002	electrical_stimulation	biphasic	LFG4-LFG5	6.0 mA	good	n/a
+1195.3349609375	0.0002	electrical_stimulation	biphasic	LFG4-LFG5	6.0 mA	good	n/a
+1199.62548828125	0.0002	electrical_stimulation	biphasic	LFG4-LFG5	6.0 mA	good	n/a
+1203.759765625	0.0002	electrical_stimulation	biphasic	LFG4-LFG5	6.0 mA	good	epileptic activity
+1208.2744140625	0.0002	electrical_stimulation	biphasic	LFG4-LFG5	6.0 mA	bad	odd peaks
+1213.52392578125	0.0002	electrical_stimulation	biphasic	LFG4-LFG5	6.0 mA	bad	n/a
+1217.486328125	0.0002	electrical_stimulation	biphasic	LFG4-LFG5	6.0 mA	good	n/a
+1221.25	0.0002	electrical_stimulation	biphasic	LFG4-LFG5	6.0 mA	good	n/a
+1225.97900390625	0.0002	electrical_stimulation	biphasic	LFG4-LFG5	6.0 mA	good	n/a
+1230.0087890625	0.0002	electrical_stimulation	biphasic	LFG4-LFG5	6.0 mA	good	n/a
+1244.984375	0.0002	electrical_stimulation	biphasic	LFG5-LFG6	6.0 mA	good	n/a
+1249.02392578125	0.0002	electrical_stimulation	biphasic	LFG5-LFG6	6.0 mA	good	n/a
+1253.8212890625	0.0002	electrical_stimulation	biphasic	LFG5-LFG6	6.0 mA	good	n/a
+1257.76220703125	0.0002	electrical_stimulation	biphasic	LFG5-LFG6	6.0 mA	good	odd peaks on the bottom
+1262.0791015625	0.0002	electrical_stimulation	biphasic	LFG5-LFG6	6.0 mA	good	n/a
+1267.6474609375	0.0002	electrical_stimulation	biphasic	LFG5-LFG6	6.0 mA	good	n/a
+1272.77685546875	0.0002	electrical_stimulation	biphasic	LFG5-LFG6	6.0 mA	good	n/a
+1276.35791015625	0.0002	electrical_stimulation	biphasic	LFG5-LFG6	6.0 mA	bad	Ruins signal on LPG16 and adds nothing to other chans
+1281.5703125	0.0002	electrical_stimulation	biphasic	LFG5-LFG6	6.0 mA	good	n/a
+1286.1435546875	0.0002	electrical_stimulation	biphasic	LFG5-LFG6	6.0 mA	good	n/a
+1308.677734375	0.0002	electrical_stimulation	biphasic	LFG7-LFG8	6.0 mA	good	n/a
+1312.6396484375	0.0002	electrical_stimulation	biphasic	LFG7-LFG8	6.0 mA	bad	n/a
+1316.99169921875	0.0002	electrical_stimulation	biphasic	LFG7-LFG8	6.0 mA	good	n/a
+1320.69970703125	0.0002	electrical_stimulation	biphasic	LFG7-LFG8	6.0 mA	good	n/a
+1325.625	0.0002	electrical_stimulation	biphasic	LFG7-LFG8	6.0 mA	good	n/a
+1330.85498046875	0.0002	electrical_stimulation	biphasic	LFG7-LFG8	6.0 mA	good	n/a
+1335.46875	0.0002	electrical_stimulation	biphasic	LFG7-LFG8	6.0 mA	good	n/a
+1339.94091796875	0.0002	electrical_stimulation	biphasic	LFG7-LFG8	6.0 mA	good	n/a
+1344.310546875	0.0002	electrical_stimulation	biphasic	LFG7-LFG8	6.0 mA	good	n/a
+1349.529296875	0.0002	electrical_stimulation	biphasic	LFG7-LFG8	6.0 mA	good	n/a
+1365.69287109375	0.0002	electrical_stimulation	biphasic	LFG8-LFG9	6.0 mA	good	n/a
+1371.4794921875	0.0002	electrical_stimulation	biphasic	LFG8-LFG9	6.0 mA	good	n/a
+1376.63037109375	0.0002	electrical_stimulation	biphasic	LFG8-LFG9	6.0 mA	good	n/a
+1381.0771484375	0.0002	electrical_stimulation	biphasic	LFG8-LFG9	6.0 mA	good	n/a
+1384.48681640625	0.0002	electrical_stimulation	biphasic	LFG8-LFG9	6.0 mA	good	n/a
+1388.412109375	0.0002	electrical_stimulation	biphasic	LFG8-LFG9	6.0 mA	good	n/a
+1392.9375	0.0002	electrical_stimulation	biphasic	LFG8-LFG9	6.0 mA	good	n/a
+1397.11767578125	0.0002	electrical_stimulation	biphasic	LFG8-LFG9	6.0 mA	good	n/a
+1402.3681640625	0.0002	electrical_stimulation	biphasic	LFG8-LFG9	6.0 mA	bad	n/a
+1407.46240234375	0.0002	electrical_stimulation	biphasic	LFG8-LFG9	6.0 mA	good	n/a
+1424.74560546875	0.0002	electrical_stimulation	biphasic	LFG9-LFG10	6.0 mA	good	n/a
+1429.015625	0.0002	electrical_stimulation	biphasic	LFG9-LFG10	6.0 mA	good	n/a
+1433.822265625	0.0002	electrical_stimulation	biphasic	LFG9-LFG10	6.0 mA	good	n/a
+1438.24853515625	0.0002	electrical_stimulation	biphasic	LFG9-LFG10	6.0 mA	good	n/a
+1442.8935546875	0.0002	electrical_stimulation	biphasic	LFG9-LFG10	6.0 mA	good	n/a
+1446.72998046875	0.0002	electrical_stimulation	biphasic	LFG9-LFG10	6.0 mA	good	n/a
+1450.80224609375	0.0002	electrical_stimulation	biphasic	LFG9-LFG10	6.0 mA	good	n/a
+1455.80712890625	0.0002	electrical_stimulation	biphasic	LFG9-LFG10	6.0 mA	good	n/a
+1460.50439453125	0.0002	electrical_stimulation	biphasic	LFG9-LFG10	6.0 mA	good	n/a
+1465.6337890625	0.0002	electrical_stimulation	biphasic	LFG9-LFG10	6.0 mA	good	n/a
+1486.0986328125	0.0002	electrical_stimulation	biphasic	LFG10-LFG11	6.0 mA	good	n/a
+1490.685546875	0.0002	electrical_stimulation	biphasic	LFG10-LFG11	6.0 mA	good	n/a
+1495.56494140625	0.0002	electrical_stimulation	biphasic	LFG10-LFG11	6.0 mA	good	n/a
+1499.1845703125	0.0002	electrical_stimulation	biphasic	LFG10-LFG11	6.0 mA	bad	n/a
+1503.8603515625	0.0002	electrical_stimulation	biphasic	LFG10-LFG11	6.0 mA	good	n/a
+1508.17138671875	0.0002	electrical_stimulation	biphasic	LFG10-LFG11	6.0 mA	good	n/a
+1512.53515625	0.0002	electrical_stimulation	biphasic	LFG10-LFG11	6.0 mA	good	n/a
+1517.248046875	0.0002	electrical_stimulation	biphasic	LFG10-LFG11	6.0 mA	good	n/a
+1520.83935546875	0.0002	electrical_stimulation	biphasic	LFG10-LFG11	6.0 mA	good	n/a
+1525.8759765625	0.0002	electrical_stimulation	biphasic	LFG10-LFG11	6.0 mA	good	n/a
+1542.55029296875	0.0002	electrical_stimulation	biphasic	LFG13-LFG14	6.0 mA	good	n/a
+1548.404296875	0.0002	electrical_stimulation	biphasic	LFG13-LFG14	6.0 mA	good	n/a
+1554.373046875	0.0002	electrical_stimulation	biphasic	LFG13-LFG14	6.0 mA	bad	Artifact bef-stim THICKER
+1558.55029296875	0.0002	electrical_stimulation	biphasic	LFG13-LFG14	6.0 mA	good	n/a
+1562.72607421875	0.0002	electrical_stimulation	biphasic	LFG13-LFG14	6.0 mA	good	n/a
+1567.66748046875	0.0002	electrical_stimulation	biphasic	LFG13-LFG14	6.0 mA	good	n/a
+1573.330078125	0.0002	electrical_stimulation	biphasic	LFG13-LFG14	6.0 mA	good	n/a
+1578.1728515625	0.0002	electrical_stimulation	biphasic	LFG13-LFG14	6.0 mA	good	n/a
+1582.927734375	0.0002	electrical_stimulation	biphasic	LFG13-LFG14	6.0 mA	bad	Artifact and noisy channels
+1588.10986328125	0.0002	electrical_stimulation	biphasic	LFG13-LFG14	6.0 mA	good	n/a
+1592.3369140625	0.0002	electrical_stimulation	biphasic	LFG13-LFG14	6.0 mA	good	n/a
+1608.57421875	0.0002	electrical_stimulation	biphasic	LFG14-LFG15	6.0 mA	good	n/a
+1613.025390625	0.0002	electrical_stimulation	biphasic	LFG14-LFG15	6.0 mA	good	n/a
+1616.341796875	0.0002	electrical_stimulation	biphasic	LFG14-LFG15	6.0 mA	good	n/a
+1619.92333984375	0.0002	electrical_stimulation	biphasic	LFG14-LFG15	6.0 mA	good	n/a
+1624.04736328125	0.0002	electrical_stimulation	biphasic	LFG14-LFG15	6.0 mA	good	n/a
+1628.353515625	0.0002	electrical_stimulation	biphasic	LFG14-LFG15	6.0 mA	good	epileptic activity
+1633.1328125	0.0002	electrical_stimulation	biphasic	LFG14-LFG15	6.0 mA	bad	n/a
+1638.46728515625	0.0002	electrical_stimulation	biphasic	LFG14-LFG15	6.0 mA	bad	odd peaks and artifact by the end
+1643.0029296875	0.0002	electrical_stimulation	biphasic	LFG14-LFG15	6.0 mA	bad	n/a
+1648.21630859375	0.0002	electrical_stimulation	biphasic	LFG14-LFG15	6.0 mA	good	n/a
+1652.52734375	0.0002	electrical_stimulation	biphasic	LFG14-LFG15	6.0 mA	good	n/a
+1668.9091796875	0.0002	electrical_stimulation	biphasic	LFG15-LFG16	6.0 mA	good	artifact after 2.5s
+1673.23583984375	0.0002	electrical_stimulation	biphasic	LFG15-LFG16	6.0 mA	bad	artifact bef-stim
+1677.05224609375	0.0002	electrical_stimulation	biphasic	LFG15-LFG16	6.0 mA	good	odd peaks after 2.5
+1681.03515625	0.0002	electrical_stimulation	biphasic	LFG15-LFG16	6.0 mA	good	n/a
+1684.7578125	0.0002	electrical_stimulation	biphasic	LFG15-LFG16	6.0 mA	good	n/a
+1688.46435546875	0.0002	electrical_stimulation	biphasic	LFG15-LFG16	6.0 mA	good	n/a
+1692.86962890625	0.0002	electrical_stimulation	biphasic	LFG15-LFG16	6.0 mA	good	n/a
+1696.88427734375	0.0002	electrical_stimulation	biphasic	LFG15-LFG16	6.0 mA	good	epileptic activity
+1700.533203125	0.0002	electrical_stimulation	biphasic	LFG15-LFG16	6.0 mA	good	n/a
+1705.34912109375	0.0002	electrical_stimulation	biphasic	LFG15-LFG16	6.0 mA	good	n/a
+1719.54736328125	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	good	n/a
+1723.81689453125	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	good	n/a
+1727.5966796875	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	good	odd waveforms
+1731.29296875	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	good	odd waveforms
+1735.18212890625	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	good	n/a
+1738.6748046875	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	good	n/a
+1742.51708984375	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	good	n/a
+1746.50537109375	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	bad	n/a
+1750.619140625	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	good	n/a
+1753.35546875	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	good	n/a
+1781.1533203125	0.0002	electrical_stimulation	biphasic	LFG17-LFG18	6.0 mA	good	n/a
+1785.8046875	0.0002	electrical_stimulation	biphasic	LFG17-LFG18	6.0 mA	good	n/a
+1790.41748046875	0.0002	electrical_stimulation	biphasic	LFG17-LFG18	6.0 mA	good	n/a
+1794.30224609375	0.0002	electrical_stimulation	biphasic	LFG17-LFG18	6.0 mA	good	n/a
+1798.43115234375	0.0002	electrical_stimulation	biphasic	LFG17-LFG18	6.0 mA	good	n/a
+1808.1220703125	0.0002	electrical_stimulation	biphasic	LFG17-LFG18	6.0 mA	good	n/a
+1812.7001953125	0.0002	electrical_stimulation	biphasic	LFG17-LFG18	6.0 mA	good	n/a
+1817.318359375	0.0002	electrical_stimulation	biphasic	LFG17-LFG18	6.0 mA	good	n/a
+1821.8330078125	0.0002	electrical_stimulation	biphasic	LFG17-LFG18	6.0 mA	good	n/a
+1836.73486328125	0.0002	electrical_stimulation	biphasic	LFG19-LFG20	6.0 mA	good	n/a
+1841.119140625	0.0002	electrical_stimulation	biphasic	LFG19-LFG20	6.0 mA	good	n/a
+1845.2001953125	0.0002	electrical_stimulation	biphasic	LFG19-LFG20	6.0 mA	good	n/a
+1848.9169921875	0.0002	electrical_stimulation	biphasic	LFG19-LFG20	6.0 mA	good	n/a
+1852.931640625	0.0002	electrical_stimulation	biphasic	LFG19-LFG20	6.0 mA	good	n/a
+1857.21728515625	0.0002	electrical_stimulation	biphasic	LFG19-LFG20	6.0 mA	good	odd waveforms
+1861.6064453125	0.0002	electrical_stimulation	biphasic	LFG19-LFG20	6.0 mA	good	n/a
+1867.05078125	0.0002	electrical_stimulation	biphasic	LFG19-LFG20	6.0 mA	good	n/a
+1871.158203125	0.0002	electrical_stimulation	biphasic	LFG19-LFG20	6.0 mA	good	n/a
+1876.1201171875	0.0002	electrical_stimulation	biphasic	LFG19-LFG20	6.0 mA	good	n/a
+1889.91259765625	0.0002	electrical_stimulation	biphasic	LFG20-LFG21	6.0 mA	good	odd waveforms
+1894.3076171875	0.0002	electrical_stimulation	biphasic	LFG20-LFG21	6.0 mA	good	odd waveforms
+1898.63916015625	0.0002	electrical_stimulation	biphasic	LFG20-LFG21	6.0 mA	good	n/a
+1903.29541015625	0.0002	electrical_stimulation	biphasic	LFG20-LFG21	6.0 mA	good	n/a
+1907.3193359375	0.0002	electrical_stimulation	biphasic	LFG20-LFG21	6.0 mA	good	n/a
+1910.0009765625	0.0002	electrical_stimulation	biphasic	LFG20-LFG21	6.0 mA	good	n/a
+1913.4248046875	0.0002	electrical_stimulation	biphasic	LFG20-LFG21	6.0 mA	good	n/a
+1917.662109375	0.0002	electrical_stimulation	biphasic	LFG20-LFG21	6.0 mA	good	n/a
+1921.8173828125	0.0002	electrical_stimulation	biphasic	LFG20-LFG21	6.0 mA	good	n/a
+1925.98876953125	0.0002	electrical_stimulation	biphasic	LFG20-LFG21	6.0 mA	good	n/a
+1942.41845703125	0.0002	electrical_stimulation	biphasic	LFG21-LFG22	6.0 mA	good	n/a
+1946.478515625	0.0002	electrical_stimulation	biphasic	LFG21-LFG22	6.0 mA	good	n/a
+1951.40625	0.0002	electrical_stimulation	biphasic	LFG21-LFG22	6.0 mA	good	n/a
+1955.39404296875	0.0002	electrical_stimulation	biphasic	LFG21-LFG22	6.0 mA	good	n/a
+1959.76806640625	0.0002	electrical_stimulation	biphasic	LFG21-LFG22	6.0 mA	good	n/a
+1963.10986328125	0.0002	electrical_stimulation	biphasic	LFG21-LFG22	6.0 mA	good	n/a
+1966.65478515625	0.0002	electrical_stimulation	biphasic	LFG21-LFG22	6.0 mA	good	n/a
+1971.63818359375	0.0002	electrical_stimulation	biphasic	LFG21-LFG22	6.0 mA	good	n/a
+1974.77685546875	0.0002	electrical_stimulation	biphasic	LFG21-LFG22	6.0 mA	bad	wrong stim onset
+1978.70263671875	0.0002	electrical_stimulation	biphasic	LFG21-LFG22	6.0 mA	good	n/a
+1997.52001953125	0.0002	electrical_stimulation	biphasic	LFG22-LFG23	6.0 mA	good	n/a
+2002.2216796875	0.0002	electrical_stimulation	biphasic	LFG22-LFG23	6.0 mA	good	n/a
+2007.154296875	0.0002	electrical_stimulation	biphasic	LFG22-LFG23	6.0 mA	bad	artif bef-stim
+2010.7353515625	0.0002	electrical_stimulation	biphasic	LFG22-LFG23	6.0 mA	bad	wrong onset stim
+2015.62060546875	0.0002	electrical_stimulation	biphasic	LFG22-LFG23	6.0 mA	good	n/a
+2019.11376953125	0.0002	electrical_stimulation	biphasic	LFG22-LFG23	6.0 mA	good	n/a
+2024.37890625	0.0002	electrical_stimulation	biphasic	LFG22-LFG23	6.0 mA	good	n/a
+2028.85205078125	0.0002	electrical_stimulation	biphasic	LFG22-LFG23	6.0 mA	good	n/a
+2033.376953125	0.0002	electrical_stimulation	biphasic	LFG22-LFG23	6.0 mA	good	n/a
+2037.380859375	0.0002	electrical_stimulation	biphasic	LFG22-LFG23	6.0 mA	good	n/a
+2054.40966796875	0.0002	electrical_stimulation	biphasic	LFG23-LFG24	6.0 mA	good	odd peaks on the bottom
+2058.58447265625	0.0002	electrical_stimulation	biphasic	LFG23-LFG24	6.0 mA	bad	peak at the bottom after 2.5s
+2071.27001953125	0.0002	electrical_stimulation	biphasic	LFG23-LFG24	6.0 mA	good	n/a
+2075.5810546875	0.0002	electrical_stimulation	biphasic	LFG23-LFG24	6.0 mA	good	peaks at 2.5
+2080.19482421875	0.0002	electrical_stimulation	biphasic	LFG23-LFG24	6.0 mA	good	n/a
+2084.45947265625	0.0002	electrical_stimulation	biphasic	LFG23-LFG24	6.0 mA	good	n/a
+2090.9384765625	0.0002	electrical_stimulation	biphasic	LFG23-LFG24	6.0 mA	good	n/a
+2094.6728515625	0.0002	electrical_stimulation	biphasic	LFG23-LFG24	6.0 mA	good	n/a
+2099.03564453125	0.0002	electrical_stimulation	biphasic	LFG23-LFG24	6.0 mA	good	n/a
+2102.8154296875	0.0002	electrical_stimulation	biphasic	LFG23-LFG24	6.0 mA	good	n/a
+2121.9453125	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	good	noisy channels
+2128.091796875	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	good	n/a
+2155.494140625	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	odd waveforms
+2161.9169921875	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	odd waveforms
+2166.74853515625	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	odd waveforms
+2173.037109375	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+2176.80615234375	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+2181.12255859375	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+2184.89697265625	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+2190.2412109375	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+2195.01123046875	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+2198.69580078125	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+2220.03466796875	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	n/a
+2225.3876953125	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	n/a
+2229.787109375	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	n/a
+2234.9013671875	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	peaks around-stim
+2239.787109375	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	n/a
+2244.07763671875	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	n/a
+2247.873046875	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	epileptic activity
+2251.41796875	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	n/a
+2256.92236328125	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	bad	artif bef-stim
+2261.4169921875	0.0002	electrical_stimulation	biphasic	LAD2-LAD3	6.0 mA	good	n/a
+2277.42333984375	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	n/a
+2280.96337890625	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	n/a
+2285.55712890625	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	bad	n/a
+2290.68603515625	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	waves
+2296.55712890625	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	n/a
+2302.14501953125	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	waves
+2306.52392578125	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	waves
+2311.77490234375	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	waves
+2317.66552734375	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	waves
+2322.81005859375	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	odd synch(also stim)
+2329.59912109375	0.0002	electrical_stimulation	biphasic	LAD3-LAD4	6.0 mA	good	w sw
+2351.3232421875	0.0002	electrical_stimulation	biphasic	LMD1-LMD2	6.0 mA	good	n/a
+2356.03076171875	0.0002	electrical_stimulation	biphasic	LMD1-LMD2	6.0 mA	good	n/a
+2362.13134765625	0.0002	electrical_stimulation	biphasic	LMD1-LMD2	6.0 mA	good	n/a
+2366.36376953125	0.0002	electrical_stimulation	biphasic	LMD1-LMD2	6.0 mA	bad	n/a
+2371.06689453125	0.0002	electrical_stimulation	biphasic	LMD1-LMD2	6.0 mA	good	n/a
+2374.90380859375	0.0002	electrical_stimulation	biphasic	LMD1-LMD2	6.0 mA	good	n/a
+2379.35595703125	0.0002	electrical_stimulation	biphasic	LMD1-LMD2	6.0 mA	good	n/a
+2384.28173828125	0.0002	electrical_stimulation	biphasic	LMD1-LMD2	6.0 mA	good	n/a
+2388.61474609375	0.0002	electrical_stimulation	biphasic	LMD1-LMD2	6.0 mA	good	epileptic activity & noisy channels
+2397.2587890625	0.0002	electrical_stimulation	biphasic	LMD1-LMD2	6.0 mA	good	n/a
+2416.68505859375	0.0002	electrical_stimulation	biphasic	LMD2-LMD3	6.0 mA	good	n/a
+2422.1376953125	0.0002	electrical_stimulation	biphasic	LMD2-LMD3	6.0 mA	good	n/a
+2427.42822265625	0.0002	electrical_stimulation	biphasic	LMD2-LMD3	6.0 mA	bad	Epileptic activity afterstim
+2432.2255859375	0.0002	electrical_stimulation	biphasic	LMD2-LMD3	6.0 mA	good	n/a
+2437.16650390625	0.0002	electrical_stimulation	biphasic	LMD2-LMD3	6.0 mA	good	Peak bef&aft-stim
+2443.412109375	0.0002	electrical_stimulation	biphasic	LMD2-LMD3	6.0 mA	good	n/a
+2447.490234375	0.0002	electrical_stimulation	biphasic	LMD2-LMD3	6.0 mA	bad	n/a
+2451.6337890625	0.0002	electrical_stimulation	biphasic	LMD2-LMD3	6.0 mA	good	n/a
+2456.7021484375	0.0002	electrical_stimulation	biphasic	LMD2-LMD3	6.0 mA	good	n/a
+2460.6484375	0.0002	electrical_stimulation	biphasic	LMD2-LMD3	6.0 mA	good	waves
+2480.60546875	0.0002	electrical_stimulation	biphasic	LMD3-LMD4	6.0 mA	good	peak after-stim
+2485.68310546875	0.0002	electrical_stimulation	biphasic	LMD3-LMD4	6.0 mA	good	n/a
+2490.125	0.0002	electrical_stimulation	biphasic	LMD3-LMD4	6.0 mA	bad	n/a
+2494.56689453125	0.0002	electrical_stimulation	biphasic	LMD3-LMD4	6.0 mA	good	peak after-stim
+2499.279296875	0.0002	electrical_stimulation	biphasic	LMD3-LMD4	6.0 mA	good	n/a
+2502.62109375	0.0002	electrical_stimulation	biphasic	LMD3-LMD4	6.0 mA	good	odd waveforms
+2508.1171875	0.0002	electrical_stimulation	biphasic	LMD3-LMD4	6.0 mA	good	n/a
+2513.8466796875	0.0002	electrical_stimulation	biphasic	LMD3-LMD4	6.0 mA	good	n/a
+2518.443359375	0.0002	electrical_stimulation	biphasic	LMD3-LMD4	6.0 mA	good	n/a
+2523.27099609375	0.0002	electrical_stimulation	biphasic	LMD3-LMD4	6.0 mA	good	waves
+2587.45068359375	0.0002	electrical_stimulation	biphasic	LPS1-LPS2	6.0 mA	bad	wrong stim onset
+2593.45703125	0.0002	electrical_stimulation	biphasic	LPS1-LPS2	6.0 mA	bad	wrong stim onset
+2601.1337890625	0.0002	electrical_stimulation	biphasic	LPS1-LPS2	6.0 mA	good	n/a
+2605.8583984375	0.0002	electrical_stimulation	biphasic	LPS1-LPS2	6.0 mA	bad	wrong stim onset
+2611.30517578125	0.0002	electrical_stimulation	biphasic	LPS1-LPS2	6.0 mA	good	n/a
+2615.673828125	0.0002	electrical_stimulation	biphasic	LPS1-LPS2	6.0 mA	good	n/a
+2620.38671875	0.0002	electrical_stimulation	biphasic	LPS1-LPS2	6.0 mA	good	n/a
+2625.318359375	0.0002	electrical_stimulation	biphasic	LPS1-LPS2	6.0 mA	good	n/a
+2629.73974609375	0.0002	electrical_stimulation	biphasic	LPS1-LPS2	6.0 mA	good	n/a
+2634.01953125	0.0002	electrical_stimulation	biphasic	LPS1-LPS2	6.0 mA	good	n/a
+2652.751953125	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	good	n/a
+2657.85107421875	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	good	n/a
+2661.78173828125	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	good	n/a
+2667.662109375	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	good	odd waveforms
+2670.9306640625	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	good	n/a
+2675.36279296875	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	good	n/a
+2680.58056640625	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	good	n/a
+2684.7880859375	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	good	n/a
+2689.5166015625	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	good	n/a
+2694.67236328125	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	good	n/a
+2748.72216796875	0.0002	electrical_stimulation	biphasic	LPS3-LPS4	6.0 mA	good	artif at 2.5s
+2754.09716796875	0.0002	electrical_stimulation	biphasic	LPS3-LPS4	6.0 mA	good	noisy channels
+2758.93994140625	0.0002	electrical_stimulation	biphasic	LPS3-LPS4	6.0 mA	good	n/a
+2764.47119140625	0.0002	electrical_stimulation	biphasic	LPS3-LPS4	6.0 mA	good	n/a
+2768.9599609375	0.0002	electrical_stimulation	biphasic	LPS3-LPS4	6.0 mA	good	n/a
+2772.46875	0.0002	electrical_stimulation	biphasic	LPS3-LPS4	6.0 mA	good	odd waveforms
+2776.5087890625	0.0002	electrical_stimulation	biphasic	LPS3-LPS4	6.0 mA	good	n/a
+2782.34814453125	0.0002	electrical_stimulation	biphasic	LPS3-LPS4	6.0 mA	good	n/a
+2792.10205078125	0.0002	electrical_stimulation	biphasic	LPS3-LPS4	6.0 mA	good	n/a
+2796.5595703125	0.0002	electrical_stimulation	biphasic	LPS3-LPS4	6.0 mA	good	n/a
+2813.5400390625	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	good	n/a
+2818.45751953125	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	good	n/a
+2822.544921875	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	good	noisy channels after 1.5s
+2827.42431640625	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	bad	n/a
+2832.486328125	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	good	n/a
+2836.1669921875	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	bad	n/a
+2839.7578125	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	good	noisy channels
+2843.61083984375	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	good	n/a
+2848.6572265625	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	good	n/a
+2852.2451171875	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	good	n/a
+2874.95556640625	0.0002	electrical_stimulation	biphasic	LMS2-LMS3	6.0 mA	good	n/a
+2879.53271484375	0.0002	electrical_stimulation	biphasic	LMS2-LMS3	6.0 mA	bad	EpAct after-stim
+2883.70263671875	0.0002	electrical_stimulation	biphasic	LMS2-LMS3	6.0 mA	good	n/a
+2888.10791015625	0.0002	electrical_stimulation	biphasic	LMS2-LMS3	6.0 mA	good	n/a
+2892.1904296875	0.0002	electrical_stimulation	biphasic	LMS2-LMS3	6.0 mA	good	odd peaks bef&aft-stim
+2896.302734375	0.0002	electrical_stimulation	biphasic	LMS2-LMS3	6.0 mA	good	n/a
+2900.8447265625	0.0002	electrical_stimulation	biphasic	LMS2-LMS3	6.0 mA	good	n/a
+2904.572265625	0.0002	electrical_stimulation	biphasic	LMS2-LMS3	6.0 mA	good	n/a
+2909.0869140625	0.0002	electrical_stimulation	biphasic	LMS2-LMS3	6.0 mA	bad	n/a
+2913.2890625	0.0002	electrical_stimulation	biphasic	LMS2-LMS3	6.0 mA	good	n/a
+2931.119140625	0.0002	electrical_stimulation	biphasic	LMS3-LMS4	6.0 mA	good	n/a
+2934.84716796875	0.0002	electrical_stimulation	biphasic	LMS3-LMS4	6.0 mA	good	n/a
+2939.35693359375	0.0002	electrical_stimulation	biphasic	LMS3-LMS4	6.0 mA	good	n/a
+2944.3876953125	0.0002	electrical_stimulation	biphasic	LMS3-LMS4	6.0 mA	good	n/a
+2948.40234375	0.0002	electrical_stimulation	biphasic	LMS3-LMS4	6.0 mA	good	n/a
+2953.06787109375	0.0002	electrical_stimulation	biphasic	LMS3-LMS4	6.0 mA	good	n/a
+2957.31787109375	0.0002	electrical_stimulation	biphasic	LMS3-LMS4	6.0 mA	good	n/a
+2961.97216796875	0.0002	electrical_stimulation	biphasic	LMS3-LMS4	6.0 mA	bad	artifact at 1.9s
+2966.6015625	0.0002	electrical_stimulation	biphasic	LMS3-LMS4	6.0 mA	good	n/a
+2970.3134765625	0.0002	electrical_stimulation	biphasic	LMS3-LMS4	6.0 mA	good	n/a
+3002.490234375	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3006.494140625	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3011.27978515625	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3015.873046875	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3019.60546875	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3025.3818359375	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3029.71923828125	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	Odd peaks at 2.5s
+3035.12548828125	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3039.83837890625	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3043.49267578125	0.0002	electrical_stimulation	biphasic	LAS1-LAS2	6.0 mA	good	n/a
+3060.55224609375	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	waveforms bef-stim; ruins LPG16, but valuable for other channels
+3066.79833984375	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3072.81396484375	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3078.29931640625	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	bad	smal artif at 1.5s
+3082.85498046875	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3087.42138671875	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3093.87060546875	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	bad	n/a
+3099.49560546875	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3103.7548828125	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3107.73291015625	0.0002	electrical_stimulation	biphasic	LAS2-LAS3	6.0 mA	good	n/a
+3122.56591796875	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3127.26416015625	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3131.53759765625	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	subtle artif bef-stim
+3135.91796875	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3140.568359375	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3145.587890625	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3150.134765625	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3155.63916015625	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3160.24951171875	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	odd waveforms bef-stim
+3166.50439453125	0.0002	electrical_stimulation	biphasic	LAS3-LAS4	6.0 mA	good	n/a
+3234.91552734375	0.0002	electrical_stimulation	biphasic	LTG1-LTG2	6.0 mA	good	n/a
+3240.23193359375	0.0002	electrical_stimulation	biphasic	LTG1-LTG2	6.0 mA	good	n/a
+3243.88134765625	0.0002	electrical_stimulation	biphasic	LTG1-LTG2	6.0 mA	good	n/a
+3248.8857421875	0.0002	electrical_stimulation	biphasic	LTG1-LTG2	6.0 mA	good	n/a
+3252.64453125	0.0002	electrical_stimulation	biphasic	LTG1-LTG2	6.0 mA	good	n/a
+3271.3935546875	0.0002	electrical_stimulation	biphasic	LTG2-LTG3	6.0 mA	good	n/a
+3275.63818359375	0.0002	electrical_stimulation	biphasic	LTG2-LTG3	6.0 mA	good	n/a
+3279.78271484375	0.0002	electrical_stimulation	biphasic	LTG2-LTG3	6.0 mA	good	n/a
+3283.46923828125	0.0002	electrical_stimulation	biphasic	LTG2-LTG3	6.0 mA	good	n/a
+3286.970703125	0.0002	electrical_stimulation	biphasic	LTG2-LTG3	6.0 mA	good	n/a
+3292.4345703125	0.0002	electrical_stimulation	biphasic	LTG2-LTG3	6.0 mA	good	n/a
+3296.23486328125	0.0002	electrical_stimulation	biphasic	LTG2-LTG3	6.0 mA	good	n/a
+3300.1923828125	0.0002	electrical_stimulation	biphasic	LTG2-LTG3	6.0 mA	good	n/a
+3304.88427734375	0.0002	electrical_stimulation	biphasic	LTG2-LTG3	6.0 mA	good	n/a
+3308.93994140625	0.0002	electrical_stimulation	biphasic	LTG2-LTG3	6.0 mA	good	n/a
+3324.5556640625	0.0002	electrical_stimulation	biphasic	LTG3-LTG4	6.0 mA	bad	small artif aft-stim & noisy channels
+3329.0498046875	0.0002	electrical_stimulation	biphasic	LTG3-LTG4	6.0 mA	good	e c
+3334.37255859375	0.0002	electrical_stimulation	biphasic	LTG3-LTG4	6.0 mA	good	n/a
+3339.4921875	0.0002	electrical_stimulation	biphasic	LTG3-LTG4	6.0 mA	good	n/a
+3343.80322265625	0.0002	electrical_stimulation	biphasic	LTG3-LTG4	6.0 mA	good	n/a
+3348.375	0.0002	electrical_stimulation	biphasic	LTG3-LTG4	6.0 mA	good	n/a
+3352.4521484375	0.0002	electrical_stimulation	biphasic	LTG3-LTG4	6.0 mA	good	n/a
+3356.98681640625	0.0002	electrical_stimulation	biphasic	LTG3-LTG4	6.0 mA	good	n/a
+3360.4130859375	0.0002	electrical_stimulation	biphasic	LTG3-LTG4	6.0 mA	good	odd waveforms bef-stim
+3364.0146484375	0.0002	electrical_stimulation	biphasic	LTG3-LTG4	6.0 mA	good	n/a
+3382.8115234375	0.0002	electrical_stimulation	biphasic	LTG4-LTG5	6.0 mA	good	n/a
+3387.857421875	0.0002	electrical_stimulation	biphasic	LTG4-LTG5	6.0 mA	good	n/a
+3391.4560546875	0.0002	electrical_stimulation	biphasic	LTG4-LTG5	6.0 mA	good	n/a
+3395.63037109375	0.0002	electrical_stimulation	biphasic	LTG4-LTG5	6.0 mA	good	n/a
+3400.62548828125	0.0002	electrical_stimulation	biphasic	LTG4-LTG5	6.0 mA	good	n/a
+3405.37939453125	0.0002	electrical_stimulation	biphasic	LTG4-LTG5	6.0 mA	good	n/a
+3409.14404296875	0.0002	electrical_stimulation	biphasic	LTG4-LTG5	6.0 mA	good	n/a
+3413.79833984375	0.0002	electrical_stimulation	biphasic	LTG4-LTG5	6.0 mA	good	artif by the end
+3419.0078125	0.0002	electrical_stimulation	biphasic	LTG4-LTG5	6.0 mA	good	n/a
+3422.88671875	0.0002	electrical_stimulation	biphasic	LTG4-LTG5	6.0 mA	good	n/a
+3435.416015625	0.0002	electrical_stimulation	biphasic	LTG5-LTG6	6.0 mA	good	n/a
+3440.42626953125	0.0002	electrical_stimulation	biphasic	LTG5-LTG6	6.0 mA	good	n/a
+3444.29443359375	0.0002	electrical_stimulation	biphasic	LTG5-LTG6	6.0 mA	good	n/a
+3448.69873046875	0.0002	electrical_stimulation	biphasic	LTG5-LTG6	6.0 mA	good	n/a
+3451.48291015625	0.0002	electrical_stimulation	biphasic	LTG5-LTG6	6.0 mA	good	n/a
+3454.5009765625	0.0002	electrical_stimulation	biphasic	LTG5-LTG6	6.0 mA	good	n/a
+3458.45947265625	0.0002	electrical_stimulation	biphasic	LTG5-LTG6	6.0 mA	good	n/a
+3462.1494140625	0.0002	electrical_stimulation	biphasic	LTG5-LTG6	6.0 mA	good	n/a
+3465.73046875	0.0002	electrical_stimulation	biphasic	LTG5-LTG6	6.0 mA	good	n/a
+3469.115234375	0.0002	electrical_stimulation	biphasic	LTG5-LTG6	6.0 mA	good	n/a
+3484.04296875	0.0002	electrical_stimulation	biphasic	LTG6-LTG7	6.0 mA	good	n/a
+3488.17138671875	0.0002	electrical_stimulation	biphasic	LTG6-LTG7	6.0 mA	good	n/a
+3492.712890625	0.0002	electrical_stimulation	biphasic	LTG6-LTG7	6.0 mA	good	n/a
+3496.2890625	0.0002	electrical_stimulation	biphasic	LTG6-LTG7	6.0 mA	good	n/a
+3499.99609375	0.0002	electrical_stimulation	biphasic	LTG6-LTG7	6.0 mA	good	n/a
+3503.978515625	0.0002	electrical_stimulation	biphasic	LTG6-LTG7	6.0 mA	good	n/a
+3508.21728515625	0.0002	electrical_stimulation	biphasic	LTG6-LTG7	6.0 mA	good	wave bef-stim
+3511.85107421875	0.0002	electrical_stimulation	biphasic	LTG6-LTG7	6.0 mA	good	n/a
+3515.2919921875	0.0002	electrical_stimulation	biphasic	LTG6-LTG7	6.0 mA	good	n/a
+3518.75341796875	0.0002	electrical_stimulation	biphasic	LTG6-LTG7	6.0 mA	good	n/a
+3522.54345703125	0.0002	electrical_stimulation	biphasic	LTG6-LTG7	6.0 mA	good	n/a
+3551.50048828125	0.0002	electrical_stimulation	biphasic	LTG7-LTG8	6.0 mA	good	n/a
+3556.28662109375	0.0002	electrical_stimulation	biphasic	LTG7-LTG8	6.0 mA	good	n/a
+3560.08154296875	0.0002	electrical_stimulation	biphasic	LTG7-LTG8	6.0 mA	good	peaks bef&aft
+3564.04345703125	0.0002	electrical_stimulation	biphasic	LTG7-LTG8	6.0 mA	good	n/a
+3568.22412109375	0.0002	electrical_stimulation	biphasic	LTG7-LTG8	6.0 mA	good	n/a
+3572.7294921875	0.0002	electrical_stimulation	biphasic	LTG7-LTG8	6.0 mA	good	n/a
+3576.58251953125	0.0002	electrical_stimulation	biphasic	LTG7-LTG8	6.0 mA	good	n/a
+3580.0791015625	0.0002	electrical_stimulation	biphasic	LTG7-LTG8	6.0 mA	good	n/a
+3583.03076171875	0.0002	electrical_stimulation	biphasic	LTG7-LTG8	6.0 mA	good	n/a
+3626.3896484375	0.0002	electrical_stimulation	biphasic	LTG7-LTG8	6.0 mA	good	epileptic activity all around
+3669.275390625	0.0002	electrical_stimulation	biphasic	LTG9-LTG10	6.0 mA	good	n/a
+3678.99951171875	0.0002	electrical_stimulation	biphasic	LTG9-LTG10	6.0 mA	good	n/a
+3686.01611328125	0.0002	electrical_stimulation	biphasic	LTG9-LTG10	6.0 mA	bad	artif bef-stim
+3691.7392578125	0.0002	electrical_stimulation	biphasic	LTG9-LTG10	6.0 mA	good	n/a
+3698.75732421875	0.0002	electrical_stimulation	biphasic	LTG9-LTG10	6.0 mA	good	n/a
+3707.03125	0.0002	electrical_stimulation	biphasic	LTG9-LTG10	6.0 mA	good	n/a
+3917.75830078125	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	good	n/a
+3927.1787109375	0.0002	electrical_stimulation	biphasic	LFG16-LFG17	6.0 mA	good	n/a
+3987.5654296875	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	bad	n/a
+3993.47705078125	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	n/a
+4000.85888671875	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	odd waveforms
+4013.2353515625	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	epileptic activity
+4017.16650390625	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	6.0 mA	good	epileptic activity
+4036.8701171875	0.0002	electrical_stimulation	biphasic	LAD1-LAD2	4.0 mA	good	n/a
+4089.470703125	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	good	n/a
+4095.22509765625	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	good	n/a
+4099.5537109375	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	good	n/a
+4106.2314453125	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	good	n/a
+4129.45166015625	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	good	n/a
+4134.2431640625	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	good	n/a
+4138.84619140625	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	good	odd waves after 3s
+4145.97802734375	0.0002	electrical_stimulation	biphasic	LPS2-LPS3	6.0 mA	bad	n/a
+4346.22119140625	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	bad	overactive channels
+4352.67529296875	0.0002	electrical_stimulation	biphasic	LMS1-LMS2	6.0 mA	bad	peak at 2s

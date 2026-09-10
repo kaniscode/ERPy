@@ -1,0 +1,4 @@
+method,reference,metric,difference,low,high,ci_excludes_zero,n_records,n_subjects
+label_free_N1,archived_ER_detect,sensitivity,-0.1280652866242039,-0.25066381234329105,-0.03756107994378594,True,32048,13
+label_free_N1,archived_ER_detect,specificity,0.008572214777947895,-0.0015869296451240327,0.019964152107455585,False,32048,13
+label_free_N1,archived_ER_detect,ppv,0.034263836827277294,-0.021398252139257452,0.10944537166808925,False,32048,13

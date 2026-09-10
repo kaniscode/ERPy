@@ -1,0 +1,25 @@
+{
+  "scope": "Current broad detector versus released N1 annotations. Artwork bytes exactly match individually inspected producer exports.",
+  "generator": "validation/plot_annotation_agreement.py",
+  "generator_sha256": "902559f65e1e1971a696f562e5bd70ac6233c9213be3329b22d366983f78d713",
+  "producer_manifest_sha256": "cc50c58322051b99301b5986ad2ca444d610dfd1e409b2e4919e2263cbb01a97",
+  "inputs": {
+    "validation/annotation_agreement/summary.json": "fb680c1f847569255f7890366ba6bfe54a751581998761dd70fb9fb88f08c262",
+    "validation/annotation_agreement/crossclassification.csv": "6ac120153f1d8da1270f2106c84a5e7f87b03698e73c6f1f5f309ec3b4cb7efb",
+    "validation/annotation_agreement/annotation_group_rates.csv": "daf071dd670a27dba8df5c7cc6870a6e1bab043061c7ee175ab358a42c305531",
+    "validation/annotation_agreement/exemplar_selection.csv": "9e3ad13d388d20cc843233f8973f5eb98e9caaebfa1482394c7e7d7a9cf9945d",
+    "validation/annotation_agreement/exemplar_traces.csv.gz": "817ccf0a4a81d9597c952ad2ecda503e6923b2ff785062658dab8ba9f6181b4d",
+    "validation/annotation_agreement/exemplar_source_provenance.json": "3957380b292706619106c5983e7fffafb0f4abe37c4cc45681f721ed4103fc3e",
+    "validation/annotation_agreement/annotation_group_contrasts.csv": "1b527a7c2706710522ddec6519cf35de5cfe7e4c016e1ecd12c70e38732e8ad9"
+  },
+  "files": {
+    "fig06_external_validation_caption.md": "268d49fc3e3da7ee93161b6f40311aaebcb9df6f15d494d8ab349e404aefb74f",
+    "fig06_external_validation.pdf": "694caa4c88d9058c57a603fbb35252ee252d7abdcc1719c98a3fd0cb639c0a3d",
+    "fig06_external_validation.png": "269d75efc094fceef8f29bc080710f68933fbddb8f21ba71b10c5a31ce604bc6",
+    "fig06_external_validation_data.csv": "6ac120153f1d8da1270f2106c84a5e7f87b03698e73c6f1f5f309ec3b4cb7efb",
+    "fig06_external_validation.svg": "ca3d96a0536ca30c59a5d1c98fc371fecdcfdee27b8ff9d5997e275ead79b84b",
+    "fig06_external_validation_alt.txt": "85068659dea25af66bf361686f49629227ed493d2f5cd8c09d448a99ed410491",
+    "fig06_external_validation.tiff": "ff7e333f8b641b2caf389ddf3b458da8f9f6b3873216b6fa8862b7d800e20f09"
+  },
+  "provenance_normalization": "Only selected-epoch filesystem locators are dataset-relative in the public provenance JSON; numerical trace samples, selection and artwork are unchanged."
+}

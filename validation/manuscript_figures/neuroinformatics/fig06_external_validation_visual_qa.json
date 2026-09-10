@@ -1,0 +1,27 @@
+{
+  "journal": "neuroinformatics",
+  "number": 6,
+  "status": "pass",
+  "role": "Author production visual inspection and verified publication copy",
+  "inspection_basis": "Root individually viewed the complete final publication-scale PNG and rendered PDF at original resolution. Every matrix cell, annotation label, interval, panel heading, trace, SEM band, axis and metadata line is legible without overlap or clipping.",
+  "width_mm": 174,
+  "height_mm": 174,
+  "minimum_pdf_font_pt": 8,
+  "visible_stroke_min_pt": 2,
+  "raster_pixels": [
+    4110,
+    4110
+  ],
+  "png_tiff_rgb_pixels_identical": true,
+  "producer_visual_qa_sha256": "85841af7c3c042b8a2795bf2c462a5080c6c66b57068bc34a81289435be010c7",
+  "artwork_and_caption_bytes_equal_inspected_source": true,
+  "files": {
+    "fig06_external_validation_caption.md": "c5987a93ecbae9f588f977587ac89f3788e96d4f21ed8bb92b2bab50fd3ea5a3",
+    "fig06_external_validation.pdf": "47380100f53143b24eaed435ae3f1ccf5a24c2641624f6760d253386c54cc66d",
+    "fig06_external_validation.png": "168b69f92d3ca8454ca6be22aa67ba487941acd1fd83ee0f168193958a53bb5e",
+    "fig06_external_validation_data.csv": "6ac120153f1d8da1270f2106c84a5e7f87b03698e73c6f1f5f309ec3b4cb7efb",
+    "fig06_external_validation.svg": "6e7e82b13ee319cd2076f213939e1e9f7a211fec1a86d9a859a0ff57cc2bfc92",
+    "fig06_external_validation_alt.txt": "85068659dea25af66bf361686f49629227ed493d2f5cd8c09d448a99ed410491",
+    "fig06_external_validation.tiff": "19557ef318bc781b5ffc79790e54f6c8426b05c1552cd9b7cb7c2625a0702ea3"
+  }
+}

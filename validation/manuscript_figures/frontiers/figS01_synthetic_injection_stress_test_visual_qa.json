@@ -1,0 +1,25 @@
+{
+  "journal": "frontiers",
+  "number": "S1",
+  "status": "pass",
+  "role": "Exact public copy of author-inspected two-panel PNG/native PDF; original calibration results unchanged",
+  "producer_visual_qa_sha256": "a6714e67c434af74ebec9070039a39e817e51aace8129b6038631464e7e50f0a",
+  "artwork_and_caption_bytes_equal_inspected_source": true,
+  "width_mm": 180.0,
+  "height_mm": 130.72,
+  "minimum_font_pt": 8.0,
+  "visible_stroke_min_pt": 2,
+  "all_96_cell_annotations_inside_cells": true,
+  "source_results_unchanged": true,
+  "pure_null_results_retained_in_tables_not_plotted": true,
+  "files": {
+    "figS01_synthetic_injection_stress_test.pdf": "cc257d442df01ded5647c775846817c86c657e1e6003891592b3356d05878105",
+    "figS01_synthetic_injection_stress_test.png": "6bbd4d2396835087b1ba60dd00e0f42d72110de972b70b78fdc863ed29f5e452",
+    "figS01_synthetic_injection_stress_test.svg": "9f5d33cfe36a1e56ed3e2c8161791ce57f79b8ab310c083b1b271540029966c7",
+    "figS01_synthetic_injection_stress_test.tiff": "4e5ccc118753f3a6ea8a606fc34fb98b783b674144fe08c62b568aebd7c4896c",
+    "figS01_synthetic_injection_stress_test_alt.txt": "f1925fa1232e023d7891c3b2d1f2152df7438046656631c9ccfe7258b70852a7",
+    "figS01_synthetic_injection_stress_test_caption.md": "967fda3fbffaaa85122b405d3cb01e83b4bcbc4f27309cbeb804dd9b98a650a2",
+    "figS01_synthetic_injection_stress_test_data.csv": "f010e290ab45a66a23d5e0cdb46d2c33325a9d4c69ba821a09740fc435da3f7e",
+    "figS01_synthetic_injection_stress_test_plot_manifest.json": "d3b45bca6cf59a86a4c5ca4796cd2bba090c513c4ae6565091e493f4ddb3fcfa"
+  }
+}

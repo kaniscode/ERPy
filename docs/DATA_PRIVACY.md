@@ -1,5 +1,7 @@
 # Data privacy and safe sharing
 
+Project: [ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis](../README.md).
+
 ERPy's analysis, caching, export, and project-creation functions run locally
 and do not upload data. The repository contains synthetic teaching data and
 references to public OpenNeuro data only. Clinical source recordings and

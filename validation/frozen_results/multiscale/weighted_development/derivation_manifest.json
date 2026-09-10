@@ -1,0 +1,25 @@
+{
+  "created_utc": "2026-09-08T06:48:10.587343+00:00",
+  "stage": "Development recombination after observing unweighted outcomes; not independent confirmation",
+  "weights": [
+    0.1,
+    0.1,
+    0.8
+  ],
+  "new_core_computations": 0,
+  "new_source_trials": 0,
+  "amendment_sha256": "c674080dbc5bd33de91e4c9242882293c2b0e7ce13d0b67d98bd03a781ece9ab",
+  "inputs": {
+    "./window_results.csv.gz": "dc3fca2db359b7cf70712af3d0da16f6dd1a8fbad3d9f0966325121d4c934625",
+    "./method_results.csv.gz": "65759729b38b270d5b1b44c51021ef6595a8ccf134826375c51e8c851f7c6c89",
+    "./family_results.csv.gz": "4e37c3d5663372b5c1109b426cccc39be60147b0f7cecd5d2a4868eef48507f9",
+    "./run_manifest.json": "4bf11dd524ae4a6a502d08e9370b1c3b5875c86fd7c7b29af55eff20c9a1f34e"
+  },
+  "outputs": {
+    "pooled_by_trials.csv": "c3eb499396ed5817adb2997d4e42b34d6bdf484831a8dc6bda0ed031b1a2c948",
+    "method_results.csv.gz": "14f50a7d0a6ae52a627367cf96d56f0ed511f3f55185ebb7818500bb2b06afa5",
+    "paired_recovery.csv": "1dd61f189c875c0cd26f7b5274fc79a984075044774e7bc1bb1dfc821d7bc81a",
+    "all_cells.csv": "7a040af742eabd90f5bc75e6b991dfacc0cf65143e70333f9a9ea411b425747d",
+    "family_results.csv.gz": "0b09af00169f79fd37d6ae5049e671f7e693b6b180e61c20784dc9ca5edcea08"
+  }
+}

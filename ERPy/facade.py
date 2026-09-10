@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import inspect
+import io
 import json
 import math
 from dataclasses import dataclass, field
@@ -15,6 +16,7 @@ from .bad_channels import ArtifactResponseReport, DEFAULT_HARD_ARTIFACT_REASONS
 from .dataloader import DataLoader
 from .epochs import Epochs
 from .events import Events, detect_events_from_artifacts
+from ._epoch_cache import epoch_cache_identity
 from .pipeline import Pipeline
 
 
@@ -375,27 +377,53 @@ class Recording:
         save_epochs: bool = True,
         **kwargs: Any,
     ) -> EpochsResult:
-        """Preprocess and epoch one stimulation pair, optionally using a cache."""
+        """Preprocess and epoch one stimulation pair, optionally using a cache.
+
+        Automatic reuse verifies current event and source contents plus effective
+        processing settings. Legacy caches without this identity are recomputed.
+        ``auto`` reads registered raw inputs on a miss; a window export is used
+        when the original inputs are unavailable. Full source hashing costs I/O.
+        NWB and custom processing hooks currently disable automatic reuse.
+        Configuration/metadata edits on disk require constructing a new Patient;
+        this method uses the DataLoader's current in-memory settings.
+        """
 
         steps = self._steps(pipeline)
-        if cache:
-            try:
-                cached = self.pipeline_obj.load_epochs(self.session_id, stim_pair, pipeline_steps=steps)
-                if (
-                    cached.baseline == baseline
-                    and cached.zero_time == zero_time
-                    and cached.metadata.get("artifact_anchor_params", {}) == (artifact_anchor_params or {})
-                    and float(cached.tmin) == float(tmin)
-                    and float(cached.tmax) == float(tmax)
-                ):
-                    return cached
-            except (FileNotFoundError, ValueError):
-                pass
         event_path = self.dataloader.get_event_path(self.session_id, stim_pair)
         if not event_path.exists():
             self.events_for(stim_pair, method=event_method, save_events=True, **kwargs)
-        event_info = self.pipeline_obj._load_event_info(self.session_id, stim_pair)
+        event_bytes = event_path.read_bytes()
+        event_info = pd.read_csv(io.BytesIO(event_bytes))
+        if "times" not in event_info:
+            raise ValueError(f"Event file must contain a 'times' column: {event_path}")
         event_times = _parse_event_times(event_info["times"])
+        processing_options = {key: kwargs[key] for key in (
+            "input_source", "raw_file", "stim_start", "processing_margin_s",
+            "load_from_raw", "overwrite",
+        ) if key in kwargs}
+        options = {
+            "tmin": float(tmin), "tmax": float(tmax), "baseline": baseline,
+            "zero_time": zero_time, "artifact_anchor_params": artifact_anchor_params or {},
+            "event_method": event_method, **processing_options,
+        }
+        identity, source = epoch_cache_identity(
+            self.pipeline_obj, self.session_id, stim_pair, steps, event_bytes, options,
+        )
+        path = self.pipeline_obj._epochs_path(
+            self.session_id, stim_pair, steps, tmin, tmax, baseline, zero_time,
+            artifact_anchor_params=artifact_anchor_params,
+        )
+        if cache and identity is not None and not processing_options.get("overwrite", False):
+            try:
+                cached = self.pipeline_obj.load_epochs_file(path)
+                if cached.metadata.get("epoch_cache_identity") == identity:
+                    return cached
+            except (FileNotFoundError, ValueError):
+                pass
+        # Lower caches have no binding to current events/source. A facade miss
+        # must not silently reconstruct an epoch from stale in-memory signals.
+        self.dataloader.clear_memory_cache()
+        processing_options["input_source"] = source
         epochs, _ = self.pipeline_obj.process_and_epoch(
             self.session_id,
             stim_pair,
@@ -407,8 +435,19 @@ class Recording:
             zero_time=zero_time,
             artifact_anchor_params=artifact_anchor_params,
             save_processed=kwargs.get("save_processed", False),
-            save_epochs=save_epochs,
+            save_epochs=False,
+            **processing_options,
         )
+        current, _ = epoch_cache_identity(
+            self.pipeline_obj, self.session_id, stim_pair, steps,
+            event_path.read_bytes(), options,
+        )
+        if current != identity or event_path.read_bytes() != event_bytes:
+            raise RuntimeError("Epoch inputs changed during processing; retry after writes finish")
+        epochs.metadata["epoch_cache_identity"] = identity
+        epochs.metadata["epoch_source_kind"] = source
+        if save_epochs:
+            epochs.to_hdf(path)
         return epochs
 
     def analyze(

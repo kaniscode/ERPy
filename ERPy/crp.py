@@ -200,7 +200,7 @@ def _mean_projection_profile(voltage: np.ndarray, counts: np.ndarray, sfreq: flo
     denominator = float(n_trials * (n_trials - 1)) * np.sqrt(float(sfreq))
     profile = np.full(len(counts), np.nan, dtype=float)
     for index, count in enumerate(counts):
-        trial_norms = np.sqrt(np.maximum(norm_sq[count - 1], eps))
+        trial_norms = np.maximum(np.sqrt(norm_sq[count - 1]), eps)
         profile[index] = float(
             np.sum(off_diagonal_dot[count - 1] / trial_norms) / denominator
         )

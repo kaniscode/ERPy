@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "protocol_sha256": "7b8170a51b118078c5567592b3cd1be12ef70db008cd0b02d422a629df201d21",
+  "input_hashes": {
+    "records": "773927fb3bf76f3a1a249e5092f077ba25a3046e4c0385deb442849bc771b48a",
+    "features": "18177ea77d9dbd44afa7fa146aaef99b2fab31ef5a6c088aea9df1bcba2cbcaf",
+    "feature_manifest": "420e2b826da3699d059e9ae5de7bb4fda6134d61715b5529c2d3187bbf7db63d",
+    "configuration_receipt": "bd21ca98db48bb73f69c502fe7443213111c8ecee176e610f2c13fa90f6eb70c"
+  },
+  "source_hashes": {
+    "validation/predict_n1_label_free.py": "26ef0b7aa40c9c4ac19cff8bccbb5cf63abb778f4527cf281a7824765a29126b",
+    "ERPy/n1_detection.py": "9518edb4093474791e04841b3c46b3656086f31a960b8835c4cae40b7687baea",
+    "ERPy/n1.py": "bb18ac73fd52fcefee1f031e108a10f0d308bc0aea73546d4852089fcf72e7bf",
+    "ERPy/inference.py": "fc94b5c22c7eccdc8b511c7b93ec62ea39811b0362dd1a39370e85dbbe429e1d"
+  },
+  "records": 36016,
+  "families": 577,
+  "finite_inference": 34926,
+  "inference_columns_read": [
+    "subject",
+    "stimpair",
+    "channel",
+    "configuration",
+    "prediction_present",
+    "epoch_sha256",
+    "random_seed",
+    "n_trials_total",
+    "n_trials_clean",
+    "p_reproducibility",
+    "p_energy",
+    "p_joint",
+    "q_joint",
+    "family_size"
+  ],
+  "human_reference_columns_read": [],
+  "archived_or_model_call_columns_read": [],
+  "outputs": {
+    "contact_predictions.csv.gz": "da6be4f9fc7a547b5c146f40c1a348f6ad937e2bdc1837a347a29471210c8e00",
+    "families.csv": "a8d63ccd7d695edc54c99eef7e4b46a7a1a100993cbf2bd7c2e14b69b05bcc48"
+  }
+}

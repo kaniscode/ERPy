@@ -1,0 +1,9 @@
+{
+  "python": "3.12.5",
+  "matplotlib": "3.8.4",
+  "numpy": "1.26.4",
+  "pandas": "2.2.2",
+  "Pillow": "10.3.0",
+  "backend": "Agg",
+  "scope": "Environment of original Figure7 production; no model fitting or new resampling during rendering."
+}

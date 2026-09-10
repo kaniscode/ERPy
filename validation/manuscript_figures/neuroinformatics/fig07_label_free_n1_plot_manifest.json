@@ -1,0 +1,923 @@
+{
+  "journal": "neuroinformatics",
+  "width_mm": 174.0,
+  "height_mm": 157.56666666666666,
+  "dpi": 600,
+  "pixel_dimensions": [
+    4110,
+    3722
+  ],
+  "minimum_text_pt": 8.0,
+  "panel_labels": "abcde",
+  "source_tables": {
+    "operating_points.csv": "d981dbaa43b91c7e87ccccef13cafbf8b930db27013bbd08763dff1138147ad2",
+    "paired_differences.csv": "c04ce2bb29789d69a9480c79de2075a227541823d5bdb8123593f41b1ac7fdce"
+  },
+  "generator_sha256": "46a59f02e96cfc24b8a1d0fe6714603b279f3c65299507d290edad3b7a1adf00",
+  "assets": {
+    "svg": {
+      "name": "fig07_label_free_n1.svg",
+      "sha256": "89ee53b7f89313e990009298c42828091584502d6c791f0460674f3213df43c1"
+    },
+    "pdf": {
+      "name": "fig07_label_free_n1.pdf",
+      "sha256": "ec9b09789369928791be74fe7d5b6e2339fcdd9f252c32bf8ef46342d8864e5c"
+    },
+    "png": {
+      "name": "fig07_label_free_n1.png",
+      "sha256": "058aa8d080551506e0b52c5b9b53a7520d44eb459d76a30eca87af07eb099c46"
+    },
+    "tiff": {
+      "name": "fig07_label_free_n1.tiff",
+      "sha256": "8d145c7c8ba76f84cefeacfb79323c2d9f4d089b41b5d5c924d88cc5a1a4538c"
+    }
+  },
+  "text_bounds": [
+    {
+      "text": "67.61",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        220.794752902603,
+        543.928589989684,
+        32.0,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "65.05",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        217.0685559707107,
+        508.3747058669905,
+        32.0,
+        10.000000000000057
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "54.80",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        202.15217820602842,
+        472.8208217442969,
+        32.0,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Sensitivity (%)",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        173.51230314960634,
+        405.4884076990376,
+        81.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        134.8154527559055,
+        423.82174103237094,
+        7.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "25",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        167.6456692913386,
+        423.82174103237094,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "50",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        204.03838582677167,
+        423.82174103237094,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "75",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        240.43110236220477,
+        423.82174103237094,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "100",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        273.2613188976378,
+        423.82174103237094,
+        21.375,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "ER-detect archive",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        30.280730533683283,
+        528.2063677674619,
+        98.375,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "ERPy N1 screen",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        40.90573053368328,
+        492.65248364476827,
+        87.75,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "ERPy N1 detection",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        25.405730533683283,
+        457.09859952207466,
+        103.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "97.64",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        365.8853162933922,
+        543.928589989684,
+        32.0,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "97.82",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        369.94653690360815,
+        508.3747058669905,
+        32.0,
+        10.000000000000057
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "98.50",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        386.1631181555483,
+        472.8208217442969,
+        32.0,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Specificity (%)",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        347.1397637795276,
+        405.4884076990376,
+        80.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "94",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        304.5679133858264,
+        423.82174103237094,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "96",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        351.87844488188944,
+        423.82174103237094,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "98",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        399.1889763779525,
+        423.82174103237094,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "100",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        442.93700787401553,
+        423.82174103237094,
+        21.375,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "81.17",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        587.1720084046706,
+        543.928589989684,
+        32.0,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "81.73",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        587.9868632492366,
+        508.3747058669905,
+        32.0,
+        10.000000000000057
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "84.60",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        592.1598248089564,
+        472.8208217442969,
+        32.0,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "PPV (%)",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        538.7047244094488,
+        405.4884076990376,
+        44.0,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        481.445374015748,
+        423.82174103237094,
+        7.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "25",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        514.275590551181,
+        423.82174103237094,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "50",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        550.668307086614,
+        423.82174103237094,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "75",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        587.0610236220472,
+        423.82174103237094,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "100",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        619.8912401574803,
+        423.82174103237094,
+        21.375,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "\u221230",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        121.72451709592514,
+        237.09903762029745,
+        23.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "\u221220",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        201.80563958955202,
+        237.09903762029745,
+        23.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "\u221210",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        281.88676208317884,
+        237.09903762029745,
+        23.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        370.1553845768057,
+        237.09903762029745,
+        7.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        446.6740070704326,
+        237.09903762029745,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "20",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        526.7551295640594,
+        237.09903762029745,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Sensitivity",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        70.40573053368328,
+        327.5367891513561,
+        58.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Specificity",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        71.03073053368328,
+        298.587532808399,
+        57.625,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "PPV",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        107.53073053368328,
+        269.63827646544183,
+        21.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Difference (percentage points)",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        231.61072834645665,
+        55.615966754155735,
+        171.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "\u221230",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        121.72451709592514,
+        73.94930008748906,
+        23.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "\u221220",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        201.80563958955202,
+        73.94930008748906,
+        23.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "\u221210",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        281.88676208317884,
+        73.94930008748906,
+        23.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        370.1553845768057,
+        73.94930008748906,
+        7.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        446.6740070704326,
+        73.94930008748906,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "20",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        526.7551295640594,
+        73.94930008748906,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Sensitivity",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        70.40573053368328,
+        164.3870516185477,
+        58.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Specificity",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        71.03073053368328,
+        135.43779527559056,
+        57.625,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "PPV",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        107.53073053368328,
+        106.48853893263343,
+        21.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Label-free N1 screening and detection",
+      "font_size_pt": 10.0,
+      "bounds_px": [
+        30.826771653543304,
+        591.4530183727035,
+        301.125,
+        14.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "32,048 records \u00b7 13 participants",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        482.81299212598424,
+        591.730971128609,
+        178.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "a",
+      "font_size_pt": 10.0,
+      "bounds_px": [
+        119.88188976377954,
+        570.7139107611549,
+        9.500000000000014,
+        14.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "b",
+      "font_size_pt": 10.0,
+      "bounds_px": [
+        293.1968503937008,
+        570.7139107611549,
+        9.875,
+        14.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "c",
+      "font_size_pt": 10.0,
+      "bounds_px": [
+        466.511811023622,
+        570.7139107611549,
+        8.25,
+        14.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "-2.56 [-7.17, +0.94]",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        519.2598425196851,
+        328.53678915135606,
+        111.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "+0.17 [-0.81, +1.05]",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        519.2598425196851,
+        299.587532808399,
+        116.625,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "+0.56 [-4.51, +6.14]",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        519.2598425196851,
+        270.63827646544183,
+        116.625,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "d",
+      "font_size_pt": 10.0,
+      "bounds_px": [
+        119.88188976377951,
+        374.06574803149607,
+        9.874999999999986,
+        14.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Nominal N1 screen \u2212 ER-detect archive",
+      "font_size_pt": 9.0,
+      "bounds_px": [
+        138.3779527559055,
+        374.06574803149607,
+        248.37500000000003,
+        13.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Difference [95% CI]",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        519.2598425196851,
+        359.1775590551181,
+        109.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "-12.81 [-25.07, -3.76]",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        519.2598425196851,
+        165.3870516185477,
+        120.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "+0.86 [-0.16, +2.00]",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        519.2598425196851,
+        136.43779527559056,
+        116.625,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "+3.43 [-2.14, +10.94]",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        519.2598425196851,
+        107.48853893263343,
+        123.75,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "e",
+      "font_size_pt": 10.0,
+      "bounds_px": [
+        119.88188976377951,
+        210.91601049868765,
+        9.499999999999986,
+        14.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Family-adjusted N1 detection \u2212 ER-detect archive",
+      "font_size_pt": 9.0,
+      "bounds_px": [
+        138.3779527559055,
+        210.91601049868765,
+        312.875,
+        13.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Difference [95% CI]",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        519.2598425196851,
+        196.02782152230972,
+        109.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Paired, nominal 95% intervals",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        495.37303149606294,
+        21.05433070866142,
+        166.375,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "CI excludes zero",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        165.5459317585302,
+        19.952974628171482,
+        90.87499999999997,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "CI includes zero",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        305.3098206474191,
+        19.952974628171482,
+        88.125,
+        10.0
+      ],
+      "within_canvas": true
+    }
+  ],
+  "marker_bounds": [
+    {
+      "bounds_px": [
+        233.60030845815854,
+        531.0119233230174,
+        6.388888888888914,
+        6.388888888888914
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        229.87411152626623,
+        495.4580392003238,
+        6.388888888888914,
+        6.388888888888914
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        214.95773376158397,
+        459.9041550776302,
+        6.388888888888914,
+        6.388888888888914
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        394.6908718489477,
+        531.0119233230174,
+        6.388888888888914,
+        6.388888888888914
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        398.7520924591637,
+        495.4580392003238,
+        6.388888888888914,
+        6.388888888888914
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        414.96867371110386,
+        459.9041550776302,
+        6.388888888888914,
+        6.388888888888914
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        599.9775639602261,
+        531.0119233230174,
+        6.388888888888914,
+        6.388888888888914
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        600.7924188047922,
+        495.4580392003238,
+        6.388888888888914,
+        6.388888888888914
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        604.9653803645119,
+        459.9041550776302,
+        6.388888888888914,
+        6.388888888888914
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        349.7471903150125,
+        330.0645669291339,
+        6.944444444444457,
+        6.944444444444457
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        371.6205237009937,
+        301.11531058617675,
+        6.944444444444457,
+        6.944444444444457
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        374.7283237793415,
+        272.1660542432196,
+        6.944444444444457,
+        6.944444444444457
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        267.6895433012404,
+        166.91482939632547,
+        6.944444444444457,
+        6.944444444444457
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        377.1103881713286,
+        137.96557305336833,
+        6.944444444444457,
+        6.944444444444457
+      ],
+      "inside_axes": true
+    },
+    {
+      "bounds_px": [
+        397.68452749525176,
+        109.0163167104112,
+        6.944444444444457,
+        6.944444444444457
+      ],
+      "inside_axes": true
+    }
+  ],
+  "visual_qa_status": "pending_direct_inspection"
+}

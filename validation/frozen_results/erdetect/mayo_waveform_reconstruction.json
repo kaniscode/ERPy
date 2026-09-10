@@ -1,0 +1,14 @@
+{
+  "checked_channel_pair_means": 10584,
+  "subjects": [
+    "MAYO01",
+    "MAYO02",
+    "MAYO03",
+    "MAYO04",
+    "MAYO05"
+  ],
+  "max_abs_difference_uv": 0.0006885835464345291,
+  "median_root_mean_square_difference_uv": 6.181124885062228e-07,
+  "max_centered_root_mean_square_difference_uv": 7.268045732961052e-05,
+  "note": "Direct comparison before accuracy scoring; float32 epoch storage causes small rounding differences."
+}

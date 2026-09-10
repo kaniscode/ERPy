@@ -1,0 +1,43 @@
+{
+  "scope": "Existing saved N1 development summaries only; no new fit, test or raw-data processing.",
+  "source_files": [
+    {
+      "repository_relative_path": "validation/frozen_results/n1/nested/metrics.csv",
+      "sha256": "b2f874eb5e27e1eca2a8c6ae2ed74a177a4ebadbf5cd1f06566e6b016dbe7a10"
+    },
+    {
+      "repository_relative_path": "validation/frozen_results/n1/nested/paired_differences.csv",
+      "sha256": "90cc4983f533d0bee60d5a4f7e1cb3ad2a757a594f7f7cb95514b9c675332745"
+    },
+    {
+      "repository_relative_path": "validation/frozen_results/n1/secondary/hybrid_vs_morphology.csv",
+      "sha256": "8e69b92ba6dee9d83fc510da013c69910127315af8e6f61752218388968ed622"
+    },
+    {
+      "repository_relative_path": "validation/frozen_results/n1/nested/N1_logistic_morphology_precision_recall.csv.gz",
+      "sha256": "85e08d1ef07aea50160f50e5242f172b0eb06147f9f7a907ec10a3c73274129b"
+    },
+    {
+      "repository_relative_path": "validation/frozen_results/n1/nested/N1_logistic_hybrid_precision_recall.csv.gz",
+      "sha256": "777d06ce9cff8cf706272b8582f47678fa17d27a8c52806d59dd334f282661df"
+    }
+  ],
+  "data_files": {
+    "N1_logistic_hybrid_precision_recall.csv.gz": "777d06ce9cff8cf706272b8582f47678fa17d27a8c52806d59dd334f282661df",
+    "N1_logistic_morphology_precision_recall.csv.gz": "85e08d1ef07aea50160f50e5242f172b0eb06147f9f7a907ec10a3c73274129b",
+    "operating_points.csv": "9d16696d74e465526013c5a4c10d7aab2ff9756a07dc72a3c0206f6ec0ba914c",
+    "paired_differences.csv": "d0d9d9ee8118eb74a978e0bb89d392383205c10f526263d05fca5ec8980c8a7b"
+  },
+  "records": 32048,
+  "participants": 13,
+  "endpoint": "Released negative-N1 annotations",
+  "included_methods": [
+    "archived_ER_detect",
+    "N1_logistic_morphology",
+    "N1_logistic_hybrid"
+  ],
+  "excluded_from_this_focused_figure": [
+    "original_ERPy"
+  ],
+  "inference": "Existing nominal conditional participant-cluster bootstrap intervals; fixed participant-held-out development predictions, without refitting inside bootstrap; no multiplicity adjustment or equivalence margin."
+}

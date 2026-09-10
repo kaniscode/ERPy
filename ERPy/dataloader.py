@@ -703,7 +703,11 @@ class DataLoader:
         except OSError:
             return path, None
         if staged.is_file() and staged.stat().st_size == source_size:
-            return staged, staged
+            # A previous interrupted run may leave a same-sized staging file.
+            # Size alone cannot establish that its signal contents are current.
+            from ._epoch_cache import file_digest
+            if file_digest(staged) == file_digest(path):
+                return staged, staged
 
         partial = staged.with_suffix(staged.suffix + ".partial")
         partial.unlink(missing_ok=True)

@@ -1,0 +1,6 @@
+# Figure-only rendering; no recording readers, private paths, or detector replay.
+numpy==1.26.4
+pandas==2.2.2
+matplotlib==3.8.4
+Pillow>=10
+CairoSVG>=2.7

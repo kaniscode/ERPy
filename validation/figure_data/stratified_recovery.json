@@ -1,0 +1,408 @@
+{
+  "input_name": "scenario_results.csv.gz",
+  "input_sha256": "cc832ab691db83d961b1607f7a726e80bbc7645b3c6fddb0e5d5a4019349ad53",
+  "method": "Percentile bootstrap of whole families independently within each fixed factorial cell",
+  "seed": 20260907,
+  "resamples": 20000,
+  "design_cells": 48,
+  "injected_families": 1920,
+  "evaluable_targets": 1440,
+  "detected_targets": 1205,
+  "conditional_recovery": 0.8368055555555556,
+  "conditional_95_percentile_interval": [
+    0.8243055555555555,
+    0.8493055555555555
+  ],
+  "overall_recovery": 0.6276041666666666,
+  "overall_95_percentile_interval": [
+    0.6182291666666667,
+    0.6369791666666667
+  ],
+  "interpretation": "Equal weighting of the declared design cells; not clinical sensitivity or prevalence-weighted performance. Evaluability is fixed by this design and receives no sampling interval.",
+  "cells": [
+    {
+      "trials": 8.0,
+      "snr": 0.5,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 4
+    },
+    {
+      "trials": 8.0,
+      "snr": 0.5,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 0,
+      "calls": 0
+    },
+    {
+      "trials": 8.0,
+      "snr": 0.5,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 0,
+      "calls": 0
+    },
+    {
+      "trials": 8.0,
+      "snr": 1.0,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 31
+    },
+    {
+      "trials": 8.0,
+      "snr": 1.0,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 0,
+      "calls": 0
+    },
+    {
+      "trials": 8.0,
+      "snr": 1.0,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 0,
+      "calls": 0
+    },
+    {
+      "trials": 8.0,
+      "snr": 2.0,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 8.0,
+      "snr": 2.0,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 0,
+      "calls": 0
+    },
+    {
+      "trials": 8.0,
+      "snr": 2.0,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 0,
+      "calls": 0
+    },
+    {
+      "trials": 8.0,
+      "snr": 4.0,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 8.0,
+      "snr": 4.0,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 0,
+      "calls": 0
+    },
+    {
+      "trials": 8.0,
+      "snr": 4.0,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 0,
+      "calls": 0
+    },
+    {
+      "trials": 12.0,
+      "snr": 0.5,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 9
+    },
+    {
+      "trials": 12.0,
+      "snr": 0.5,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 6
+    },
+    {
+      "trials": 12.0,
+      "snr": 0.5,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 0,
+      "calls": 0
+    },
+    {
+      "trials": 12.0,
+      "snr": 1.0,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 12.0,
+      "snr": 1.0,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 33
+    },
+    {
+      "trials": 12.0,
+      "snr": 1.0,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 0,
+      "calls": 0
+    },
+    {
+      "trials": 12.0,
+      "snr": 2.0,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 12.0,
+      "snr": 2.0,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 12.0,
+      "snr": 2.0,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 0,
+      "calls": 0
+    },
+    {
+      "trials": 12.0,
+      "snr": 4.0,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 12.0,
+      "snr": 4.0,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 12.0,
+      "snr": 4.0,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 0,
+      "calls": 0
+    },
+    {
+      "trials": 24.0,
+      "snr": 0.5,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 21
+    },
+    {
+      "trials": 24.0,
+      "snr": 0.5,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 16
+    },
+    {
+      "trials": 24.0,
+      "snr": 0.5,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 8
+    },
+    {
+      "trials": 24.0,
+      "snr": 1.0,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 24.0,
+      "snr": 1.0,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 24.0,
+      "snr": 1.0,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 24.0,
+      "snr": 2.0,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 24.0,
+      "snr": 2.0,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 24.0,
+      "snr": 2.0,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 24.0,
+      "snr": 4.0,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 24.0,
+      "snr": 4.0,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 24.0,
+      "snr": 4.0,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 36.0,
+      "snr": 0.5,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 30
+    },
+    {
+      "trials": 36.0,
+      "snr": 0.5,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 28
+    },
+    {
+      "trials": 36.0,
+      "snr": 0.5,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 19
+    },
+    {
+      "trials": 36.0,
+      "snr": 1.0,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 36.0,
+      "snr": 1.0,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 36.0,
+      "snr": 1.0,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 36.0,
+      "snr": 2.0,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 36.0,
+      "snr": 2.0,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 36.0,
+      "snr": 2.0,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 36.0,
+      "snr": 4.0,
+      "mask_fraction": 0.0,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 36.0,
+      "snr": 4.0,
+      "mask_fraction": 0.25,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    },
+    {
+      "trials": 36.0,
+      "snr": 4.0,
+      "mask_fraction": 0.5,
+      "families": 40,
+      "evaluable": 40,
+      "calls": 40
+    }
+  ]
+}

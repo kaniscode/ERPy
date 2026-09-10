@@ -1,0 +1,8 @@
+{
+    "name": "Name of the electrode contact point",
+    "x": "X position. The position of the center the electrode in xyz space in millimeters",
+    "y": "Y position. The position of the center the electrode in xyz space in millimeters",
+    "z": "Z position. The position of the center the electrode in xyz space in millimeters",
+    "size": "Surface area of the electrode, in mm^2",
+    "hemisphere": "The hemisphere in which the electrode is placed, one of 'L' or 'R'"
+}

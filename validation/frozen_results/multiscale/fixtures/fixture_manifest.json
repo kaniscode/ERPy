@@ -1,0 +1,90 @@
+{
+  "selection_before_outcomes": true,
+  "amendment": "Original >=24-native-trial request infeasible (Mayo max15, UMCU max11). Author requested >=10; select earliest10 without replacement. Injection benchmarks may reuse source baselines across scenarios, not call them independent observations.",
+  "fixtures": [
+    {
+      "site": "MAYO",
+      "subject": "MAYO02",
+      "stimpair": "LG1-LG2",
+      "channel": "LAS1",
+      "source_path": "public_epoch_sources/MAYO02/LG1-LG2.npz",
+      "source_sha256": "b5434d72e3aa3e90c8c8e711498fe3362929d6ca5a9474da66403dff576a48f6",
+      "trials_total": 10,
+      "finite_baseline_trials": 10,
+      "selected_trial_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "baseline_samples": 1843,
+      "baseline_slice": [
+        0,
+        1843
+      ],
+      "sfreq": 2048.0,
+      "voltage_unit": "uV",
+      "requested_baseline": [
+        -1.0,
+        -0.1
+      ],
+      "realized_baseline_start": -1.0,
+      "realized_baseline_end": -0.1005859375,
+      "normalization": "per-trial median[-0.5,-0.02), half-open rounded; native cache may already be centered",
+      "selection": "First lexicographic participant (MAYO01 excluded), pair, non-stimulation good ECoG contact with >=10 finite native baseline trials; earliest10 eligible trials; no annotations or poststimulus morphology inspected",
+      "source_dataset": "OpenNeuro ds004774",
+      "source_license": "CC0",
+      "fixture_file": "./fixtures/mayo_native_baseline_10.npz",
+      "fixture_sha256": "a300c05bf89e074cb51b1542fa0d35eebcb633b983b46961181b55259f3f6c6e",
+      "original_fixture_sha256": "a217fe07805876212493ada71cfff50adf103c5b9ca882264a72e2514b611617"
+    },
+    {
+      "site": "UMCU",
+      "subject": "UMCU20",
+      "stimpair": "HF14-HF15",
+      "channel": "F01",
+      "source_path": "public_epoch_sources/UMCU20/sub-UMCU20__HF14-HF15.npz",
+      "source_sha256": "9a467d59d942aa4b2ada4b51010ac48d81c42409b192ea00da36ddef09897c19",
+      "trials_total": 10,
+      "finite_baseline_trials": 10,
+      "selected_trial_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "baseline_samples": 1843,
+      "baseline_slice": [
+        0,
+        1843
+      ],
+      "sfreq": 2048.0002097152387,
+      "voltage_unit": "uV",
+      "requested_baseline": [
+        -1.0,
+        -0.1
+      ],
+      "realized_baseline_start": -0.9999998976,
+      "realized_baseline_end": -0.10058592720000001,
+      "normalization": "per-trial median[-0.5,-0.02), half-open rounded; native cache may already be centered",
+      "selection": "First lexicographic participant (MAYO01 excluded), pair, non-stimulation good ECoG contact with >=10 finite native baseline trials; earliest10 eligible trials; no annotations or poststimulus morphology inspected",
+      "source_dataset": "OpenNeuro ds004774",
+      "source_license": "CC0",
+      "fixture_file": "./fixtures/umcu_native_baseline_10.npz",
+      "fixture_sha256": "2c5ef876f1d670618faeae177be972f2f28412972c144e20721ada1d912514bb",
+      "original_fixture_sha256": "ec8e58a38b0ca0ab8d7cdd4a8ae5a8698d2224ec4878057d398c0f149f6e5c0c"
+    }
+  ]
+}

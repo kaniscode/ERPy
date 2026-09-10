@@ -21,6 +21,7 @@ notebooks/rutishauser_nwb_workspace/
 notebooks/*.ipynb
 validation/diagnose_failed_server_events.py
 validation/results/
+validation/work/
 validation/public_spes_work*/
 validation/*.png
 validation/public_spes_work*/

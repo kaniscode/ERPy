@@ -1,0 +1,49 @@
+{
+  "created_utc": "2026-09-08T06:49:07.394601+00:00",
+  "analysis_plan_sha256": "c674080dbc5bd33de91e4c9242882293c2b0e7ce13d0b67d98bd03a781ece9ab",
+  "predeclared_families": 2000,
+  "completed_families": 2000,
+  "failed_families": 0,
+  "methods": [
+    "early",
+    "broad",
+    "late",
+    "matched_broad",
+    "multiscale",
+    "weighted_multiscale"
+  ],
+  "fixed_weights": [
+    0.1,
+    0.1,
+    0.8
+  ],
+  "weighted_confirmation": true,
+  "elapsed_wall_seconds": 60.28017966588959,
+  "worker_processes": 3,
+  "python": "3.12.5",
+  "numpy": "1.26.4",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "thread_settings": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "code_hashes": {
+    "<repository>/validation/benchmark_multiscale.py": "1f20ade14929fff145bf147fac83eabd12a4fc00670ef9d21e49b643b98e2641",
+    "<repository>/ERPy/multiscale.py": "dbe9735b7aa4bcde8ef38ba11743b056fd242ee42c3ea55c63e424e1080601ad",
+    "<repository>/ERPy/crp_energy.py": "5a26ca705f0117b56de9d35f2a8a197c36c8451063aabcbcdfa64e8d72d96455"
+  },
+  "independence_note": "Generated primary families independent; all methods paired within family. Source-injection scenario reuses ten native baseline trials per site and is conditional on those sources, not new independent clinical observations.",
+  "null_note": "Global multiscale null requires at least one component null in EVERY bank window. Both declared stresses meet this; no mixed-window unsupported null is claimed.",
+  "outputs": {
+    "failures.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "warnings.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "declared_scenarios.json": "b242a3e8c0e973e5004f796d8b62e6c122b4204f97f4eac68e7da3c1b78c350d",
+    "family_results.csv.gz": "afd332717cb1196df62889aa9df3eeed0b08cf7b73decd8eeba3b76aaa904ac0",
+    "method_results.csv.gz": "1cf152f23e96f273c026cf0bc9361b80ead8d682edc62359f1ef67b8217df835",
+    "window_results.csv.gz": "29aa51739df88c6bcb8342a9997e27040b82e517e1ae35abc4a5b7bf1e1037e9",
+    "all_cells.csv": "b4f5f33bbce5b7164c28ca2262b8b4568582098c6bcd66a02c5b33a9f22dab3d",
+    "pooled_by_trials.csv": "73267f6dbeb039fb2f70bb3abdb773dc15e7d9c47a86a45f3122dabc18426e37",
+    "paired_recovery.csv": "288fea5ed53b4e19a7eba33a832fb349b8e44a31a04f0a12d92eaded5a849ce8"
+  }
+}

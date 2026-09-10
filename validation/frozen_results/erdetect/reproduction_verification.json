@@ -1,0 +1,52 @@
+{
+  "annotation_category_discordance.csv": {
+    "rows": 334,
+    "columns": 9,
+    "all_values_equal": true
+  },
+  "annotation_exclusion_denominators.csv": {
+    "rows": 280,
+    "columns": 7,
+    "all_values_equal": true
+  },
+  "availability_by_reference.csv": {
+    "rows": 44,
+    "columns": 8,
+    "all_values_equal": true
+  },
+  "interrater_agreement.csv": {
+    "rows": 46,
+    "columns": 26,
+    "all_values_equal": true
+  },
+  "metrics.csv": {
+    "rows": 2112,
+    "columns": 53,
+    "all_values_equal": true
+  },
+  "rater_label_joins.csv": {
+    "rows": 184008,
+    "columns": 50,
+    "all_values_equal": true
+  },
+  "record_exclusion_denominators.csv": {
+    "rows": 346,
+    "columns": 12,
+    "all_values_equal": true
+  },
+  "record_predictions_and_labels.csv": {
+    "rows": 106124,
+    "columns": 50,
+    "all_values_equal": true
+  },
+  "umcu_reconstruction": {
+    "all_values_equal": true
+  },
+  "tests": {
+    "unit_integration_tests_passed": 193,
+    "python": "3.12.5",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "pandas": "2.2.2"
+  }
+}

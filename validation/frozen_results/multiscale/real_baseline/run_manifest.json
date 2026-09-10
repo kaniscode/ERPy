@@ -1,0 +1,41 @@
+{
+  "created_utc": "2026-09-08T06:38:16.099625+00:00",
+  "analysis_plan_sha256": "70c671ffbddd093662ed2d150a45081adca42fa2b3af037e5df0f436ee0ba6a4",
+  "predeclared_families": 960,
+  "completed_families": 960,
+  "failed_families": 0,
+  "methods": [
+    "early",
+    "broad",
+    "late",
+    "matched_broad",
+    "multiscale"
+  ],
+  "elapsed_wall_seconds": 54.941163833253086,
+  "worker_processes": 2,
+  "python": "3.12.5",
+  "numpy": "1.26.4",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "thread_settings": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "code_hashes": {
+    "<repository>/validation/benchmark_multiscale.py": "d4a773a8a21902f752af0d16243976d3d3c31c232376f3fee96042d6f730dc8a",
+    "<repository>/ERPy/multiscale.py": "2c458ad04dce77b719eebb62b53b9cd4faeaf729e5ccb4fc86572df7e76ac879",
+    "<repository>/ERPy/crp_energy.py": "5a26ca705f0117b56de9d35f2a8a197c36c8451063aabcbcdfa64e8d72d96455"
+  },
+  "independence_note": "Generated primary families independent; all methods paired within family. Source-injection scenario reuses ten native baseline trials per site and is conditional on those sources, not new independent clinical observations.",
+  "null_note": "Global multiscale null requires at least one component null in EVERY bank window. Both declared stresses meet this; no mixed-window unsupported null is claimed.",
+  "outputs": {
+    "failures.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "pooled_by_trials.csv": "869268a33de6b631538f379f4f0cb43ecea564ca7bc6a6f29dbed05caeb251ca",
+    "declared_scenarios.json": "63e84ede79438fd1ab9c5be76d6d8144531529a3a1e2152b5008d8dd0bc914c8",
+    "method_results.csv.gz": "0168afb4a955bd9bcae60444e6f1d61254b86c3902f242dc405b70ab67b78b56",
+    "window_results.csv.gz": "5a50ff2e366acc5865052a4146a8fd369b9b752d2545f23a93331429848233d0",
+    "warnings.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "all_cells.csv": "f1f00037c651e24a2d8bcc2b6c26ce8c60c67f203abeca868408a4fdeb5947af",
+    "family_results.csv.gz": "41ca0975d23ad743a6178273bbe450fdf666c612df21ecdcacfee4ca746f36cf"
+  }
+}

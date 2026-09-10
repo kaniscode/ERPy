@@ -1,0 +1,120 @@
+{
+  "created_utc": "2026-09-08T06:22:48.456950+00:00",
+  "status": "Predeclared before any candidate outcomes; internal analysis plan, not a registered protocol",
+  "candidate": "Optional fixed-three-window Bonferroni projection–energy; no default promotion",
+  "windows_seconds": [
+    [
+      0.01,
+      0.09
+    ],
+    [
+      0.09,
+      0.3
+    ],
+    [
+      0.01,
+      0.3
+    ]
+  ],
+  "single_reference_windows_seconds": {
+    "early": [
+      0.01,
+      0.09
+    ],
+    "broad": [
+      0.015,
+      0.3
+    ]
+  },
+  "diagnostic_single_windows_seconds": {
+    "late": [
+      0.09,
+      0.3
+    ],
+    "matched_broad": [
+      0.01,
+      0.3
+    ]
+  },
+  "baseline_window_seconds": [
+    -0.5,
+    -0.02
+  ],
+  "artifact_interval_seconds": [
+    0,
+    0.009
+  ],
+  "sfreq": 500,
+  "time_axis": "integer indices −300 through160 divided by500; realized endpoints saved",
+  "min_clean_trials": 8,
+  "n_permutations": 5000,
+  "max_exact_projection_trials": 12,
+  "max_exact_energy_trials": 16,
+  "alpha": 0.05,
+  "family_contacts": 4,
+  "family_bh_policy": "all four predeclared contacts, unavailable contact/window p=1 with unavailable flag retained",
+  "master_seed": 20260908,
+  "power": {
+    "trial_counts": [
+      8,
+      12,
+      24
+    ],
+    "signal_rms_to_noise_sd": [
+      0.5,
+      1,
+      2
+    ],
+    "morphologies": [
+      "early_40ms_sd12ms",
+      "narrow_25ms_sd4ms",
+      "late_180ms_sd25ms",
+      "biphasic_negative45ms_sd12ms_positive125ms_sd25ms_weight0.8"
+    ],
+    "leading_polarities": [
+      -1,
+      1
+    ],
+    "replicates_per_cell": 20,
+    "families": 1440,
+    "signal_definition": "Injected waveform RMS over10–300ms equals10µV×ratio×clipped N(1,.15²) trial multiplier; independent N(0,(3ms)²) latency jitter; each shifted template renormalized on broad grid"
+  },
+  "noise_only": {
+    "trial_counts": [
+      8,
+      12,
+      24
+    ],
+    "replicates_per_cell": 80,
+    "families": 240
+  },
+  "component_nulls": {
+    "trial_counts": [
+      12
+    ],
+    "replicates_per_arm": 160,
+    "families": 320,
+    "projection_alt_energy_null": "Independent positive exchangeable lognormal slope pairs for target baseline and response linear sample-index ramps. Every equal-length segment has centered RMS slope×sqrt((L²−1)/12); exchanging slopes negates paired log-RMS differences in every window, including epsilon. Strong positive common ramps provide projection alignment. Deliberately nonphysiological null stress.",
+    "energy_alt_projection_null": "Independent centrally symmetric Gaussian AR(1) baseline/response noise plus a randomly signed full-response template independently across trials; coordinate-wise whole-trial sign invariance holds jointly for all windows."
+  },
+  "noise_model": "Independent stationary Gaussian AR(1), phi .85, marginalSD10µV, burn-in via existing benchmark helper; independent mean-one lognormal trial/contact scale with logSD .18",
+  "total_families": 2000,
+  "matched_methods": "Same complete four-contact family and same per-contact/per-window random seeds across every method; window results computed once and reused in fixed3 Bonferroni and single-window summaries. Distinct design cells use independent generated families.",
+  "primary_outputs": [
+    "every contact/window component p and availability reason",
+    "every method p/q and call",
+    "all power and null cells, including zero/unavailable/failed cells",
+    "paired recovery differences against early and broad",
+    "family-wise any-null-call frequencies and target/null-contact rates",
+    "confidence intervals and workload/timing measured during this execution"
+  ],
+  "uncertainty": "Wilson95% intervals for per-cell binary recovery and any-family false call; stratified paired family bootstrap2000 resamples seed20260909 for pooled fixed-grid recovery differences, not clinical performance. No claim of validation across arbitrary dependent noise/missingness.",
+  "n8_resolution": "With four contacts and three windows, isolated exact projection floor is12/128=.09375 after Bonferroni and BH; potential inability to recover an isolated target at n8 is explicitly tested and reported.",
+  "unavailable_windows": "Never reduce multiplicity based on observed evaluability. Retain raw unavailability and contribute conservative p=1.",
+  "real_baseline_optional": {
+    "selection": "If source-verified caches are available, one Mayo and one UMCU participant chosen deterministically by lexicographic order after excluding overlapping MAYO01; first eligible pair/contact with at least24 finite prestimulation trials, no annotation or poststimulus selection. Use only prestimulation samples, report pair/contact/source hashes.",
+    "design": "Resample paired disjoint prestimulation blocks for synthetic baseline/response, random whole-trial signs to define controlled null, inject the same four shapes and both polarities at ratios1 and2; n12/24,10replicates per cell. Semi-synthetic feasibility characterization only; not natural-noise clinical calibration.",
+    "failure_policy": "If verified source fixture is unavailable, record omission and do not silently use an unverifiable historical cache."
+  },
+  "decision_rule": "Run this one candidate/design once after correctness tests. Report inferiority/tradeoffs without tuning windows, masks, thresholds or selecting a winner from repeated candidate search. Operational fixes logged; no outcome-directed retuning."
+}

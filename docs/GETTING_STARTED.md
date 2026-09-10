@@ -1,16 +1,23 @@
 # Getting started with ERPy
 
+Project: [ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis](../README.md).
+
 This guide assumes that you are comfortable opening files and folders but may
 be new to Python. ERPy is research software for stimulation-evoked responses in
 intracranial recordings. It is not a medical device and its automated labels
 must be reviewed alongside the waveforms and quality-control reports.
 
+Start with the [worked cohort recording](../notebooks/examples/00_quickstart.ipynb)
+to see actual deidentified trials and executed figures from the CNS/ACC–PAG
+analysis cohort. Its source recording is restricted; viewing the stored
+figures does not require downloading that input.
+
 ## 1. Install Python
 
 Install Python from [python.org](https://www.python.org/downloads/). ERPy
-requires Python 3.9 or newer, and the 1.0 release is tested on Python 3.9
-through 3.13. Python 3.13 is the simplest choice for a new installation. A
-newer Python release may work but is not part of the release test matrix.
+declares Python 3.9 or newer. The current release candidate was checked on
+Python 3.12.5; use Python 3.12 to follow its recorded execution environment.
+The expanded Python-version matrix has not been verified for these changes.
 During Windows installation, select **Add Python to PATH**.
 
 Open Terminal (macOS/Linux) or PowerShell (Windows) and check the installation:
@@ -53,25 +60,29 @@ The import name is `ERPy`; the installable distribution is `erpy-neuro`. Do
 not run `pip install erpy`: that name belongs to an unrelated project.
 
 Choose one of the routes below. Routes A and B are best for a first use because
-they keep the notebooks and their adjacent `_synthetic.py` teaching-data
-helper together. Do not download an individual notebook by itself.
+they keep the current notebooks and their adjacent input helpers together.
+Do not download an individual notebook by itself. The worked cohort example
+and optional analysis APIs are supplied with the current `1.1.0rc1` source.
+The routes using `main` retrieve the latest public branch; confirm the version
+before continuing. A supplied complete source folder can be installed with the
+same command. Record the exact Git revision when reproducing results.
 
-### Route A: clone the complete release with Git
+### Route A: clone the current source and worked notebooks with Git
 
-With Git installed, clone the exact release into the tutorial folder:
+With Git installed, clone current `main` into the tutorial folder:
 
 ```text
-git clone --branch v1.0.0 --depth 1 https://github.com/kaniscode/ERPy.git ERPy-source
+git clone --branch main --depth 1 https://github.com/kaniscode/ERPy.git ERPy-source
 ```
 
 No GitHub account, username, or password is needed for a public repository. If
 the command succeeds, continue to **Install the downloaded folder** below.
 
-### Route B: download the complete release as a ZIP
+### Route B: download the current source as a ZIP
 
-If Git is unavailable, open the
-[v1.0.0 release page](https://github.com/kaniscode/ERPy/releases/tag/v1.0.0),
-expand **Assets**, and choose **Source code (zip)**. Move the ZIP into the
+If Git is unavailable, download the
+[current main source ZIP](https://github.com/kaniscode/ERPy/archive/refs/heads/main.zip).
+Move the ZIP into the
 `erpy_tutorial` folder, extract it, and rename the extracted directory
 `ERPy-source`. On Windows, use **Extract All** before renaming it; do not try to
 install from inside the unopened ZIP.
@@ -85,10 +96,11 @@ features:
 python -m pip install "./ERPy-source[edf,nwb,viz]"
 ```
 
-### Route C: install the tagged library directly
+### Route C: install the historical tagged library directly
 
 If you only want the library, have Git installed, and do not need a local copy
-of the notebooks, install directly from the exact tag:
+of the current notebooks or development APIs, install historical `1.0.0`
+directly from the exact tag:
 
 ```text
 python -m pip install "erpy-neuro[edf,nwb,viz] @ git+https://github.com/kaniscode/ERPy.git@v1.0.0"
@@ -100,10 +112,12 @@ the notebook section.
 The end-user extras are `edf` for EDF/BDF/BrainVision/BIDS, `nwb` for NWB,
 `viz` for Plotly/Nilearn/Seaborn views, `surface` (used with `viz`) for optional
 MNE/PyVista surface rendering, and `validation` for the public-data validation
-workflows. The `dev` extra adds contributor test/build tools. A minimal CSV
+workflows. The current-source `n1-training` extra adds optional scikit-learn
+training; N1 runtime prediction does not need it. The `dev` extra adds
+contributor test/build tools. A minimal CSV
 workflow can omit all extras.
 
-Before running the public-data command in notebook 07, add its download and
+Before executing the public-data cells in notebook 07, add their download and
 validation dependencies from the source folder:
 
 ```text
@@ -123,7 +137,9 @@ python -m pip show erpy-neuro
 python -c "import ERPy; print(ERPy.__version__)"
 ```
 
-The final command should print `1.0.0`.
+The prepared candidate should print `1.1.0rc1`; route C's historical tag should
+print `1.0.0`. A moving `main` checkout may have a later version, so record its
+Git commit and package version with your results.
 
 If it prints another version or reports `No module named ERPy`, stop here and
 use [TROUBLESHOOTING.md](TROUBLESHOOTING.md). The most common cause is that the
@@ -133,7 +149,8 @@ environment was not active in the terminal where the install command ran.
 
 If you used route A or B, enter the downloaded source folder, install
 JupyterLab, and start the quick-start notebook while the environment is still
-active:
+active. For reexecution, set `ERPY_COHORT_EXAMPLE_DIR` to the authorized
+method-example directory in that environment before starting Jupyter:
 
 ```text
 cd ERPy-source
@@ -141,18 +158,27 @@ python -m pip install jupyterlab
 python -m jupyter lab notebooks/examples/00_quickstart.ipynb
 ```
 
-JupyterLab should open in a web browser. Use **Run > Run All Cells**. Teaching
-notebooks 00 through 06 create deterministic synthetic data, so no participant
-recording is needed. Notebook 07 embeds no recording data; it provides a
-separate terminal command that downloads small event-centered windows from a
-public participant dataset only when you choose to run it. The notebooks cover
+JupyterLab should open in a web browser. The lead notebook 00 displays an actual
+deidentified CNS/ACC–PAG cohort recording. Rerunning it requires authorized
+access to the documented trial export and `ERPY_COHORT_EXAMPLE_DIR` set before
+starting Jupyter. Its stored figures are available without those restricted
+inputs. Teaching notebooks 01 through 06 create deterministic synthetic data;
+use **Run > Run All Cells** to reproduce them without participant recordings.
+Notebook 07 runs a small public ds003708 recording subset when you execute its
+cells. Notebook 08 applies a participant-held-out N1 development model to
+actual public ds004774 derived features and needs no raw download. All nine
+notebooks include stored tables and
+figures for browsing directly on GitHub; raw downloads remain outside version
+control. The notebooks cover
 waveforms, detection and QC, spectral analysis, networks, interactive brain
 views, and figure export. Keep the terminal open while JupyterLab is running;
 press `Ctrl+C` in that terminal when you are finished.
 
-The first notebook prints the ERPy version. It must be `1.0.0`. Because
-JupyterLab was started with `python -m jupyter`, its default Python kernel
-comes from the active environment. If the version is wrong, use **Kernel >
+Fresh execution of the prepared candidate reports `1.1.0rc1`. Earlier stored
+notebook outputs retain the versions under which they were actually executed;
+they have not been relabeled as current execution. Because JupyterLab was
+started with `python -m jupyter`, its default Python kernel comes from the
+active environment. If it differs from your installed version, use **Kernel >
 Change Kernel > Python 3** and rerun the first cell; if it remains wrong, close
 JupyterLab and follow the environment checks in the troubleshooting guide.
 

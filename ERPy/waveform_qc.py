@@ -16,7 +16,11 @@ import numpy as np
 import pandas as pd
 
 from .baseline import baseline_center_array
-from .erp_detection import PRIMARY_CRITERION, _feature_table_from_array
+from .erp_detection import (
+    PRIMARY_CRITERION,
+    _feature_table_from_array,
+    _standalone_comparator_summary,
+)
 from .inference import fdr_bh
 
 
@@ -597,7 +601,24 @@ def audit_waveforms(
     min_clean_responses: int = 10,
     fdr_alpha: float = 0.05,
 ) -> WaveformAudit:
-    """Recompute waveform metrics and classify responses needing review."""
+    """Recompute waveform metrics and classify responses needing review.
+
+    Default component decisions are ``primary_reproducibility_pass`` and
+    ``primary_energy_pass``. ``primary_detector_pass`` is the joint BH decision
+    (``primary_significant`` in the detection table); ``primary_qc_pass`` also
+    requires contact-QC eligibility.
+
+    Standalone CRP/Kundu calls use nullable ``comparator_crp_pass`` and
+    ``comparator_kundu_pass`` with explicit availability and reason fields.
+    ``primary_shape_pass`` and ``primary_magnitude_pass`` are deprecated aliases
+    for CRP and Kundu respectively, including their missing states; they are
+    not the default reproducibility/energy components. Missing comparator calls
+    indicate not run or unavailable, not a negative result. Matching
+    ``comparator_*_available`` and ``comparator_*_availability_reason`` columns
+    retain the evidence status and distinguish ``not_run``.
+    ``comparator_crp_kundu_disagreement`` is reported only when both comparator
+    calls have applicable evidence; this diagnostic does not change eligibility.
+    """
 
     detections = pd.DataFrame(detections).copy()
     artifacts = pd.DataFrame(artifact_responses).copy()
@@ -716,18 +737,14 @@ def audit_waveforms(
         )
         & kundu_detector_pass
     )
-    summary["primary_shape_pass"] = (
-        summary["channel"]
-        .map(crp_q["significant"])
-        .fillna(False)
-        .astype(bool)
+    comparators = _standalone_comparator_summary(
+        detections, channels, crp_adjustment=crp_q,
     )
-    summary["primary_magnitude_pass"] = (
-        summary["channel"]
-        .map(kundu_detector_pass)
-        .fillna(False)
-        .astype(bool)
-    )
+    for column in comparators:
+        summary[column] = summary["channel"].map(comparators[column])
+    # Deprecated compatibility aliases refer to standalone comparators only.
+    summary["primary_shape_pass"] = summary["comparator_crp_pass"]
+    summary["primary_magnitude_pass"] = summary["comparator_kundu_pass"]
     summary["shape_magnitude_detector_pass"] = (
         summary["channel"]
         .map(primary_detector_pass)
@@ -851,16 +868,13 @@ def audit_waveforms(
             errors="coerce",
         ).fillna(0.0)
 
-    amplitude_tolerance = np.maximum(
-        0.05,
-        np.abs(
-            pd.to_numeric(
-                summary["peak_amplitude_uv_recomputed"],
-                errors="coerce",
-            )
-        )
-        * 5e-5,
+    recomputed_amplitude = pd.to_numeric(
+        summary["peak_amplitude_uv_recomputed"], errors="coerce"
     )
+    recomputed_latency = pd.to_numeric(
+        summary["peak_latency_ms_recomputed"], errors="coerce"
+    )
+    amplitude_tolerance = np.maximum(0.05, np.abs(recomputed_amplitude) * 5e-5)
     stored_amplitude = pd.to_numeric(
         summary.get(
             "peak_amplitude_uv",
@@ -876,21 +890,22 @@ def audit_waveforms(
         errors="coerce",
     )
     summary["peak_amplitude_difference_uv"] = (
-        stored_amplitude
-        - pd.to_numeric(
-            summary["peak_amplitude_uv_recomputed"],
-            errors="coerce",
-        )
+        stored_amplitude - recomputed_amplitude
     )
     summary["peak_latency_difference_ms"] = (
-        stored_latency
-        - pd.to_numeric(
-            summary["peak_latency_ms_recomputed"],
-            errors="coerce",
-        )
+        stored_latency - recomputed_latency
     )
+    # Comparisons with NaN are False, and an infinite amplitude also produces
+    # an infinite tolerance. Neither establishes agreement between features.
+    features_finite = np.isfinite(
+        pd.concat(
+            [stored_amplitude, stored_latency, recomputed_amplitude, recomputed_latency],
+            axis=1,
+        ).to_numpy(dtype=float, na_value=np.nan)
+    ).all(axis=1)
     summary["feature_mismatch"] = (
-        summary["peak_amplitude_difference_uv"].abs().gt(
+        ~features_finite
+        | summary["peak_amplitude_difference_uv"].abs().gt(
             amplitude_tolerance
         )
         | summary["peak_latency_difference_ms"].abs().gt(
@@ -1026,10 +1041,12 @@ def audit_waveforms(
         ):
             reasons.append("primary_reproducibility_energy_disagreement")
             priority = max(priority, 2)
-        if bool(row.get("primary_shape_pass", False)) != bool(
-            row.get("primary_magnitude_pass", False)
+        if (
+            bool(row["comparator_crp_available"])
+            and bool(row["comparator_kundu_available"])
+            and bool(row["comparator_crp_pass"]) != bool(row["comparator_kundu_pass"])
         ):
-            reasons.append("primary_shape_magnitude_disagreement")
+            reasons.append("comparator_crp_kundu_disagreement")
             priority = max(priority, 2)
         method_count = int(row.get("n_methods_significant", 0) or 0)
         if 0 < method_count < len(method_matrix.columns):

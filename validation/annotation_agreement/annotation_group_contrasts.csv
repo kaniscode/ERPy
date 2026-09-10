@@ -1,0 +1,4 @@
+group_1,group_0,call_rate_difference,low,high,valid_resamples
+Unanimous N1-positive (>=2 raters),Unanimous N1-negative (>=2 raters),0.6675049232433348,0.5623453412786212,0.7384409367223503,2000
+Mixed N1 ratings (>=2 raters),Unanimous N1-negative (>=2 raters),0.49836774672121353,0.3655756718111162,0.6069604005327962,2000
+Unanimous N1-positive (>=2 raters),Mixed N1 ratings (>=2 raters),0.16913717652212124,0.0890652234106735,0.22482910875316442,2000

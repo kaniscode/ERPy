@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "description": "Selected public ds004774 source-trace summaries with original prediction-matched NPZ hashes; no private cohort data. Epoch paths are relative to the public validation cache root.",
+  "files": {
+    "exemplar_selection.csv": {
+      "bytes": 2232,
+      "sha256": "9e3ad13d388d20cc843233f8973f5eb98e9caaebfa1482394c7e7d7a9cf9945d"
+    },
+    "exemplar_source_provenance.json": {
+      "bytes": 80370,
+      "sha256": "3957380b292706619106c5983e7fffafb0f4abe37c4cc45681f721ed4103fc3e"
+    },
+    "exemplar_traces.csv.gz": {
+      "bytes": 70741,
+      "sha256": "817ccf0a4a81d9597c952ad2ecda503e6923b2ff785062658dab8ba9f6181b4d"
+    }
+  }
+}

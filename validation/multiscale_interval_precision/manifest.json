@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-09-08T09:39:51.801088+00:00",
+  "purpose": "Precision supplement to the unchanged frozen 2,000-resample confirmation summaries",
+  "bootstrap_law": "Independent empirical resampling of 20 paired target-family deltas within each n_trials/morphology/polarity/snr cell; retain fixed cell sizes and pool by family count",
+  "arithmetic": "Exact integer polynomial convolution; rational inverse-CDF comparisons",
+  "quantile_definition": "Q(p)=min{s in integer support: F(s)>=p}; p=1/40 and 39/40; divide count quantiles by the number of families",
+  "interpretation": "Exact distribution of the specified empirical bootstrap conditional on the observed fixed grid; not exact frequentist or clinical-population coverage",
+  "compared_rows": 24,
+  "all_saved_2000_intervals_reproduced": true,
+  "frozen_inputs_modified": false,
+  "artifacts": [
+    {
+      "path": "../frozen_results/multiscale/weighted_confirmation/method_results.csv.gz",
+      "bytes": 461826,
+      "sha256": "1cf152f23e96f273c026cf0bc9361b80ead8d682edc62359f1ef67b8217df835"
+    },
+    {
+      "path": "../frozen_results/multiscale/weighted_confirmation/paired_recovery.csv",
+      "bytes": 3009,
+      "sha256": "288fea5ed53b4e19a7eba33a832fb349b8e44a31a04f0a12d92eaded5a849ce8"
+    },
+    {
+      "path": "../frozen_results/multiscale/weighted_confirmation/analysis_plan.json",
+      "bytes": 9444,
+      "sha256": "c674080dbc5bd33de91e4c9242882293c2b0e7ce13d0b67d98bd03a781ece9ab"
+    },
+    {
+      "path": "../frozen_results/multiscale/weighted_execution_code/validation/benchmark_multiscale.py",
+      "bytes": 20291,
+      "sha256": "1f20ade14929fff145bf147fac83eabd12a4fc00670ef9d21e49b643b98e2641"
+    },
+    {
+      "path": "../exact_multiscale_bootstrap.py",
+      "bytes": 13453,
+      "sha256": "a77d505d5faf88a5d18badb2b8b9318574d3f41a566d89968c41f3f5566fa282"
+    },
+    {
+      "path": "../../tests/test_exact_multiscale_bootstrap.py",
+      "bytes": 3089,
+      "sha256": "e824c6a1394aa2456313612c80fa2fae2f2959ba26a77da08e94f8adf976b921"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4173,
+      "sha256": "7e6c13c048191f0ab5739bfe68b845004841534ddcc34563fa7249f9c1b25432"
+    },
+    {
+      "path": "exact_confirmation_intervals.csv",
+      "bytes": 8589,
+      "sha256": "94243104ffd90d632da2541e39efccd428a26c8c4cdb05f5d4b263fa3134bf7a"
+    }
+  ]
+}

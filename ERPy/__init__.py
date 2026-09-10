@@ -104,7 +104,7 @@ from .waveform_qc import (
     common_mode_recovery_diagnostic,
 )
 
-__version__ = "1.0.0"
+__version__ = "1.1.0rc1"
 # This developer-maintained checkpoint is shared by every installation with
 # the same numerical and QC semantics. It is not a participant identifier, a
 # local release-record label, or a network destination. Bump it only when

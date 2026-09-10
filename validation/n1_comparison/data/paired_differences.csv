@@ -1,0 +1,7 @@
+method,reference,metric,difference,low,high,ci_excludes_zero
+N1_logistic_hybrid,archived_ER_detect,sensitivity,-0.0021496815286624,-0.0552050767186326,0.045846532838189,False
+N1_logistic_hybrid,archived_ER_detect,specificity,0.0031943912710566,-0.008360637519151,0.0157790300444662,False
+N1_logistic_hybrid,archived_ER_detect,ppv,0.0208171937025632,-0.041663652630921,0.1052095608256795,False
+N1_logistic_hybrid,N1_logistic_morphology,sensitivity,0.0011146496815287,-0.018064064013886,0.0281249813822649,False
+N1_logistic_hybrid,N1_logistic_morphology,specificity,0.0047975689127106,0.0007416635152612,0.0102585093201864,True
+N1_logistic_hybrid,N1_logistic_morphology,ppv,0.0318547930068147,0.0116124116554172,0.0464542462644384,True

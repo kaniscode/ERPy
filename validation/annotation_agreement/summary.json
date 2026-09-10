@@ -1,0 +1,132 @@
+{
+  "analysis": "Broad/default response-window detector versus released negative N1 annotations",
+  "configuration": "broad_15_300ms",
+  "configuration_settings": {
+    "response_window_s": [
+      0.015,
+      0.3
+    ],
+    "artifact_interval_s": [
+      0,
+      0.015
+    ],
+    "candidate_baseline_s": [
+      -1,
+      -0.1
+    ],
+    "baseline_matching": "last baseline samples, same count as response; separately demeaned segments",
+    "normalization": "per-trial nanmedian over rounded half-open [-.5,-.02) slice",
+    "minimum_clean_trials": 8,
+    "family": "saved BH across all retained good nonstimulation ECoG contacts per pair; finite joint p",
+    "call": "saved q_joint <=0.05; no additional acquisition-level contact QC gate was run in this external benchmark"
+  },
+  "cohort": {
+    "participants": [
+      "MAYO02",
+      "MAYO03",
+      "MAYO04",
+      "MAYO05",
+      "UMCU20",
+      "UMCU21",
+      "UMCU22",
+      "UMCU23",
+      "UMCU25",
+      "UMCU26",
+      "UMCU59",
+      "UMCU62",
+      "UMCU67"
+    ],
+    "available_records": 32121,
+    "source_and_site_eligible_labeled_records": 33694,
+    "MAYO01_excluded": "previous development/worked example overlap",
+    "expanded_otherwise_eligible_records": 39595,
+    "expanded_coverage": 0.8112387927768657
+  },
+  "counts": {
+    "tp": 2929.0,
+    "fn": 1268.1666666666667,
+    "tn": 24806.833333333332,
+    "fp": 3117.0,
+    "available": 32121.0,
+    "eligible": 33694.0
+  },
+  "metrics": {
+    "agreement": {
+      "value": 0.863479758828596,
+      "low": 0.8146982734121325,
+      "high": 0.8985775320571783,
+      "valid_resamples": 2000
+    },
+    "disagreement": {
+      "value": 0.13652024117140396,
+      "low": 0.10142246794282168,
+      "high": 0.18530172658786745,
+      "valid_resamples": 2000
+    },
+    "kappa": {
+      "value": 0.49381306474946274,
+      "low": 0.4492004748444581,
+      "high": 0.5237175072417459,
+      "valid_resamples": 2000
+    },
+    "n1_positive_call_rate": {
+      "value": 0.6978517253702894,
+      "low": 0.551969207392202,
+      "high": 0.8220393693854894,
+      "valid_resamples": 2000
+    },
+    "n1_negative_call_rate": {
+      "value": 0.11162507535378978,
+      "low": 0.06386194739204153,
+      "high": 0.18370730832760815,
+      "valid_resamples": 2000
+    },
+    "n1_call_rate_difference": {
+      "value": 0.5862266500164997,
+      "low": 0.48376479128367694,
+      "high": 0.6566825911738633,
+      "valid_resamples": 2000
+    },
+    "positive_agreement": {
+      "value": 0.5718934574269026,
+      "low": 0.5141134758741555,
+      "high": 0.6078271162653096,
+      "valid_resamples": 2000
+    },
+    "negative_agreement": {
+      "value": 0.9187914553709494,
+      "low": 0.8796140541451398,
+      "high": 0.9433325850012482,
+      "valid_resamples": 2000
+    },
+    "n1_fraction_among_calls": {
+      "value": 0.484452530598743,
+      "low": 0.43983788461141077,
+      "high": 0.5229597397155928,
+      "valid_resamples": 2000
+    },
+    "coverage": {
+      "value": 0.9533151302902594,
+      "low": 0.8996017030757442,
+      "high": 0.989525790610123,
+      "valid_resamples": 2000
+    }
+  },
+  "interval_method": {
+    "resamples": 2000,
+    "seed": 20260907,
+    "unit": "whole participant",
+    "strata": "site (4 Mayo, 9 UMCU)",
+    "quantile": "numpy linear 2.5th/97.5th percentile",
+    "interpretation": "nominal conditional interval for fixed saved predictions in this convenience cohort; no training uncertainty or guaranteed population coverage"
+  },
+  "tests": "No independent-record significance tests or bootstrap-tail p values. Exemplar q values are original detector values, not tests of annotator correctness.",
+  "saved_metric_reproduction": "exact within 1e-12 for verified points and intervals",
+  "observed_P1_subset": {
+    "records_with_at_least_one_P1_vote": 785,
+    "broad_calls": 385,
+    "also_N1_positive_vote": 354,
+    "all_available_raters_P1": 111,
+    "interpretation": "Observed P1 annotations only. No assumption that code0 rules out P1 or later effects; categorical coverage differs by rater. Not a validated any-response reference."
+  }
+}

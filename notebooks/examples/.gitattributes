@@ -1,0 +1,2 @@
+# Retain executed notebook source, outputs and provenance bytes on checkout.
+*.ipynb -text

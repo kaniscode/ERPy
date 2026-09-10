@@ -1,0 +1,33 @@
+{
+  "files": {
+    "stratified_recovery.json": {
+      "sha256": "382f4c0939ee01f9997f78929c8567611cfa0ed8b193a9e93a6bb9f5d68e398c",
+      "bytes": 7762
+    },
+    "qc_aggregate_summary.json": {
+      "sha256": "3b61903caca243137711df74dbc2163e840a182132d38d63e633fd0b234b5a7f",
+      "bytes": 1845
+    },
+    "synthetic_benchmark/scenario_results.csv.gz": {
+      "sha256": "cc832ab691db83d961b1607f7a726e80bbc7645b3c6fddb0e5d5a4019349ad53",
+      "bytes": 330362
+    },
+    "synthetic_benchmark/cell_metrics.csv": {
+      "sha256": "6698c01e9601f8250988d896fbdb838155ddf66d5d96d962171711b058670084",
+      "bytes": 71293
+    },
+    "synthetic_benchmark/benchmark_config.json": {
+      "sha256": "81972f5396d3120c31de477aa0c22ed6ffdcd369d22645153ae7ae7b28836c9d",
+      "bytes": 1625
+    },
+    "synthetic_benchmark/family_calibration.csv": {
+      "sha256": "90671f0e3ccef5fe7afc8521bcbb254a4cf47d1bc77d37c8ec5e1c70c4fe97ff",
+      "bytes": 4862
+    },
+    "synthetic_benchmark/composite_null_stress_test/composite_null_summary.csv": {
+      "sha256": "859d99e3575e237a4af3bc4f6957df39d1ea09c74d1d1a7598b8f9bcede7eb26",
+      "bytes": 996
+    }
+  },
+  "content": "Frozen synthetic benchmark decisions/summaries and selected QC aggregate display counts; not private cohort raw data."
+}

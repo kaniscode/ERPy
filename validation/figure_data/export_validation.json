@@ -1,0 +1,99 @@
+{
+  "scope": "Local export and display verification, 2026-09-07; not a new detector benchmark. Generated figures require final visual review after any software/layout change.",
+  "portable_exports": {
+    "packaged_input_hashes_verified": true,
+    "figures": [
+      1,
+      3,
+      5,
+      6
+    ],
+    "isolated_frontiers_exit_code": 0,
+    "isolated_neuroinformatics_exit_code": 0,
+    "optional_missing_SVG_failure_verified": true,
+    "qc_visual_qa": "Both generated journal QC figures inspected; counts/accounting and clean layout preserved.",
+    "scope": "Figures 2/4 require authorized frozen display SVGs; no raw cohort redistributed."
+  },
+  "generator_hashes": {
+    "plot_erdetect_validation.py": "317611eb67d09e436c47c56622a443f1d6dd3eebfc769d39059084808b593c0c",
+    "plot_qc_aggregate.py": "2dc8c198a4cafe6b06f551d1ddff88be050236aa9a33537c8bf592291e7ea882",
+    "plot_manuscript_validation_figures.py": "5dddfcf5050b9d0bab9f90c063cb6fe1fc4c523f1d9869e0db7242031a36a14a",
+    "export_frontiers_figures.py": "dbf390f81037bb618d08672bc69a3a08032dc7edc662de16f7addff3396023eb",
+    "export_neuroinformatics_figures.py": "39028ccecc0446e1da2fda3c4025eb145ff80a211df5b4692a2d1213c908f566"
+  },
+  "figure_6": {
+    "standard": {
+      "width_mm": 180.0,
+      "height_mm": 162.0,
+      "minimum_visible_font_pt": 8.0,
+      "outside_canvas_text": [],
+      "source_metrics_sha256": "a3e932b306da2e91c0a6c58a0bd6202c5319191222cef3a21d00c5cf77a3214e",
+      "plotter_sha256": "317611eb67d09e436c47c56622a443f1d6dd3eebfc769d39059084808b593c0c",
+      "measured_performance_unchanged": "Exact frame equality with pre-change plotted-data CSV: all 29 rows and every column.",
+      "visual_inspection": "Passed: native publication-scale PNG and independently rasterized full-page PDF at 254 dpi inspected for this Round 03 export; no adjacent tick ambiguity, clipping, overlap or missing glyphs.",
+      "coverage_scope": "Conditional on source and site eligibility",
+      "source_event_absent_otherwise_eligible_records": 5901,
+      "expanded_coverage_denominator": 39595,
+      "expanded_coverage": 0.8112387927768657,
+      "suppressed_boundary_tick_labels": {
+        "pooled_sensitivity": 100,
+        "participant_sensitivity": 100
+      },
+      "export_hashes": {
+        "png": "5f85c0906489c6f31a1938e5910491c73d8f3b796ccb16ca2a61847edf4135c7",
+        "pdf": "21b965a0708702891126005e13986cd0460a7905aa2c9f8816253ad1bc227715",
+        "svg": "caa340dfcaa67cf72abbc6e0f78023c7a3c46f43c97760a2202024d9cce28c5e",
+        "tiff": "3ff7ecd471382dfb32eb29ca91aef6c52c9f59750e6dd410f8f237ea45e7461d"
+      }
+    },
+    "frontiers": {
+      "width_mm": 180.0,
+      "height_mm": 162.0,
+      "minimum_visible_font_pt": 8.0,
+      "outside_canvas_text": [],
+      "source_metrics_sha256": "a3e932b306da2e91c0a6c58a0bd6202c5319191222cef3a21d00c5cf77a3214e",
+      "plotter_sha256": "317611eb67d09e436c47c56622a443f1d6dd3eebfc769d39059084808b593c0c",
+      "measured_performance_unchanged": "Exact frame equality with pre-change plotted-data CSV: all 29 rows and every column.",
+      "visual_inspection": "Passed: native publication-scale PNG and independently rasterized full-page PDF at 254 dpi inspected for this Round 03 export; no adjacent tick ambiguity, clipping, overlap or missing glyphs.",
+      "coverage_scope": "Conditional on source and site eligibility",
+      "source_event_absent_otherwise_eligible_records": 5901,
+      "expanded_coverage_denominator": 39595,
+      "expanded_coverage": 0.8112387927768657,
+      "suppressed_boundary_tick_labels": {
+        "pooled_sensitivity": 100,
+        "participant_sensitivity": 100
+      },
+      "export_hashes": {
+        "png": "f9c6e0a494a3fca1b594f6e6213745748d252da3e3a295908289afc5890a2f95",
+        "pdf": "898aec4a58780bda0f2ae44410b6aea353fd736ba7512c90f6595f6049ccb657",
+        "svg": "23624d1d8d5fc1cfbb76745d0c42193ce64af5561e234807b0824e752e5dcad7",
+        "tiff": "34e331858cb9581e0ada8a0f12407c2de0d3868199e3e9efc5accf021321153c"
+      }
+    },
+    "neuroinformatics": {
+      "width_mm": 180.0,
+      "height_mm": 162.0,
+      "minimum_visible_font_pt": 8.0,
+      "outside_canvas_text": [],
+      "source_metrics_sha256": "a3e932b306da2e91c0a6c58a0bd6202c5319191222cef3a21d00c5cf77a3214e",
+      "plotter_sha256": "317611eb67d09e436c47c56622a443f1d6dd3eebfc769d39059084808b593c0c",
+      "measured_performance_unchanged": "Exact frame equality with pre-change plotted-data CSV: all 29 rows and every column.",
+      "visual_inspection": "Passed: native publication-scale PNG and independently rasterized full-page PDF at 254 dpi inspected for this Round 03 export; no adjacent tick ambiguity, clipping, overlap or missing glyphs.",
+      "coverage_scope": "Conditional on source and site eligibility",
+      "source_event_absent_otherwise_eligible_records": 5901,
+      "expanded_coverage_denominator": 39595,
+      "expanded_coverage": 0.8112387927768657,
+      "suppressed_boundary_tick_labels": {
+        "pooled_sensitivity": 100,
+        "participant_sensitivity": 100
+      },
+      "export_hashes": {
+        "png": "b2ceedda3a25a847293983eb47b2cf4f45a3939f158d3405c9716d7f295d67b7",
+        "pdf": "896683b5316cba76512b503d06416708f36e487a1e06e1cbdd8aabea8c246792",
+        "svg": "e381767ac7e48862268c15cbda478e36d41cca29fcf411f3d06aa258c0b857a7",
+        "tiff": "84716565d0eeeda43f8908a9f74c4f62aec9e7b09d4d57e3c2d49551f43708b4"
+      }
+    }
+  },
+  "clinical_data_scope": "Only selected aggregate QC counts are packaged. Figures 2/4 require frozen derived display SVGs supplied separately; no raw cohort recording or trial epochs are redistributed."
+}

@@ -1,0 +1,7 @@
+# N1 timing reporting verification
+
+Current feature extraction and portable model predictions distinguish measured N1 timing from the model's unchanged 50-ms midpoint imputation. `measured_peak_latency_ms` is null when there is no interior negative peak; `peak_latency_imputed` flags the imputed feature input. Unavailable features have no measured timing and are not classified. The original `peak_latency_ms` feature remains unchanged to preserve trained models.
+
+`verification.json` records a current-source replay of all 26 saved participant-held-out models over 32,048 paired records: 64,096 individual predictions. All calls match and score differences are below 1e-12. Each of the 10,648 no-peak model predictions has unavailable measured timing and an explicit imputation flag. The 5,324 no-peak records contain 76 hybrid calls and 15.5 positive reference weight, giving subgroup PPV 20.39%. This does not establish timing accuracy or justify a new hard peak gate.
+
+Run `python validation/verify_n1_timing_reporting.py` from the repository root. The receipt identifies all frozen inputs, models, current source and focused tests by SHA-256. No fitting, threshold selection, historical-file replacement or new performance study occurs. Notebook08 verifies this receipt before demonstrating a saved held-out prediction. The frozen development execution snapshots remain the authority for reproducing the original feature extraction and training pipeline; current additional reporting fields have separate verification here.

@@ -1,0 +1,27 @@
+{
+  "dataset": "ds003708",
+  "snapshot": "1.0.4",
+  "source_pair": "LTG1-LTG2",
+  "source_channels": 89,
+  "source_events": 17,
+  "epochs": 17,
+  "epoch_channels": 86,
+  "auxiliary_exclusions": [
+    "EKG"
+  ],
+  "stimulation_contacts": [
+    "LTG1",
+    "LTG2"
+  ],
+  "finite_BH_family": 86,
+  "bh_rejected": 39,
+  "qc_gate_available_nonstim": 86,
+  "qc_gate_pass_nonstim": 85,
+  "bh_and_qc_final": 38,
+  "bh_positive_gate_negative": 1,
+  "retained_nonstim_without_finite_test": 0,
+  "independent_BH_gate_intersection_checks": "pass",
+  "erpy_version": "1.1.0rc1",
+  "historical_results_changed": false,
+  "scope": "Current-source workflow demonstration on the complete 89-channel, 17-event public stimulation acquisition; no external accuracy or unconditional FDR calibration claim"
+}

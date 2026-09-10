@@ -1,0 +1,46 @@
+{
+  "status": "curated_complete_scientific_tables",
+  "original_run_manifest_sha256": "32f0b23b6ee36706beb724af7cd0cc48a22a50d6ac0933fcb6034a0e20177912",
+  "original_run_listed_files": 484,
+  "original_run_family_count": 480,
+  "original_run_contact_count": 3840,
+  "binding": {
+    "primary_protocol_sha256": "7b8170a51b118078c5567592b3cd1be12ef70db008cd0b02d422a629df201d21",
+    "runtime": {
+      "numpy": "1.26.4",
+      "pandas": "2.2.2",
+      "python": "3.12.5",
+      "scipy": "1.13.1",
+      "thread_environment": {
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      }
+    },
+    "source_hashes": {
+      "ERPy/crp_energy.py": "07590e407bd0d7dd53dd1cb745e9e0004b15b0310c5cd15737c5d9a7c229f9f7",
+      "ERPy/inference.py": "fc94b5c22c7eccdc8b511c7b93ec62ea39811b0362dd1a39370e85dbbe429e1d",
+      "ERPy/n1.py": "bb18ac73fd52fcefee1f031e108a10f0d308bc0aea73546d4852089fcf72e7bf",
+      "ERPy/n1_detection.py": "9518edb4093474791e04841b3c46b3656086f31a960b8835c4cae40b7687baea",
+      "validation/calibrate_n1_label_free.py": "4ac616367787ecff7152cfd7aa8255415a09fb9167aeaf69ce01c394c87962cc"
+    },
+    "synthetic_protocol_sha256": "0b5b0e5851eedd81b04e8f046388d656fa1922b2767c129725a27d3e03b3d9bb"
+  },
+  "contact_table": {
+    "public_file": "contact_results.csv.gz",
+    "operation": "gzip compression with mtime=0; uncompressed bytes unchanged",
+    "original_uncompressed_sha256": "45086ba0b7edb8d888ad9e1e10ab67950b07fc965391ad5c73f157b62333f024",
+    "original_uncompressed_bytes": 9928715
+  },
+  "byte_identical_copies": {
+    "family_results.csv": "335162962d8f2329515d05cc144ac7f5ff356f7255b86906662473e46f1def87",
+    "execution_plan.json": "11bf57397c2a8ec030bb39bcf82e5950810506f1315b5b92a8226ae99eea1158",
+    "summary.json": "c245ccda2245fbe5469dd48525971365be75910c6c445c1dbbba8ad16518c10b"
+  },
+  "omitted_internal_files": {
+    "family_json_records": 480,
+    "reason": "All3840 contact outcomes, complete morphology/provenance dictionaries, full480-family aggregates and exact noise/inference seed materials are preserved in the public tables and execution plan. Per-family JSON duplicates are retained internally; this curated package does not claim to contain the full original484-file archive.",
+    "timing_scope": "Per-family wall-clock timing is omitted; not a scientific outcome."
+  },
+  "third_party_source_code_included": false
+}

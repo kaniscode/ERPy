@@ -1,0 +1,45 @@
+{
+  "created_utc": "2026-09-08T06:37:35.741050+00:00",
+  "analysis_plan_sha256": "70c671ffbddd093662ed2d150a45081adca42fa2b3af037e5df0f436ee0ba6a4",
+  "predeclared_families": 2000,
+  "completed_families": 2000,
+  "failed_families": 0,
+  "methods": [
+    "early",
+    "broad",
+    "late",
+    "matched_broad",
+    "multiscale"
+  ],
+  "elapsed_wall_seconds": 61.09090416692197,
+  "worker_processes": 3,
+  "python": "3.12.5",
+  "numpy": "1.26.4",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "thread_settings": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "code_hashes": {
+    "<repository>/validation/benchmark_multiscale.py": "d4a773a8a21902f752af0d16243976d3d3c31c232376f3fee96042d6f730dc8a",
+    "<repository>/ERPy/multiscale.py": "2c458ad04dce77b719eebb62b53b9cd4faeaf729e5ccb4fc86572df7e76ac879",
+    "<repository>/ERPy/crp_energy.py": "5a26ca705f0117b56de9d35f2a8a197c36c8451063aabcbcdfa64e8d72d96455"
+  },
+  "independence_note": "Generated primary families independent; all methods paired within family. Source-injection scenario reuses ten native baseline trials per site and is conditional on those sources, not new independent clinical observations.",
+  "null_note": "Global multiscale null requires at least one component null in EVERY bank window. Both declared stresses meet this; no mixed-window unsupported null is claimed.",
+  "outputs": {
+    "failures.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "pooled_by_trials.csv": "448aaccfe842db1164f695c5e8fdf0131dfc642b6e89ea3e22c9917ed3b145a6",
+    "declared_scenarios.json": "313555989a2255154090f763242b18359835dc2ba619c5d4223fd5bef597371b",
+    ".DS_Store": "98c93691dc82ba4ecb3676d32d10cada57e031f945cf133b63b8ac17b7c796cf",
+    "real_baseline_execution.log": "c190b43184168bbf2690b12aa576b563186e21d1164ecee0e1d43c0dab3560c1",
+    "method_results.csv.gz": "65759729b38b270d5b1b44c51021ef6595a8ccf134826375c51e8c851f7c6c89",
+    "execution.log": "dbc2aec52fd7182085710eb1cd1f2e37f12dc54c7e2ecee9b1b8532c1f1b5153",
+    "paired_recovery.csv": "31cd8da7f9b1bcf7d1923766aba11ddf46e14774885afa2bde0601ad21c58897",
+    "window_results.csv.gz": "dc3fca2db359b7cf70712af3d0da16f6dd1a8fbad3d9f0966325121d4c934625",
+    "warnings.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "all_cells.csv": "1b44756db3672a70ccc5b93ff7ee8c86917a1390fc542ffd03280126f29f3510",
+    "family_results.csv.gz": "4e37c3d5663372b5c1109b426cccc39be60147b0f7cecd5d2a4868eef48507f9"
+  }
+}

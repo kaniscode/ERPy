@@ -1,0 +1,9 @@
+{
+  "acknowledged_utc": "2026-09-09T00:24:22.231573+00:00",
+  "acknowledged_by": "parent author coordinating user-directed label-free revision",
+  "primary_protocol_sha256": "7b8170a51b118078c5567592b3cd1be12ef70db008cd0b02d422a629df201d21",
+  "calibration_protocol_sha256": "0b5b0e5851eedd81b04e8f046388d656fa1922b2767c129725a27d3e03b3d9bb",
+  "source_checkpoint": "9842e022d2ffe950df2a938a1263a5e55498bee6",
+  "new_calls_before_acknowledgment": false,
+  "instruction": "Implement checked label-free API, full-family label-blind calls, separate human-reference scoring and480-family calibration; no parameter selection/retraining."
+}

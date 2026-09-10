@@ -1,9 +1,11 @@
-# ERPy: open-source software for automated stimulation-evoked intracranial response analysis
+# ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis
 
-**A clinician-oriented Python pipeline for auditable stimulation-evoked
-response analysis in intracranial recordings.**
+**Auditable stimulation response pipeline**
 
-[Getting started](docs/GETTING_STARTED.md) | [Methods and equations](docs/METHODS.md) | [API reference](docs/API_REFERENCE.md) | [Visualization notebooks](docs/VISUALIZATION_GALLERY.md) | [Validation](docs/VALIDATION.md) | [Data privacy](docs/DATA_PRIVACY.md)
+A Python workflow for event detection, preprocessing, quality control, response
+detection, waveform measurements and reproducible result exports.
+
+[Getting started](docs/GETTING_STARTED.md) | [Methods and equations](docs/METHODS.md) | [API reference](docs/API_REFERENCE.md) | [Visualization notebooks](docs/VISUALIZATION_GALLERY.md) | [Validation](docs/VALIDATION.md) | [External expert-label evaluation](docs/EXTERNAL_VALIDATION.md) | [Detector–annotation agreement](docs/ANNOTATION_AGREEMENT.md) | [Label-free N1](docs/N1_LABEL_FREE.md) | [Secondary N1 models](docs/N1_DEVELOPMENT.md) | [Data privacy](docs/DATA_PRIVACY.md)
 
 ERPy is research software. It does not make clinical decisions and is not a
 medical device. Inspect waveforms, acquisition settings, and quality-control
@@ -68,7 +70,7 @@ patient = ep.Patient.from_nwb(
 epochs = patient.epoch("EXAMPLE_SESSION", "STIM_A_1_2")
 ```
 
-Epochs are baseline-window corrected and, by default, zero-anchored just after the immediate stimulation artifact rather than at the artifact spike itself. ERPy detects the largest peri-onset artifact envelope and, on the trial-averaged response, finds the point where it settles back to baseline (returns near baseline *and* flattens for a sustained duration). That settled time is used as a single **common** anchor across trials, and a short post-anchor baseline window is subtracted per trial. Anchoring at one common time over a window — rather than at each trial's own single sample — means the trial-averaged waveform is genuinely flat at ~0 at the anchor, so peak amplitudes (measured in the post-artifact response window) are referenced to a clean, artifact-free baseline. Time 0 remains the stimulation-onset reference. The anchor and residual can be audited directly:
+Epochs are baseline-window corrected and, by default, recentered using a short window after a **common** anchor shared across trials. ERPy searches the trial-averaged peri-onset artifact envelope for a sustained amplitude-and-slope return toward baseline. If no settled interval is found, it uses a reported amplitude-return, quietest-sample, or peak-neighbor fallback. The anchor report records the selected method and residual values for inspection. Subtracting a post-anchor window sets an amplitude reference; it does not establish a flat waveform, artifact removal, or physiological baseline recovery. Time 0 remains the stimulation-onset reference. Audit the anchor and residual directly:
 
 ```python
 epochs.zero_time_report()
@@ -92,12 +94,25 @@ epochs.detect_zero_time_artifacts(zero_time=0.0)
 
 ## Install
 
+This source checkout is `1.1.0rc1`. It includes the current pipeline, public-data
+examples and optional negative-N1 classifier. Install the complete source folder:
+
+```bash
+python -m pip install ".[edf,nwb,viz]"
+git rev-parse HEAD
+```
+
+Record the printed Git commit with the results. The source installation reports
+`1.1.0rc1`; the tagged installation below retrieves historical `1.0.0`. The
+commands using `main` retrieve the latest public branch. Confirm its version
+before use, and use an exact recorded commit for reproducing published results.
+
 ERPy's import name is `ERPy`, while its installable distribution is
 `erpy-neuro`. The unrelated name `erpy` on the Python Package Index is an
 Erlang communication library; do not use `pip install erpy` for this project.
-ERPy requires Python 3.9 or newer; release 1.0 is tested on Python 3.9 through
-3.13. Newer Python releases may work but are outside this release's test
-matrix.
+The package declares Python 3.9 or newer. This release candidate's checks were
+run on Python 3.12.5; an expanded Python-version matrix has not been verified
+for these changes. Use the recorded environment for numerical reproduction.
 
 For the tagged GitHub release, create an isolated environment and install the
 features needed for EDF/BIDS, NWB, and the full visualization gallery. A public
@@ -127,17 +142,20 @@ The final command should print `1.0.0`. The command above installs directly
 from the immutable `v1.0.0` tag and therefore requires Git. It installs the
 library but does not create a local copy of the notebooks.
 
-For the complete release, including the teaching notebooks, clone the same tag:
+For the current worked notebooks, beginning with the actual deidentified cohort
+recording, clone `main`. Those examples postdate the historical `v1.0.0` tag:
 
 ```bash
-git clone --branch v1.0.0 --depth 1 https://github.com/kaniscode/ERPy.git ERPy-source
+git clone --branch main --depth 1 https://github.com/kaniscode/ERPy.git ERPy-source
 python -m pip install "./ERPy-source[edf,nwb,viz]"
 python -m pip install jupyterlab
 python -m jupyter lab ERPy-source/notebooks/examples/00_quickstart.ipynb
 ```
 
-Without Git, download **Source code (zip)** from the
-[`v1.0.0` release page](https://github.com/kaniscode/ERPy/releases/tag/v1.0.0),
+The lead notebook's stored figures can be viewed directly. Reexecution requires
+the authorized trial export and `ERPY_COHORT_EXAMPLE_DIR` configured before
+starting Jupyter. Without Git, download the
+[current main source ZIP](https://github.com/kaniscode/ERPy/archive/refs/heads/main.zip),
 extract the complete folder, rename it `ERPy-source`, and use the same install
 command shown above. A step-by-step guide for readers who are new to Python,
 with separate macOS/Linux and Windows commands, is in
@@ -484,6 +502,35 @@ result for a one-call analysis. CRP-only, energy-only, the former
 `shape_magnitude_significant` CRP-Kundu rule, and count-based `consensus_ch`
 remain available as explicitly labeled descriptive comparisons.
 
+Detection and waveform-audit tables distinguish the default components from
+standalone comparator calls:
+
+| Field | Meaning |
+| --- | --- |
+| `primary_reproducibility_pass`, `primary_energy_pass` | Unadjusted component decisions within the default `crp_energy` method. |
+| `primary_significant` (detection table), `primary_detector_pass` (audit) | Joint BH decision before the separate contact-QC gate. |
+| `primary_qc_pass` (audit) | Final intersection of the joint decision and contact-QC eligibility. |
+| `comparator_crp_pass` | Standalone `crp_significance` comparator, using its own adjusted result. |
+| `comparator_kundu_pass` | Standalone `kundu_rolston` comparator's published-rule call. |
+
+Each comparator has a matching `comparator_*_available` boolean and
+`comparator_*_availability_reason`. Calls use nullable booleans: missing
+(`pd.NA`, empty in CSV) means not run or unavailable, not a negative result.
+Reasons distinguish `not_run`, missing availability metadata, unavailable
+method input, and missing required comparator evidence. Availability requires
+explicit method metadata and finite applicable quantities; a boolean call alone
+is insufficient. Only two available comparator calls can produce the audit
+reason `comparator_crp_kundu_disagreement`; this review diagnostic does not
+change detector decisions or contact eligibility.
+
+`primary_shape_pass` and `primary_magnitude_pass` are deprecated compatibility
+aliases for `comparator_crp_pass` and `comparator_kundu_pass`, respectively,
+including their missing states. They do not represent the default detector's
+components. Code using these aliases as ordinary booleans should migrate to the
+comparator names and inspect availability first. The historical
+`shape_magnitude_significant`/`shape_magnitude_detector_pass` conjunction and
+consensus fields retain their existing selection semantics.
+
 The primary result retains the historical field names `p_crp` and
 `crp_statistic`; in version 1.0.0 they contain the fixed-window
 reproducibility value \(p_R\) and statistic \(T_R\). The standalone
@@ -717,19 +764,87 @@ plot_surface_connectome(
 )
 ```
 
-Compact notebooks 00 through 06 under
-[`notebooks/examples`](notebooks/examples) cover every public visualization
+The lead [quick-start notebook](notebooks/examples/00_quickstart.ipynb) uses an
+actual deidentified recording from the CNS/ACC–PAG cohort, with source trial QC,
+waveforms, and single-contact reproducibility/energy results. Its stored figures
+are viewable directly on GitHub; rerunning requires the authorized local trial
+export configured through `ERPY_COHORT_EXAMPLE_DIR`. Restricted signals and
+private source locators are not distributed. Compact notebooks 01 through 06
+under [`notebooks/examples`](notebooks/examples) cover every public visualization
 family using deterministic synthetic data. The gallery index maps every
 plotting function to a notebook and identifies optional Nilearn, Plotly, MNE,
-or PyVista requirements. Notebook 07 embeds no recording data; it provides a
-command that applies the same interfaces to the public Miller/Hermes OpenNeuro
-`ds003708` example without including protected recordings in this repository.
+or PyVista requirements. Notebook 07 runs a compact public Miller/Hermes
+OpenNeuro `ds003708` example and includes its input provenance, detector
+tables, and figures. Raw downloads remain outside version control.
+
+[Notebook 08](notebooks/examples/08_n1_development.ipynb) applies the secondary
+negative-N1 development classifier to actual public `ds004774` derived features
+and matching stored inference values. It verifies source/model hashes, uses a
+model that excluded the example participant, and demonstrates portable model
+save/load. The example needs no raw download or scikit-learn. Notebook outputs
+retain their actual execution versions; earlier examples are not relabeled as
+having been executed under the current release candidate.
+
+## Label-free negative-N1 detection
+
+`ERPy.n1_detection.detect_n1_family` is the proposed N1 method. It requires no
+training labels or fitted model: an interior negative peak in the fixed early
+window must exceed 3.4 times the mean-baseline sample SD, with a 50 µV SD floor.
+The original early projection–energy joint p becomes 1 when this gate fails,
+then BH is recomputed over the complete original finite contact family.
+Unannotated contacts remain in that family. The general polarity-invariant
+detector keeps its existing defaults.
+
+On the previously examined paired public cohort, the fixed rule had 54.80%
+sensitivity, 98.50% specificity and 84.60% PPV. Sensitivity was lower than
+archived ER-detect; paired intervals did not establish higher specificity or
+PPV. Its p/q values concern the original response conjunction, not N1 truth.
+See the [label-free guide](docs/N1_LABEL_FREE.md) for the checked array API,
+complete-family public example, uncertainty, synthetic checks and limitations.
+
+## Secondary supervised N1 development models
+
+`ERPy.n1` retains separate supervised negative-N1 ECoG annotation scores and decisions;
+the default polarity-invariant detector and its p/q values remain unchanged.
+The morphology arm includes trial-consistency descriptors; the hybrid adds
+reproducibility, energy and RMS inference features. Training uses fixed C=1,
+soft expert-vote targets with total weight one per record, train-only scaling,
+and nested leave-one-participant-out threshold selection. Its score is not a
+p value or q value, and the fitted population does not validate sEEG use.
+Hybrid prediction requires checked early-window evidence. Use
+`ERPy.n1.prepare_n1_hybrid_inputs(trials_uv, times_seconds)` to construct both
+paths from matching arrays and retain their separate finite-trial masks; bare
+inference dictionaries are rejected. The guide also provides a checksum-verified
+saved-reference adapter with explicit historical trial-provenance limits.
+
+The comparison uses archived negative-N1 outputs from ER-detect. ER-detect also
+supports other polarities and detection methods, including CRP similarity across
+trials; the ERPy hybrid is a separate classifier and does not use those calls as
+predictors. See the [method comparison](docs/N1_DEVELOPMENT.md#how-this-relates-to-er-detect)
+and [ER-detect paper](https://doi.org/10.1016/j.jneumeth.2025.110389).
+
+This is corrected post hoc development after the original external evaluation,
+with all candidates and the identifier-join correction disclosed. Saved reference
+inputs and models are checksum-pinned. The [N1 development guide](docs/N1_DEVELOPMENT.md)
+explains the model, limitations, API and complete reproduction commands.
+Runtime prediction uses the existing NumPy/SciPy dependencies; install
+`python -m pip install -e ".[n1-training]"` for optional scikit-learn training.
+The N1 extraction, training and secondary-summary scripts require Python
+3.11+ and were validated on 3.12.5. Portable model prediction retains the
+package's broader declared Python range and does not require scikit-learn.
+
+The [optional multiple-window experiment](docs/MULTISCALE_DEVELOPMENT.md) tests
+several response intervals with a correction for searching across them. Neither
+equal weights nor one declared set of unequal weights established a general
+improvement in a separate confirmation simulation. The single-window default
+remains. Plans, source versions, result tables and two small public baseline
+samples are retained so the experiment can be reproduced.
 
 ## How the synthetic benchmark relates to the real-data examples
 
 The benchmark in
 [`validation/benchmark_crp_energy.py`](validation/benchmark_crp_energy.py)
-characterizes the joint CRP-energy decision under one declared synthetic
+characterizes the joint projection–energy decision under one declared synthetic
 model. It contains generated values exclusively and creates 2,400 independent
 simulated stimulation acquisitions by
 varying trial count, response-to-noise ratio, and the fraction of target trials
@@ -772,7 +887,7 @@ The exact implementation omits the observed all-positive assignment from the
 matrix calculation, counts it explicitly through a plus-one numerator, and
 uses a scale-aware floating-point tolerance for numerically tied statistics.
 
-The frozen target-level ablation uses the primary row's own component values.
+The saved target-level component comparison uses the primary row's own component values.
 Among 360 evaluable noise-only targets, `p_R <= 0.05`, `p_E <= 0.05`, and
 `max(p_R, p_E) <= 0.05` occurred 19, 21, and 1 times, respectively; no joint
 call survived family adjustment. Among 1,440 evaluable injected targets, the
@@ -842,14 +957,20 @@ summaries, and time-resolved brain views.
 Large datasets are intentionally sampled by stimulation event window; ERPy should not require downloading a full multi-GB BIDS run to prove that open raw signal loading, event creation, epoching, QC, and detection work.
 
 
+## Detector–annotation agreement figures
+
+The [agreement guide](docs/ANNOTATION_AGREEMENT.md) explains the current broad-response Figure 6 and focused N1 Figure 7. The broad detector is compared with released negative-N1 ratings using equal weight per contact/pair record and participant-level uncertainty. Its four recorded examples retain their original q values and source hashes. N1-negative ratings are not a complete reference for every evoked response.
+
+Reproduce the aggregate tables with `python validation/analyze_annotation_agreement.py --verify`. The [figure directory](validation/manuscript_figures/README.md) provides current artwork and plotting commands. Existing model fits, calls, thresholds, notebooks and historical result files remain unchanged.
+
 ## Citation
 
 ```bibtex
 @software{kanungo_erpy_2026,
   author = {Kanungo, Ishan},
-  title = {ERPy: open-source software for automated stimulation-evoked intracranial response analysis},
+  title = {ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis},
   year = {2026},
-  version = {1.0.0},
+  version = {1.1.0rc1},
   url = {https://github.com/kaniscode/ERPy},
   license = {MIT}
 }

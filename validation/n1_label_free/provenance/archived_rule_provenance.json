@@ -1,0 +1,378 @@
+{
+  "json_configs": [
+    {
+      "dataset": "sub-MAYO01_ses-ieeg01_task-ccep_run-01",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    },
+    {
+      "dataset": "sub-MAYO02_ses-ieeg01_task-ccep_run-01",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    },
+    {
+      "dataset": "sub-MAYO03_ses-ieeg01_task-ccep_run-01",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    },
+    {
+      "dataset": "sub-MAYO04_ses-ieeg01_task-ccep_run-01",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    },
+    {
+      "dataset": "sub-MAYO05_ses-ieeg01_task-ccep_run-01",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    },
+    {
+      "dataset": "sub-UMCU20_ses-1_task-SPESclin_run-011757",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    },
+    {
+      "dataset": "sub-UMCU21_ses-1_task-SPESclin_run-021525",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    },
+    {
+      "dataset": "sub-UMCU22_ses-1_task-SPESclin_run-011714",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    },
+    {
+      "dataset": "sub-UMCU23_ses-1_task-SPESclin_run-021706",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    },
+    {
+      "dataset": "sub-UMCU25_ses-1_task-SPESclin_run-031729",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    },
+    {
+      "dataset": "sub-UMCU26_ses-1_task-SPESclin_run-011555",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    },
+    {
+      "dataset": "sub-UMCU59_ses-1_task-SPESclin_run-041501",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    },
+    {
+      "dataset": "sub-UMCU62_ses-1b_task-SPESclin_run-050941",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    },
+    {
+      "dataset": "sub-UMCU67_ses-1_task-SPESclin_run-021704",
+      "sha256": "0b0530cb6e83542c2088121a5dd6c53a5f580fe1de0bebc33907b4883b7f849f",
+      "detection": {
+        "negative": true,
+        "positive": false,
+        "peak_search_epoch": [
+          0,
+          0.5
+        ],
+        "response_search_epoch": [
+          0.009,
+          0.09
+        ],
+        "method": "std_base",
+        "std_base": {
+          "baseline_epoch": [
+            -1,
+            -0.1
+          ],
+          "baseline_threshold_factor": 3.4
+        }
+      }
+    }
+  ],
+  "mat_checked": {
+    "dataset": "sub-MAYO04_ses-ieeg01_task-ccep_run-01",
+    "sha256": "5ffd3e8bd97382bfa4013b288af53854983879895eef7ea83ce05b1a11d6373b",
+    "detection": {
+      "negative": 1,
+      "positive": 0,
+      "peak_search_epoch": [
+        0.0,
+        0.5
+      ],
+      "response_search_epoch": [
+        0.009,
+        0.09
+      ],
+      "method": "std_base",
+      "std_base": {
+        "baseline_epoch": [
+          -1.0,
+          -0.1
+        ],
+        "baseline_threshold_factor": 3.4
+      }
+    }
+  },
+  "explicit_archive_floor_field_present": false,
+  "historical_code_revision": "47f58d161537a735ebd400f9dfe3db57b65a17d4",
+  "historical_code_date": "2023-09-13",
+  "historical_code_sha256": "5f2132189a609aac0ec0d5018c8297d9d038d7bd5fb8933f915de77ef953b2b6",
+  "historical_rule": "baseline_std=np.nanstd(averaged_baseline); baseline_std=max(baseline_std,50); accept amplitude>=3.4*baseline_std",
+  "2025_change": "370548c4e94a8bb277ab889e5a514b4632504510 exposed the pre-existing 50uV floor as a configuration value",
+  "archived_call_consistency": {
+    "finite_calls": 4337,
+    "minimum_amplitude_uv": 170.009765625,
+    "calls_below170uv": 0,
+    "human_annotation_values_read": false,
+    "new_rule_scored": false
+  },
+  "interpretation": "Historical code and archived amplitude support strongly establish a 50uV floor before it was configurable. The saved artifact does not identify an exact execution software commit; do not claim a complete exact rerun or full algorithm equivalence."
+}

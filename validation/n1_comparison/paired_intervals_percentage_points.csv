@@ -1,0 +1,7 @@
+method,reference,metric,difference_pp,low_pp,high_pp,display_difference_pp,display_low_pp,display_high_pp,ci_excludes_zero
+N1_logistic_hybrid,archived_ER_detect,sensitivity,-0.2149681528662400,-5.5205076718632600,4.584653283818900,-0.21,-5.52,4.58,False
+N1_logistic_hybrid,archived_ER_detect,specificity,0.3194391271056600,-0.836063751915100,1.5779030044466200,0.32,-0.84,1.58,False
+N1_logistic_hybrid,archived_ER_detect,ppv,2.0817193702563200,-4.166365263092100,10.5209560825679500,2.08,-4.17,10.52,False
+N1_logistic_hybrid,N1_logistic_morphology,sensitivity,0.1114649681528700,-1.806406401388600,2.8124981382264900,0.11,-1.81,2.81,False
+N1_logistic_hybrid,N1_logistic_morphology,specificity,0.4797568912710600,0.0741663515261200,1.0258509320186400,0.48,0.07,1.03,True
+N1_logistic_hybrid,N1_logistic_morphology,ppv,3.1854793006814700,1.1612411655417200,4.6454246264438400,3.19,1.16,4.65,True

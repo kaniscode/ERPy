@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "assessment_only": true,
+  "new_rule_calls_computed": false,
+  "annotation_values_read": false,
+  "algorithm_reference_calls_read": false,
+  "prediction_files": 577,
+  "prediction_rows_both_configs": 72032,
+  "early_records": 36016,
+  "subjects": 14,
+  "families": 577,
+  "early_finite_records": 34926,
+  "feature_records": 36016,
+  "feature_available": 34928,
+  "finite_inference_feature_unavailable": 0,
+  "feature_available_inference_unavailable": 2,
+  "clean_count_difference": 0,
+  "epoch_hashes_match": true,
+  "family_sizes_match_finite_counts": true,
+  "keys_missing_from_frozen_label_join": 0,
+  "prediction_records_without_available_rater": 99,
+  "finite_records_without_available_rater": 50,
+  "prediction_records_not_scoring_eligible": 752,
+  "finite_records_not_scoring_eligible": 639,
+  "matching_frozen_inference_numerics": {
+    "p_joint": true,
+    "p_reproducibility": true,
+    "p_energy": true,
+    "q_joint": true
+  },
+  "source_feature_epochs": 596,
+  "zero_record_epochs": 19,
+  "zero_record_epoch_reasons": {
+    "bad_or_missing_stimulation_contact": 19
+  },
+  "feature_unavailability_reasons": {
+    "insufficient_finite_trials": 1088
+  },
+  "feature_config": {
+    "response_window": [
+      0.01,
+      0.09
+    ],
+    "baseline_window": [
+      -1.0,
+      -0.1
+    ],
+    "normalization_window": [
+      -0.5,
+      -0.02
+    ],
+    "min_trials": 8
+  },
+  "feature_version": [
+    "0.1.0-development"
+  ],
+  "feature_contract_hash": [
+    "44cf76c4f0d2ee2fcea72159e4cc77b104b0f2bbc189459c6bb243b5c70dd5ab"
+  ],
+  "note": "Inventory reads only annotation availability/eligibility; no annotation values or calls. Historical per-family CSV hashes are captured now, not claimed to be previously pinned. Frozen joined p/q quantities independently match exactly for every overlapping row. Raw-input epoch hashes and family completeness are checked against feature extraction manifest.",
+  "input_hashes": {
+    "n1_features.csv.gz": "18177ea77d9dbd44afa7fa146aaef99b2fab31ef5a6c088aea9df1bcba2cbcaf",
+    "feature_manifest.json": "420e2b826da3699d059e9ae5de7bb4fda6134d61715b5529c2d3187bbf7db63d",
+    "record_predictions_and_labels.csv.gz": "773927fb3bf76f3a1a249e5092f077ba25a3046e4c0385deb442849bc771b48a"
+  },
+  "script_sha256": "245f43fc70bdc7aaef299a402c42f64ef8d6d834bace50acf8d3aa1569f871ed"
+}

@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "status_of_analysis": "post-result diagnostic of an already recorded stage; no new primary/threshold selection",
+  "primary_protocol_sha256": "7b8170a51b118078c5567592b3cd1be12ef70db008cd0b02d422a629df201d21",
+  "primary_method_unchanged": true,
+  "screen_definition": "available & fixed 50uV-floor morphology gate & p_joint<=0.05; no BH selection",
+  "screen_is_fdr_adjusted": false,
+  "reference": "same raw-human-vote reconstructed reference as completed scoring",
+  "records": 32048,
+  "participants": [
+    "MAYO02",
+    "MAYO03",
+    "MAYO04",
+    "MAYO05",
+    "UMCU20",
+    "UMCU21",
+    "UMCU22",
+    "UMCU23",
+    "UMCU25",
+    "UMCU26",
+    "UMCU59",
+    "UMCU62",
+    "UMCU67"
+  ],
+  "calls": 3332,
+  "confusion": {
+    "tp": 2723.333333333333,
+    "fn": 1463.3333333333335,
+    "tn": 27252.666666666664,
+    "fp": 608.6666666666667,
+    "available": 32048.0,
+    "eligible": 32048.0
+  },
+  "estimates": {
+    "sensitivity": 0.6504777070063694,
+    "specificity": 0.9781537136294027,
+    "balanced_accuracy": 0.8143157103178861,
+    "ppv": 0.8173269307723088,
+    "npv": 0.9490411849375494,
+    "accuracy": 0.9353469795307039,
+    "kappa": 0.6883319664042846,
+    "coverage": 1.0
+  },
+  "paired_differences": [
+    {
+      "method": "N1_nominal_screen",
+      "reference": "archived_ER_detect",
+      "metric": "sensitivity",
+      "difference": -0.02559713375796191,
+      "low": -0.07173893548302021,
+      "high": 0.009371164559800466,
+      "ci_excludes_zero": false,
+      "n_records": 32048,
+      "n_subjects": 13,
+      "role": "post_result_nominal_screen_diagnostic"
+    },
+    {
+      "method": "N1_nominal_screen",
+      "reference": "archived_ER_detect",
+      "metric": "specificity",
+      "difference": 0.0017168357580398252,
+      "low": -0.008093753457732503,
+      "high": 0.010497448347986313,
+      "ci_excludes_zero": false,
+      "n_records": 32048,
+      "n_subjects": 13,
+      "role": "post_result_nominal_screen_diagnostic"
+    },
+    {
+      "method": "N1_nominal_screen",
+      "reference": "archived_ER_detect",
+      "metric": "ppv",
+      "difference": 0.005597650588769931,
+      "low": -0.04511390625943934,
+      "high": 0.0614201038452116,
+      "ci_excludes_zero": false,
+      "n_records": 32048,
+      "n_subjects": 13,
+      "role": "post_result_nominal_screen_diagnostic"
+    }
+  ],
+  "uncertainty": "same2000 whole-participant site-stratified draws,seed20260908; nominal conditional intervals",
+  "input_scoring_manifest_sha256": "be8fd60cb2e722d89f746c4ebb02d520948421d4ab88a8f88d3a8ea759584194",
+  "source_hashes": {
+    "validation/summarize_n1_nominal_stage.py": "38260a902afeb32690d777b324461a47c25381dd281dcfebf744ece83e463d7d",
+    "validation/score_n1_label_free.py": "80c2f39ed73c5e4dc919c136b3e256d28145a79260e2d44d6a3db46c34ce685e"
+  }
+}

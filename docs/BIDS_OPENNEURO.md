@@ -1,5 +1,7 @@
 # BIDS, OpenNeuro, And NWB In ERPy
 
+Project: [ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis](../README.md).
+
 ERPy is intended to feel natural for stereo-EEG and ECoG stimulation studies. If your project is already BIDS-like or NWB-based, you should not need to build ERPy metadata by hand.
 
 ## One-Minute Path

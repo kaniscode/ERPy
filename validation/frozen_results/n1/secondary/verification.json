@@ -1,0 +1,10 @@
+{
+  "status": "complete",
+  "paired_decisions_matched": 32048,
+  "source_eligible": 33694,
+  "original_evaluable": 32121,
+  "features_and_inference_available": 32121,
+  "original_run_protocol_sha256": "90296e4afb4de38bc8d67b7278d5e5d9bee3a0c0fa76146841fbe7ce2733433d",
+  "script_sha256": "2068ade30e1a688da7997e312ee7fb4bc7791bbe8f9367b05766f09bd1df1287",
+  "note": "Frozen held-out models/rules applied without refitting or threshold changes. Processing no-call policy is not an assertion that absent inputs are physiologically negative."
+}

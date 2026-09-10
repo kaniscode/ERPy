@@ -1,0 +1,1 @@
+Two matched heatmaps show all48 synthetic injection conditions for primary and no-floor label-free N1 rules. Primary early-negative recovery is0/60 at100µV and51/60 at250µV; no-floor recovery is31/60 and51/60. Both reject all early-positive and late-negative targets. Residual-artifact calls are1/120 with the primary rule and55/120 without the floor.

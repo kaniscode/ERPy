@@ -1,5 +1,7 @@
 # ERPy Validation
 
+Project: [ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis](../README.md).
+
 ERPy validation is intentionally split into three tiers.
 
 From a source checkout, install the test and public-data dependencies before
@@ -82,6 +84,12 @@ detector performance.
 
 ### Declared CRP-Energy Rule
 
+The epoch must cover the effective declared response window within half a
+sample. Otherwise, the detector returns unavailable inference without
+randomization; it does not shorten the test to the available epoch. The
+[response-window verification](../validation/RESPONSE_WINDOW_SUPPORT.md)
+records this availability check and its regression tests.
+
 Let \(x_i\) be clean trial \(i\)'s baseline-mean-centered samples in the fixed,
 predeclared response window and let \(f_s\) be the sampling frequency. For
 \(i \ne j\), define the ordered semi-normalized cross-projection
@@ -125,13 +133,23 @@ Calling that adjustment FDR-controlling additionally requires valid component
 p-values and independent or PRDS-dependent null hypotheses; the benchmark's
 channels are independent by construction.
 
-### Frozen v1.0.0 Benchmark Results
+### Saved v1.0.0 Benchmark Results
 
-The table below is the deterministic result of ERPy v1.0.0 compatibility
+The counts below are the deterministic result of ERPy v1.0.0 compatibility
 checkpoint `415a636abd5b9a28`. This fixed software-behavior label is shared by
 all equivalent installations; it is not a release-record or dataset label.
-Wilson intervals are used for binary rates. Intervals for mean null-call rates
-and false-discovery proportions resample complete four-channel testing groups.
+Wilson intervals are used for stochastic binary null-call rates. Intervals for
+mean null-call rates and false-discovery proportions resample complete
+four-channel testing groups.
+
+Current recovery intervals reanalyze the saved decisions with a percentile
+bootstrap of whole families independently within each of the 48 fixed target
+design cells (40 families per cell): 20,000 draws, seed `20260907`, using
+[`reanalyze_factorial_recovery.py`](../validation/reanalyze_factorial_recovery.py).
+This preserves the equal weighting of the declared factorial design. Target
+evaluability is fixed by that design and receives no sampling interval.
+Historical reports retain their original pooled Wilson recovery and
+evaluability intervals; the recovery intervals below are the current estimates.
 
 | Outcome | Estimate (count) | 95% interval |
 | --- | ---: | ---: |
@@ -143,9 +161,9 @@ and false-discovery proportions resample complete four-channel testing groups.
 | Signal-present groups: null-reference call rate | 0.00035 (2/5,760) | 0.00000–0.00087 |
 | Signal-present groups: probability of any null-reference call | 0.00104 (2/1,920) | 0.00029–0.00379 |
 | Signal-present groups: mean false-discovery proportion | 0.00052 | 0.00000–0.00130 |
-| Balanced-grid unconditional target recovery | 0.628 (1,205/1,920) | 0.606–0.649 |
-| Target evaluability | 0.750 (1,440/1,920) | 0.730–0.769 |
-| Recovery conditional on evaluability | 0.837 (1,205/1,440) | 0.817–0.855 |
+| Balanced-grid unconditional target recovery | 0.627604 (1,205/1,920) | 0.618229–0.636979 |
+| Target evaluability | 0.750 (1,440/1,920) | Fixed by design; no sampling interval |
+| Recovery conditional on evaluability | 0.836806 (1,205/1,440) | 0.824306–0.849306 |
 
 The balanced-grid recovery rate averages equally over the declared signal and
 masking grid and counts non-evaluable targets as negative. With no target-trial
@@ -335,3 +353,31 @@ Provide explicit `stim_times` when the NWB trials table does not contain an
 electrical-stimulation-site column. A cognitive-task NWB file without usable
 stimulation timing is outside the stimulation-timing evaluation scope; ERPy does not
 fabricate stimulation events from generic task columns.
+
+## External expert-annotation evaluation
+
+The fixed-setting external evaluation includes in 13 independent participants using released ER-detect recordings, annotations and archived comparator outputs. [Results, limitations and reproduction instructions](EXTERNAL_VALIDATION.md) include the complete annotation-to-source flow, conditional and expanded coverage, clustered uncertainty, site differences, and the sensitivity–specificity tradeoff. The corrected source revision postdates the historical `v1.0.0` tag; install the checked-out source and record its Git commit for reproduction.
+
+## Precision of the multiple-window confirmation intervals
+
+The [exact empirical-bootstrap supplement](../validation/multiscale_interval_precision/README.md)
+computes all 24 confirmation intervals without Monte Carlo endpoint variation.
+The weighted-minus-matched broad recovery difference remains −1.04 percentage
+points; its conditional empirical-bootstrap interval is −2.08 to 0.00 points.
+All original 2,000-resample summaries reproduce and remain unchanged. This
+precision correction establishes no improvement and does not change the
+original single-window default. Exact computation does not imply exact
+frequentist coverage or clinical-population validity.
+
+## Complete public acquisition decisions
+
+The [current public workflow demonstration](../validation/public_workflow_completion/README.md)
+accounts for all 89 source channels and 17 events in the ds003708 LTG1–LTG2
+acquisition. Excluding the auxiliary EKG and two stimulation contacts leaves
+86 finite neural-contact tests: 39 pass BH, 85 pass the separate contact gate,
+and 38 pass both. LAG64 fails the gate because 5/17 bad responses exceed its
+strictly less than 25% criterion. Per-contact decisions, exact clean-trial
+membership, source-event alignment, the sample grid and immutable source
+identities are retained. This completes the software workflow demonstration;
+it does not establish accuracy or unconditional FDR calibration. The earlier
+32-channel example retains its historical results and smaller family.

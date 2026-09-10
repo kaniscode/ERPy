@@ -178,11 +178,15 @@ def main() -> int:
     args = parser.parse_args()
     missing: list[str] = []
     lines = [
-        "# ERPy 1.0.0 API reference",
+        f"# ERPy {ERPy.__version__} API reference",
         "",
-        "This reference is generated from the released public signatures and docstrings.",
+        "Project: [ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis](../README.md).",
+        "",
+        "This reference is generated from the checked-out public signatures and docstrings.",
         "It documents the stable `ERPy` import surface and every exported visualization.",
         "Scientific definitions and defaults are explained in [METHODS.md](METHODS.md).",
+        "The optional module APIs have dedicated guides:",
+        "[label-free N1 detection](N1_LABEL_FREE.md), [secondary supervised N1 development](N1_DEVELOPMENT.md), and [tests across several windows](MULTISCALE_DEVELOPMENT.md).",
         "",
     ]
     lines.extend(render_namespace("Core API (`ERPy`)", ERPy, list(ERPy.__all__), missing))

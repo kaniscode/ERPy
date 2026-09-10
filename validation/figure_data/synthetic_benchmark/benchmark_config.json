@@ -1,0 +1,72 @@
+{
+  "alpha": 0.05,
+  "amplitude_cv": 0.15,
+  "ar1_phi": 0.85,
+  "artifact_definition": "Randomly selected target-channel trials are marked nonfinite in the matched baseline and response windows, emulating upstream QC rejection",
+  "artifact_fractions": [
+    0.0,
+    0.25,
+    0.5
+  ],
+  "artifact_interval": [
+    0.0,
+    0.016
+  ],
+  "baseline_window": [
+    -0.32,
+    -0.016
+  ],
+  "benchmark_schema_version": "1.0.0",
+  "bootstrap_resamples": 5000,
+  "comparator_response_window": [
+    0.016,
+    0.12
+  ],
+  "confidence": 0.95,
+  "detectors": [
+    "crp_energy",
+    "crp_only_fdr",
+    "paired_rms_fdr",
+    "kundu_rolston",
+    "n1_z"
+  ],
+  "eps": 1e-12,
+  "latency_jitter_sd_s": 0.003,
+  "master_seed": 20260830,
+  "max_exact_reproducibility_trials": 12,
+  "max_exact_trials": 16,
+  "min_clean_trials": 8,
+  "n_family_channels": 4,
+  "n_permutations": 5000,
+  "n_replicates": 40,
+  "noise_sd_uv": 10.0,
+  "primary_decision": "BH-adjusted q_joint <= alpha, where p_joint=max(p_crp,p_energy)",
+  "primary_random_stream_derivation": "sha256-v1(root-seed, exact channel label; first 63 bits)",
+  "projection_start_s": 0.01,
+  "projection_step_s": 0.005,
+  "response_window": [
+    0.016,
+    0.32
+  ],
+  "sfreq": 250.0,
+  "snr_values": [
+    0.0,
+    0.5,
+    1.0,
+    2.0,
+    4.0
+  ],
+  "tmax": 0.34,
+  "tmin": -0.36,
+  "trial_counts": [
+    8,
+    12,
+    24,
+    36
+  ],
+  "trial_scale_log_sd": 0.18,
+  "truth_definition": {
+    "injected": "RMS-normalized, biphasic response with positive trial amplitudes and small latency jitter",
+    "null_noise": "stationary colored noise; no poststimulus injection"
+  }
+}

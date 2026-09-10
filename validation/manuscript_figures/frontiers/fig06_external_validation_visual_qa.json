@@ -1,0 +1,27 @@
+{
+  "journal": "frontiers",
+  "number": 6,
+  "status": "pass",
+  "role": "Author production visual inspection and verified publication copy",
+  "inspection_basis": "Root individually viewed the complete final publication-scale PNG and rendered PDF at original resolution. Every matrix cell, annotation label, interval, panel heading, trace, SEM band, axis and metadata line is legible without overlap or clipping.",
+  "width_mm": 180,
+  "height_mm": 180,
+  "minimum_pdf_font_pt": 8,
+  "visible_stroke_min_pt": 2,
+  "raster_pixels": [
+    4251,
+    4251
+  ],
+  "png_tiff_rgb_pixels_identical": true,
+  "producer_visual_qa_sha256": "1b0df44546563382fd9da6aa6e5d5e65ee863560bebc4935ea09c9f36ac31e5c",
+  "artwork_and_caption_bytes_equal_inspected_source": true,
+  "files": {
+    "fig06_external_validation_caption.md": "268d49fc3e3da7ee93161b6f40311aaebcb9df6f15d494d8ab349e404aefb74f",
+    "fig06_external_validation.pdf": "694caa4c88d9058c57a603fbb35252ee252d7abdcc1719c98a3fd0cb639c0a3d",
+    "fig06_external_validation.png": "269d75efc094fceef8f29bc080710f68933fbddb8f21ba71b10c5a31ce604bc6",
+    "fig06_external_validation_data.csv": "6ac120153f1d8da1270f2106c84a5e7f87b03698e73c6f1f5f309ec3b4cb7efb",
+    "fig06_external_validation.svg": "ca3d96a0536ca30c59a5d1c98fc371fecdcfdee27b8ff9d5997e275ead79b84b",
+    "fig06_external_validation_alt.txt": "85068659dea25af66bf361686f49629227ed493d2f5cd8c09d448a99ed410491",
+    "fig06_external_validation.tiff": "ff7e333f8b641b2caf389ddf3b458da8f9f6b3873216b6fa8862b7d800e20f09"
+  }
+}

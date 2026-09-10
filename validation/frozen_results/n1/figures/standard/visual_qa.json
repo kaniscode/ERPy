@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "inspector": "root production visual QA, not a fresh referee",
+  "created_utc": "2026-09-08T06:46:59.480327+00:00",
+  "inspection_basis": "Actual final600dpiPNG viewed at readable whole-figure size; all panel labels, ticks, metric labels, legend, intervals and curves inspected. Embedded manuscript page inspection still required.",
+  "width_mm": 180,
+  "height_mm": 150,
+  "font_min_pt": 8,
+  "stroke_min_pt": 2,
+  "findings": [],
+  "png_sha256": "82fa0ff2203dd4ae99395fcf4db1854409e7809f17915fcdd9c4146baecc63f8",
+  "figure_manifest_sha256": "5524d5b6a441924b019f1a0576463e5d77dfbd0e5b30331b8ccf41d1905d26bc"
+}

@@ -1,0 +1,7 @@
+# Preserve the exact feature implementation used by frozen N1 model receipts.
+n1.py -text
+multiscale.py -text
+crp_energy.py -text
+inference.py -text
+# Full-acquisition receipts identify every current module by its exact bytes.
+*.py -text

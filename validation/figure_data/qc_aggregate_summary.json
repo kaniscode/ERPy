@@ -1,0 +1,85 @@
+{
+  "source_sha256": "00ddf22b8a495b83cdf61429aa5b006d2c95bfee0ccb4c9fb80c12d5d77cc466",
+  "flag_counts": [
+    {
+      "panel": "A",
+      "reason": "amplifier_or_motion_artifact",
+      "contacts": 68,
+      "denominator": 145
+    },
+    {
+      "panel": "A",
+      "reason": "sharp_transient",
+      "contacts": 11,
+      "denominator": 145
+    },
+    {
+      "panel": "A",
+      "reason": "late_high_frequency_outlier",
+      "contacts": 27,
+      "denominator": 145
+    },
+    {
+      "panel": "A",
+      "reason": "extreme_amplitude_outlier",
+      "contacts": 16,
+      "denominator": 145
+    },
+    {
+      "panel": "B",
+      "reason": "amplifier_or_motion_artifact",
+      "contacts": 16,
+      "denominator": 30
+    },
+    {
+      "panel": "B",
+      "reason": "sharp_transient",
+      "contacts": 8,
+      "denominator": 30
+    },
+    {
+      "panel": "B",
+      "reason": "late_high_frequency_outlier",
+      "contacts": 6,
+      "denominator": 30
+    },
+    {
+      "panel": "B",
+      "reason": "extreme_amplitude_outlier",
+      "contacts": 1,
+      "denominator": 30
+    }
+  ],
+  "classes": {
+    "clinical": [
+      91,
+      33,
+      4,
+      15
+    ],
+    "public": [
+      16,
+      10,
+      1,
+      3
+    ]
+  },
+  "qc_scope_note": "QC\u2229nonstim=142 from independently hash-matched audit; BH+QC joined calls unverified.",
+  "accounting": {
+    "clinical": {
+      "loaded": 145,
+      "non_stimulation": 143,
+      "qc_eligible": 143,
+      "qc_and_non_stimulation": 142,
+      "bh_calls": 85
+    },
+    "public": {
+      "loaded": 32,
+      "non_stimulation": 30,
+      "qc_eligible": null,
+      "qc_and_non_stimulation": null,
+      "bh_calls": 11
+    }
+  },
+  "disclosure": "Published figure-level aggregate counts only. No private recording, epoch, participant/contact locator, or raw cohort data is included."
+}

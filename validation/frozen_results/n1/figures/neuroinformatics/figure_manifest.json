@@ -1,0 +1,18 @@
+{
+  "width_mm": 180,
+  "height_mm": 150,
+  "font_min_pt": 8,
+  "visible_stroke_min_pt": 2,
+  "lowercase_panels": true,
+  "input_metrics_sha256": "b2f874eb5e27e1eca2a8c6ae2ed74a177a4ebadbf5cd1f06566e6b016dbe7a10",
+  "run_protocol_sha256": "90296e4afb4de38bc8d67b7278d5e5d9bee3a0c0fa76146841fbe7ce2733433d",
+  "generator_sha256": "ecb4a65152e3976c8254d8da07f20ccaa20ec9b79be861f479f467a08c9f39f3",
+  "outside_text": [],
+  "files": {
+    "fig07_n1_development.pdf": "c0554d151f74681cff4ea686620cb63ac41dfc8ac5287120d2d54bbbed135d67",
+    "fig07_n1_development.png": "e46ad2e01010819b9469e206c832522029082b490b45fad2e9729b812440e541",
+    "fig07_n1_development.svg": "92398addad32c0c27c2931c2be9c54a0fd5677893fac5bba3fdbf8efc8de6a86",
+    "fig07_n1_development.tiff": "39128d0bddf56410029f8ff7f2c6d3d83b80ccc96071bf86dfa57dba89fac682"
+  },
+  "visual_inspection_required": true
+}

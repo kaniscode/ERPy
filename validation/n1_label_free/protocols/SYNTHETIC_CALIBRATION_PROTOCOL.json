@@ -1,0 +1,50 @@
+{
+  "protocol_version": "1.0",
+  "status": "fixed_pending_parent_acknowledgment_before_generation",
+  "new_simulation_outcomes_viewed": false,
+  "purpose": "tractable characterization of the fixed primary/sole-ablation rules, not universal N1-specific calibration",
+  "seed": 20260909,
+  "sampling_rate_hz": 500,
+  "times_s": "np.arange(-500,176)/500 gives -1.000 through0.350 inclusive",
+  "family_contacts": 8,
+  "trial_counts": [
+    8,
+    12,
+    24
+  ],
+  "per_trial_stationary_noise_sd_uv": [
+    25,
+    100
+  ],
+  "noise": "stationary zero-mean Gaussian AR(1),rho0.6; each contact sqrt(0.75)*independent +sqrt(0.25)*family-shared AR noise, independently generated across trials and families",
+  "pure_null": {
+    "families": 240,
+    "allocation": "3trialcounts x2noiselevels x40independent replicates",
+    "signal": "none; all8contacts response-null",
+    "endpoint": "any primary/ablation call in family",
+    "uncertainty": "Wilson95% binomial interval across240independent pure-null families; also by fixed trial/noise cell with its denominator"
+  },
+  "phenotype_challenges": {
+    "families": 240,
+    "allocation": "4scenarios x3trialcounts x2noiselevels x2amplitudes x5independent replicates",
+    "peak_amplitude_uv": [
+      100,
+      250
+    ],
+    "targets": "contacts0 and1 receive identical-shape responses; other6remain pure noise",
+    "scenarios": {
+      "early_negative": "-A*exp(-0.5*((t-0.050)/0.012)^2)",
+      "early_positive": "+A*exp(-0.5*((t-0.050)/0.012)^2)",
+      "late_negative": "-A*exp(-0.5*((t-0.180)/0.020)^2)",
+      "residual_artifact": "-A*exp(-t/0.025) for t>=0, zero prestimulation; no neuronal response"
+    },
+    "trial_variation": "none in deterministic signal; trials differ by generated noise",
+    "ground_truth": "only early_negative targets have synthetic negative N1; earlypositive/latenegative/artifact cases are phenotype challenges, not all original joint nulls",
+    "metrics": "target recovery and contact/family calls by scenario/trial/noise/amplitude; separate null-contact calls; primary and soleablation retained"
+  },
+  "total_families": 480,
+  "inference": "exactly primary empirical configuration; deterministic per-family/contact seed derived with SHA256 namespace erpy-label-free-N1-calibration-v1|20260909|scenario|n_trials|noise_sd|amplitude|replicate|channel,first8bytes bigendian masked63bits",
+  "no_adaptation": "no outcome-based threshold, family, scenario or seed changes; runtime improvements must preserve arrays/results and be recorded",
+  "source_reuse": "old2400factorial records lack a justified170uV physical scale; retain old evidence unchanged, do not rescale after outcomes",
+  "inputs": "synthetic only, no human labels or supervised models"
+}

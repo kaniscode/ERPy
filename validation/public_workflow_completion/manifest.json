@@ -1,0 +1,366 @@
+{
+  "schema_version": 1,
+  "purpose": "Current-source full acquisition BH, separate QC gate and final intersection demonstration",
+  "artifacts": [
+    {
+      "path": "../../ERPy/__init__.py",
+      "bytes": 6858,
+      "sha256": "1addde60a1bd73fa80127c0b377b775d21b4268cec268f5601752daea2c85b4f"
+    },
+    {
+      "path": "../../ERPy/_epoch_cache.py",
+      "bytes": 6811,
+      "sha256": "51a780515b13efd64e7f01b2fe3fc8337a4c1273543fc57d46e5368d9824c81a"
+    },
+    {
+      "path": "../../ERPy/analysis.py",
+      "bytes": 17192,
+      "sha256": "13f1b2a1f8d77fe038815c53e173d42fa2f56c645461277688b01f7deef300c6"
+    },
+    {
+      "path": "../../ERPy/artifact_anchor.py",
+      "bytes": 10845,
+      "sha256": "4ff5bb32fc866f192ef3f9c976e4d6789642702009f789cf7ca1fd94c15c11ea"
+    },
+    {
+      "path": "../../ERPy/bad_channels.py",
+      "bytes": 25783,
+      "sha256": "eae924e9b10dde9c1273428457b038e54bd86d96fb63b377e2ec1e64b931759d"
+    },
+    {
+      "path": "../../ERPy/baseline.py",
+      "bytes": 2164,
+      "sha256": "39f00de63aac71cc81f530e91b847b1ff0be63d0dc094f99201dd2db87fc954c"
+    },
+    {
+      "path": "../../ERPy/bids.py",
+      "bytes": 13918,
+      "sha256": "ba538033edc3ccc02be94f94164d957231983881da8119d4600ed9919ae986e1"
+    },
+    {
+      "path": "../../ERPy/cli.py",
+      "bytes": 3145,
+      "sha256": "7a65def455ff45671d11b3e762e67b6a9092911e17086369cedd9b8375cd95c7"
+    },
+    {
+      "path": "../../ERPy/connectivity.py",
+      "bytes": 30718,
+      "sha256": "69ec4313cd5d8fb5e6879c792b6277636f44b13994d3a5dba7e3905627b11874"
+    },
+    {
+      "path": "../../ERPy/coordinates.py",
+      "bytes": 6254,
+      "sha256": "e62a68ed3330b2d61330caa299052462f60bda65d1f6b2e88d6d1e58eebaabab"
+    },
+    {
+      "path": "../../ERPy/crp.py",
+      "bytes": 23398,
+      "sha256": "3e10af052790cf72a4f1c248f617435a25db65d20ee9fd92d57df778e49591cc"
+    },
+    {
+      "path": "../../ERPy/crp_energy.py",
+      "bytes": 32327,
+      "sha256": "07590e407bd0d7dd53dd1cb745e9e0004b15b0310c5cd15737c5d9a7c229f9f7"
+    },
+    {
+      "path": "../../ERPy/dataloader.py",
+      "bytes": 61744,
+      "sha256": "7564fb9d0bf20b6bdb02805811edd446177357ec521105a5d20bcd278dd44d42"
+    },
+    {
+      "path": "../../ERPy/epochs.py",
+      "bytes": 30795,
+      "sha256": "b1d4c1261a82213b029decd380449d3b3799e5896ed28758a6f19c56273a62c1"
+    },
+    {
+      "path": "../../ERPy/erp_detection.py",
+      "bytes": 70413,
+      "sha256": "3c89c3fad1173122314b0c4d1453a7d29817cdb3e8e518da83cdead2fde29758"
+    },
+    {
+      "path": "../../ERPy/events.py",
+      "bytes": 46747,
+      "sha256": "d1939ddff7db78d4e1f1ad3fc02a5f0f8b8c420cd5f051739c14062e380e3493"
+    },
+    {
+      "path": "../../ERPy/facade.py",
+      "bytes": 36757,
+      "sha256": "940b15f67f8651132717619fcfa9dac66006296e084bea6bca79e2fa87437c3f"
+    },
+    {
+      "path": "../../ERPy/graph_metrics.py",
+      "bytes": 39842,
+      "sha256": "591de3c2409379cc8f3f9862ca13b9f78431d71f538de7d15868ddbf5d40ab12"
+    },
+    {
+      "path": "../../ERPy/inference.py",
+      "bytes": 11372,
+      "sha256": "fc94b5c22c7eccdc8b511c7b93ec62ea39811b0362dd1a39370e85dbbe429e1d"
+    },
+    {
+      "path": "../../ERPy/io.py",
+      "bytes": 2241,
+      "sha256": "22a5618f901bd627eb2916e492b80a446722959bbaebfd1e1dd617e811a67b3f"
+    },
+    {
+      "path": "../../ERPy/multiscale.py",
+      "bytes": 12747,
+      "sha256": "dbe9735b7aa4bcde8ef38ba11743b056fd242ee42c3ea55c63e424e1080601ad"
+    },
+    {
+      "path": "../../ERPy/n1.py",
+      "bytes": 21421,
+      "sha256": "bb18ac73fd52fcefee1f031e108a10f0d308bc0aea73546d4852089fcf72e7bf"
+    },
+    {
+      "path": "../../ERPy/n1_detection.py",
+      "bytes": 9954,
+      "sha256": "9518edb4093474791e04841b3c46b3656086f31a960b8835c4cae40b7687baea"
+    },
+    {
+      "path": "../../ERPy/pipeline.py",
+      "bytes": 36246,
+      "sha256": "c1acfe99d19563ff525d31256b38e14de493968abeae12da441ec558aaf2c2aa"
+    },
+    {
+      "path": "../../ERPy/response_metrics.py",
+      "bytes": 2132,
+      "sha256": "97cba515c2587a6b899da5ae622e4526d6730274703c5b1f4cba584c147f8963"
+    },
+    {
+      "path": "../../ERPy/spectral.py",
+      "bytes": 37147,
+      "sha256": "38ed1ceef8c41f23c6322fd8ae735eb96c71c075bee58f008f666f003f8ec8b3"
+    },
+    {
+      "path": "../../ERPy/stats_utils.py",
+      "bytes": 2635,
+      "sha256": "5fc00bba0d3e18da3c55db76e06c1057f025901ee6f59945c00faf09748887a6"
+    },
+    {
+      "path": "../../ERPy/storage.py",
+      "bytes": 7852,
+      "sha256": "e870afecaca3453215c9c85be6eec576213e2cc62ef0b69fb4c9b5f4ba85a2ec"
+    },
+    {
+      "path": "../../ERPy/traveling_waves.py",
+      "bytes": 28274,
+      "sha256": "e4abe6d8e19bea3791c362477a53d595538adecc99079f55cc25ed113df7e6d3"
+    },
+    {
+      "path": "../../ERPy/utils/__init__.py",
+      "bytes": 370,
+      "sha256": "10fa3df73853582fd34e6f080b6ec53f710e8e840994969f15c0647f4b3ec0d5"
+    },
+    {
+      "path": "../../ERPy/utils/events.py",
+      "bytes": 123,
+      "sha256": "0bc6c842920805c9e2116dff370a0bd9c5b57e37732a1a37b6f2074b7961e515"
+    },
+    {
+      "path": "../../ERPy/utils/jobrunner.py",
+      "bytes": 3557,
+      "sha256": "58d3406d5d4763636d359a1a6ab20725b6090a1ca60decb5b3cabb7b4286e9d0"
+    },
+    {
+      "path": "../../ERPy/utils/preproc.py",
+      "bytes": 6965,
+      "sha256": "1d1c7dddc162abd56edef322f6d9bd59b18a43fc87d840060908a6745cbfab2a"
+    },
+    {
+      "path": "../../ERPy/utils/utils.py",
+      "bytes": 6872,
+      "sha256": "c7beb64011986532284a3f5a8d3cc56493439f2448c12a8841888212a5c0705e"
+    },
+    {
+      "path": "../../ERPy/viz/__init__.py",
+      "bytes": 4741,
+      "sha256": "00f74409efc09b32efc084c020e2604e7a8396bb0749c9000341c55b2e1a9167"
+    },
+    {
+      "path": "../../ERPy/viz/anatomy.py",
+      "bytes": 3248,
+      "sha256": "c5f5c9bb3ee04adc017668c50af91a3578375833590a524fc949c65406ff9140"
+    },
+    {
+      "path": "../../ERPy/viz/crp.py",
+      "bytes": 10063,
+      "sha256": "3574581780ed8dc1ac0d6b344aa2d6a535483c1f6127bc3a98314dd0f8f4e262"
+    },
+    {
+      "path": "../../ERPy/viz/crp_plots.py",
+      "bytes": 180,
+      "sha256": "79446e734cc677a2775ad627fd57af594a21eb1f8e5cfae081a1bc4e5cad7291"
+    },
+    {
+      "path": "../../ERPy/viz/detections.py",
+      "bytes": 19168,
+      "sha256": "8f99d85cf0b7c227e6c4d8323239ce9e210082d73ff25857a23ffe78b92b7582"
+    },
+    {
+      "path": "../../ERPy/viz/erp_plots.py",
+      "bytes": 2692,
+      "sha256": "6978c610c03ac0eafce0de0422fc8f32c35e165b0ab520fee5231aa0b0ac5714"
+    },
+    {
+      "path": "../../ERPy/viz/graph_metrics.py",
+      "bytes": 3431,
+      "sha256": "8a9d54045a5bf262a4bc0bd91a4a476064d361838242151f7c34127fdc74d0cf"
+    },
+    {
+      "path": "../../ERPy/viz/heatmaps.py",
+      "bytes": 2219,
+      "sha256": "24573ca826ddbfd199427e47e17f06306ff0d765eea44be7a7b513551db040dc"
+    },
+    {
+      "path": "../../ERPy/viz/io.py",
+      "bytes": 1049,
+      "sha256": "96ead2714f8d877f74d3c6fbae27bee8f52d7d8dc482879f9755f245337444d0"
+    },
+    {
+      "path": "../../ERPy/viz/networks.py",
+      "bytes": 110982,
+      "sha256": "620738c8eb6d113e030951ca25610e36d2a32ad9b586e19a991a7726a25292df"
+    },
+    {
+      "path": "../../ERPy/viz/quick.py",
+      "bytes": 1902,
+      "sha256": "9e33625d73e633f70cb53e19d7c1931490d7e42d838d7e4399708378dd9d8a23"
+    },
+    {
+      "path": "../../ERPy/viz/response_metrics.py",
+      "bytes": 4511,
+      "sha256": "f367ad456353e9b504bebe2a5d6bc377a07f5f444f231ed9910dd9f9b9e0a98e"
+    },
+    {
+      "path": "../../ERPy/viz/spectral.py",
+      "bytes": 11916,
+      "sha256": "2f198ca0bef693d8625e4287eff91c253a6e9a71e6fb12812fd2234d31985ca2"
+    },
+    {
+      "path": "../../ERPy/viz/stim_order.py",
+      "bytes": 1680,
+      "sha256": "ffad0867a69c0e416d0ea8d3bea83bed3c390a853d6508030bbea2aa9a916fb4"
+    },
+    {
+      "path": "../../ERPy/viz/theme.py",
+      "bytes": 720,
+      "sha256": "a79b45290a37a74476f09764dac4ebbbf8ea2df393fc54e26818b5573332217a"
+    },
+    {
+      "path": "../../ERPy/viz/waveforms.py",
+      "bytes": 16528,
+      "sha256": "ca0d9ebf884a58841fbdfc9b36fe36475a8ce21938627171bf66bcb885ee29cc"
+    },
+    {
+      "path": "../../ERPy/warmup.py",
+      "bytes": 4789,
+      "sha256": "1deb96b906789e6b20c3138f2b6e01d8f34485adbbc61d66ab42d7faa65d7cca"
+    },
+    {
+      "path": "../../ERPy/waveform_qc.py",
+      "bytes": 50024,
+      "sha256": "5f95106d512e465d4aa555f3822f2a6e5bc44260646d78a6d27f61c0f6cf072e"
+    },
+    {
+      "path": "../public_workflow_completion.py",
+      "bytes": 22564,
+      "sha256": "b376a349e2cc03dde4797975c377dedc62c1ff13a2fe46bb314dca0e6c640745"
+    },
+    {
+      "path": "../validate_public_spes.py",
+      "bytes": 72115,
+      "sha256": "d569e0d379c199c058a48b9143ce94fb50fdf353297039591671b21029e5e701"
+    },
+    {
+      "path": "../public_ds003708_source_manifest.json",
+      "bytes": 4196,
+      "sha256": "437a2824b3c1c749354c8245422f3558b856868baa15a0e4114c5953e3c3afec"
+    },
+    {
+      "path": "../../tests/test_public_workflow_completion.py",
+      "bytes": 3870,
+      "sha256": "3b0928927e9d2b6dcbc642e1f3f2a2e366be752e1d8eb7018d4d45ce1917dd32"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4732,
+      "sha256": "69507d6ee301205ef4ca5f33cb0d3cd70687f52e299b020ba82b12c8c20138ca"
+    },
+    {
+      "path": "acquisition_artifact_channel_summary.csv",
+      "bytes": 17999,
+      "sha256": "68fb72abccc8e09caa039c48c41e25624aa8725882736eab71cdae5e2a53345d"
+    },
+    {
+      "path": "acquisition_artifact_response_table.csv",
+      "bytes": 513390,
+      "sha256": "a8d2a96c7e68c0ff94539520e22b7275c66eed7400cd498db5595a7147339d27"
+    },
+    {
+      "path": "acquisition_detections.csv",
+      "bytes": 1529411,
+      "sha256": "dd897e49b40e3afdb6f08d1bef30a4a2d62c1a07f8187a8d70a66a0f21b2404b"
+    },
+    {
+      "path": "acquisition_detections_primary.csv",
+      "bytes": 730965,
+      "sha256": "af50defbea86f68b6df046b370b95d931d1b790323103b636674701ca07a69ac"
+    },
+    {
+      "path": "acquisition_detections_qc.csv",
+      "bytes": 1548721,
+      "sha256": "4760d521cb412f18ccf02ca58b7ed26d0a9748bcf25629c8db11865677ecf9d2"
+    },
+    {
+      "path": "acquisition_detections_qc_pass.csv",
+      "bytes": 1526097,
+      "sha256": "c0b748fe79cc149ce99c45d157383fe291ed93336aa3a4231f485312c602b7e7"
+    },
+    {
+      "path": "acquisition_metadata.json",
+      "bytes": 32264,
+      "sha256": "4478a0305062ec53a33aec2741c238cc9c29852eb6ae31d7f77b769e0731ac81"
+    },
+    {
+      "path": "acquisition_zero_anchor_report.csv",
+      "bytes": 12381,
+      "sha256": "3b4a14fc8047877977fb14da75dcbc5945d8c8f41d42b03c56f674787188ef89"
+    },
+    {
+      "path": "contact_clean_trials.csv",
+      "bytes": 61104,
+      "sha256": "b334f641e758816f4c33cb91b1a41a09f4f6799ea6135cc81eb9b7b886f65713"
+    },
+    {
+      "path": "contact_decisions.csv",
+      "bytes": 24260,
+      "sha256": "b8330d7ff123d5ce34d6ad9259c6f7cb0414202cd023f2533709c62aa71678f2"
+    },
+    {
+      "path": "epoch_sample_grid.csv",
+      "bytes": 38008,
+      "sha256": "683f23cac8421be706d2d6909fb81d654584d53df0317d984c0d4e4e9d94cd39"
+    },
+    {
+      "path": "provenance.json",
+      "bytes": 8526,
+      "sha256": "536937a78dc73c52c3297b78e40bcae3a592199a65c7d7d21d7f7c2eb129d49c"
+    },
+    {
+      "path": "selected_source_events.tsv",
+      "bytes": 1882,
+      "sha256": "d024b5b1976a514737df23afa1d6960420b40f56787466fe650c77b607ecebdb"
+    },
+    {
+      "path": "source_header.vhdr",
+      "bytes": 2444,
+      "sha256": "5551a8ca58fe16f489956981ab6437ae65c041891273c08fbea13dfab70cef4a"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 787,
+      "sha256": "f596f893bc1b3ae0eaec6ace44428ddae909d20fddcc5b26cd6acd44e1db6d59"
+    }
+  ]
+}

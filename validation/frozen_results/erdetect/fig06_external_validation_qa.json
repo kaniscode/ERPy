@@ -1,0 +1,49 @@
+{
+  "width_mm": 180.0,
+  "height_mm": 162.0,
+  "minimum_visible_font_pt": 8.0,
+  "style": "standard journal style",
+  "outside_canvas_text": [],
+  "n_participants": 13,
+  "n_paired_available_records": 32048,
+  "n_all_source_available_records": 32121,
+  "n_all_source_eligible_labeled_records": 33694,
+  "coverage_scope": "Conditional on source and site eligibility",
+  "source_event_absent_otherwise_eligible_records": 5901,
+  "expanded_coverage_denominator": 39595,
+  "expanded_coverage": 0.8112387927768657,
+  "suppressed_boundary_tick_labels": {
+    "pooled_sensitivity": 100,
+    "participant_sensitivity": 100
+  },
+  "ci": "95% percentile,2000whole-subject resamples stratified by site; seed20260907",
+  "source_metrics_sha256": "a3e932b306da2e91c0a6c58a0bd6202c5319191222cef3a21d00c5cf77a3214e",
+  "plotter_sha256": "317611eb67d09e436c47c56622a443f1d6dd3eebfc769d39059084808b593c0c",
+  "visual_inspection": "Passed: native publication-scale PNG and independently rasterized full-page PDF at 254 dpi inspected for this Round 03 export; no adjacent tick ambiguity, clipping, overlap or missing glyphs.",
+  "measured_performance_unchanged": "Exact frame equality with pre-change plotted-data CSV: all 29 rows and every column.",
+  "tiff": {
+    "pixels": [
+      4251,
+      3826
+    ],
+    "dpi": [
+      600.0,
+      600.0
+    ],
+    "mode": "RGB",
+    "compression": "tiff_lzw"
+  },
+  "physical_stroke_audit": {
+    "width_mm": 179.99999983333333,
+    "height_mm": 161.99999985,
+    "explicit_positive_stroke_count": 110,
+    "minimum_explicit_stroke_pt": 0.55,
+    "strokes_below_2pt": 110
+  },
+  "export_hashes": {
+    "png": "5f85c0906489c6f31a1938e5910491c73d8f3b796ccb16ca2a61847edf4135c7",
+    "pdf": "21b965a0708702891126005e13986cd0460a7905aa2c9f8816253ad1bc227715",
+    "svg": "caa340dfcaa67cf72abbc6e0f78023c7a3c46f43c97760a2202024d9cce28c5e",
+    "tiff": "3ff7ecd471382dfb32eb29ca91aef6c52c9f59750e6dd410f8f237ea45e7461d"
+  }
+}

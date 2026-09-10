@@ -1,0 +1,28 @@
+{
+  "journal": "neuroinformatics",
+  "number": 7,
+  "status": "pass",
+  "role": "Exact public copy of author-inspected PNG and native-PDF artwork",
+  "producer_visual_qa_sha256": "b7926db86b118208619199ac89614dfb516a394c66e5af09df8ae4e2cc4856b3",
+  "artwork_and_caption_bytes_equal_inspected_source": true,
+  "width_mm": 174.0,
+  "height_mm": 157.56666666666666,
+  "minimum_font_pt": 8.0,
+  "visible_stroke_min_pt": 2,
+  "files": {
+    "fig07_label_free_n1.pdf": "ec9b09789369928791be74fe7d5b6e2339fcdd9f252c32bf8ef46342d8864e5c",
+    "fig07_label_free_n1.png": "058aa8d080551506e0b52c5b9b53a7520d44eb459d76a30eca87af07eb099c46",
+    "fig07_label_free_n1.svg": "89ee53b7f89313e990009298c42828091584502d6c791f0460674f3213df43c1",
+    "fig07_label_free_n1.tiff": "8d145c7c8ba76f84cefeacfb79323c2d9f4d089b41b5d5c924d88cc5a1a4538c",
+    "fig07_label_free_n1_alt.txt": "2db9578c480b97778d229b1665d8c04ca46ca3b4c5a9b043e0c1cbf1173daf85",
+    "fig07_label_free_n1_caption.md": "71f80ccb93992e1701d45c73b94570e6e71c92355e38b5a40e400085506fc377",
+    "fig07_label_free_n1_data.csv": "d981dbaa43b91c7e87ccccef13cafbf8b930db27013bbd08763dff1138147ad2",
+    "fig07_label_free_n1_paired_differences.csv": "c04ce2bb29789d69a9480c79de2075a227541823d5bdb8123593f41b1ac7fdce",
+    "fig07_label_free_n1_plot_manifest.json": "ee3ce7a6e2d85a0bbc6e65b511381cf29ef8a343b7fd7adb5fab0352e6202c03"
+  },
+  "marker_and_interval_caps_inside_axes": true,
+  "specificity_axis_range_percent": [
+    94,
+    100.4
+  ]
+}

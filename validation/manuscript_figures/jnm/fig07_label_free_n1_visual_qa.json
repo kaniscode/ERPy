@@ -1,0 +1,28 @@
+{
+  "journal": "jnm",
+  "number": 7,
+  "status": "pass",
+  "role": "Exact public copy of author-inspected PNG and native-PDF artwork",
+  "producer_visual_qa_sha256": "b7926db86b118208619199ac89614dfb516a394c66e5af09df8ae4e2cc4856b3",
+  "artwork_and_caption_bytes_equal_inspected_source": true,
+  "width_mm": 180.0,
+  "height_mm": 163.0,
+  "minimum_font_pt": 8.0,
+  "visible_stroke_min_pt": 2,
+  "files": {
+    "fig07_label_free_n1.pdf": "4cc3322af451c32db0fae74988db33166d2e122641c09b4d221dc10eeebce7ed",
+    "fig07_label_free_n1.png": "444c6d488cee9f0dbbc0be0af284ba82ef3b9b1f31bc4ebae463c456da90f93d",
+    "fig07_label_free_n1.svg": "a1ad1deb0097901573b7b2257bcacac66875d511c81191ad9036d10db3066e0c",
+    "fig07_label_free_n1.tiff": "ec9118b7a599682d27a52770c79e4f4a3fd76f2c3083da6599cb23ce05afe273",
+    "fig07_label_free_n1_alt.txt": "2db9578c480b97778d229b1665d8c04ca46ca3b4c5a9b043e0c1cbf1173daf85",
+    "fig07_label_free_n1_caption.md": "26e3358f5d87db4f40210f0decc0065f7d3a1115d82678d6200ed09d7de1b103",
+    "fig07_label_free_n1_data.csv": "d981dbaa43b91c7e87ccccef13cafbf8b930db27013bbd08763dff1138147ad2",
+    "fig07_label_free_n1_paired_differences.csv": "c04ce2bb29789d69a9480c79de2075a227541823d5bdb8123593f41b1ac7fdce",
+    "fig07_label_free_n1_plot_manifest.json": "dc5b950a7b8edd444c7e23758d1af5a1f39a25b32beca6cfaddad63be510fe3a"
+  },
+  "marker_and_interval_caps_inside_axes": true,
+  "specificity_axis_range_percent": [
+    94,
+    100.4
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "N1_rule": {
+    "rule": {
+      "amplitude_z": 5.0,
+      "prominence_z": 2.0,
+      "min_width_ms": 0.0,
+      "min_trial_fraction": 0.8,
+      "amplitude_uv": 100.0,
+      "require_iut": false
+    },
+    "selection": {
+      "policy": "specificity_constraint_infeasible",
+      "training_sensitivity": 0.683797770700637,
+      "training_specificity": 0.9744388878254211,
+      "training_ppv": 0.8007925407925407,
+      "comparator_sensitivity": 0.6760748407643313,
+      "comparator_specificity": 0.9764368778713629,
+      "comparator_ppv": 0.8117292801835388
+    },
+    "training_subjects": [
+      "MAYO02",
+      "MAYO03",
+      "MAYO04",
+      "MAYO05",
+      "UMCU20",
+      "UMCU21",
+      "UMCU22",
+      "UMCU23",
+      "UMCU25",
+      "UMCU26",
+      "UMCU59",
+      "UMCU62",
+      "UMCU67"
+    ]
+  },
+  "N1_rule_with_IUT": {
+    "rule": {
+      "amplitude_z": 3.4,
+      "prominence_z": 0.0,
+      "min_width_ms": 0.0,
+      "min_trial_fraction": 0.8,
+      "amplitude_uv": 60.0,
+      "require_iut": true
+    },
+    "selection": {
+      "policy": "specificity_constraint_infeasible",
+      "training_sensitivity": 0.6848328025477708,
+      "training_specificity": 0.9537411466309341,
+      "training_ppv": 0.6898861084376002,
+      "comparator_sensitivity": 0.6760748407643313,
+      "comparator_specificity": 0.9764368778713629,
+      "comparator_ppv": 0.8117292801835388
+    },
+    "training_subjects": [
+      "MAYO02",
+      "MAYO03",
+      "MAYO04",
+      "MAYO05",
+      "UMCU20",
+      "UMCU21",
+      "UMCU22",
+      "UMCU23",
+      "UMCU25",
+      "UMCU26",
+      "UMCU59",
+      "UMCU62",
+      "UMCU67"
+    ]
+  },
+  "N1_logistic_morphology": {
+    "threshold": 0.4997438153614224,
+    "selection": {
+      "policy": "specificity_constraint_infeasible",
+      "training_sensitivity": 0.6762738853503196,
+      "training_specificity": 0.9744209418070444,
+      "training_ppv": 0.7989089541008279,
+      "comparator_sensitivity": 0.6760748407643313,
+      "comparator_specificity": 0.9764368778713629,
+      "comparator_ppv": 0.8117292801835388
+    },
+    "training_subjects": [
+      "MAYO02",
+      "MAYO03",
+      "MAYO04",
+      "MAYO05",
+      "UMCU20",
+      "UMCU21",
+      "UMCU22",
+      "UMCU23",
+      "UMCU25",
+      "UMCU26",
+      "UMCU59",
+      "UMCU62",
+      "UMCU67"
+    ]
+  },
+  "N1_logistic_hybrid": {
+    "threshold": 0.5594938926007017,
+    "selection": {
+      "policy": "both_constraints_met",
+      "training_sensitivity": 0.6761942675159242,
+      "training_specificity": 0.9793261868300153,
+      "training_ppv": 0.830936307601996,
+      "comparator_sensitivity": 0.6760748407643313,
+      "comparator_specificity": 0.9764368778713629,
+      "comparator_ppv": 0.8117292801835388
+    },
+    "training_subjects": [
+      "MAYO02",
+      "MAYO03",
+      "MAYO04",
+      "MAYO05",
+      "UMCU20",
+      "UMCU21",
+      "UMCU22",
+      "UMCU23",
+      "UMCU25",
+      "UMCU26",
+      "UMCU59",
+      "UMCU62",
+      "UMCU67"
+    ]
+  }
+}

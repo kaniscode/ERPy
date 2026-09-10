@@ -1,0 +1,511 @@
+{
+  "scope": "Portable public export; original source files unchanged",
+  "excluded": [
+    "Desktop metadata files",
+    "Growing progress logs",
+    "Full epoch caches"
+  ],
+  "files": [
+    {
+      "path": "RESULTS_AND_DECISION.md",
+      "original_sha256": "6fdf7db588a9d7f447fe4fa74c7039d2cda3282d9710740befc393fc12e0d588",
+      "public_sha256": "6fdf7db588a9d7f447fe4fa74c7039d2cda3282d9710740befc393fc12e0d588",
+      "changes": []
+    },
+    {
+      "path": "all_cells.csv",
+      "original_sha256": "1b44756db3672a70ccc5b93ff7ee8c86917a1390fc542ffd03280126f29f3510",
+      "public_sha256": "1b44756db3672a70ccc5b93ff7ee8c86917a1390fc542ffd03280126f29f3510",
+      "changes": []
+    },
+    {
+      "path": "analysis_plan.json",
+      "original_sha256": "70c671ffbddd093662ed2d150a45081adca42fa2b3af037e5df0f436ee0ba6a4",
+      "public_sha256": "70c671ffbddd093662ed2d150a45081adca42fa2b3af037e5df0f436ee0ba6a4",
+      "changes": []
+    },
+    {
+      "path": "analysis_plan.md",
+      "original_sha256": "fbe78744823f2ddc58bfae58404c58329e3e8b5acce8ae147658b9384edee509",
+      "public_sha256": "fbe78744823f2ddc58bfae58404c58329e3e8b5acce8ae147658b9384edee509",
+      "changes": []
+    },
+    {
+      "path": "analysis_plan.sha256",
+      "original_sha256": "4f4ac60991cc6d436937aceb95399a0efaf3eb46fbc28382e690bd265fcb6214",
+      "public_sha256": "4f4ac60991cc6d436937aceb95399a0efaf3eb46fbc28382e690bd265fcb6214",
+      "changes": []
+    },
+    {
+      "path": "analysis_plan_initial.json",
+      "original_sha256": "3df8e55933a8a445c362236873bc2148b7405b3016efcfab493d769d0a8b8511",
+      "public_sha256": "3df8e55933a8a445c362236873bc2148b7405b3016efcfab493d769d0a8b8511",
+      "changes": []
+    },
+    {
+      "path": "audit_and_report.py",
+      "original_sha256": "8bda6879cbc90a7e4ac6e32f30cd7a5865cfb5db21d3d502cdf027ad5c38d634",
+      "public_sha256": "4e2cfd17472d44f6b8100935b896fdacc36cb8b645fa5d63dd3f20dd579ed947",
+      "changes": [
+        "Removed one machine-specific sys.path insertion; scientific statements unchanged."
+      ]
+    },
+    {
+      "path": "declared_scenarios.json",
+      "original_sha256": "313555989a2255154090f763242b18359835dc2ba619c5d4223fd5bef597371b",
+      "public_sha256": "313555989a2255154090f763242b18359835dc2ba619c5d4223fd5bef597371b",
+      "changes": []
+    },
+    {
+      "path": "derive_weighted_development.py",
+      "original_sha256": "065f7b573a07176631d11690a39b28f94a24588d04f10b08103ec0d1b8a2eed4",
+      "public_sha256": "23f87a023ab683e9a44b74e9bf622b92b77c337139c35eca8608f8b3a47c88d5",
+      "changes": [
+        "Removed one machine-specific sys.path insertion; scientific statements unchanged."
+      ]
+    },
+    {
+      "path": "development_shape_polarity_summary.csv",
+      "original_sha256": "142561c8d4ac7767d38e097f916d3a2c375ee781b6cc9b4b49fae01ecc28bc62",
+      "public_sha256": "142561c8d4ac7767d38e097f916d3a2c375ee781b6cc9b4b49fae01ecc28bc62",
+      "changes": []
+    },
+    {
+      "path": "execution_code/ERPy/crp_energy.py",
+      "original_sha256": "5a26ca705f0117b56de9d35f2a8a197c36c8451063aabcbcdfa64e8d72d96455",
+      "public_sha256": "5a26ca705f0117b56de9d35f2a8a197c36c8451063aabcbcdfa64e8d72d96455",
+      "changes": []
+    },
+    {
+      "path": "execution_code/ERPy/multiscale.py",
+      "original_sha256": "2c458ad04dce77b719eebb62b53b9cd4faeaf729e5ccb4fc86572df7e76ac879",
+      "public_sha256": "2c458ad04dce77b719eebb62b53b9cd4faeaf729e5ccb4fc86572df7e76ac879",
+      "changes": []
+    },
+    {
+      "path": "execution_code/tests/test_multiscale.py",
+      "original_sha256": "5ef42d095d8ec5ea6a270b4bb017ab12a4ac20624831062a35016c63f59f73fe",
+      "public_sha256": "5ef42d095d8ec5ea6a270b4bb017ab12a4ac20624831062a35016c63f59f73fe",
+      "changes": []
+    },
+    {
+      "path": "execution_code/validation/benchmark_multiscale.py",
+      "original_sha256": "d4a773a8a21902f752af0d16243976d3d3c31c232376f3fee96042d6f730dc8a",
+      "public_sha256": "d4a773a8a21902f752af0d16243976d3d3c31c232376f3fee96042d6f730dc8a",
+      "changes": []
+    },
+    {
+      "path": "failures.json",
+      "original_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "public_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "changes": []
+    },
+    {
+      "path": "family_results.csv.gz",
+      "original_sha256": "4e37c3d5663372b5c1109b426cccc39be60147b0f7cecd5d2a4868eef48507f9",
+      "public_sha256": "4e37c3d5663372b5c1109b426cccc39be60147b0f7cecd5d2a4868eef48507f9",
+      "changes": []
+    },
+    {
+      "path": "fixtures/fixture_manifest.json",
+      "original_sha256": "14607741b42c2631eb842006168f10b6d3157930e267701a16e36dea9dcd0655",
+      "public_sha256": "833fa4d5f11dded0e75e23cefdd88930628639f65f580803561979e070ebd30e",
+      "changes": [
+        "Local path strings/keys replaced by portable identities; original referenced hashes retained.",
+        "Fixture identity now binds the public metadata-only NPZ export; original fixture hash is also retained."
+      ]
+    },
+    {
+      "path": "fixtures/mayo_native_baseline_10.npz",
+      "original_sha256": "a217fe07805876212493ada71cfff50adf103c5b9ca882264a72e2514b611617",
+      "public_sha256": "a300c05bf89e074cb51b1542fa0d35eebcb633b983b46961181b55259f3f6c6e",
+      "changes": [
+        "Metadata local source path replaced by a portable public epoch identity; all numerical arrays unchanged."
+      ],
+      "unchanged_numerical_arrays": {
+        "values": {
+          "dtype": "float64",
+          "shape": [
+            10,
+            1843
+          ],
+          "sha256": "470674cd007f45393390e449a745fe5173496efbd6aa73941fdb2ce590ae3227"
+        },
+        "times": {
+          "dtype": "float64",
+          "shape": [
+            1843
+          ],
+          "sha256": "fa2e25f600531eac13603fd63a66f4f726ea0ddb7ab69e4e914249ac5e3ae35d"
+        },
+        "trial_indices": {
+          "dtype": "int64",
+          "shape": [
+            10
+          ],
+          "sha256": "23c379d6c0f22ef64cdef873fd530df1f1419b4a3935e9323d5f1d82ca697b6a"
+        },
+        "sfreq": {
+          "dtype": "float64",
+          "shape": [],
+          "sha256": "a65ced9108f42ddee3b97cb5a10a4a1f7de5c58d11813cb54cf424ecaab2d879"
+        }
+      }
+    },
+    {
+      "path": "fixtures/umcu_native_baseline_10.npz",
+      "original_sha256": "ec8e58a38b0ca0ab8d7cdd4a8ae5a8698d2224ec4878057d398c0f149f6e5c0c",
+      "public_sha256": "2c5ef876f1d670618faeae177be972f2f28412972c144e20721ada1d912514bb",
+      "changes": [
+        "Metadata local source path replaced by a portable public epoch identity; all numerical arrays unchanged."
+      ],
+      "unchanged_numerical_arrays": {
+        "values": {
+          "dtype": "float64",
+          "shape": [
+            10,
+            1843
+          ],
+          "sha256": "16cd15fcc5c5958664bb06a944d1c3e8f8483a69dbfb176e5b79d10186a20b72"
+        },
+        "times": {
+          "dtype": "float64",
+          "shape": [
+            1843
+          ],
+          "sha256": "a7c060677ffb8fe080825520f625cd7d2c8d1644706bf6313dd482dba9eb091d"
+        },
+        "trial_indices": {
+          "dtype": "int64",
+          "shape": [
+            10
+          ],
+          "sha256": "23c379d6c0f22ef64cdef873fd530df1f1419b4a3935e9323d5f1d82ca697b6a"
+        },
+        "sfreq": {
+          "dtype": "float64",
+          "shape": [],
+          "sha256": "9fa4e188ca2413489cf80c19a8cc1b6a64062df83345c2dd15606b04b2d15be3"
+        }
+      }
+    },
+    {
+      "path": "method_results.csv.gz",
+      "original_sha256": "65759729b38b270d5b1b44c51021ef6595a8ccf134826375c51e8c851f7c6c89",
+      "public_sha256": "65759729b38b270d5b1b44c51021ef6595a8ccf134826375c51e8c851f7c6c89",
+      "changes": []
+    },
+    {
+      "path": "paired_recovery.csv",
+      "original_sha256": "31cd8da7f9b1bcf7d1923766aba11ddf46e14774885afa2bde0601ad21c58897",
+      "public_sha256": "31cd8da7f9b1bcf7d1923766aba11ddf46e14774885afa2bde0601ad21c58897",
+      "changes": []
+    },
+    {
+      "path": "pooled_by_trials.csv",
+      "original_sha256": "448aaccfe842db1164f695c5e8fdf0131dfc642b6e89ea3e22c9917ed3b145a6",
+      "public_sha256": "448aaccfe842db1164f695c5e8fdf0131dfc642b6e89ea3e22c9917ed3b145a6",
+      "changes": []
+    },
+    {
+      "path": "real_baseline/all_cells.csv",
+      "original_sha256": "f1f00037c651e24a2d8bcc2b6c26ce8c60c67f203abeca868408a4fdeb5947af",
+      "public_sha256": "f1f00037c651e24a2d8bcc2b6c26ce8c60c67f203abeca868408a4fdeb5947af",
+      "changes": []
+    },
+    {
+      "path": "real_baseline/declared_scenarios.json",
+      "original_sha256": "63e84ede79438fd1ab9c5be76d6d8144531529a3a1e2152b5008d8dd0bc914c8",
+      "public_sha256": "a431ff342587b57fa7a69101865d4d2175ba07a9b8bf168cb37895f9a290d9c9",
+      "changes": [
+        "Local path strings/keys replaced by portable identities; original referenced hashes retained."
+      ]
+    },
+    {
+      "path": "real_baseline/failures.json",
+      "original_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "public_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "changes": []
+    },
+    {
+      "path": "real_baseline/family_results.csv.gz",
+      "original_sha256": "41ca0975d23ad743a6178273bbe450fdf666c612df21ecdcacfee4ca746f36cf",
+      "public_sha256": "41ca0975d23ad743a6178273bbe450fdf666c612df21ecdcacfee4ca746f36cf",
+      "changes": []
+    },
+    {
+      "path": "real_baseline/method_results.csv.gz",
+      "original_sha256": "0168afb4a955bd9bcae60444e6f1d61254b86c3902f242dc405b70ab67b78b56",
+      "public_sha256": "0168afb4a955bd9bcae60444e6f1d61254b86c3902f242dc405b70ab67b78b56",
+      "changes": []
+    },
+    {
+      "path": "real_baseline/pooled_by_trials.csv",
+      "original_sha256": "869268a33de6b631538f379f4f0cb43ecea564ca7bc6a6f29dbed05caeb251ca",
+      "public_sha256": "869268a33de6b631538f379f4f0cb43ecea564ca7bc6a6f29dbed05caeb251ca",
+      "changes": []
+    },
+    {
+      "path": "real_baseline/run_manifest.json",
+      "original_sha256": "7bbfbf6bed224a00d7cb2043bc1526c36c8c1cc641b16e214158ee695e0aa180",
+      "public_sha256": "d6767a158e33e2e66b5ca005025f14698d59ed8f4aefb0765b43c45b9075e0c1",
+      "changes": [
+        "Local path strings/keys replaced by portable identities; original referenced hashes retained."
+      ]
+    },
+    {
+      "path": "real_baseline/warnings.json",
+      "original_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "public_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "changes": []
+    },
+    {
+      "path": "real_baseline/window_results.csv.gz",
+      "original_sha256": "5a50ff2e366acc5865052a4146a8fd369b9b752d2545f23a93331429848233d0",
+      "public_sha256": "5a50ff2e366acc5865052a4146a8fd369b9b752d2545f23a93331429848233d0",
+      "changes": []
+    },
+    {
+      "path": "run_manifest.json",
+      "original_sha256": "4bf11dd524ae4a6a502d08e9370b1c3b5875c86fd7c7b29af55eff20c9a1f34e",
+      "public_sha256": "7419d1934aed4475e43f30b23cee5cc8c512e3dc18ca3f6226c3098fe27d96cc",
+      "changes": [
+        "Local path strings/keys replaced by portable identities; original referenced hashes retained."
+      ]
+    },
+    {
+      "path": "source_conditional_shape_polarity_summary.csv",
+      "original_sha256": "75769af7792aaa96486b01f7fa809a6503556e51f8024050ec12aa0f261f5015",
+      "public_sha256": "75769af7792aaa96486b01f7fa809a6503556e51f8024050ec12aa0f261f5015",
+      "changes": []
+    },
+    {
+      "path": "verification.json",
+      "original_sha256": "ef9e77d46e5582f8ca6d9d6ec424b26d2511ff09b637ed8a5771fa01fb103a45",
+      "public_sha256": "ef9e77d46e5582f8ca6d9d6ec424b26d2511ff09b637ed8a5771fa01fb103a45",
+      "changes": []
+    },
+    {
+      "path": "warnings.json",
+      "original_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "public_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "changes": []
+    },
+    {
+      "path": "weighted_amendment/README.md",
+      "original_sha256": "e30ddd006c0c091b8946b9ee7485aa57e8093205fba4a65c2544d961eb5f81dc",
+      "public_sha256": "e30ddd006c0c091b8946b9ee7485aa57e8093205fba4a65c2544d961eb5f81dc",
+      "changes": []
+    },
+    {
+      "path": "weighted_amendment/analysis_plan.json",
+      "original_sha256": "c674080dbc5bd33de91e4c9242882293c2b0e7ce13d0b67d98bd03a781ece9ab",
+      "public_sha256": "c674080dbc5bd33de91e4c9242882293c2b0e7ce13d0b67d98bd03a781ece9ab",
+      "changes": []
+    },
+    {
+      "path": "weighted_amendment/analysis_plan.sha256",
+      "original_sha256": "6f84601d4a500c1b7a5afd7b16611ad2e4ffd39bcdff4ab41a6bcfb9342d6636",
+      "public_sha256": "6f84601d4a500c1b7a5afd7b16611ad2e4ffd39bcdff4ab41a6bcfb9342d6636",
+      "changes": []
+    },
+    {
+      "path": "weighted_confirmation/all_cells.csv",
+      "original_sha256": "b4f5f33bbce5b7164c28ca2262b8b4568582098c6bcd66a02c5b33a9f22dab3d",
+      "public_sha256": "b4f5f33bbce5b7164c28ca2262b8b4568582098c6bcd66a02c5b33a9f22dab3d",
+      "changes": []
+    },
+    {
+      "path": "weighted_confirmation/analysis_plan.json",
+      "original_sha256": "c674080dbc5bd33de91e4c9242882293c2b0e7ce13d0b67d98bd03a781ece9ab",
+      "public_sha256": "c674080dbc5bd33de91e4c9242882293c2b0e7ce13d0b67d98bd03a781ece9ab",
+      "changes": []
+    },
+    {
+      "path": "weighted_confirmation/analysis_plan.sha256",
+      "original_sha256": "6f84601d4a500c1b7a5afd7b16611ad2e4ffd39bcdff4ab41a6bcfb9342d6636",
+      "public_sha256": "6f84601d4a500c1b7a5afd7b16611ad2e4ffd39bcdff4ab41a6bcfb9342d6636",
+      "changes": []
+    },
+    {
+      "path": "weighted_confirmation/declared_scenarios.json",
+      "original_sha256": "b242a3e8c0e973e5004f796d8b62e6c122b4204f97f4eac68e7da3c1b78c350d",
+      "public_sha256": "b242a3e8c0e973e5004f796d8b62e6c122b4204f97f4eac68e7da3c1b78c350d",
+      "changes": []
+    },
+    {
+      "path": "weighted_confirmation/failures.json",
+      "original_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "public_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "changes": []
+    },
+    {
+      "path": "weighted_confirmation/family_results.csv.gz",
+      "original_sha256": "afd332717cb1196df62889aa9df3eeed0b08cf7b73decd8eeba3b76aaa904ac0",
+      "public_sha256": "afd332717cb1196df62889aa9df3eeed0b08cf7b73decd8eeba3b76aaa904ac0",
+      "changes": []
+    },
+    {
+      "path": "weighted_confirmation/method_results.csv.gz",
+      "original_sha256": "1cf152f23e96f273c026cf0bc9361b80ead8d682edc62359f1ef67b8217df835",
+      "public_sha256": "1cf152f23e96f273c026cf0bc9361b80ead8d682edc62359f1ef67b8217df835",
+      "changes": []
+    },
+    {
+      "path": "weighted_confirmation/paired_recovery.csv",
+      "original_sha256": "288fea5ed53b4e19a7eba33a832fb349b8e44a31a04f0a12d92eaded5a849ce8",
+      "public_sha256": "288fea5ed53b4e19a7eba33a832fb349b8e44a31a04f0a12d92eaded5a849ce8",
+      "changes": []
+    },
+    {
+      "path": "weighted_confirmation/pooled_by_trials.csv",
+      "original_sha256": "73267f6dbeb039fb2f70bb3abdb773dc15e7d9c47a86a45f3122dabc18426e37",
+      "public_sha256": "73267f6dbeb039fb2f70bb3abdb773dc15e7d9c47a86a45f3122dabc18426e37",
+      "changes": []
+    },
+    {
+      "path": "weighted_confirmation/run_manifest.json",
+      "original_sha256": "48e4e5d21fc95c415cf61510d8428feef3c4b52927b2c8b7247474b869ad060e",
+      "public_sha256": "5ccab0d0a49ee5159ec6207d148eb6baa4ab39056e89f36952c4c197b14d9d29",
+      "changes": [
+        "Local path strings/keys replaced by portable identities; original referenced hashes retained."
+      ]
+    },
+    {
+      "path": "weighted_confirmation/warnings.json",
+      "original_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "public_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "changes": []
+    },
+    {
+      "path": "weighted_confirmation/window_results.csv.gz",
+      "original_sha256": "29aa51739df88c6bcb8342a9997e27040b82e517e1ae35abc4a5b7bf1e1037e9",
+      "public_sha256": "29aa51739df88c6bcb8342a9997e27040b82e517e1ae35abc4a5b7bf1e1037e9",
+      "changes": []
+    },
+    {
+      "path": "weighted_confirmation_shape_polarity_summary.csv",
+      "original_sha256": "916ba1dbdfb89b0b832c54b0c3a944b431ff5f9e8f646009c128e2c2554cfad0",
+      "public_sha256": "916ba1dbdfb89b0b832c54b0c3a944b431ff5f9e8f646009c128e2c2554cfad0",
+      "changes": []
+    },
+    {
+      "path": "weighted_development/all_cells.csv",
+      "original_sha256": "7a040af742eabd90f5bc75e6b991dfacc0cf65143e70333f9a9ea411b425747d",
+      "public_sha256": "7a040af742eabd90f5bc75e6b991dfacc0cf65143e70333f9a9ea411b425747d",
+      "changes": []
+    },
+    {
+      "path": "weighted_development/derivation_manifest.json",
+      "original_sha256": "47aa66833db1690d5a36098cb7deaa4b13834d74873fd164d8e1ed4366b8ced0",
+      "public_sha256": "cee9a8149a392949284dc6d83354aee9c0a7b8d10718821e81ae96cf7a0fbc06",
+      "changes": [
+        "Local path strings/keys replaced by portable identities; original referenced hashes retained."
+      ]
+    },
+    {
+      "path": "weighted_development/family_results.csv.gz",
+      "original_sha256": "0b09af00169f79fd37d6ae5049e671f7e693b6b180e61c20784dc9ca5edcea08",
+      "public_sha256": "0b09af00169f79fd37d6ae5049e671f7e693b6b180e61c20784dc9ca5edcea08",
+      "changes": []
+    },
+    {
+      "path": "weighted_development/method_results.csv.gz",
+      "original_sha256": "14f50a7d0a6ae52a627367cf96d56f0ed511f3f55185ebb7818500bb2b06afa5",
+      "public_sha256": "14f50a7d0a6ae52a627367cf96d56f0ed511f3f55185ebb7818500bb2b06afa5",
+      "changes": []
+    },
+    {
+      "path": "weighted_development/paired_recovery.csv",
+      "original_sha256": "1dd61f189c875c0cd26f7b5274fc79a984075044774e7bc1bb1dfc821d7bc81a",
+      "public_sha256": "1dd61f189c875c0cd26f7b5274fc79a984075044774e7bc1bb1dfc821d7bc81a",
+      "changes": []
+    },
+    {
+      "path": "weighted_development/pooled_by_trials.csv",
+      "original_sha256": "c3eb499396ed5817adb2997d4e42b34d6bdf484831a8dc6bda0ed031b1a2c948",
+      "public_sha256": "c3eb499396ed5817adb2997d4e42b34d6bdf484831a8dc6bda0ed031b1a2c948",
+      "changes": []
+    },
+    {
+      "path": "weighted_real_baseline/all_cells.csv",
+      "original_sha256": "29a369fa314df3f5f05a249b4b9bb827422f4d4d5a57c120df2ce2ba77deb802",
+      "public_sha256": "29a369fa314df3f5f05a249b4b9bb827422f4d4d5a57c120df2ce2ba77deb802",
+      "changes": []
+    },
+    {
+      "path": "weighted_real_baseline/derivation_manifest.json",
+      "original_sha256": "c7a51d132a4236c8a3584ec5a104ae944eb5379e045b184291a5be9de534fa15",
+      "public_sha256": "1b7cc4b8f2b579593ef88e355b18c41be249fdcb17e0fa5d768b45fdbd7dad7f",
+      "changes": [
+        "Local path strings/keys replaced by portable identities; original referenced hashes retained."
+      ]
+    },
+    {
+      "path": "weighted_real_baseline/family_results.csv.gz",
+      "original_sha256": "ba40344611a6d3d27dcd62032a5b1f864a5878b4f2484c48fd7671ad92a68a51",
+      "public_sha256": "ba40344611a6d3d27dcd62032a5b1f864a5878b4f2484c48fd7671ad92a68a51",
+      "changes": []
+    },
+    {
+      "path": "weighted_real_baseline/method_results.csv.gz",
+      "original_sha256": "037b03cf86cdb6998e7397c65ba3655499907960aa225c4bd8677aab13ef135c",
+      "public_sha256": "037b03cf86cdb6998e7397c65ba3655499907960aa225c4bd8677aab13ef135c",
+      "changes": []
+    },
+    {
+      "path": "weighted_real_baseline/pooled_by_trials.csv",
+      "original_sha256": "a842e6afcff34eb9b24f4ba30e294db7dfcbec26b95a16fdac5dd958279a0d11",
+      "public_sha256": "a842e6afcff34eb9b24f4ba30e294db7dfcbec26b95a16fdac5dd958279a0d11",
+      "changes": []
+    },
+    {
+      "path": "window_results.csv.gz",
+      "original_sha256": "dc3fca2db359b7cf70712af3d0da16f6dd1a8fbad3d9f0966325121d4c934625",
+      "public_sha256": "dc3fca2db359b7cf70712af3d0da16f6dd1a8fbad3d9f0966325121d4c934625",
+      "changes": []
+    },
+    {
+      "path": "weighted_execution_code/validation/benchmark_multiscale.py",
+      "original_sha256": "1f20ade14929fff145bf147fac83eabd12a4fc00670ef9d21e49b643b98e2641",
+      "public_sha256": "1f20ade14929fff145bf147fac83eabd12a4fc00670ef9d21e49b643b98e2641",
+      "changes": [],
+      "stage": "weighted confirmation; matches recorded execution hash"
+    },
+    {
+      "path": "weighted_execution_code/ERPy/multiscale.py",
+      "original_sha256": "dbe9735b7aa4bcde8ef38ba11743b056fd242ee42c3ea55c63e424e1080601ad",
+      "public_sha256": "dbe9735b7aa4bcde8ef38ba11743b056fd242ee42c3ea55c63e424e1080601ad",
+      "changes": [],
+      "stage": "weighted confirmation; matches recorded execution hash"
+    },
+    {
+      "path": "weighted_execution_code/ERPy/crp_energy.py",
+      "original_sha256": "5a26ca705f0117b56de9d35f2a8a197c36c8451063aabcbcdfa64e8d72d96455",
+      "public_sha256": "5a26ca705f0117b56de9d35f2a8a197c36c8451063aabcbcdfa64e8d72d96455",
+      "changes": [],
+      "stage": "weighted confirmation; matches recorded execution hash"
+    },
+    {
+      "path": "weighted_execution_code/tests/test_multiscale.py",
+      "original_sha256": "192a0f9e8f209e3193132fccb989fd3b5edf7f23fe514078db24c741d859b1e1",
+      "public_sha256": "192a0f9e8f209e3193132fccb989fd3b5edf7f23fe514078db24c741d859b1e1",
+      "changes": [],
+      "stage": "support/test snapshot at packaging; not an earlier recorded dependency-hash claim"
+    },
+    {
+      "path": "weighted_execution_code/ERPy/inference.py",
+      "original_sha256": "fc94b5c22c7eccdc8b511c7b93ec62ea39811b0362dd1a39370e85dbbe429e1d",
+      "public_sha256": "fc94b5c22c7eccdc8b511c7b93ec62ea39811b0362dd1a39370e85dbbe429e1d",
+      "changes": [],
+      "stage": "support/test snapshot at packaging; not an earlier recorded dependency-hash claim"
+    },
+    {
+      "path": "weighted_execution_code/validation/benchmark_crp_energy.py",
+      "original_sha256": "8964968715909b1be7058413de2770fd44e1bfde161ef1e20696fb8db80b7014",
+      "public_sha256": "8964968715909b1be7058413de2770fd44e1bfde161ef1e20696fb8db80b7014",
+      "changes": [],
+      "stage": "support/test snapshot at packaging; not an earlier recorded dependency-hash claim"
+    }
+  ]
+}

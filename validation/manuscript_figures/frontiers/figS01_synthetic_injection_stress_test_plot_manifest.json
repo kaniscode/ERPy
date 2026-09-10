@@ -1,0 +1,3122 @@
+{
+  "journal": "frontiers",
+  "width_mm": 180.0,
+  "height_mm": 130.72,
+  "dpi": 600,
+  "pixel_dimensions": [
+    4251,
+    3087
+  ],
+  "minimum_text_pt": 8.0,
+  "panel_labels": "AB",
+  "generator_sha256": "37840e730ddbaf950e5abab5a6b991400907743a43924d654cdd4765e8765644",
+  "source_tables": {
+    "summary.json": "c245ccda2245fbe5469dd48525971365be75910c6c445c1dbbba8ad16518c10b",
+    "family_results.csv": "335162962d8f2329515d05cc144ac7f5ff356f7255b86906662473e46f1def87"
+  },
+  "plotted_cells": [
+    {
+      "method": "primary",
+      "scenario": "early_negative",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_negative",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "primary",
+      "scenario": "early_negative",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_negative",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "early_negative",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_negative",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "primary",
+      "scenario": "early_negative",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 4
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_negative",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 4
+    },
+    {
+      "method": "primary",
+      "scenario": "early_negative",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_negative",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "primary",
+      "scenario": "early_negative",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_negative",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 1
+    },
+    {
+      "method": "primary",
+      "scenario": "early_negative",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_negative",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "primary",
+      "scenario": "early_negative",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 7
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_negative",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 7
+    },
+    {
+      "method": "primary",
+      "scenario": "early_negative",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_negative",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "primary",
+      "scenario": "early_negative",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_negative",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "early_negative",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_negative",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "primary",
+      "scenario": "early_negative",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_negative",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "primary",
+      "scenario": "early_positive",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_positive",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "early_positive",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_positive",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "early_positive",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_positive",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "early_positive",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_positive",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "early_positive",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_positive",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "early_positive",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_positive",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "early_positive",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_positive",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "early_positive",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_positive",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "early_positive",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_positive",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "early_positive",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_positive",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "early_positive",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_positive",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "early_positive",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "early_positive",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "late_negative",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "late_negative",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "late_negative",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "late_negative",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "late_negative",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "late_negative",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "late_negative",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "late_negative",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "late_negative",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "late_negative",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "late_negative",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "late_negative",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "late_negative",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "late_negative",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "late_negative",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "late_negative",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "late_negative",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "late_negative",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "late_negative",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "late_negative",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "late_negative",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "late_negative",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "late_negative",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "late_negative",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "residual_artifact",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "residual_artifact",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 2
+    },
+    {
+      "method": "primary",
+      "scenario": "residual_artifact",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "residual_artifact",
+      "n_trials": 8,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "residual_artifact",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "residual_artifact",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "primary",
+      "scenario": "residual_artifact",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "residual_artifact",
+      "n_trials": 8,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "residual_artifact",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "residual_artifact",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 8
+    },
+    {
+      "method": "primary",
+      "scenario": "residual_artifact",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "residual_artifact",
+      "n_trials": 12,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "residual_artifact",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "residual_artifact",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "primary",
+      "scenario": "residual_artifact",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "residual_artifact",
+      "n_trials": 12,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "residual_artifact",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "residual_artifact",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "primary",
+      "scenario": "residual_artifact",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "residual_artifact",
+      "n_trials": 24,
+      "amplitude_uv": 100,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "primary",
+      "scenario": "residual_artifact",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 0
+    },
+    {
+      "method": "ablation",
+      "scenario": "residual_artifact",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 25,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 10
+    },
+    {
+      "method": "primary",
+      "scenario": "residual_artifact",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 1
+    },
+    {
+      "method": "ablation",
+      "scenario": "residual_artifact",
+      "n_trials": 24,
+      "amplitude_uv": 250,
+      "noise_sd_uv": 100,
+      "families": 5,
+      "target_contacts": 10,
+      "target_calls": 5
+    }
+  ],
+  "cell_annotations": [
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "4/10",
+      "within_own_cell": true,
+      "contrast_ratio": 10.947899949443052
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "7/10",
+      "within_own_cell": true,
+      "contrast_ratio": 6.818675805839827
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "1/10",
+      "within_own_cell": true,
+      "contrast_ratio": 16.801899633376927
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "4/10",
+      "within_own_cell": true,
+      "contrast_ratio": 10.947899949443052
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "1/10",
+      "within_own_cell": true,
+      "contrast_ratio": 16.801899633376927
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "7/10",
+      "within_own_cell": true,
+      "contrast_ratio": 6.818675805839827
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "2/10",
+      "within_own_cell": true,
+      "contrast_ratio": 14.619304845371587
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "8/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.8090565594047465
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "0/10",
+      "within_own_cell": true,
+      "contrast_ratio": 19.10744828264095
+    },
+    {
+      "text": "10/10",
+      "within_own_cell": true,
+      "contrast_ratio": 5.02271319365152
+    },
+    {
+      "text": "5/10",
+      "within_own_cell": true,
+      "contrast_ratio": 9.37185350367194
+    }
+  ],
+  "marker_bounds": [],
+  "text_bounds": [
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        191.177657480315,
+        387.75590551181097,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        244.32726377952758,
+        387.75590551181097,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        293.9143700787402,
+        387.75590551181097,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "4/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        350.6264763779528,
+        387.75590551181097,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        191.177657480315,
+        360.66929133858264,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        244.32726377952758,
+        360.66929133858264,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        293.9143700787402,
+        360.66929133858264,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "7/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        350.6264763779528,
+        360.66929133858264,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        191.177657480315,
+        333.58267716535426,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        244.32726377952758,
+        333.58267716535426,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        293.9143700787402,
+        333.58267716535426,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        347.0639763779528,
+        333.58267716535426,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        191.177657480315,
+        306.4960629921259,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        244.32726377952758,
+        306.4960629921259,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        297.4768700787402,
+        306.4960629921259,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        350.6264763779528,
+        306.4960629921259,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        191.177657480315,
+        279.4094488188976,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        244.32726377952758,
+        279.4094488188976,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        297.4768700787402,
+        279.4094488188976,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        350.6264763779528,
+        279.4094488188976,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        191.177657480315,
+        252.32283464566922,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        244.32726377952758,
+        252.32283464566922,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        297.4768700787402,
+        252.32283464566922,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        350.6264763779528,
+        252.32283464566922,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        191.177657480315,
+        225.2362204724409,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        244.32726377952758,
+        225.2362204724409,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        297.4768700787402,
+        225.2362204724409,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        350.6264763779528,
+        225.2362204724409,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        191.177657480315,
+        198.14960629921256,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        244.32726377952758,
+        198.14960629921256,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        297.4768700787402,
+        198.14960629921256,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        350.6264763779528,
+        198.14960629921256,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        191.177657480315,
+        171.0629921259842,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        244.32726377952758,
+        171.0629921259842,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        297.4768700787402,
+        171.0629921259842,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        350.6264763779528,
+        171.0629921259842,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        191.177657480315,
+        143.97637795275585,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        244.32726377952758,
+        143.97637795275585,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        297.4768700787402,
+        143.97637795275585,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        350.6264763779528,
+        143.97637795275585,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        191.177657480315,
+        116.88976377952753,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        244.32726377952758,
+        116.88976377952753,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        297.4768700787402,
+        116.88976377952753,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        350.6264763779528,
+        116.88976377952753,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        191.177657480315,
+        89.8031496062992,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        244.32726377952758,
+        89.8031496062992,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        297.4768700787402,
+        89.8031496062992,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "1/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        350.6264763779528,
+        89.8031496062992,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "8",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        161.70702099737534,
+        386.75590551181097,
+        7.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "12",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        154.58202099737534,
+        359.66929133858264,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "24",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        154.58202099737534,
+        332.58267716535426,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "8",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        161.70702099737534,
+        305.4960629921259,
+        7.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "12",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        154.58202099737534,
+        278.4094488188976,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "24",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        154.58202099737534,
+        251.32283464566922,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "8",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        161.70702099737534,
+        224.2362204724409,
+        7.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "12",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        154.58202099737534,
+        197.14960629921256,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "24",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        154.58202099737534,
+        170.0629921259842,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "8",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        161.70702099737534,
+        142.97637795275585,
+        7.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "12",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        154.58202099737534,
+        115.88976377952753,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "24",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        154.58202099737534,
+        88.8031496062992,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        481.7096456692914,
+        387.75590551181097,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        538.4217519685039,
+        387.75590551181097,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        588.0088582677166,
+        387.75590551181097,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "4/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        644.7209645669293,
+        387.75590551181097,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        481.7096456692914,
+        360.66929133858264,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "1/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        538.4217519685039,
+        360.66929133858264,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        588.0088582677166,
+        360.66929133858264,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "7/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        644.7209645669293,
+        360.66929133858264,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        481.7096456692914,
+        333.58267716535426,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        538.4217519685039,
+        333.58267716535426,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        588.0088582677166,
+        333.58267716535426,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        641.1584645669293,
+        333.58267716535426,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        485.2721456692914,
+        306.4960629921259,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        538.4217519685039,
+        306.4960629921259,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        591.5713582677166,
+        306.4960629921259,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        644.7209645669293,
+        306.4960629921259,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        485.2721456692914,
+        279.4094488188976,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        538.4217519685039,
+        279.4094488188976,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        591.5713582677166,
+        279.4094488188976,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        644.7209645669293,
+        279.4094488188976,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        485.2721456692914,
+        252.32283464566922,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        538.4217519685039,
+        252.32283464566922,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        591.5713582677166,
+        252.32283464566922,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        644.7209645669293,
+        252.32283464566922,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        485.2721456692914,
+        225.2362204724409,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        538.4217519685039,
+        225.2362204724409,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        591.5713582677166,
+        225.2362204724409,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        644.7209645669293,
+        225.2362204724409,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        485.2721456692914,
+        198.14960629921256,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        538.4217519685039,
+        198.14960629921256,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        591.5713582677166,
+        198.14960629921256,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        644.7209645669293,
+        198.14960629921256,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        485.2721456692914,
+        171.0629921259842,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        538.4217519685039,
+        171.0629921259842,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        591.5713582677166,
+        171.0629921259842,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        644.7209645669293,
+        171.0629921259842,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "2/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        485.2721456692914,
+        143.97637795275585,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        538.4217519685039,
+        143.97637795275585,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        588.0088582677166,
+        143.97637795275585,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        644.7209645669293,
+        143.97637795275585,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "8/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        485.2721456692914,
+        116.88976377952753,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        538.4217519685039,
+        116.88976377952753,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        588.0088582677166,
+        116.88976377952753,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        644.7209645669293,
+        116.88976377952753,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        481.7096456692914,
+        89.8031496062992,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        538.4217519685039,
+        89.8031496062992,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "10/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        588.0088582677166,
+        89.8031496062992,
+        32.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "5/10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        644.7209645669293,
+        89.8031496062992,
+        25.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "8",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        455.8015091863518,
+        386.75590551181097,
+        7.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "12",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        448.6765091863518,
+        359.66929133858264,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "24",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        448.6765091863518,
+        332.58267716535426,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "8",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        455.8015091863518,
+        305.4960629921259,
+        7.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "12",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        448.6765091863518,
+        278.4094488188976,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "24",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        448.6765091863518,
+        251.32283464566922,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "8",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        455.8015091863518,
+        224.2362204724409,
+        7.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "12",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        448.6765091863518,
+        197.14960629921256,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "24",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        448.6765091863518,
+        170.0629921259842,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "8",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        455.8015091863518,
+        142.97637795275585,
+        7.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "12",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        448.6765091863518,
+        115.88976377952753,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "24",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        448.6765091863518,
+        88.8031496062992,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Target-contact call proportion (%)",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        337.13681102362216,
+        12.158355205599293,
+        186.75,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "0",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        233.83907480314966,
+        27.71391076115485,
+        7.125,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "25",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        326.83169291338595,
+        27.71391076115485,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "50",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        423.38681102362216,
+        27.71391076115485,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "75",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        519.9419291338585,
+        27.71391076115485,
+        14.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "100",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        612.9345472440947,
+        27.71391076115485,
+        21.375,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Fixed synthetic injection stress test",
+      "font_size_pt": 10.0,
+      "bounds_px": [
+        24.80314960629922,
+        488.4566929133858,
+        281.0,
+        14.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "240 injection families \u00b7 8 contacts per family",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        24.80314960629922,
+        468.75590551181097,
+        247.99999999999997,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Cells: detected targets / 10",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        532.6082677165355,
+        468.75590551181097,
+        151.25,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "A",
+      "font_size_pt": 10.0,
+      "bounds_px": [
+        151.65354330708664,
+        448.9606299212598,
+        10.75,
+        14.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Primary N1 detector",
+      "font_size_pt": 9.0,
+      "bounds_px": [
+        177.16535433070868,
+        448.9606299212598,
+        142.625,
+        13.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Amplitude / noise SD (\u00b5V)",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        211.71456692913392,
+        429.99999999999994,
+        143.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "100/25",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        184.05265748031496,
+        410.36220472440937,
+        39.375,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "100/100",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        233.63976377952758,
+        410.36220472440937,
+        46.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "250/25",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        290.3518700787402,
+        410.36220472440937,
+        39.375,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "250/100",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        339.93897637795277,
+        410.36220472440937,
+        46.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Trials",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        129.53149606299215,
+        410.36220472440937,
+        28.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Early negative\nN1 target",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        24.80314960629922,
+        354.8692913385826,
+        80.375,
+        21.600000000000023
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Early positive\nchallenge",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        24.80314960629922,
+        273.6094488188976,
+        75.25,
+        21.600000000000023
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Late negative\nchallenge",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        24.80314960629922,
+        192.3496062992126,
+        76.375,
+        21.600000000000023
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Residual artifact\nchallenge",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        24.80314960629922,
+        111.08976377952754,
+        90.625,
+        21.599999999999994
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "B",
+      "font_size_pt": 10.0,
+      "bounds_px": [
+        445.74803149606305,
+        448.9606299212598,
+        10.625,
+        14.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "No-floor ablation",
+      "font_size_pt": 9.0,
+      "bounds_px": [
+        471.2598425196851,
+        448.9606299212598,
+        118.5,
+        13.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Amplitude / noise SD (\u00b5V)",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        505.80905511811034,
+        429.99999999999994,
+        143.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "100/25",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        478.1471456692914,
+        410.36220472440937,
+        39.375,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "100/100",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        527.734251968504,
+        410.36220472440937,
+        46.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "250/25",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        584.4463582677166,
+        410.36220472440937,
+        39.375,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "250/100",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        634.0334645669292,
+        410.36220472440937,
+        46.5,
+        10.0
+      ],
+      "within_canvas": true
+    },
+    {
+      "text": "Trials",
+      "font_size_pt": 8.0,
+      "bounds_px": [
+        423.6259842519686,
+        410.36220472440937,
+        28.5,
+        10.0
+      ],
+      "within_canvas": true
+    }
+  ],
+  "assets": {
+    "svg": {
+      "name": "figS01_synthetic_injection_stress_test.svg",
+      "sha256": "9f5d33cfe36a1e56ed3e2c8161791ce57f79b8ab310c083b1b271540029966c7"
+    },
+    "pdf": {
+      "name": "figS01_synthetic_injection_stress_test.pdf",
+      "sha256": "cc257d442df01ded5647c775846817c86c657e1e6003891592b3356d05878105"
+    },
+    "png": {
+      "name": "figS01_synthetic_injection_stress_test.png",
+      "sha256": "6bbd4d2396835087b1ba60dd00e0f42d72110de972b70b78fdc863ed29f5e452"
+    },
+    "tiff": {
+      "name": "figS01_synthetic_injection_stress_test.tiff",
+      "sha256": "4e5ccc118753f3a6ea8a606fc34fb98b783b674144fe08c62b568aebd7c4896c"
+    }
+  },
+  "visual_qa_status": "pending_direct_inspection"
+}

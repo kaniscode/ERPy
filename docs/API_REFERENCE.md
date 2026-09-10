@@ -1,8 +1,12 @@
-# ERPy 1.0.0 API reference
+# ERPy 1.1.0rc1 API reference
 
-This reference is generated from the released public signatures and docstrings.
+Project: [ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis](../README.md).
+
+This reference is generated from the checked-out public signatures and docstrings.
 It documents the stable `ERPy` import surface and every exported visualization.
 Scientific definitions and defaults are explained in [METHODS.md](METHODS.md).
+The optional module APIs have dedicated guides:
+[label-free N1 detection](N1_LABEL_FREE.md), [secondary supervised N1 development](N1_DEVELOPMENT.md), and [tests across several windows](MULTISCALE_DEVELOPMENT.md).
 
 ## Core API (`ERPy`)
 
@@ -1346,7 +1350,7 @@ make configuration errors indistinguishable from unsuitable data.
 ### `CRPEnergyResult`
 
 ```python
-CRPEnergyResult(channel: 'str', significant: 'bool', classification: 'str', p_crp: 'float', p_energy: 'float', p_joint: 'float', q_joint: 'float', crp_significant: 'bool', energy_significant: 'bool', crp_statistic: 'float', energy_statistic: 'float', rms_response: 'float', rms_baseline: 'float', rms_ratio_db: 'float', canonical_energy: 'float', canonical_energy_fraction: 'float', response_duration: 'float', n_trials_total: 'int', n_trials_clean: 'int', canonical_waveform: 'np.ndarray', canonical_waveform_times: 'np.ndarray', trial_coefficients: 'np.ndarray', clean_trial_indices: 'np.ndarray', crp_explained_variance: 'float', crp_snr: 'float', reproducibility_test_exact: 'bool', reproducibility_n_randomizations: 'int', energy_test_exact: 'bool', energy_n_permutations: 'int', response_window: 'tuple[float, float]', baseline_window: 'tuple[float, float]', qc_status: 'str', parameters: 'str', detector_version: 'str' = '1.0.0', notes: 'str' = '') -> None
+CRPEnergyResult(channel: 'str', significant: 'bool', classification: 'str', p_crp: 'float', p_energy: 'float', p_joint: 'float', q_joint: 'float', crp_significant: 'bool', energy_significant: 'bool', crp_statistic: 'float', energy_statistic: 'float', rms_response: 'float', rms_baseline: 'float', rms_ratio_db: 'float', canonical_energy: 'float', canonical_energy_fraction: 'float', response_duration: 'float', n_trials_total: 'int', n_trials_clean: 'int', canonical_waveform: 'np.ndarray', canonical_waveform_times: 'np.ndarray', trial_coefficients: 'np.ndarray', clean_trial_indices: 'np.ndarray', crp_explained_variance: 'float', crp_snr: 'float', reproducibility_test_exact: 'bool', reproducibility_n_randomizations: 'int', energy_test_exact: 'bool', energy_n_permutations: 'int', response_window: 'tuple[float, float]', baseline_window: 'tuple[float, float]', qc_status: 'str', parameters: 'str', detector_version: 'str' = '1.0.0', notes: 'str' = '', n_response_samples: 'int' = 0, n_baseline_samples: 'int' = 0) -> None
 ```
 
 One channel's unadjusted reproducibility-energy conjunction result.
@@ -1396,6 +1400,8 @@ explained fraction remain descriptive CRP quantities.
 | `parameters` | str | required |
 | `detector_version` | str | `'1.0.0'` |
 | `notes` | str | `''` |
+| `n_response_samples` | int | `0` |
+| `n_baseline_samples` | int | `0` |
 
 **Returns:** None.
 
@@ -3840,6 +3846,14 @@ epoch(self, stim_pair: 'str', pipeline: 'str | list[tuple[str, dict[str, Any]]]'
 
 Preprocess and epoch one stimulation pair, optionally using a cache.
 
+Automatic reuse verifies current event and source contents plus effective
+processing settings. Legacy caches without this identity are recomputed.
+``auto`` reads registered raw inputs on a miss; a window export is used
+when the original inputs are unavailable. Full source hashing costs I/O.
+NWB and custom processing hooks currently disable automatic reuse.
+Configuration/metadata edits on disk require constructing a new Patient;
+this method uses the DataLoader's current in-memory settings.
+
 **Parameters**
 
 | Name | Type | Default |
@@ -3994,6 +4008,14 @@ epoch(self, stim_pair: 'str', pipeline: 'str | list[tuple[str, dict[str, Any]]]'
 ```
 
 Preprocess and epoch one stimulation pair, optionally using a cache.
+
+Automatic reuse verifies current event and source contents plus effective
+processing settings. Legacy caches without this identity are recomputed.
+``auto`` reads registered raw inputs on a miss; a window export is used
+when the original inputs are unavailable. Full source hashing costs I/O.
+NWB and custom processing hooks currently disable automatic reuse.
+Configuration/metadata edits on disk require constructing a new Patient;
+this method uses the DataLoader's current in-memory settings.
 
 **Parameters**
 
@@ -5124,7 +5146,9 @@ Test a paired or one-sample contrast by flipping observation signs.
 
 The test is exact when the number of finite observations does not exceed
 ``max_exact_observations``. For larger samples, deterministic Monte Carlo
-resampling is used by default.
+resampling is used by default. Monte Carlo signs are sampled uniformly
+with replacement; the observed assignment is additionally counted with
+the plus-one correction, so a sampled p-value cannot be zero.
 
 **Parameters**
 
@@ -5171,6 +5195,9 @@ Test fixed-window trial reproducibility by whole-trial sign flips.
 The statistic is the mean of all ordered, semi-normalized cross-trial
 projections. Whole-trial Rademacher signs preserve every trial norm and
 account for the dependence among projections that share trials. The
+null requires joint invariance of the response vectors under independent
+whole-trial sign changes; independent centrally symmetric trials suffice.
+This condition must hold after preprocessing and trial selection. The
 response window must be fixed before this function is called; a
 data-selected CRP duration must not define this inferential array.
 
@@ -5482,7 +5509,12 @@ time-frequency point.
 paired_log_rms_sign_flip_test(log_rms_differences: 'np.ndarray', *, n_permutations: 'int' = 5000, max_exact_trials: 'int' = 16, random_state: 'int | np.random.Generator | None' = 42) -> 'tuple[float, float, bool, int]'
 ```
 
-One-sided paired sign-flip test of mean log RMS ratio against zero.
+Upper-tail sign-flip test of paired log RMS differences.
+
+Null validity requires joint invariance under coordinate-wise sign
+changes, as supplied by independent centrally symmetric differences.
+It is not an unrestricted finite-sample test of every distribution with
+a nonpositive mean difference.
 
 Exact enumeration omits the observed all-positive assignment and adds it
 back through the standard plus-one formula. This is algebraically the
@@ -5703,7 +5735,10 @@ Evaluate fixed-window reproducibility and paired energy for one channel.
 Whole-trial sign flips supply the reproducibility component over the full
 declared response window. Matched response and baseline segments are each
 demeaned separately before paired log-RMS sign flips. A descriptive CRP
-model is fitted independently of the inferential window selection.
+model is fitted independently of the inferential window selection. An
+unavailable descriptive model does not discard valid component p-values.
+Epochs must cover the effective response window within half a sample;
+truncated windows return an unavailable result rather than a shorter test.
 
 **Parameters**
 
@@ -5745,6 +5780,22 @@ audit_waveforms(epochs: 'Any', detections: 'pd.DataFrame', artifact_responses: '
 ```
 
 Recompute waveform metrics and classify responses needing review.
+
+Default component decisions are ``primary_reproducibility_pass`` and
+``primary_energy_pass``. ``primary_detector_pass`` is the joint BH decision
+(``primary_significant`` in the detection table); ``primary_qc_pass`` also
+requires contact-QC eligibility.
+
+Standalone CRP/Kundu calls use nullable ``comparator_crp_pass`` and
+``comparator_kundu_pass`` with explicit availability and reason fields.
+``primary_shape_pass`` and ``primary_magnitude_pass`` are deprecated aliases
+for CRP and Kundu respectively, including their missing states; they are
+not the default reproducibility/energy components. Missing comparator calls
+indicate not run or unavailable, not a negative result. Matching
+``comparator_*_available`` and ``comparator_*_availability_reason`` columns
+retain the evidence status and distinguish ``not_run``.
+``comparator_crp_kundu_disagreement`` is reported only when both comparator
+calls have applicable evidence; this diagnostic does not change eligibility.
 
 **Parameters**
 

@@ -1,0 +1,25 @@
+[
+  {
+    "method": "N1_logistic_morphology",
+    "average_precision": 0.8147243081272544,
+    "available": 32048,
+    "total": 32048,
+    "positive_weight": 4186.666666666666,
+    "rater_weighted_brier": 0.04805574480331211
+  },
+  {
+    "method": "N1_logistic_hybrid",
+    "average_precision": 0.846025010412417,
+    "available": 32048,
+    "total": 32048,
+    "positive_weight": 4186.666666666666,
+    "rater_weighted_brier": 0.04395003625538562
+  },
+  {
+    "method": "original_ERPy",
+    "average_precision": 0.5444682836117984,
+    "available": 32048,
+    "total": 32048,
+    "positive_weight": 4186.666666666666
+  }
+]

@@ -1,0 +1,7 @@
+method,reference,metric,difference,low,high,ci_excludes_zero,n_records,n_subjects,role
+label_free_N1,archived_ER_detect,sensitivity,-0.1280652866242039,-0.250663812343291,-0.0375610799437859,True,32048,13,prespecified_family_adjusted_primary
+label_free_N1,archived_ER_detect,specificity,0.0085722147779478,-0.001586929645124,0.0199641521074555,False,32048,13,prespecified_family_adjusted_primary
+label_free_N1,archived_ER_detect,ppv,0.0342638368272772,-0.0213982521392574,0.1094453716680892,False,32048,13,prespecified_family_adjusted_primary
+N1_nominal_screen,archived_ER_detect,sensitivity,-0.02559713375796191,-0.07173893548302021,0.009371164559800466,False,32048,13,post_result_nominal_screen_diagnostic
+N1_nominal_screen,archived_ER_detect,specificity,0.0017168357580398252,-0.008093753457732503,0.010497448347986313,False,32048,13,post_result_nominal_screen_diagnostic
+N1_nominal_screen,archived_ER_detect,ppv,0.005597650588769931,-0.04511390625943934,0.0614201038452116,False,32048,13,post_result_nominal_screen_diagnostic

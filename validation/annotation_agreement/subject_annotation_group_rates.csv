@@ -1,0 +1,51 @@
+site,subject,annotation_group,n_records,n_calls,call_rate
+Mayo,MAYO02,Single-rater N1-negative,1723,15,0.008705745792222866
+Mayo,MAYO02,Single-rater N1-positive,66,13,0.19696969696969696
+Mayo,MAYO03,Single-rater N1-negative,676,75,0.11094674556213018
+Mayo,MAYO03,Single-rater N1-positive,34,20,0.5882352941176471
+Mayo,MAYO04,Mixed N1 ratings (>=2 raters),9,3,0.3333333333333333
+Mayo,MAYO04,Single-rater N1-positive,1,0,0.0
+Mayo,MAYO04,Unanimous N1-negative (>=2 raters),208,11,0.052884615384615384
+Mayo,MAYO04,Unanimous N1-positive (>=2 raters),13,9,0.6923076923076923
+Mayo,MAYO05,Mixed N1 ratings (>=2 raters),21,8,0.38095238095238093
+Mayo,MAYO05,Single-rater N1-negative,6,0,0.0
+Mayo,MAYO05,Unanimous N1-negative (>=2 raters),3485,55,0.015781922525107604
+Mayo,MAYO05,Unanimous N1-positive (>=2 raters),32,18,0.5625
+UMCU,UMCU20,Mixed N1 ratings (>=2 raters),54,42,0.7777777777777778
+UMCU,UMCU20,Single-rater N1-negative,8,5,0.625
+UMCU,UMCU20,Single-rater N1-positive,1,1,1.0
+UMCU,UMCU20,Unanimous N1-negative (>=2 raters),533,146,0.27392120075046905
+UMCU,UMCU20,Unanimous N1-positive (>=2 raters),52,50,0.9615384615384616
+UMCU,UMCU21,Mixed N1 ratings (>=2 raters),236,147,0.6228813559322034
+UMCU,UMCU21,Unanimous N1-negative (>=2 raters),1269,178,0.14026792750197006
+UMCU,UMCU21,Unanimous N1-positive (>=2 raters),112,103,0.9196428571428571
+UMCU,UMCU22,Mixed N1 ratings (>=2 raters),726,428,0.5895316804407713
+UMCU,UMCU22,Single-rater N1-negative,9,1,0.1111111111111111
+UMCU,UMCU22,Single-rater N1-positive,4,4,1.0
+UMCU,UMCU22,Unanimous N1-negative (>=2 raters),3726,437,0.11728395061728394
+UMCU,UMCU22,Unanimous N1-positive (>=2 raters),627,511,0.8149920255183413
+UMCU,UMCU23,Mixed N1 ratings (>=2 raters),276,228,0.8260869565217391
+UMCU,UMCU23,Single-rater N1-negative,3,1,0.3333333333333333
+UMCU,UMCU23,Unanimous N1-negative (>=2 raters),1588,397,0.25
+UMCU,UMCU23,Unanimous N1-positive (>=2 raters),428,396,0.9252336448598131
+UMCU,UMCU25,Mixed N1 ratings (>=2 raters),196,100,0.5102040816326531
+UMCU,UMCU25,Single-rater N1-negative,2,0,0.0
+UMCU,UMCU25,Single-rater N1-positive,1,1,1.0
+UMCU,UMCU25,Unanimous N1-negative (>=2 raters),1834,96,0.05234460196292257
+UMCU,UMCU25,Unanimous N1-positive (>=2 raters),230,182,0.7913043478260869
+UMCU,UMCU26,Mixed N1 ratings (>=2 raters),438,395,0.9018264840182648
+UMCU,UMCU26,Single-rater N1-negative,5,1,0.2
+UMCU,UMCU26,Single-rater N1-positive,4,4,1.0
+UMCU,UMCU26,Unanimous N1-negative (>=2 raters),1603,536,0.3343730505302558
+UMCU,UMCU26,Unanimous N1-positive (>=2 raters),425,416,0.9788235294117648
+UMCU,UMCU59,Mixed N1 ratings (>=2 raters),39,5,0.1282051282051282
+UMCU,UMCU59,Unanimous N1-negative (>=2 raters),1647,24,0.014571948998178506
+UMCU,UMCU59,Unanimous N1-positive (>=2 raters),159,76,0.4779874213836478
+UMCU,UMCU62,Mixed N1 ratings (>=2 raters),214,89,0.4158878504672897
+UMCU,UMCU62,Single-rater N1-negative,4,0,0.0
+UMCU,UMCU62,Single-rater N1-positive,9,1,0.1111111111111111
+UMCU,UMCU62,Unanimous N1-negative (>=2 raters),3864,267,0.06909937888198758
+UMCU,UMCU62,Unanimous N1-positive (>=2 raters),373,210,0.5630026809651475
+UMCU,UMCU67,Mixed N1 ratings (>=2 raters),381,86,0.22572178477690288
+UMCU,UMCU67,Unanimous N1-negative (>=2 raters),4415,95,0.021517553793884484
+UMCU,UMCU67,Unanimous N1-positive (>=2 raters),352,160,0.45454545454545453
