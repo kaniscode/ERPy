@@ -39,8 +39,12 @@ RULE_GRID = [dict(amplitude_z=z,prominence_z=p,min_width_ms=w,min_trial_fraction
 
 
 def sha(path):
-    with Path(path).open('rb') as f:
-        return hashlib.file_digest(f,'sha256').hexdigest()
+    # Stream files on all supported Python versions (file_digest needs 3.11).
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
 
 
 def clean_json(value):

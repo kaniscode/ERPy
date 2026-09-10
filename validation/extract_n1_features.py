@@ -19,8 +19,12 @@ from predict_erdetect_epochs import load_epochs
 
 
 def sha(path):
-    with Path(path).open("rb") as f:
-        return hashlib.file_digest(f, "sha256").hexdigest()
+    # Stream files on all supported Python versions (file_digest needs 3.11).
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
 
 
 def extract_file(path: Path) -> tuple[list[dict], dict]:

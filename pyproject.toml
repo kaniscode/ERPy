@@ -19,7 +19,9 @@ classifiers = [
 ]
 
 dependencies = [
-    "numpy>=1.22",
+    # Python 3.9 uses PyTables 3.9 wheels, which require the NumPy 1.x ABI.
+    "numpy>=1.22,<2; python_version < '3.10'",
+    "numpy>=1.22; python_version >= '3.10'",
     "pandas>=1.5",
     "scipy>=1.9",
     "matplotlib>=3.6",

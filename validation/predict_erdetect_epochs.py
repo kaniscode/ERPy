@@ -52,8 +52,12 @@ def configurations() -> dict[str, CRPEnergyConfig]:
 
 
 def _sha256(path: Path) -> str:
+    # Stream files on all supported Python versions (file_digest needs 3.11).
+    digest = hashlib.sha256()
     with path.open("rb") as stream:
-        return hashlib.file_digest(stream, "sha256").hexdigest()
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
 
 
 def _json_bytes(value: dict) -> bytes:
