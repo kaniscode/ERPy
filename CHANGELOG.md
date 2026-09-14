@@ -14,7 +14,6 @@
 - Add experimental multiscale projection–energy variants and report their power costs. The original general detector remains the default; the tested variants did not improve overall recovery in confirmation.
 - Provide executed real-cohort/public-data examples, pinned public source identities, external-validation reproduction artifacts, and publication figure recipes.
 
-This candidate has not been published by the assistant. The final public commit and any archived release identifier must be recorded by the author. Historical outputs retain the implementation identities under which they were generated; the version number alone does not identify those immutable artifacts.
 
 ## 1.0.0
 
