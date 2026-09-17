@@ -765,7 +765,7 @@ plot_surface_connectome(
 ```
 
 The lead [quick-start notebook](notebooks/examples/00_quickstart.ipynb) uses an
-actual deidentified recording from the CNS/ACC–PAG cohort, with source trial QC,
+actual deidentified example cohort recording, with source trial QC,
 waveforms, and single-contact reproducibility/energy results. Its stored figures
 are viewable directly on GitHub; rerunning requires the authorized local trial
 export configured through `ERPY_COHORT_EXAMPLE_DIR`. Restricted signals and

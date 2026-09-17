@@ -32,6 +32,6 @@ comparison uses the actual archived negative-N1 calls, rather than executing
 or approximating a new ER-detect package run. ER-detect's broader capabilities
 are described in its paper.
 
-No governed CNS/ACC–PAG raw recordings are included here. The lead notebook's
+No governed deidentified-example raw recordings are included here. The lead notebook's
 external governed example has separate access requirements and is not part of
 this public evaluation cohort.

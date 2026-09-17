@@ -97,7 +97,7 @@ preserves the individual prediction CSVs, exact integer seeds, q-values and
 family membership. The software commit recorded in the original scoring
 summary identifies its checkout; the separately recorded scorer SHA256 identifies
 the then-uncommitted scorer. Cite the installed software version as well as the retained run manifest. No raw governed
-CNS/ACC–PAG data are included in these external-validation artifacts.
+deidentified example data are included in these external-validation artifacts.
 
 ## Using the released evidence
 
@@ -132,7 +132,7 @@ sample support, while exact clean-trial selection also requires source finite ma
 ## Relationship to the lead example
 
 The [executed lead notebook](../notebooks/examples/00_quickstart.ipynb) uses an
-actual deidentified recording from the governed CNS/ACC–PAG analysis cohort.
+actual recording from the governed deidentified example analysis cohort.
 It is a separate illustration and is not synthetic. Its authorized source is
 loaded externally. The public ds004774 evaluation above and fully generated
 simulation benchmarks serve separate validation purposes.

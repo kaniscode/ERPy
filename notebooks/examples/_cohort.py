@@ -59,10 +59,10 @@ def load_cohort_example() -> tuple[Epochs, pd.DataFrame, dict]:
     epochs = Epochs(
         frame, sfreq=2000.0, tmin=-0.4, tmax=0.6, baseline=(-0.4, -0.03),
         stim_ch=[], zero_time=0.015,
-        metadata={"source": "deidentified CNS/ACC–PAG cohort recording", "source_qc": "retained/excluded status from the generating analysis"},
+        metadata={"source": "deidentified example cohort recording", "source_qc": "retained/excluded status from the generating analysis"},
     )
     provenance = {
-        "data_source": "deidentified CNS/ACC–PAG cohort recording",
+        "data_source": "deidentified example cohort recording",
         "stimulation": "ACC stimulation",
         "recording": DISPLAY_CHANNEL,
         "input_sha256": INPUT_SHA256,

@@ -32,7 +32,7 @@ After the initial Mayo pilot was scored, source-event comparison established tha
 
 ## Reproducibility and limits
 
-Retain raw-object/range checksums, dataset metadata version, extraction settings, software environment, code commit, seeds, row-level predictions, label joins, exclusion tables and figure-generation code. Public repository artifacts may include public-data-derived summaries and recipes, subject to the dataset's stated license. The governed CNS/ACC–PAG worked example is a separate resource and must not be mixed into this public validation cohort.
+Retain raw-object/range checksums, dataset metadata version, extraction settings, software environment, code commit, seeds, row-level predictions, label joins, exclusion tables and figure-generation code. Public repository artifacts may include public-data-derived summaries and recipes, subject to the dataset's stated license. The governed deidentified worked example is a separate resource and must not be mixed into this public validation cohort.
 
 Reporting must distinguish paper-reported ER-detect results, newly reproduced comparator results, and new ERPy results. No inference of superiority is planned from unpaired published headline metrics.
 

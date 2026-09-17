@@ -8,7 +8,7 @@ intracranial recordings. It is not a medical device and its automated labels
 must be reviewed alongside the waveforms and quality-control reports.
 
 Start with the [worked cohort recording](../notebooks/examples/00_quickstart.ipynb)
-to see actual deidentified trials and executed figures from the CNS/ACC–PAG
+to see actual deidentified trials and executed figures from the example
 analysis cohort. Its source recording is restricted; viewing the stored
 figures does not require downloading that input.
 
@@ -159,7 +159,7 @@ python -m jupyter lab notebooks/examples/00_quickstart.ipynb
 ```
 
 JupyterLab should open in a web browser. The lead notebook 00 displays an actual
-deidentified CNS/ACC–PAG cohort recording. Rerunning it requires authorized
+deidentified example cohort recording. Rerunning it requires authorized
 access to the documented trial export and `ERPY_COHORT_EXAMPLE_DIR` set before
 starting Jupyter. Its stored figures are available without those restricted
 inputs. Teaching notebooks 01 through 06 create deterministic synthetic data;

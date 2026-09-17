@@ -4,7 +4,7 @@ Project: [ERPy: an auditable complete pipeline for intracranial stimulation resp
 
 The example notebooks include executed tables and inline PNG figures that can
 be viewed directly on GitHub. The lead notebook 00 uses an actual deidentified
-recording from the CNS/ACC–PAG cohort, with anatomical display labels.
+recording from the deidentified example cohort, with anatomical display labels.
 Notebooks 01–06 use deterministic synthetic signals and fictitious coordinates.
 Notebook 07 runs a small, explicitly
 identified public OpenNeuro ds003708 recording subset. Notebook 08 applies a
