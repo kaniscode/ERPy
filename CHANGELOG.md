@@ -1,5 +1,19 @@
 # Changes
 
+## Unreleased
+
+Code organization and interface cleanup. Numerical results, cache file names,
+stored metadata and the compatibility checkpoint are unchanged, and every
+earlier public name remains available.
+
+- Fix `Patient.epoch()`/`Patient.analyze()` failing with "An epoch input changed during content verification" on cloud-synchronized folders, where the first read of a placeholder file changes its status. An unstable read is retried before the input is rejected.
+- Shorter names: `Epochs.detect()`, `Epochs.detect_all()`, `Epochs.mean()`/`std()`/`sem()`, `Epochs.shape`, `Recording.detect_events()`, `Patient.session_ids`, `Pipeline.resolve_pipeline()`, and snake_case `DataLoader` attributes (`rawdata_path`, `all_raw_meta`, ...). See the table in [docs/README.md](docs/README.md#names-changed-in-11).
+- Readable `repr` for `Patient`, `DataLoader`, `Epochs` and `AnalysisResult`.
+- The standard preprocessing pipelines are listed in `ERPy.STANDARD_PIPELINES`.
+- Internal restructuring: metadata storage (`_metadata.py`), analysis results (`results.py`), shared defaults (`defaults.py`), single-sourced version (`_version.py`); consistent formatting and linting with ruff.
+- Updating the package invalidates automatic epoch-cache reuse once: the first `epoch()`/`analyze()` call per acquisition recomputes its epochs.
+- The README is now a short overview; its detailed sections moved to guides under `docs/` (installation, workflow, data formats, events, preprocessing and QC, detection, spectral, visualization, networks).
+
 ## 1.1.0rc1 — release candidate
 
 - Distinguish measured N1 timing from the unchanged model's midpoint imputation in current feature and prediction exports.

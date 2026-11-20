@@ -2,6 +2,8 @@
 
 Project: [ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis](../README.md).
 
+For a short account of what each benchmark and public-data check establishes, see the [benchmark overview](BENCHMARK_OVERVIEW.md).
+
 ERPy validation is intentionally split into three tiers.
 
 From a source checkout, install the test and public-data dependencies before

@@ -104,7 +104,7 @@ deidentified example data are included in these external-validation artifacts.
 The saved tables and source metadata above document this fixed external
 evaluation. Historical source hashes identify the code used for those runs;
 only the current library implementation is distributed here. For a new public
-recording, start with the [OpenNeuro validation recipe](VALIDATION.md#public-data-validation)
+recording, start with the [OpenNeuro validation recipe](VALIDATION.md#tier-2-public-open-raw-spes-data)
 and declare the preprocessing, eligibility rules and testing family for that
 recording. A new analysis is a separate run, rather than a replacement of these
 fixed comparison results.

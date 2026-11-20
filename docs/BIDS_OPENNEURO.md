@@ -18,7 +18,7 @@ patient = ep.Patient.from_bids(
 )
 
 epochs = patient.epoch("1", "PT_1_2")
-detections = epochs.detect_erp_all()
+detections = epochs.detect_all()
 fig = epochs.plot.summary("PT03", detections=detections)
 ```
 
