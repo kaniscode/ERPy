@@ -12,6 +12,1509 @@ The optional module APIs have dedicated guides:
 
 ### Classes
 
+### `Patient`
+
+```python
+Patient(patient_id: 'str', config_path: 'str | None' = None, verbose: 'bool' = True) -> 'None'
+```
+
+Quick-use public wrapper for one patient.
+
+A patient bundles the configured :class:`DataLoader`, the preprocessing
+:class:`Pipeline`, event detection, and the analysis helpers. Index it by
+session (``patient["A"]``) to obtain a :class:`Recording`.
+
+Parameters
+----------
+patient_id
+    Identifier used in the metadata tables.
+config_path
+    ERPy YAML configuration. When omitted, ``$ERPY_CONFIG``, the working
+    directory and ``~/.erpy`` are searched.
+verbose
+    Forwarded to the :class:`DataLoader`.
+
+Examples
+--------
+>>> patient = ep.Patient("EXAMPLE_PATIENT", config_path="config.yaml")
+>>> result = patient.analyze("EXAMPLE_SESSION", "STIM_A_1_2")
+>>> result.primary_significant.head()
+
+>>> epochs = patient.epoch("EXAMPLE_SESSION", "STIM_A_1_2")
+>>> detections = epochs.detect_all()
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `patient_id` | str | required |
+| `config_path` | str \| None | `None` |
+| `verbose` | bool | `True` |
+
+**Returns:** None.
+
+#### Public members
+
+##### `Patient.analyze`
+
+```python
+analyze(self, session_id: 'str', stim_pair: 'str', **kwargs: 'Any') -> 'AnalysisResult'
+```
+
+Run epoching, response-artifact QC, and ERP detection in one call.
+
+See :meth:`Recording.analyze` for the available options.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `kwargs` | Any | required |
+
+**Returns:** AnalysisResult.
+
+##### `Patient.detect_events`
+
+```python
+detect_events(self, session_id: 'str', stim_pair: 'str', method: 'str' = 'auto', **kwargs: 'Any') -> 'pd.DataFrame'
+```
+
+Detect stimulation events for one session and stimulation pair.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `method` | str | `'auto'` |
+| `kwargs` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+##### `Patient.epoch`
+
+```python
+epoch(self, session_id: 'str', stim_pair: 'str', pipeline: 'PipelineSpec' = 'blank_filt', **kwargs: 'Any') -> 'Epochs'
+```
+
+Extract or load event-locked epochs for one acquisition.
+
+See :meth:`Recording.epoch` for the epoch and caching options.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `pipeline` | PipelineSpec | `'blank_filt'` |
+| `kwargs` | Any | required |
+
+**Returns:** Epochs.
+
+##### `Patient.from_bids`
+
+```python
+from_bids(cls, bids_root: 'str', subject: 'str', output_root: 'str | None' = None, session: 'str | None' = None, task: 'str | None' = None, patient_id: 'str | None' = None, copy_raw: 'bool' = False, derivatives: 'bool' = True, verbose: 'bool' = True) -> 'Patient'
+```
+
+Import a BIDS iEEG subject and return a ready-to-use patient facade.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `bids_root` | str | required |
+| `subject` | str | required |
+| `output_root` | str \| None | `None` |
+| `session` | str \| None | `None` |
+| `task` | str \| None | `None` |
+| `patient_id` | str \| None | `None` |
+| `copy_raw` | bool | `False` |
+| `derivatives` | bool | `True` |
+| `verbose` | bool | `True` |
+
+**Returns:** Patient.
+
+##### `Patient.from_nwb`
+
+```python
+from_nwb(cls, nwb_path: 'str', output_root: 'str | None' = None, patient_id: 'str | None' = None, session_id: 'str | None' = None, stim_pair: 'str | None' = None, stim_times: 'Any | None' = None, stim_duration_s: 'float' = 0.001, series_name: 'str | None' = None, copy_raw: 'bool' = False, verbose: 'bool' = True) -> 'Patient'
+```
+
+Import one NWB recording and return a ready-to-use patient facade.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `nwb_path` | str | required |
+| `output_root` | str \| None | `None` |
+| `patient_id` | str \| None | `None` |
+| `session_id` | str \| None | `None` |
+| `stim_pair` | str \| None | `None` |
+| `stim_times` | Any \| None | `None` |
+| `stim_duration_s` | float | `0.001` |
+| `series_name` | str \| None | `None` |
+| `copy_raw` | bool | `False` |
+| `verbose` | bool | `True` |
+
+**Returns:** Patient.
+
+##### `Patient.recording`
+
+```python
+recording(self, session_id: 'str') -> 'Recording'
+```
+
+Return the recording facade for one session.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+
+**Returns:** Recording.
+
+##### `Patient.run`
+
+```python
+run(self, session_id: 'str', stim_pair: 'str', pipeline: 'PipelineSpec' = 'blank_filt', tmin: 'float' = -0.5, tmax: 'float' = 1.0, baseline: 'tuple[float, float] | None' = (-0.5, -0.03), zero_time: 'float | str | None' = 'post_artifact', artifact_anchor_params: 'dict[str, Any] | None' = None, event_method: 'str' = 'auto', **kwargs: 'Any') -> 'Epochs'
+```
+
+Run preprocessing and epoch extraction without reusing a cache.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `pipeline` | PipelineSpec | `'blank_filt'` |
+| `tmin` | float | `-0.5` |
+| `tmax` | float | `1.0` |
+| `baseline` | tuple[float, float] \| None | `(-0.5, -0.03)` |
+| `zero_time` | float \| str \| None | `'post_artifact'` |
+| `artifact_anchor_params` | dict[str, Any] \| None | `None` |
+| `event_method` | str | `'auto'` |
+| `kwargs` | Any | required |
+
+**Returns:** Epochs.
+
+##### `Patient.session`
+
+```python
+session(self, session_id: 'str') -> 'Recording'
+```
+
+Return a recording facade; alias of ``recording``.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+
+**Returns:** Recording.
+
+##### `Patient.session_ids`
+
+```python
+session_ids  # property
+```
+
+Registered session identifiers for this patient.
+
+**Returns:** list[str].
+
+##### `Patient.sessions`
+
+```python
+sessions(self) -> 'list[str]'
+```
+
+Return registered session identifiers; same as :attr:`session_ids`.
+
+**Returns:** list[str].
+
+##### `Patient.stim_pairs`
+
+```python
+stim_pairs(self, session_id: 'str | None' = None) -> 'list[str]'
+```
+
+Return registered stimulation pairs, optionally for one session.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str \| None | `None` |
+
+**Returns:** list[str].
+
+##### `Patient.warmup`
+
+```python
+warmup(self, session_ids: 'Iterable[str] | None' = None, **kwargs: 'Any') -> 'pd.DataFrame'
+```
+
+Precompute local caches for selected patient sessions.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_ids` | Iterable[str] \| None | `None` |
+| `kwargs` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+##### `Patient.warmup_jobs`
+
+```python
+warmup_jobs(self, session_ids: 'Iterable[str] | None' = None, **kwargs: 'Any') -> 'pd.DataFrame'
+```
+
+Submit cache-warmup jobs for selected patient sessions.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_ids` | Iterable[str] \| None | `None` |
+| `kwargs` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+### `Recording`
+
+```python
+Recording(patient: 'Patient', session_id: 'str') -> None
+```
+
+Session-scoped analysis facade owned by a ``Patient``.
+
+A recording fixes ``session_id`` while exposing event creation, epoching,
+cache loading, and the one-call analysis contract for any registered
+stimulation pair. ``Session`` is a compatibility alias for this class.
+
+Examples
+--------
+>>> recording = patient["EXAMPLE_SESSION"]
+>>> recording.stim_pairs()
+['STIM_A_1_2', 'STIM_A_3_4']
+>>> result = recording.analyze("STIM_A_1_2")
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `patient` | Patient | required |
+| `session_id` | str | required |
+
+**Returns:** None.
+
+#### Public members
+
+##### `Recording.analyze`
+
+```python
+analyze(self, stim_pair: 'str', *, pipeline: 'PipelineSpec' = 'blank_filt', methods: 'list[str] | None' = None, min_consensus: 'int' = 2, response_window: 'tuple[float, float] | None' = None, artifact_kwargs: 'dict[str, Any] | None' = None, artifact_reject: 'str | None' = 'nan_response', max_bad_channel_fraction: 'float' = 0.25, qc_max_bad_response_fraction: 'float' = 0.25, qc_max_hard_artifact_fraction: 'float' = 0.1, qc_min_clean_responses: 'int' = 8, qc_exclude_boundary_peaks: 'bool' = True, hard_artifact_reasons: 'Iterable[str]' = ('absolute_peak', 'absolute_ptp', 'extreme_amplitude_outlier', 'plateau_clipping', 'rail_clipping', 'saturation_or_clipping'), detect_kwargs: 'dict[str, Any] | None' = None, **epoch_kwargs: 'Any') -> 'AnalysisResult'
+```
+
+Run the default ERPy analysis contract for one stimulation pair.
+
+The call epochs the acquisition, scores every trial-by-channel response
+for artifacts, rejects contaminated responses, runs the detectors on
+the cleaned epochs, and annotates each detection with artifact-QC
+eligibility. It returns the same auditable artifacts available from
+the lower-level API.
+
+Parameters
+----------
+stim_pair
+    Registered stimulation pair.
+pipeline
+    Standard pipeline name or custom step list.
+methods
+    Detectors to run; defaults to :data:`ERPy.ALL_METHODS`.
+min_consensus
+    Number of standalone detectors required by the legacy consensus.
+response_window
+    Response window applied to both artifact QC and detection.
+artifact_kwargs
+    Options for :meth:`Epochs.flag_artifacts`.
+artifact_reject
+    Rejection mode (``"nan_response"``, ``"drop_epoch"``,
+    ``"drop_channel"``) or ``None`` to detect on the unmasked epochs.
+max_bad_channel_fraction
+    Rejection threshold forwarded to :meth:`Epochs.reject_artifacts`.
+qc_max_bad_response_fraction, qc_max_hard_artifact_fraction, qc_min_clean_responses, qc_exclude_boundary_peaks
+    Channel eligibility criteria behind ``artifact_qc_pass``.
+hard_artifact_reasons
+    Artifact reasons counted as hard failures.
+detect_kwargs
+    Additional options for :meth:`Epochs.detect_all`.
+**epoch_kwargs
+    Options for :meth:`epoch` (``tmin``, ``tmax``, ``baseline``, ...).
+
+Notes
+-----
+Trial-contact artifact QC is always evaluated. Persistent-channel
+detection is performed only when the preprocessing pipeline contains
+an explicit ``reject_bad_channels`` step, such as ``blank_filt_reject``.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `stim_pair` | str | required |
+| `pipeline` | PipelineSpec | `'blank_filt'` |
+| `methods` | list[str] \| None | `None` |
+| `min_consensus` | int | `2` |
+| `response_window` | tuple[float, float] \| None | `None` |
+| `artifact_kwargs` | dict[str, Any] \| None | `None` |
+| `artifact_reject` | str \| None | `'nan_response'` |
+| `max_bad_channel_fraction` | float | `0.25` |
+| `qc_max_bad_response_fraction` | float | `0.25` |
+| `qc_max_hard_artifact_fraction` | float | `0.1` |
+| `qc_min_clean_responses` | int | `8` |
+| `qc_exclude_boundary_peaks` | bool | `True` |
+| `hard_artifact_reasons` | Iterable[str] | `('absolute_peak', 'absolute_ptp', 'extreme_amplitude_outlier', 'plateau_clipping', 'rail_clipping', 'saturation_or_clipping')` |
+| `detect_kwargs` | dict[str, Any] \| None | `None` |
+| `epoch_kwargs` | Any | required |
+
+**Returns:** AnalysisResult.
+
+##### `Recording.dataloader`
+
+```python
+dataloader  # property
+```
+
+Return the patient data loader used by this recording.
+
+**Returns:** DataLoader.
+
+##### `Recording.detect_events`
+
+```python
+detect_events(self, stim_pair: 'str', method: 'str' = 'auto', save_events: 'bool' = True, **kwargs: 'Any') -> 'pd.DataFrame'
+```
+
+Detect and optionally save events for one stimulation pair.
+
+``kwargs`` are forwarded to :func:`ERPy.detect_events_from_artifacts`.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `stim_pair` | str | required |
+| `method` | str | `'auto'` |
+| `save_events` | bool | `True` |
+| `kwargs` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+##### `Recording.epoch`
+
+```python
+epoch(self, stim_pair: 'str', pipeline: 'PipelineSpec' = 'blank_filt', tmin: 'float' = -0.5, tmax: 'float' = 1.0, baseline: 'tuple[float, float] | None' = (-0.5, -0.03), zero_time: 'float | str | None' = 'post_artifact', artifact_anchor_params: 'dict[str, Any] | None' = None, cache: 'bool' = True, event_method: 'str' = 'auto', save_epochs: 'bool' = True, **kwargs: 'Any') -> 'Epochs'
+```
+
+Preprocess and epoch one stimulation pair, optionally using a cache.
+
+Parameters
+----------
+stim_pair
+    Registered stimulation pair, for example ``"STIM_A_1_2"``.
+pipeline
+    Name of a standard pipeline or a list of ``(step, parameters)``.
+tmin, tmax
+    Epoch limits in seconds relative to stimulation onset.
+baseline
+    Window whose mean is subtracted from each trial, or ``None``.
+zero_time
+    Post-baseline recentring: ERPy's post-artifact anchor (default), a
+    fixed time in seconds, or ``None`` to skip.
+artifact_anchor_params
+    Overrides for the post-artifact anchor search.
+cache
+    Reuse a verified epoch cache when one matches.
+event_method
+    Detector used when no event file exists yet.
+save_epochs
+    Write the extracted epochs to the cache.
+**kwargs
+    Recording selection (``input_source``, ``raw_file``,
+    ``stim_start``, ``processing_margin_s``, ``overwrite``) and, when
+    events must be detected first, event-detection options.
+
+Notes
+-----
+Automatic reuse verifies current event and source contents plus effective
+processing settings. Legacy caches without this identity are recomputed.
+``auto`` reads registered raw inputs on a miss; a window export is used
+when the original inputs are unavailable. Full source hashing costs I/O.
+NWB and custom processing hooks currently disable automatic reuse.
+Configuration/metadata edits on disk require constructing a new Patient;
+this method uses the DataLoader's current in-memory settings.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `stim_pair` | str | required |
+| `pipeline` | PipelineSpec | `'blank_filt'` |
+| `tmin` | float | `-0.5` |
+| `tmax` | float | `1.0` |
+| `baseline` | tuple[float, float] \| None | `(-0.5, -0.03)` |
+| `zero_time` | float \| str \| None | `'post_artifact'` |
+| `artifact_anchor_params` | dict[str, Any] \| None | `None` |
+| `cache` | bool | `True` |
+| `event_method` | str | `'auto'` |
+| `save_epochs` | bool | `True` |
+| `kwargs` | Any | required |
+
+**Returns:** Epochs.
+
+##### `Recording.events_for`
+
+```python
+events_for(self, stim_pair: 'str', method: 'str' = 'auto', save_events: 'bool' = True, **kwargs: 'Any') -> 'pd.DataFrame'
+```
+
+Detect events for one stimulation pair; alias of :meth:`detect_events`.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `stim_pair` | str | required |
+| `method` | str | `'auto'` |
+| `save_events` | bool | `True` |
+| `kwargs` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+##### `Recording.load_epochs`
+
+```python
+load_epochs(self, stim_pair: 'str', pipeline: 'PipelineSpec' = 'blank_filt', **kwargs: 'Any') -> 'Epochs'
+```
+
+Load the newest matching epoch cache for a stimulation pair.
+
+``allow_unsafe_legacy_pickle=True`` may be passed only for a trusted
+pre-1.0 cache whose pickle metadata the caller accepts executing.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `stim_pair` | str | required |
+| `pipeline` | PipelineSpec | `'blank_filt'` |
+| `kwargs` | Any | required |
+
+**Returns:** Epochs.
+
+##### `Recording.pipeline_obj`
+
+```python
+pipeline_obj  # property
+```
+
+Return the patient preprocessing pipeline used by this recording.
+
+**Returns:** Pipeline.
+
+##### `Recording.stim_pairs`
+
+```python
+stim_pairs(self) -> 'list[str]'
+```
+
+Return stimulation pairs registered for this recording session.
+
+**Returns:** list[str].
+
+### `Session`
+
+```python
+Session(patient: 'Patient', session_id: 'str') -> None
+```
+
+Session-scoped analysis facade owned by a ``Patient``.
+
+A recording fixes ``session_id`` while exposing event creation, epoching,
+cache loading, and the one-call analysis contract for any registered
+stimulation pair. ``Session`` is a compatibility alias for this class.
+
+Examples
+--------
+>>> recording = patient["EXAMPLE_SESSION"]
+>>> recording.stim_pairs()
+['STIM_A_1_2', 'STIM_A_3_4']
+>>> result = recording.analyze("STIM_A_1_2")
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `patient` | Patient | required |
+| `session_id` | str | required |
+
+**Returns:** None.
+
+#### Public members
+
+##### `Session.analyze`
+
+```python
+analyze(self, stim_pair: 'str', *, pipeline: 'PipelineSpec' = 'blank_filt', methods: 'list[str] | None' = None, min_consensus: 'int' = 2, response_window: 'tuple[float, float] | None' = None, artifact_kwargs: 'dict[str, Any] | None' = None, artifact_reject: 'str | None' = 'nan_response', max_bad_channel_fraction: 'float' = 0.25, qc_max_bad_response_fraction: 'float' = 0.25, qc_max_hard_artifact_fraction: 'float' = 0.1, qc_min_clean_responses: 'int' = 8, qc_exclude_boundary_peaks: 'bool' = True, hard_artifact_reasons: 'Iterable[str]' = ('absolute_peak', 'absolute_ptp', 'extreme_amplitude_outlier', 'plateau_clipping', 'rail_clipping', 'saturation_or_clipping'), detect_kwargs: 'dict[str, Any] | None' = None, **epoch_kwargs: 'Any') -> 'AnalysisResult'
+```
+
+Run the default ERPy analysis contract for one stimulation pair.
+
+The call epochs the acquisition, scores every trial-by-channel response
+for artifacts, rejects contaminated responses, runs the detectors on
+the cleaned epochs, and annotates each detection with artifact-QC
+eligibility. It returns the same auditable artifacts available from
+the lower-level API.
+
+Parameters
+----------
+stim_pair
+    Registered stimulation pair.
+pipeline
+    Standard pipeline name or custom step list.
+methods
+    Detectors to run; defaults to :data:`ERPy.ALL_METHODS`.
+min_consensus
+    Number of standalone detectors required by the legacy consensus.
+response_window
+    Response window applied to both artifact QC and detection.
+artifact_kwargs
+    Options for :meth:`Epochs.flag_artifacts`.
+artifact_reject
+    Rejection mode (``"nan_response"``, ``"drop_epoch"``,
+    ``"drop_channel"``) or ``None`` to detect on the unmasked epochs.
+max_bad_channel_fraction
+    Rejection threshold forwarded to :meth:`Epochs.reject_artifacts`.
+qc_max_bad_response_fraction, qc_max_hard_artifact_fraction, qc_min_clean_responses, qc_exclude_boundary_peaks
+    Channel eligibility criteria behind ``artifact_qc_pass``.
+hard_artifact_reasons
+    Artifact reasons counted as hard failures.
+detect_kwargs
+    Additional options for :meth:`Epochs.detect_all`.
+**epoch_kwargs
+    Options for :meth:`epoch` (``tmin``, ``tmax``, ``baseline``, ...).
+
+Notes
+-----
+Trial-contact artifact QC is always evaluated. Persistent-channel
+detection is performed only when the preprocessing pipeline contains
+an explicit ``reject_bad_channels`` step, such as ``blank_filt_reject``.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `stim_pair` | str | required |
+| `pipeline` | PipelineSpec | `'blank_filt'` |
+| `methods` | list[str] \| None | `None` |
+| `min_consensus` | int | `2` |
+| `response_window` | tuple[float, float] \| None | `None` |
+| `artifact_kwargs` | dict[str, Any] \| None | `None` |
+| `artifact_reject` | str \| None | `'nan_response'` |
+| `max_bad_channel_fraction` | float | `0.25` |
+| `qc_max_bad_response_fraction` | float | `0.25` |
+| `qc_max_hard_artifact_fraction` | float | `0.1` |
+| `qc_min_clean_responses` | int | `8` |
+| `qc_exclude_boundary_peaks` | bool | `True` |
+| `hard_artifact_reasons` | Iterable[str] | `('absolute_peak', 'absolute_ptp', 'extreme_amplitude_outlier', 'plateau_clipping', 'rail_clipping', 'saturation_or_clipping')` |
+| `detect_kwargs` | dict[str, Any] \| None | `None` |
+| `epoch_kwargs` | Any | required |
+
+**Returns:** AnalysisResult.
+
+##### `Session.dataloader`
+
+```python
+dataloader  # property
+```
+
+Return the patient data loader used by this recording.
+
+**Returns:** DataLoader.
+
+##### `Session.detect_events`
+
+```python
+detect_events(self, stim_pair: 'str', method: 'str' = 'auto', save_events: 'bool' = True, **kwargs: 'Any') -> 'pd.DataFrame'
+```
+
+Detect and optionally save events for one stimulation pair.
+
+``kwargs`` are forwarded to :func:`ERPy.detect_events_from_artifacts`.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `stim_pair` | str | required |
+| `method` | str | `'auto'` |
+| `save_events` | bool | `True` |
+| `kwargs` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+##### `Session.epoch`
+
+```python
+epoch(self, stim_pair: 'str', pipeline: 'PipelineSpec' = 'blank_filt', tmin: 'float' = -0.5, tmax: 'float' = 1.0, baseline: 'tuple[float, float] | None' = (-0.5, -0.03), zero_time: 'float | str | None' = 'post_artifact', artifact_anchor_params: 'dict[str, Any] | None' = None, cache: 'bool' = True, event_method: 'str' = 'auto', save_epochs: 'bool' = True, **kwargs: 'Any') -> 'Epochs'
+```
+
+Preprocess and epoch one stimulation pair, optionally using a cache.
+
+Parameters
+----------
+stim_pair
+    Registered stimulation pair, for example ``"STIM_A_1_2"``.
+pipeline
+    Name of a standard pipeline or a list of ``(step, parameters)``.
+tmin, tmax
+    Epoch limits in seconds relative to stimulation onset.
+baseline
+    Window whose mean is subtracted from each trial, or ``None``.
+zero_time
+    Post-baseline recentring: ERPy's post-artifact anchor (default), a
+    fixed time in seconds, or ``None`` to skip.
+artifact_anchor_params
+    Overrides for the post-artifact anchor search.
+cache
+    Reuse a verified epoch cache when one matches.
+event_method
+    Detector used when no event file exists yet.
+save_epochs
+    Write the extracted epochs to the cache.
+**kwargs
+    Recording selection (``input_source``, ``raw_file``,
+    ``stim_start``, ``processing_margin_s``, ``overwrite``) and, when
+    events must be detected first, event-detection options.
+
+Notes
+-----
+Automatic reuse verifies current event and source contents plus effective
+processing settings. Legacy caches without this identity are recomputed.
+``auto`` reads registered raw inputs on a miss; a window export is used
+when the original inputs are unavailable. Full source hashing costs I/O.
+NWB and custom processing hooks currently disable automatic reuse.
+Configuration/metadata edits on disk require constructing a new Patient;
+this method uses the DataLoader's current in-memory settings.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `stim_pair` | str | required |
+| `pipeline` | PipelineSpec | `'blank_filt'` |
+| `tmin` | float | `-0.5` |
+| `tmax` | float | `1.0` |
+| `baseline` | tuple[float, float] \| None | `(-0.5, -0.03)` |
+| `zero_time` | float \| str \| None | `'post_artifact'` |
+| `artifact_anchor_params` | dict[str, Any] \| None | `None` |
+| `cache` | bool | `True` |
+| `event_method` | str | `'auto'` |
+| `save_epochs` | bool | `True` |
+| `kwargs` | Any | required |
+
+**Returns:** Epochs.
+
+##### `Session.events_for`
+
+```python
+events_for(self, stim_pair: 'str', method: 'str' = 'auto', save_events: 'bool' = True, **kwargs: 'Any') -> 'pd.DataFrame'
+```
+
+Detect events for one stimulation pair; alias of :meth:`detect_events`.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `stim_pair` | str | required |
+| `method` | str | `'auto'` |
+| `save_events` | bool | `True` |
+| `kwargs` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+##### `Session.load_epochs`
+
+```python
+load_epochs(self, stim_pair: 'str', pipeline: 'PipelineSpec' = 'blank_filt', **kwargs: 'Any') -> 'Epochs'
+```
+
+Load the newest matching epoch cache for a stimulation pair.
+
+``allow_unsafe_legacy_pickle=True`` may be passed only for a trusted
+pre-1.0 cache whose pickle metadata the caller accepts executing.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `stim_pair` | str | required |
+| `pipeline` | PipelineSpec | `'blank_filt'` |
+| `kwargs` | Any | required |
+
+**Returns:** Epochs.
+
+##### `Session.pipeline_obj`
+
+```python
+pipeline_obj  # property
+```
+
+Return the patient preprocessing pipeline used by this recording.
+
+**Returns:** Pipeline.
+
+##### `Session.stim_pairs`
+
+```python
+stim_pairs(self) -> 'list[str]'
+```
+
+Return stimulation pairs registered for this recording session.
+
+**Returns:** list[str].
+
+### `Study`
+
+```python
+Study(patient_id: 'str', config_path: 'str | None' = None, verbose: 'bool' = True) -> 'None'
+```
+
+Quick-use public wrapper for one patient.
+
+A patient bundles the configured :class:`DataLoader`, the preprocessing
+:class:`Pipeline`, event detection, and the analysis helpers. Index it by
+session (``patient["A"]``) to obtain a :class:`Recording`.
+
+Parameters
+----------
+patient_id
+    Identifier used in the metadata tables.
+config_path
+    ERPy YAML configuration. When omitted, ``$ERPY_CONFIG``, the working
+    directory and ``~/.erpy`` are searched.
+verbose
+    Forwarded to the :class:`DataLoader`.
+
+Examples
+--------
+>>> patient = ep.Patient("EXAMPLE_PATIENT", config_path="config.yaml")
+>>> result = patient.analyze("EXAMPLE_SESSION", "STIM_A_1_2")
+>>> result.primary_significant.head()
+
+>>> epochs = patient.epoch("EXAMPLE_SESSION", "STIM_A_1_2")
+>>> detections = epochs.detect_all()
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `patient_id` | str | required |
+| `config_path` | str \| None | `None` |
+| `verbose` | bool | `True` |
+
+**Returns:** None.
+
+#### Public members
+
+##### `Study.analyze`
+
+```python
+analyze(self, session_id: 'str', stim_pair: 'str', **kwargs: 'Any') -> 'AnalysisResult'
+```
+
+Run epoching, response-artifact QC, and ERP detection in one call.
+
+See :meth:`Recording.analyze` for the available options.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `kwargs` | Any | required |
+
+**Returns:** AnalysisResult.
+
+##### `Study.detect_events`
+
+```python
+detect_events(self, session_id: 'str', stim_pair: 'str', method: 'str' = 'auto', **kwargs: 'Any') -> 'pd.DataFrame'
+```
+
+Detect stimulation events for one session and stimulation pair.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `method` | str | `'auto'` |
+| `kwargs` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+##### `Study.epoch`
+
+```python
+epoch(self, session_id: 'str', stim_pair: 'str', pipeline: 'PipelineSpec' = 'blank_filt', **kwargs: 'Any') -> 'Epochs'
+```
+
+Extract or load event-locked epochs for one acquisition.
+
+See :meth:`Recording.epoch` for the epoch and caching options.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `pipeline` | PipelineSpec | `'blank_filt'` |
+| `kwargs` | Any | required |
+
+**Returns:** Epochs.
+
+##### `Study.from_bids`
+
+```python
+from_bids(cls, bids_root: 'str', subject: 'str', output_root: 'str | None' = None, session: 'str | None' = None, task: 'str | None' = None, patient_id: 'str | None' = None, copy_raw: 'bool' = False, derivatives: 'bool' = True, verbose: 'bool' = True) -> 'Patient'
+```
+
+Import a BIDS iEEG subject and return a ready-to-use patient facade.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `bids_root` | str | required |
+| `subject` | str | required |
+| `output_root` | str \| None | `None` |
+| `session` | str \| None | `None` |
+| `task` | str \| None | `None` |
+| `patient_id` | str \| None | `None` |
+| `copy_raw` | bool | `False` |
+| `derivatives` | bool | `True` |
+| `verbose` | bool | `True` |
+
+**Returns:** Patient.
+
+##### `Study.from_nwb`
+
+```python
+from_nwb(cls, nwb_path: 'str', output_root: 'str | None' = None, patient_id: 'str | None' = None, session_id: 'str | None' = None, stim_pair: 'str | None' = None, stim_times: 'Any | None' = None, stim_duration_s: 'float' = 0.001, series_name: 'str | None' = None, copy_raw: 'bool' = False, verbose: 'bool' = True) -> 'Patient'
+```
+
+Import one NWB recording and return a ready-to-use patient facade.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `nwb_path` | str | required |
+| `output_root` | str \| None | `None` |
+| `patient_id` | str \| None | `None` |
+| `session_id` | str \| None | `None` |
+| `stim_pair` | str \| None | `None` |
+| `stim_times` | Any \| None | `None` |
+| `stim_duration_s` | float | `0.001` |
+| `series_name` | str \| None | `None` |
+| `copy_raw` | bool | `False` |
+| `verbose` | bool | `True` |
+
+**Returns:** Patient.
+
+##### `Study.recording`
+
+```python
+recording(self, session_id: 'str') -> 'Recording'
+```
+
+Return the recording facade for one session.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+
+**Returns:** Recording.
+
+##### `Study.run`
+
+```python
+run(self, session_id: 'str', stim_pair: 'str', pipeline: 'PipelineSpec' = 'blank_filt', tmin: 'float' = -0.5, tmax: 'float' = 1.0, baseline: 'tuple[float, float] | None' = (-0.5, -0.03), zero_time: 'float | str | None' = 'post_artifact', artifact_anchor_params: 'dict[str, Any] | None' = None, event_method: 'str' = 'auto', **kwargs: 'Any') -> 'Epochs'
+```
+
+Run preprocessing and epoch extraction without reusing a cache.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `pipeline` | PipelineSpec | `'blank_filt'` |
+| `tmin` | float | `-0.5` |
+| `tmax` | float | `1.0` |
+| `baseline` | tuple[float, float] \| None | `(-0.5, -0.03)` |
+| `zero_time` | float \| str \| None | `'post_artifact'` |
+| `artifact_anchor_params` | dict[str, Any] \| None | `None` |
+| `event_method` | str | `'auto'` |
+| `kwargs` | Any | required |
+
+**Returns:** Epochs.
+
+##### `Study.session`
+
+```python
+session(self, session_id: 'str') -> 'Recording'
+```
+
+Return a recording facade; alias of ``recording``.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+
+**Returns:** Recording.
+
+##### `Study.session_ids`
+
+```python
+session_ids  # property
+```
+
+Registered session identifiers for this patient.
+
+**Returns:** list[str].
+
+##### `Study.sessions`
+
+```python
+sessions(self) -> 'list[str]'
+```
+
+Return registered session identifiers; same as :attr:`session_ids`.
+
+**Returns:** list[str].
+
+##### `Study.stim_pairs`
+
+```python
+stim_pairs(self, session_id: 'str | None' = None) -> 'list[str]'
+```
+
+Return registered stimulation pairs, optionally for one session.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str \| None | `None` |
+
+**Returns:** list[str].
+
+##### `Study.warmup`
+
+```python
+warmup(self, session_ids: 'Iterable[str] | None' = None, **kwargs: 'Any') -> 'pd.DataFrame'
+```
+
+Precompute local caches for selected patient sessions.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_ids` | Iterable[str] \| None | `None` |
+| `kwargs` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+##### `Study.warmup_jobs`
+
+```python
+warmup_jobs(self, session_ids: 'Iterable[str] | None' = None, **kwargs: 'Any') -> 'pd.DataFrame'
+```
+
+Submit cache-warmup jobs for selected patient sessions.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_ids` | Iterable[str] \| None | `None` |
+| `kwargs` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+### `DataLoader`
+
+```python
+DataLoader(patient_id: 'str', config_path: 'str | Path | None' = None, load_data: 'bool' = False, create_tree: 'bool' = True, verbose: 'bool' = True) -> 'None'
+```
+
+Configuration, metadata, and raw-signal access for one ERPy patient.
+
+The loader reads the YAML configuration and the three metadata tables,
+keeps the rows belonging to ``patient_id``, and resolves where raw
+recordings, events, processed data and epochs live on disk.
+
+Parameters
+----------
+patient_id
+    Identifier used in the metadata tables (a ``sub-`` prefix is ignored).
+config_path
+    ERPy YAML configuration; see :func:`ERPy.utils.load_config` for the
+    search order when omitted.
+load_data
+    Export a raw window for every registered stimulation acquisition.
+create_tree
+    Create the per-session output folders.
+verbose
+    Retained for compatibility with scripts that pass it.
+
+Attributes
+----------
+config : dict
+    Parsed configuration with resolved paths.
+raw_meta, stim_meta, elec_meta : pandas.DataFrame
+    Recording, stimulation and electrode metadata for this patient.
+all_raw_meta, all_stim_meta, all_elec_meta : pandas.DataFrame
+    The same tables for every patient in the project.
+session_ids : list of str
+    Sessions registered in the configuration or metadata.
+rawdata_path, procdata_path, patient_path : str
+    Raw-data root, processed-data root, and this patient's output folder.
+
+Notes
+-----
+Releases before 1.1 exposed these settings under upper-case names such as
+``RAWDATA_PATH`` and ``RAW_META_DF``. Those names remain available as
+aliases of the snake_case attributes.
+
+Examples
+--------
+>>> loader = DataLoader("EXAMPLE_PATIENT", config_path="config.yaml")
+>>> loader.stim_pairs("EXAMPLE_SESSION")
+['STIM_A_1_2']
+>>> raw = loader.load_stim_data("EXAMPLE_SESSION", "STIM_A_1_2")
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `patient_id` | str | required |
+| `config_path` | str \| Path \| None | `None` |
+| `load_data` | bool | `False` |
+| `create_tree` | bool | `True` |
+| `verbose` | bool | `True` |
+
+**Returns:** None.
+
+#### Public members
+
+##### `DataLoader.bad_channels`
+
+```python
+bad_channels(self, session_id: 'str | None' = None) -> 'list[str]'
+```
+
+Return electrode labels explicitly marked bad in project metadata.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str \| None | `None` |
+
+**Returns:** list[str].
+
+##### `DataLoader.clear_memory_cache`
+
+```python
+clear_memory_cache(self) -> 'None'
+```
+
+Discard the currently retained stimulation window from memory.
+
+**Returns:** None.
+
+##### `DataLoader.create_session_tree`
+
+```python
+create_session_tree(self) -> 'None'
+```
+
+Create the standard raw, event, epoch, analysis, and log folders.
+
+**Returns:** None.
+
+##### `DataLoader.from_bids`
+
+```python
+from_bids(cls, bids_root: 'str | Path', subject: 'str', output_root: 'str | Path | None' = None, session: 'str | None' = None, task: 'str | None' = None, patient_id: 'str | None' = None, copy_raw: 'bool' = False, derivatives: 'bool' = True, **kwargs: 'Any') -> 'DataLoader'
+```
+
+Import one BIDS iEEG subject and return its configured data loader.
+
+ERPy metadata tables and configuration are created under
+``output_root``; raw recordings remain in place unless ``copy_raw`` is
+enabled.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `bids_root` | str \| Path | required |
+| `subject` | str | required |
+| `output_root` | str \| Path \| None | `None` |
+| `session` | str \| None | `None` |
+| `task` | str \| None | `None` |
+| `patient_id` | str \| None | `None` |
+| `copy_raw` | bool | `False` |
+| `derivatives` | bool | `True` |
+| `kwargs` | Any | required |
+
+**Returns:** DataLoader.
+
+##### `DataLoader.from_nwb`
+
+```python
+from_nwb(cls, nwb_path: 'str | Path', output_root: 'str | Path | None' = None, patient_id: 'str | None' = None, session_id: 'str | None' = None, stim_pair: 'str | None' = None, stim_times: 'Any | None' = None, stim_duration_s: 'float' = 0.001, series_name: 'str | None' = None, copy_raw: 'bool' = False, **kwargs: 'Any') -> 'DataLoader'
+```
+
+Create a minimal ERPy project around one NWB file.
+
+Parameters
+----------
+nwb_path
+    Local NWB file.
+output_root
+    Folder where ERPy metadata, config, and processed outputs are written.
+patient_id, session_id
+    Optional ERPy identifiers. When omitted, ERPy uses the NWB subject
+    and session identifiers when available.
+stim_pair, stim_times
+    Optional stimulation-site name and event times. Numeric times are
+    interpreted as seconds relative to NWB session start; datetimes are
+    preserved as absolute event times. If omitted, ERPy tries to infer a
+    stimulation table from NWB trials.
+series_name
+    Name of the NWB ElectricalSeries to load. If omitted, the first
+    ElectricalSeries is used.
+copy_raw
+    Copy the NWB into the ERPy project. Defaults to keeping large NWB
+    files in place.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `nwb_path` | str \| Path | required |
+| `output_root` | str \| Path \| None | `None` |
+| `patient_id` | str \| None | `None` |
+| `session_id` | str \| None | `None` |
+| `stim_pair` | str \| None | `None` |
+| `stim_times` | Any \| None | `None` |
+| `stim_duration_s` | float | `0.001` |
+| `series_name` | str \| None | `None` |
+| `copy_raw` | bool | `False` |
+| `kwargs` | Any | required |
+
+**Returns:** DataLoader.
+
+##### `DataLoader.get_analysis_path`
+
+```python
+get_analysis_path(self, session_id: 'str | None' = None) -> 'Path'
+```
+
+Return and create the patient- or session-level analysis directory.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str \| None | `None` |
+
+**Returns:** Path.
+
+##### `DataLoader.get_event_path`
+
+```python
+get_event_path(self, session_id: 'str', stim_pair: 'str') -> 'Path'
+```
+
+Return the conventional CSV path for a detected event table.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+
+**Returns:** Path.
+
+##### `DataLoader.get_raw_cache_path`
+
+```python
+get_raw_cache_path(self, session_id: 'str', stim_pair: 'str', *, raw_file: 'str | Path | None' = None) -> 'Path'
+```
+
+Return the configured binary or text cache path for an acquisition.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `raw_file` | str \| Path \| None | `None` |
+
+**Returns:** Path.
+
+##### `DataLoader.get_raw_csv_path`
+
+```python
+get_raw_csv_path(self, session_id: 'str', stim_pair: 'str', *, raw_file: 'str | Path | None' = None) -> 'Path'
+```
+
+Return the acquisition-specific path for a text raw-data cache.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `raw_file` | str \| Path \| None | `None` |
+
+**Returns:** Path.
+
+##### `DataLoader.get_raw_files`
+
+```python
+get_raw_files(self, session_id: 'str | None' = None, stim_pair: 'str | None' = None, *, raw_file: 'str | Path | None' = None, stim_start: 'Any | None' = None) -> 'list[Path]'
+```
+
+Resolve raw recording paths for a session or stimulation acquisition.
+
+``raw_file`` and ``stim_start`` disambiguate repeated acquisitions when
+the metadata table contains more than one candidate.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str \| None | `None` |
+| `stim_pair` | str \| None | `None` |
+| `raw_file` | str \| Path \| None | `None` |
+| `stim_start` | Any \| None | `None` |
+
+**Returns:** list[Path].
+
+##### `DataLoader.get_sampling_freq`
+
+```python
+get_sampling_freq(self, session_id: 'str | None' = None, stim_pair: 'str | None' = None) -> 'float | None'
+```
+
+Resolve the registered sampling frequency for a run or session.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str \| None | `None` |
+| `stim_pair` | str \| None | `None` |
+
+**Returns:** float \| None.
+
+##### `DataLoader.get_session_path`
+
+```python
+get_session_path(self, session_id: 'str', kind: 'str | None' = None) -> 'Path'
+```
+
+Return a session directory or one named subdirectory within it.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `kind` | str \| None | `None` |
+
+**Returns:** Path.
+
+##### `DataLoader.get_stim_row`
+
+```python
+get_stim_row(self, session_id: 'str', stim_pair: 'str', *, stim_start: 'Any | None' = None) -> 'pd.Series'
+```
+
+Return the metadata row matching a session and stimulation pair.
+
+When repeated acquisitions exist, ``stim_start`` selects the closest
+registered start time.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `stim_start` | Any \| None | `None` |
+
+**Returns:** pd.Series.
+
+##### `DataLoader.has_stim_cache`
+
+```python
+has_stim_cache(self, session_id: 'str', stim_pair: 'str', *, raw_file: 'str | Path | None' = None, allow_legacy_cache: 'bool' = False) -> 'bool'
+```
+
+Return whether a matching on-disk stimulation cache is available.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `raw_file` | str \| Path \| None | `None` |
+| `allow_legacy_cache` | bool | `False` |
+
+**Returns:** bool.
+
+##### `DataLoader.load_stim_data`
+
+```python
+load_stim_data(self, session_id: 'str', stim_pair: 'str', source: 'str' = 'auto', save_csv: 'bool' = True, nrows: 'int | None' = None, raw_file: 'str | Path | None' = None, stim_start: 'Any | None' = None, allow_legacy_cache: 'bool' = False) -> 'pd.DataFrame'
+```
+
+Load a stimulation window as a time-indexed DataFrame.
+
+``source='auto'`` prefers the local per-acquisition cache and otherwise
+reads a registered raw file. ``raw_file`` disambiguates repeated
+stimulation acquisitions that share a session and electrode pair.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `source` | str | `'auto'` |
+| `save_csv` | bool | `True` |
+| `nrows` | int \| None | `None` |
+| `raw_file` | str \| Path \| None | `None` |
+| `stim_start` | Any \| None | `None` |
+| `allow_legacy_cache` | bool | `False` |
+
+**Returns:** pd.DataFrame.
+
+##### `DataLoader.prefetch_stim_data`
+
+```python
+prefetch_stim_data(self, session_id: 'str', stim_pair: 'str', *, raw_file: 'str | Path', stim_start: 'Any | None' = None, stop_event: 'Any | None' = None) -> 'list[Path]'
+```
+
+Stage registered text exports locally using large sequential reads.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `raw_file` | str \| Path | required |
+| `stim_start` | Any \| None | `None` |
+| `stop_event` | Any \| None | `None` |
+
+**Returns:** list[Path].
+
+##### `DataLoader.prepare_raw_windows`
+
+```python
+prepare_raw_windows(self, overwrite: 'bool' = False) -> 'list[Path]'
+```
+
+Precompute registered stimulation-window caches for all sessions.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `overwrite` | bool | `False` |
+
+**Returns:** list[Path].
+
+##### `DataLoader.remove_stim_cache`
+
+```python
+remove_stim_cache(self, session_id: 'str', stim_pair: 'str', *, raw_file: 'str | Path | None' = None, include_legacy: 'bool' = False) -> 'list[Path]'
+```
+
+Remove matching cache files and return the paths that were deleted.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `raw_file` | str \| Path \| None | `None` |
+| `include_legacy` | bool | `False` |
+
+**Returns:** list[Path].
+
+##### `DataLoader.stim_pairs`
+
+```python
+stim_pairs(self, session_id: 'str | None' = None) -> 'list[str]'
+```
+
+Return sorted stimulation-pair labels, optionally for one session.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str \| None | `None` |
+
+**Returns:** list[str].
+
 ### `Analysis`
 
 ```python
@@ -19,6 +1522,11 @@ Analysis(pipeline) -> 'None'
 ```
 
 High-level analysis and visualization helpers bound to a pipeline.
+
+Every method is a thin wrapper around a public ERPy function that fills in
+the patient's electrode metadata where one is needed, so analyses can be
+written against ``patient.analysis`` without importing each function.
+``plot_*`` methods that wrap an axes-level function return the figure.
 
 **Parameters**
 
@@ -274,7 +1782,7 @@ Plot single-trial activity for one channel as a heat map.
 install_standard_scripts(cls) -> 'None'
 ```
 
-Reset external analysis-script hooks to ERPy's built-in execution.
+Do nothing; ERPy's built-in execution path needs no installation.
 
 **Returns:** None.
 
@@ -960,7 +2468,7 @@ Save a figure in the configured analysis directory and return its path.
 use_standard_scripts(cls, bash_type: 'str' = 'simple') -> 'None'
 ```
 
-Select ERPy's built-in local analysis execution hooks.
+Select ERPy's built-in execution path (the only one available).
 
 **Parameters**
 
@@ -995,6 +2503,27 @@ AnalysisResult(epochs: 'Epochs', detections: 'pd.DataFrame', artifact_report: 'A
 ```
 
 One-call result for the common ERPy stimulation-response workflow.
+
+Attributes
+----------
+epochs
+    Epochs as extracted, before trial-by-channel artifact rejection.
+clean_epochs
+    Epochs after artifact rejection; the input to the detectors.
+detections
+    Long-form detector table (one row per channel and method).
+qc_detections
+    ``detections`` annotated with artifact-QC eligibility columns.
+artifact_report, artifact_summary
+    Trial-by-channel artifact scores and their per-channel summary.
+metadata
+    Audit record of every effective setting; written by :meth:`save`.
+
+Examples
+--------
+>>> result = patient.analyze("EXAMPLE_SESSION", "STIM_A_1_2")
+>>> result.primary_significant[["channel", "q_joint"]]
+>>> result.save("analysis_tables")
 
 **Parameters**
 
@@ -1050,6 +2579,11 @@ contact a registry, or create a release-record identifier.
 Projects that use an opaque release-record label should keep its local
 mapping under their own governance controls.
 
+Returns
+-------
+dict
+    Path of every written file, keyed by table name.
+
 **Parameters**
 
 | Name | Type | Default |
@@ -1068,87 +2602,6 @@ significant  # property
 Return significant response rows from the full detection table.
 
 **Returns:** pd.DataFrame.
-
-### `ArtifactResponseReport`
-
-```python
-ArtifactResponseReport(table: 'pd.DataFrame') -> None
-```
-
-Trial-by-channel response-artifact quality-control report.
-
-``table`` contains one row per evaluated trial and channel, including the
-measured artifact features, the ``bad_response`` decision, and its reason.
-Use ``by_channel`` to summarize burden without discarding the
-trial-level audit trail.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `table` | pd.DataFrame | required |
-
-**Returns:** None.
-
-#### Public members
-
-##### `ArtifactResponseReport.bad_channels`
-
-```python
-bad_channels  # property
-```
-
-Return channels whose bad-response fraction exceeds 25 percent.
-
-**Returns:** list[str].
-
-##### `ArtifactResponseReport.bad_epochs`
-
-```python
-bad_epochs  # property
-```
-
-Return trial identifiers containing at least one bad response.
-
-**Returns:** list[int].
-
-##### `ArtifactResponseReport.by_channel`
-
-```python
-by_channel(self, group_cols: 'Iterable[str] | None' = None, hard_artifact_reasons: 'Iterable[str] | None' = None) -> 'pd.DataFrame'
-```
-
-Summarize response-artifact burden by channel.
-
-This is the table used by cohort notebooks before building ranked
-response edges. It keeps saturated/rail-clipped responses auditable
-without requiring downstream code to reimplement the trial-level QC
-rules.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `group_cols` | Iterable[str] \| None | `None` |
-| `hard_artifact_reasons` | Iterable[str] \| None | `None` |
-
-**Returns:** pd.DataFrame.
-
-##### `ArtifactResponseReport.to_csv`
-
-```python
-to_csv(self, path) -> 'None'
-```
-
-Write the trial-by-channel artifact report to a CSV file.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `path` | not specified | required |
-
-**Returns:** None.
 
 ### `BIDSImportResult`
 
@@ -1175,6 +2628,546 @@ and electrode rows were imported for a quick completeness check.
 | `n_electrodes` | int | required |
 
 **Returns:** None.
+### `Events`
+
+```python
+Events(dataloader: 'Any') -> None
+```
+
+Session-event workflow bound to an ERPy ``DataLoader``.
+
+The facade creates canonical event tables for selected stimulation pairs
+and exposes the same processing path for local execution or a configured
+job runner. Event-source parameters remain explicit in each method call.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `dataloader` | Any | required |
+
+**Returns:** None.
+
+#### Public members
+
+##### `Events.install_standard_scripts`
+
+```python
+install_standard_scripts(cls) -> 'None'
+```
+
+Do nothing; ERPy's built-in execution path needs no installation.
+
+**Returns:** None.
+
+##### `Events.process`
+
+```python
+process(self, session_id: 'str', method: 'str' = 'consensus', stim_pairs: 'Iterable[str] | None' = None, **kwargs: 'Any')
+```
+
+Detect events for the requested session and stimulation pairs.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `method` | str | `'consensus'` |
+| `stim_pairs` | Iterable[str] \| None | `None` |
+| `kwargs` | Any | required |
+
+##### `Events.queue_job`
+
+```python
+queue_job(self, session_ids: 'Iterable[str] | None' = None, backend: 'str | None' = None, **kwargs: 'Any')
+```
+
+Process event jobs and return the runner plus execution summaries.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_ids` | Iterable[str] \| None | `None` |
+| `backend` | str \| None | `None` |
+| `kwargs` | Any | required |
+
+##### `Events.use_standard_scripts`
+
+```python
+use_standard_scripts(cls, bash_type: 'str' = 'simple') -> 'None'
+```
+
+Select ERPy's built-in execution path (the only one available).
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `bash_type` | str | `'simple'` |
+
+**Returns:** None.
+
+### `EventDetectionError`
+
+```python
+EventDetectionError
+```
+
+Raised when no defensible stimulation-event sequence can be detected.
+
+#### Public members
+
+##### `EventDetectionError.add_note`
+
+```python
+add_note
+```
+
+Exception.add_note(note) --
+add a note to the exception
+
+##### `EventDetectionError.with_traceback`
+
+```python
+with_traceback
+```
+
+Exception.with_traceback(tb) --
+set self.__traceback__ to tb and return self.
+
+### `Pipeline`
+
+```python
+Pipeline(dataloader) -> 'None'
+```
+
+Registry-based preprocessing and epoch extraction.
+
+Each step in :attr:`registry` maps a name to a function that transforms a
+continuous recording. A pipeline is an ordered list of
+``(step_name, parameters)`` tuples, either one of
+:data:`STANDARD_PIPELINES` or a custom list.
+
+Examples
+--------
+>>> pipeline = Pipeline(dataloader)
+>>> steps = pipeline.get_standard_pipeline("blank_filt")
+>>> epochs, processed = pipeline.process_and_epoch("SESSION", "STIM_A_1_2", steps)
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `dataloader` | not specified | required |
+
+**Returns:** None.
+
+#### Public members
+
+##### `Pipeline.build_custom_pipeline`
+
+```python
+build_custom_pipeline(self, steps: 'PipelineSteps') -> 'PipelineSteps'
+```
+
+Validate and normalize a user-supplied preprocessing sequence.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `steps` | PipelineSteps | required |
+
+**Returns:** PipelineSteps.
+
+##### `Pipeline.epoch_data`
+
+```python
+epoch_data(self, df: 'pd.DataFrame', event_times: 'Iterable[Any]', tmin: 'float' = -0.5, tmax: 'float' = 1.0, baseline: 'tuple[float, float] | None' = None, zero_time: 'float | str | None' = 'post_artifact', stim_ch: 'str | list[str] | None' = None, artifact_anchor_params: 'dict[str, Any] | None' = None) -> 'Epochs'
+```
+
+Extract event-locked trials from a continuous processed recording.
+
+Every trial is first corrected by its ``baseline`` window. When
+``zero_time`` is set, each trial is then recentred on a short window
+that starts at one anchor time shared by all trials: the fixed
+``zero_time`` (seconds), or ERPy's post-artifact anchor, which stores
+per-trial anchor diagnostics in the audit metadata.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `df` | pd.DataFrame | required |
+| `event_times` | Iterable[Any] | required |
+| `tmin` | float | `-0.5` |
+| `tmax` | float | `1.0` |
+| `baseline` | tuple[float, float] \| None | `None` |
+| `zero_time` | float \| str \| None | `'post_artifact'` |
+| `stim_ch` | str \| list[str] \| None | `None` |
+| `artifact_anchor_params` | dict[str, Any] \| None | `None` |
+
+**Returns:** Epochs.
+
+##### `Pipeline.epochs`
+
+```python
+epochs  # property
+```
+
+Return the epoch-job accessor bound to this pipeline.
+
+**Returns:** EpochsRunner.
+
+##### `Pipeline.find_epochs_files`
+
+```python
+find_epochs_files(self, session_id: 'str', stim_pair: 'str', pipeline_steps=None) -> 'list[Path]'
+```
+
+Return matching epoch caches from newest to oldest.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `pipeline_steps` | not specified | `None` |
+
+**Returns:** list[Path].
+
+##### `Pipeline.get_standard_pipeline`
+
+```python
+get_standard_pipeline(self, name: 'str' = 'blank_filt') -> 'PipelineSteps'
+```
+
+Return an independent copy of a named preprocessing step sequence.
+
+Available presets (see :data:`STANDARD_PIPELINES`) combine artifact
+blanking, line-noise filtering, band-pass filtering, optional
+decimation, and a selected reference.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `name` | str | `'blank_filt'` |
+
+**Returns:** PipelineSteps.
+
+##### `Pipeline.install_standard_scripts`
+
+```python
+install_standard_scripts(cls) -> 'None'
+```
+
+Do nothing; ERPy's built-in execution path needs no installation.
+
+**Returns:** None.
+
+##### `Pipeline.load_epochs`
+
+```python
+load_epochs(self, session_id: 'str', stim_pair: 'str', pipeline_steps=None, *, allow_unsafe_legacy_pickle: 'bool' = False) -> 'Epochs'
+```
+
+Load the newest matching epoch cache for an acquisition.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `pipeline_steps` | not specified | `None` |
+| `allow_unsafe_legacy_pickle` | bool | `False` |
+
+**Returns:** Epochs.
+
+##### `Pipeline.load_epochs_file`
+
+```python
+load_epochs_file(self, path: 'str | Path', *, allow_unsafe_legacy_pickle: 'bool' = False) -> 'Epochs'
+```
+
+Load a cached epoch file.
+
+Set ``allow_unsafe_legacy_pickle`` only for a pre-1.0 file that you
+created and trust; legacy pickle metadata can execute arbitrary code.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `path` | str \| Path | required |
+| `allow_unsafe_legacy_pickle` | bool | `False` |
+
+**Returns:** Epochs.
+
+##### `Pipeline.load_processed_data`
+
+```python
+load_processed_data(self, path: 'str | Path', *, allow_unsafe_legacy_pickle: 'bool' = False) -> 'pd.DataFrame'
+```
+
+Load processed data and safely restore its provenance metadata.
+
+Parameters
+----------
+path : str or pathlib.Path
+    HDF5 processed-data file to read.
+allow_unsafe_legacy_pickle : bool, default ``False``
+    Permit metadata from a trusted pre-1.0 file. Legacy PyTables
+    attributes use pickle and may execute arbitrary code; never enable
+    this option for an untrusted or downloaded file.
+
+Returns
+-------
+pandas.DataFrame
+    Processed samples with restored metadata in ``DataFrame.attrs``.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `path` | str \| Path | required |
+| `allow_unsafe_legacy_pickle` | bool | `False` |
+
+**Returns:** pd.DataFrame.
+
+##### `Pipeline.pipeline_id`
+
+```python
+pipeline_id(self, pipeline_steps: 'PipelineSteps | None') -> 'str'
+```
+
+Return a stable identifier for a preprocessing step sequence.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `pipeline_steps` | PipelineSteps \| None | required |
+
+**Returns:** str.
+
+##### `Pipeline.process`
+
+```python
+process(self, pipeline_steps: 'PipelineSteps | None' = None, session_id: 'str | None' = None, stim_pair: 'str | None' = None, **kwargs: 'Any')
+```
+
+Run preprocessing for one acquisition or all matching acquisitions.
+
+With both ``session_id`` and ``stim_pair`` the processed recording is
+returned directly; otherwise a ``{(session_id, stim_pair): frame}``
+dictionary covers every matching acquisition.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `pipeline_steps` | PipelineSteps \| None | `None` |
+| `session_id` | str \| None | `None` |
+| `stim_pair` | str \| None | `None` |
+| `kwargs` | Any | required |
+
+##### `Pipeline.process_all_sessions`
+
+```python
+process_all_sessions(self, pipeline_steps=None, session_ids: 'Iterable[str] | None' = None, **kwargs: 'Any')
+```
+
+Preprocess selected or registered sessions and stimulation pairs.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `pipeline_steps` | not specified | `None` |
+| `session_ids` | Iterable[str] \| None | `None` |
+| `kwargs` | Any | required |
+
+##### `Pipeline.process_and_epoch`
+
+```python
+process_and_epoch(self, session_id: 'str', stim_pair: 'str', pipeline_steps: 'PipelineSteps | None' = None, event_times: 'Iterable[Any] | None' = None, tmin: 'float' = -0.5, tmax: 'float' = 1.0, baseline: 'tuple[float, float] | None' = (-0.5, -0.03), zero_time: 'float | str | None' = 'post_artifact', artifact_anchor_params: 'dict[str, Any] | None' = None, processing_margin_s: 'float | None' = None, save_processed: 'bool' = False, save_epochs: 'bool' = False, **kwargs: 'Any') -> 'tuple[Epochs, pd.DataFrame]'
+```
+
+Preprocess one acquisition and extract its event-locked epochs.
+
+Returns ``(epochs, processed)``. Event times default to the saved
+event file. ``processing_margin_s`` limits preprocessing to the span of
+the events plus that margin instead of the whole recording.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `pipeline_steps` | PipelineSteps \| None | `None` |
+| `event_times` | Iterable[Any] \| None | `None` |
+| `tmin` | float | `-0.5` |
+| `tmax` | float | `1.0` |
+| `baseline` | tuple[float, float] \| None | `(-0.5, -0.03)` |
+| `zero_time` | float \| str \| None | `'post_artifact'` |
+| `artifact_anchor_params` | dict[str, Any] \| None | `None` |
+| `processing_margin_s` | float \| None | `None` |
+| `save_processed` | bool | `False` |
+| `save_epochs` | bool | `False` |
+| `kwargs` | Any | required |
+
+**Returns:** tuple[Epochs, pd.DataFrame].
+
+##### `Pipeline.process_session`
+
+```python
+process_session(self, session_id: 'str', pipeline_steps=None, stim_pairs: 'Iterable[str] | None' = None, **kwargs: 'Any')
+```
+
+Preprocess selected stimulation pairs within one session.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `pipeline_steps` | not specified | `None` |
+| `stim_pairs` | Iterable[str] \| None | `None` |
+| `kwargs` | Any | required |
+
+##### `Pipeline.process_stim_session`
+
+```python
+process_stim_session(self, session_id: 'str', stim_pair: 'str', pipeline_steps: 'PipelineSteps | None' = None, input_source: 'str' = 'auto', load_from_raw: 'bool' = True, save_processed: 'bool' = False, overwrite: 'bool' = False, raw_file: 'str | Path | None' = None, stim_start: 'Any | None' = None, time_window: 'tuple[Any, Any] | None' = None, **context: 'Any') -> 'pd.DataFrame'
+```
+
+Load and preprocess one session/stimulation-pair acquisition.
+
+The returned continuous table records sampling frequency and pipeline
+identity in ``DataFrame.attrs`` and can optionally be cached on disk.
+A cached result is reused only when ``input_source="processed"``;
+``load_from_raw`` is accepted for backward compatibility and has no
+further effect.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `pipeline_steps` | PipelineSteps \| None | `None` |
+| `input_source` | str | `'auto'` |
+| `load_from_raw` | bool | `True` |
+| `save_processed` | bool | `False` |
+| `overwrite` | bool | `False` |
+| `raw_file` | str \| Path \| None | `None` |
+| `stim_start` | Any \| None | `None` |
+| `time_window` | tuple[Any, Any] \| None | `None` |
+| `context` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+##### `Pipeline.queue_job`
+
+```python
+queue_job(self, pipeline_steps=None, session_ids: 'Iterable[str] | None' = None, backend: 'str | None' = None, **kwargs: 'Any')
+```
+
+Process selected acquisitions and return the job-runner summary.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `pipeline_steps` | not specified | `None` |
+| `session_ids` | Iterable[str] \| None | `None` |
+| `backend` | str \| None | `None` |
+| `kwargs` | Any | required |
+
+##### `Pipeline.resolve_pipeline`
+
+```python
+resolve_pipeline(self, pipeline: 'PipelineSpec') -> 'PipelineSteps'
+```
+
+Return validated steps for a standard-pipeline name or a step list.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `pipeline` | PipelineSpec | required |
+
+**Returns:** PipelineSteps.
+
+##### `Pipeline.save_processed_data`
+
+```python
+save_processed_data(self, df: 'pd.DataFrame', path: 'str | Path', **metadata: 'Any') -> 'Path'
+```
+
+Atomically save processed data with deterministic JSON provenance.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `df` | pd.DataFrame | required |
+| `path` | str \| Path | required |
+| `metadata` | Any | required |
+
+**Returns:** Path.
+
+##### `Pipeline.use_standard_scripts`
+
+```python
+use_standard_scripts(cls, bash_type: 'str' = 'simple') -> 'None'
+```
+
+Select ERPy's built-in execution path (the only one available).
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `bash_type` | str | `'simple'` |
+
+**Returns:** None.
+
+### `UnsafeLegacyProcessedMetadataError`
+
+```python
+UnsafeLegacyProcessedMetadataError
+```
+
+Raised when pickle-backed processed-data metadata are not trusted.
+
+#### Public members
+
+##### `UnsafeLegacyProcessedMetadataError.add_note`
+
+```python
+add_note
+```
+
+Exception.add_note(note) --
+add a note to the exception
+
+##### `UnsafeLegacyProcessedMetadataError.with_traceback`
+
+```python
+with_traceback
+```
+
+Exception.with_traceback(tb) --
+set self.__traceback__ to tb and return self.
+
 ### `BadChannelReport`
 
 ```python
@@ -1222,687 +3215,6 @@ Write the full channel-QC table to a CSV file.
 
 **Returns:** None.
 
-### `BootstrapInterval`
-
-```python
-BootstrapInterval(estimate: 'float', ci_low: 'float', ci_high: 'float', confidence: 'float', n_resamples: 'int', n_observations: 'int', n_top_level_clusters: 'int') -> None
-```
-
-Patient-balanced hierarchical bootstrap estimate and interval.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `estimate` | float | required |
-| `ci_low` | float | required |
-| `ci_high` | float | required |
-| `confidence` | float | required |
-| `n_resamples` | int | required |
-| `n_observations` | int | required |
-| `n_top_level_clusters` | int | required |
-
-**Returns:** None.
-### `ComodulogramResult`
-
-```python
-ComodulogramResult(phase_channel: 'str', amp_channel: 'str', phase_freqs: 'np.ndarray', amp_freqs: 'np.ndarray', mi: 'np.ndarray', method: 'str', bandwidth_phase: 'float' = 2.0, bandwidth_amp: 'float' = 20.0) -> None
-```
-
-Phase-amplitude coupling values across frequency-band centers.
-
-``mi`` is arranged as amplitude-frequency by phase-frequency. Frequency
-centers and bandwidths are expressed in hertz, and ``method`` records the
-modulation-index estimator.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `phase_channel` | str | required |
-| `amp_channel` | str | required |
-| `phase_freqs` | np.ndarray | required |
-| `amp_freqs` | np.ndarray | required |
-| `mi` | np.ndarray | required |
-| `method` | str | required |
-| `bandwidth_phase` | float | `2.0` |
-| `bandwidth_amp` | float | `20.0` |
-
-**Returns:** None.
-### `CRPConfig`
-
-```python
-CRPConfig(response_window: 'tuple[float, float]' = (0.015, 0.3), baseline_window: 'tuple[float, float]' = (-0.5, -0.03), min_trials: 'int' = 3, alpha: 'float' = 0.05, projection_start_s: 'float' = 0.01, projection_step_s: 'float' = 0.005, permutation_n: 'int' = 0, random_state: 'int | None' = 0, eps: 'float' = 1e-12) -> None
-```
-
-Configuration for canonical response parametrization.
-
-The extraction follows Miller et al. (2023): semi-normalized reciprocal
-trial projections determine a data-driven response duration, a balanced
-half of those projections supplies the one-sided extraction test, and a
-linear kernel PCA supplies the canonical response shape.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `response_window` | tuple[float, float] | `(0.015, 0.3)` |
-| `baseline_window` | tuple[float, float] | `(-0.5, -0.03)` |
-| `min_trials` | int | `3` |
-| `alpha` | float | `0.05` |
-| `projection_start_s` | float | `0.01` |
-| `projection_step_s` | float | `0.005` |
-| `permutation_n` | int | `0` |
-| `random_state` | int \| None | `0` |
-| `eps` | float | `1e-12` |
-
-**Returns:** None.
-### `CRPEnergyConfig`
-
-```python
-CRPEnergyConfig(response_window: 'tuple[float, float]' = (0.015, 1.0), baseline_window: 'tuple[float, float]' = (-1.0, -0.015), alpha: 'float' = 0.05, correction: 'str' = 'fdr_bh', min_clean_trials: 'int' = 8, n_permutations: 'int' = 5000, max_exact_trials: 'int' = 16, max_exact_reproducibility_trials: 'int' = 12, canonical_energy_cv: 'bool' = True, random_state: 'int | None' = 42, artifact_interval: 'tuple[float, float]' = (0.0, 0.015), projection_start_s: 'float' = 0.01, projection_step_s: 'float' = 0.005, eps: 'float' = 1e-12) -> None
-```
-
-Configuration for the CRP-energy conjunction.
-
-The response and baseline windows are matched sample-for-sample. Samples
-in ``artifact_interval`` are excluded before either component is fitted.
-The inferential reproducibility window is the complete effective response
-window; CRP duration selection is retained only for descriptive effects.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `response_window` | tuple[float, float] | `(0.015, 1.0)` |
-| `baseline_window` | tuple[float, float] | `(-1.0, -0.015)` |
-| `alpha` | float | `0.05` |
-| `correction` | str | `'fdr_bh'` |
-| `min_clean_trials` | int | `8` |
-| `n_permutations` | int | `5000` |
-| `max_exact_trials` | int | `16` |
-| `max_exact_reproducibility_trials` | int | `12` |
-| `canonical_energy_cv` | bool | `True` |
-| `random_state` | int \| None | `42` |
-| `artifact_interval` | tuple[float, float] | `(0.0, 0.015)` |
-| `projection_start_s` | float | `0.01` |
-| `projection_step_s` | float | `0.005` |
-| `eps` | float | `1e-12` |
-
-**Returns:** None.
-
-#### Public members
-
-##### `CRPEnergyConfig.validate`
-
-```python
-validate(self) -> 'None'
-```
-
-Validate scientific windows and finite inference settings.
-
-Validation is explicit because silently coercing an invalid window,
-seed, or randomization count into an ``insufficient_data`` result would
-make configuration errors indistinguishable from unsuitable data.
-
-**Returns:** None.
-
-### `CRPEnergyResult`
-
-```python
-CRPEnergyResult(channel: 'str', significant: 'bool', classification: 'str', p_crp: 'float', p_energy: 'float', p_joint: 'float', q_joint: 'float', crp_significant: 'bool', energy_significant: 'bool', crp_statistic: 'float', energy_statistic: 'float', rms_response: 'float', rms_baseline: 'float', rms_ratio_db: 'float', canonical_energy: 'float', canonical_energy_fraction: 'float', response_duration: 'float', n_trials_total: 'int', n_trials_clean: 'int', canonical_waveform: 'np.ndarray', canonical_waveform_times: 'np.ndarray', trial_coefficients: 'np.ndarray', clean_trial_indices: 'np.ndarray', crp_explained_variance: 'float', crp_snr: 'float', reproducibility_test_exact: 'bool', reproducibility_n_randomizations: 'int', energy_test_exact: 'bool', energy_n_permutations: 'int', response_window: 'tuple[float, float]', baseline_window: 'tuple[float, float]', qc_status: 'str', parameters: 'str', detector_version: 'str' = '1.0.0', notes: 'str' = '', n_response_samples: 'int' = 0, n_baseline_samples: 'int' = 0) -> None
-```
-
-One channel's unadjusted reproducibility-energy conjunction result.
-
-For backward compatibility, ``p_crp`` and ``crp_statistic`` store the
-fixed-window reproducibility value `p_R` and statistic `T_R`.
-They are distinct from the standalone, selected-duration CRP comparator.
-The canonical waveform, response duration, coefficients, SNR, and
-explained fraction remain descriptive CRP quantities.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `channel` | str | required |
-| `significant` | bool | required |
-| `classification` | str | required |
-| `p_crp` | float | required |
-| `p_energy` | float | required |
-| `p_joint` | float | required |
-| `q_joint` | float | required |
-| `crp_significant` | bool | required |
-| `energy_significant` | bool | required |
-| `crp_statistic` | float | required |
-| `energy_statistic` | float | required |
-| `rms_response` | float | required |
-| `rms_baseline` | float | required |
-| `rms_ratio_db` | float | required |
-| `canonical_energy` | float | required |
-| `canonical_energy_fraction` | float | required |
-| `response_duration` | float | required |
-| `n_trials_total` | int | required |
-| `n_trials_clean` | int | required |
-| `canonical_waveform` | np.ndarray | required |
-| `canonical_waveform_times` | np.ndarray | required |
-| `trial_coefficients` | np.ndarray | required |
-| `clean_trial_indices` | np.ndarray | required |
-| `crp_explained_variance` | float | required |
-| `crp_snr` | float | required |
-| `reproducibility_test_exact` | bool | required |
-| `reproducibility_n_randomizations` | int | required |
-| `energy_test_exact` | bool | required |
-| `energy_n_permutations` | int | required |
-| `response_window` | tuple[float, float] | required |
-| `baseline_window` | tuple[float, float] | required |
-| `qc_status` | str | required |
-| `parameters` | str | required |
-| `detector_version` | str | `'1.0.0'` |
-| `notes` | str | `''` |
-| `n_response_samples` | int | `0` |
-| `n_baseline_samples` | int | `0` |
-
-**Returns:** None.
-
-#### Public members
-
-##### `CRPEnergyResult.to_record`
-
-```python
-to_record(self, *, include_arrays: 'bool' = True) -> 'dict[str, Any]'
-```
-
-Return a detector-table record with optionally compact array fields.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `include_arrays` | bool | `True` |
-
-**Returns:** dict[str, Any].
-
-### `CRPResult`
-
-```python
-CRPResult(channel: 'str', significant: 'bool', score: 'float', p_value: 'float', threshold: 'float', canonical_waveform: 'np.ndarray', times: 'np.ndarray', projections: 'np.ndarray', response_window: 'tuple[float, float]', baseline_window: 'tuple[float, float]', response_duration_s: 'float' = nan, t_value: 'float' = nan, alpha_prime_uv: 'np.ndarray | None' = None, residual_rms_uv: 'np.ndarray | None' = None, snr: 'np.ndarray | None' = None, explained_variance: 'np.ndarray | None' = None, cross_projections: 'np.ndarray | None' = None, projection_times: 'np.ndarray | None' = None, mean_projection_profile: 'np.ndarray | None' = None, full_window_t_value: 'float' = nan, full_window_p_value: 'float' = nan, canonical_weight_times: 'np.ndarray | None' = None, canonical_weight_mean: 'np.ndarray | None' = None, canonical_weight_sem: 'np.ndarray | None' = None, canonical_weight_z: 'np.ndarray | None' = None, baseline_weight_mean: 'float' = nan, baseline_weight_std: 'float' = nan, max_canonical_weight_z: 'float' = nan, reconstruction_rms_uv: 'float' = nan, normalized_reconstruction_energy: 'float' = nan, energy_z: 'float' = nan, permutation_p_value: 'float' = nan, null_distribution: 'np.ndarray | None' = None) -> None
-```
-
-Canonical response parametrization result for one recording channel.
-
-The object retains the fitted waveform, reciprocal trial projections,
-data-driven response duration, extraction-test quantities, reconstruction
-diagnostics, and optional permutation null. Time windows and durations are
-in seconds; amplitude and residual fields carrying an ``_uv`` suffix are
-in microvolts. ``significant`` and ``p_value`` describe the unadjusted CRP
-extraction test, not the separate CRP-energy conjunction.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `channel` | str | required |
-| `significant` | bool | required |
-| `score` | float | required |
-| `p_value` | float | required |
-| `threshold` | float | required |
-| `canonical_waveform` | np.ndarray | required |
-| `times` | np.ndarray | required |
-| `projections` | np.ndarray | required |
-| `response_window` | tuple[float, float] | required |
-| `baseline_window` | tuple[float, float] | required |
-| `response_duration_s` | float | `nan` |
-| `t_value` | float | `nan` |
-| `alpha_prime_uv` | np.ndarray \| None | `None` |
-| `residual_rms_uv` | np.ndarray \| None | `None` |
-| `snr` | np.ndarray \| None | `None` |
-| `explained_variance` | np.ndarray \| None | `None` |
-| `cross_projections` | np.ndarray \| None | `None` |
-| `projection_times` | np.ndarray \| None | `None` |
-| `mean_projection_profile` | np.ndarray \| None | `None` |
-| `full_window_t_value` | float | `nan` |
-| `full_window_p_value` | float | `nan` |
-| `canonical_weight_times` | np.ndarray \| None | `None` |
-| `canonical_weight_mean` | np.ndarray \| None | `None` |
-| `canonical_weight_sem` | np.ndarray \| None | `None` |
-| `canonical_weight_z` | np.ndarray \| None | `None` |
-| `baseline_weight_mean` | float | `nan` |
-| `baseline_weight_std` | float | `nan` |
-| `max_canonical_weight_z` | float | `nan` |
-| `reconstruction_rms_uv` | float | `nan` |
-| `normalized_reconstruction_energy` | float | `nan` |
-| `energy_z` | float | `nan` |
-| `permutation_p_value` | float | `nan` |
-| `null_distribution` | np.ndarray \| None | `None` |
-
-**Returns:** None.
-
-#### Public members
-
-##### `CRPResult.canonical_response_curve`
-
-```python
-canonical_response_curve  # property
-```
-
-Return the fitted canonical waveform as a compatibility alias.
-
-**Returns:** np.ndarray.
-
-### `FixedWindowReproducibilityResult`
-
-```python
-FixedWindowReproducibilityResult(statistic: 'float', p_value: 'float', exact: 'bool', n_randomizations: 'int') -> None
-```
-
-Result of the trial-level fixed-window reproducibility randomization.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `statistic` | float | required |
-| `p_value` | float | required |
-| `exact` | bool | required |
-| `n_randomizations` | int | required |
-
-**Returns:** None.
-### `DataLoader`
-
-```python
-DataLoader(patient_id: 'str', config_path: 'str | Path | None' = None, load_data: 'bool' = False, create_tree: 'bool' = True, verbose: 'bool' = True) -> 'None'
-```
-
-Configuration and metadata access for one ERPy patient.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `patient_id` | str | required |
-| `config_path` | str \| Path \| None | `None` |
-| `load_data` | bool | `False` |
-| `create_tree` | bool | `True` |
-| `verbose` | bool | `True` |
-
-**Returns:** None.
-
-#### Public members
-
-##### `DataLoader.bad_channels`
-
-```python
-bad_channels(self, session_id: 'str | None' = None) -> 'list[str]'
-```
-
-Return electrode labels explicitly marked bad in project metadata.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str \| None | `None` |
-
-**Returns:** list[str].
-
-##### `DataLoader.clear_memory_cache`
-
-```python
-clear_memory_cache(self) -> 'None'
-```
-
-Discard the currently retained stimulation window from memory.
-
-**Returns:** None.
-
-##### `DataLoader.create_session_tree`
-
-```python
-create_session_tree(self) -> 'None'
-```
-
-Create the standard raw, event, epoch, analysis, and log folders.
-
-**Returns:** None.
-
-##### `DataLoader.from_bids`
-
-```python
-from_bids(cls, bids_root: 'str | Path', subject: 'str', output_root: 'str | Path | None' = None, session: 'str | None' = None, task: 'str | None' = None, patient_id: 'str | None' = None, copy_raw: 'bool' = False, derivatives: 'bool' = True, **kwargs: 'Any') -> "'DataLoader'"
-```
-
-Import one BIDS iEEG subject and return its configured data loader.
-
-ERPy metadata tables and configuration are created under
-``output_root``; raw recordings remain in place unless ``copy_raw`` is
-enabled.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `bids_root` | str \| Path | required |
-| `subject` | str | required |
-| `output_root` | str \| Path \| None | `None` |
-| `session` | str \| None | `None` |
-| `task` | str \| None | `None` |
-| `patient_id` | str \| None | `None` |
-| `copy_raw` | bool | `False` |
-| `derivatives` | bool | `True` |
-| `kwargs` | Any | required |
-
-**Returns:** 'DataLoader'.
-
-##### `DataLoader.from_nwb`
-
-```python
-from_nwb(cls, nwb_path: 'str | Path', output_root: 'str | Path | None' = None, patient_id: 'str | None' = None, session_id: 'str | None' = None, stim_pair: 'str | None' = None, stim_times: 'Any | None' = None, stim_duration_s: 'float' = 0.001, series_name: 'str | None' = None, copy_raw: 'bool' = False, **kwargs: 'Any') -> "'DataLoader'"
-```
-
-Create a minimal ERPy project around one NWB file.
-
-Parameters
-----------
-nwb_path
-    Local NWB file.
-output_root
-    Folder where ERPy metadata, config, and processed outputs are written.
-patient_id, session_id
-    Optional ERPy identifiers. When omitted, ERPy uses the NWB subject
-    and session identifiers when available.
-stim_pair, stim_times
-    Optional stimulation-site name and event times. Numeric times are
-    interpreted as seconds relative to NWB session start; datetimes are
-    preserved as absolute event times. If omitted, ERPy tries to infer a
-    stimulation table from NWB trials.
-series_name
-    Name of the NWB ElectricalSeries to load. If omitted, the first
-    ElectricalSeries is used.
-copy_raw
-    Copy the NWB into the ERPy project. Defaults to keeping large NWB
-    files in place.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `nwb_path` | str \| Path | required |
-| `output_root` | str \| Path \| None | `None` |
-| `patient_id` | str \| None | `None` |
-| `session_id` | str \| None | `None` |
-| `stim_pair` | str \| None | `None` |
-| `stim_times` | Any \| None | `None` |
-| `stim_duration_s` | float | `0.001` |
-| `series_name` | str \| None | `None` |
-| `copy_raw` | bool | `False` |
-| `kwargs` | Any | required |
-
-**Returns:** 'DataLoader'.
-
-##### `DataLoader.get_analysis_path`
-
-```python
-get_analysis_path(self, session_id: 'str | None' = None) -> 'Path'
-```
-
-Return and create the patient- or session-level analysis directory.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str \| None | `None` |
-
-**Returns:** Path.
-
-##### `DataLoader.get_event_path`
-
-```python
-get_event_path(self, session_id: 'str', stim_pair: 'str') -> 'Path'
-```
-
-Return the conventional CSV path for a detected event table.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-
-**Returns:** Path.
-
-##### `DataLoader.get_raw_cache_path`
-
-```python
-get_raw_cache_path(self, session_id: 'str', stim_pair: 'str', *, raw_file: 'str | Path | None' = None) -> 'Path'
-```
-
-Return the configured binary or text cache path for an acquisition.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `raw_file` | str \| Path \| None | `None` |
-
-**Returns:** Path.
-
-##### `DataLoader.get_raw_csv_path`
-
-```python
-get_raw_csv_path(self, session_id: 'str', stim_pair: 'str', *, raw_file: 'str | Path | None' = None) -> 'Path'
-```
-
-Return the acquisition-specific path for a text raw-data cache.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `raw_file` | str \| Path \| None | `None` |
-
-**Returns:** Path.
-
-##### `DataLoader.get_raw_files`
-
-```python
-get_raw_files(self, session_id: 'str | None' = None, stim_pair: 'str | None' = None, *, raw_file: 'str | Path | None' = None, stim_start: 'Any | None' = None) -> 'list[Path]'
-```
-
-Resolve raw recording paths for a session or stimulation acquisition.
-
-``raw_file`` and ``stim_start`` disambiguate repeated acquisitions when
-the metadata table contains more than one candidate.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str \| None | `None` |
-| `stim_pair` | str \| None | `None` |
-| `raw_file` | str \| Path \| None | `None` |
-| `stim_start` | Any \| None | `None` |
-
-**Returns:** list[Path].
-
-##### `DataLoader.get_sampling_freq`
-
-```python
-get_sampling_freq(self, session_id: 'str | None' = None, stim_pair: 'str | None' = None) -> 'float | None'
-```
-
-Resolve the registered sampling frequency for a run or session.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str \| None | `None` |
-| `stim_pair` | str \| None | `None` |
-
-**Returns:** float \| None.
-
-##### `DataLoader.get_session_path`
-
-```python
-get_session_path(self, session_id: 'str', kind: 'str | None' = None) -> 'Path'
-```
-
-Return a session directory or one named subdirectory within it.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `kind` | str \| None | `None` |
-
-**Returns:** Path.
-
-##### `DataLoader.get_stim_row`
-
-```python
-get_stim_row(self, session_id: 'str', stim_pair: 'str', *, stim_start: 'Any | None' = None) -> 'pd.Series'
-```
-
-Return the metadata row matching a session and stimulation pair.
-
-When repeated acquisitions exist, ``stim_start`` selects the closest
-registered start time.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `stim_start` | Any \| None | `None` |
-
-**Returns:** pd.Series.
-
-##### `DataLoader.has_stim_cache`
-
-```python
-has_stim_cache(self, session_id: 'str', stim_pair: 'str', *, raw_file: 'str | Path | None' = None, allow_legacy_cache: 'bool' = False) -> 'bool'
-```
-
-Return whether a matching on-disk stimulation cache is available.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `raw_file` | str \| Path \| None | `None` |
-| `allow_legacy_cache` | bool | `False` |
-
-**Returns:** bool.
-
-##### `DataLoader.load_stim_data`
-
-```python
-load_stim_data(self, session_id: 'str', stim_pair: 'str', source: 'str' = 'auto', save_csv: 'bool' = True, nrows: 'int | None' = None, raw_file: 'str | Path | None' = None, stim_start: 'Any | None' = None, allow_legacy_cache: 'bool' = False) -> 'pd.DataFrame'
-```
-
-Load a stimulation window as a time-indexed DataFrame.
-
-``source='auto'`` prefers the local per-acquisition cache and otherwise
-reads a registered raw file. ``raw_file`` disambiguates repeated
-stimulation acquisitions that share a session and electrode pair.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `source` | str | `'auto'` |
-| `save_csv` | bool | `True` |
-| `nrows` | int \| None | `None` |
-| `raw_file` | str \| Path \| None | `None` |
-| `stim_start` | Any \| None | `None` |
-| `allow_legacy_cache` | bool | `False` |
-
-**Returns:** pd.DataFrame.
-
-##### `DataLoader.prefetch_stim_data`
-
-```python
-prefetch_stim_data(self, session_id: 'str', stim_pair: 'str', *, raw_file: 'str | Path', stim_start: 'Any | None' = None, stop_event: 'Any | None' = None) -> 'list[Path]'
-```
-
-Stage registered text exports locally using large sequential reads.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `raw_file` | str \| Path | required |
-| `stim_start` | Any \| None | `None` |
-| `stop_event` | Any \| None | `None` |
-
-**Returns:** list[Path].
-
-##### `DataLoader.prepare_raw_windows`
-
-```python
-prepare_raw_windows(self, overwrite: 'bool' = False) -> 'list[Path]'
-```
-
-Precompute registered stimulation-window caches for all sessions.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `overwrite` | bool | `False` |
-
-**Returns:** list[Path].
-
-##### `DataLoader.remove_stim_cache`
-
-```python
-remove_stim_cache(self, session_id: 'str', stim_pair: 'str', *, raw_file: 'str | Path | None' = None, include_legacy: 'bool' = False) -> 'list[Path]'
-```
-
-Remove matching cache files and return the paths that were deleted.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `raw_file` | str \| Path \| None | `None` |
-| `include_legacy` | bool | `False` |
-
-**Returns:** list[Path].
-
-##### `DataLoader.stim_pairs`
-
-```python
-stim_pairs(self, session_id: 'str | None' = None) -> 'list[str]'
-```
-
-Return sorted stimulation-pair labels, optionally for one session.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str \| None | `None` |
-
-**Returns:** list[str].
-
 ### `Epochs`
 
 ```python
@@ -1910,6 +3222,15 @@ Epochs(epochs_df: 'pd.DataFrame', sfreq: 'float', tmin: 'float', tmax: 'float', 
 ```
 
 Epoched stimulation data backed by a MultiIndex DataFrame.
+
+Examples
+--------
+>>> epochs = patient.epoch("EXAMPLE_SESSION", "STIM_A_1_2")
+>>> epochs
+<Epochs | 20 trials x 751 samples x 64 channels | -0.5 to 1 s at 500 Hz | stim A1, A2>
+>>> clean = epochs.reject_artifacts(mode="nan_response")
+>>> detections = clean.detect()            # primary CRP-energy detector
+>>> fig = clean.plot.summary("CONTACT_B1", detections=detections)
 
 **Parameters**
 
@@ -1950,10 +3271,55 @@ Return channel labels in their stored column order.
 
 **Returns:** list[str].
 
+##### `Epochs.detect`
+
+```python
+detect(self, method: 'str' = 'crp_energy', **params: 'Any') -> 'pd.DataFrame'
+```
+
+Run one detector; defaults to the primary CRP-energy conjunction.
+
+Equivalent to :func:`ERPy.detect`. ``params`` are forwarded to the
+detector, for example ``response_window``, ``baseline_window``,
+``alpha`` or ``n_permutations``.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `method` | str | `'crp_energy'` |
+| `params` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+##### `Epochs.detect_all`
+
+```python
+detect_all(self, methods: 'Iterable[str] | None' = None, min_consensus: 'int' = 2, wideband_epochs: 'Epochs | None' = None, **params: 'Any') -> 'pd.DataFrame'
+```
+
+Run every requested detector and combine the channel results.
+
+``methods`` defaults to :data:`ERPy.ALL_METHODS`. Pass
+``wideband_epochs`` only when that object truly retains 70-170 Hz; the
+SIGNI/high-gamma detector is otherwise reported as unavailable. See
+:func:`ERPy.erp_detection.detect_erp_all` for the returned columns.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `methods` | Iterable[str] \| None | `None` |
+| `min_consensus` | int | `2` |
+| `wideband_epochs` | Epochs \| None | `None` |
+| `params` | Any | required |
+
+**Returns:** pd.DataFrame.
+
 ##### `Epochs.detect_erp`
 
 ```python
-detect_erp(self, method: 'str', *args: 'Any', **kwargs: 'Any') -> 'pd.DataFrame'
+detect_erp(self, method: 'str', baseline_window: 'tuple[float, float]' = (-0.5, -0.03), response_window: 'tuple[float, float]' = (0.01, 0.3), **params: 'Any') -> 'pd.DataFrame'
 ```
 
 Run one named ERP detector and return its channel-level results.
@@ -1963,25 +3329,28 @@ Run one named ERP detector and return its channel-level results.
 | Name | Type | Default |
 | --- | --- | --- |
 | `method` | str | required |
-| `args` | Any | required |
-| `kwargs` | Any | required |
+| `baseline_window` | tuple[float, float] | `(-0.5, -0.03)` |
+| `response_window` | tuple[float, float] | `(0.01, 0.3)` |
+| `params` | Any | required |
 
 **Returns:** pd.DataFrame.
 
 ##### `Epochs.detect_erp_all`
 
 ```python
-detect_erp_all(self, *args: 'Any', **kwargs: 'Any') -> 'pd.DataFrame'
+detect_erp_all(self, methods: 'Iterable[str] | None' = None, min_consensus: 'int' = 2, wideband_epochs: 'Epochs | None' = None, **params: 'Any') -> 'pd.DataFrame'
 ```
 
-Run every registered ERP detector and combine the channel results.
+Run every registered ERP detector; alias of :meth:`detect_all`.
 
 **Parameters**
 
 | Name | Type | Default |
 | --- | --- | --- |
-| `args` | Any | required |
-| `kwargs` | Any | required |
+| `methods` | Iterable[str] \| None | `None` |
+| `min_consensus` | int | `2` |
+| `wideband_epochs` | Epochs \| None | `None` |
+| `params` | Any | required |
 
 **Returns:** pd.DataFrame.
 
@@ -2010,6 +3379,8 @@ flag_artifacts(self, *args: 'Any', **kwargs: 'Any')
 
 Score trial-channel responses against the artifact criteria.
 
+Arguments are forwarded to :func:`ERPy.detect_artifactual_responses`.
+
 **Parameters**
 
 | Name | Type | Default |
@@ -2020,7 +3391,7 @@ Score trial-channel responses against the artifact criteria.
 ##### `Epochs.from_hdf`
 
 ```python
-from_hdf(cls, path: 'str | Path', key: 'str' = 'epochs', *, allow_unsafe_legacy_pickle: 'bool' = False) -> "'Epochs'"
+from_hdf(cls, path: 'str | Path', key: 'str' = 'epochs', *, allow_unsafe_legacy_pickle: 'bool' = False) -> 'Epochs'
 ```
 
 Load epochs and restore their audit metadata.
@@ -2060,7 +3431,7 @@ UnsafeLegacyEpochMetadataError
 | `key` | str | `'epochs'` |
 | `allow_unsafe_legacy_pickle` | bool | `False` |
 
-**Returns:** 'Epochs'.
+**Returns:** Epochs.
 
 ##### `Epochs.get_mean_waveform`
 
@@ -2068,7 +3439,7 @@ UnsafeLegacyEpochMetadataError
 get_mean_waveform(self) -> 'pd.DataFrame'
 ```
 
-Return the trial-averaged waveform for every channel.
+Return the trial-averaged waveform; alias of :meth:`mean`.
 
 **Returns:** pd.DataFrame.
 
@@ -2078,7 +3449,7 @@ Return the trial-averaged waveform for every channel.
 get_sem_waveform(self) -> 'pd.DataFrame'
 ```
 
-Return the standard error across trials at each time.
+Return the across-trial standard error; alias of :meth:`sem`.
 
 **Returns:** pd.DataFrame.
 
@@ -2088,7 +3459,17 @@ Return the standard error across trials at each time.
 get_std_waveform(self) -> 'pd.DataFrame'
 ```
 
-Return the sample standard deviation across trials at each time.
+Return the across-trial standard deviation; alias of :meth:`std`.
+
+**Returns:** pd.DataFrame.
+
+##### `Epochs.mean`
+
+```python
+mean(self) -> 'pd.DataFrame'
+```
+
+Return the trial-averaged waveform for every channel (time x channel).
 
 **Returns:** pd.DataFrame.
 
@@ -2123,10 +3504,13 @@ Return per-epoch post-artifact zeroing anchors when available.
 ##### `Epochs.reject_artifacts`
 
 ```python
-reject_artifacts(self, *args: 'Any', **kwargs: 'Any') -> "'Epochs'"
+reject_artifacts(self, *args: 'Any', **kwargs: 'Any') -> 'Epochs'
 ```
 
 Return a copy with artifact-contaminated responses rejected.
+
+Arguments are forwarded to :func:`ERPy.reject_artifactual_responses`;
+``mode`` is ``"drop_epoch"``, ``"nan_response"`` or ``"drop_channel"``.
 
 **Parameters**
 
@@ -2135,12 +3519,12 @@ Return a copy with artifact-contaminated responses rejected.
 | `args` | Any | required |
 | `kwargs` | Any | required |
 
-**Returns:** 'Epochs'.
+**Returns:** Epochs.
 
 ##### `Epochs.rereference`
 
 ```python
-rereference(self, *, method: 'str' = 'robust_mean', skipped_chs: 'Iterable[str] | None' = None, zscore_threshold: 'float' = 8.0, min_reference_channels: 'int' = 4) -> "'Epochs'"
+rereference(self, *, method: 'str' = 'robust_mean', skipped_chs: 'Iterable[str] | None' = None, zscore_threshold: 'float' = 8.0, min_reference_channels: 'int' = 4) -> 'Epochs'
 ```
 
 Return a re-referenced copy while preserving every channel.
@@ -2154,12 +3538,12 @@ Return a re-referenced copy while preserving every channel.
 | `zscore_threshold` | float | `8.0` |
 | `min_reference_channels` | int | `4` |
 
-**Returns:** 'Epochs'.
+**Returns:** Epochs.
 
 ##### `Epochs.rescale`
 
 ```python
-rescale(self, factor: 'float', *, signal_units: 'str' = 'uV', reason: 'str | None' = None) -> "'Epochs'"
+rescale(self, factor: 'float', *, signal_units: 'str' = 'uV', reason: 'str | None' = None) -> 'Epochs'
 ```
 
 Return a copy with channel values multiplied by ``factor``.
@@ -2172,7 +3556,27 @@ Return a copy with channel values multiplied by ``factor``.
 | `signal_units` | str | `'uV'` |
 | `reason` | str \| None | `None` |
 
-**Returns:** 'Epochs'.
+**Returns:** Epochs.
+
+##### `Epochs.sem`
+
+```python
+sem(self) -> 'pd.DataFrame'
+```
+
+Return the standard error across trials at each time.
+
+**Returns:** pd.DataFrame.
+
+##### `Epochs.shape`
+
+```python
+shape  # property
+```
+
+Return ``(n_trials, n_times, n_channels)``, matching :meth:`as_array`.
+
+**Returns:** tuple[int, int, int].
 
 ##### `Epochs.spectral`
 
@@ -2181,6 +3585,16 @@ spectral  # property
 ```
 
 Return a spectral-analysis accessor bound to these epochs.
+
+##### `Epochs.std`
+
+```python
+std(self) -> 'pd.DataFrame'
+```
+
+Return the sample standard deviation across trials at each time.
+
+**Returns:** pd.DataFrame.
 
 ##### `Epochs.times`
 
@@ -2308,7 +3722,7 @@ Detect whether a requested zeroing sample overlaps the onset artifact.
 get_mean_waveform(self) -> 'pd.DataFrame'
 ```
 
-Return the trial-averaged waveform for every channel.
+Return the trial-averaged waveform; alias of :meth:`mean`.
 
 **Returns:** pd.DataFrame.
 
@@ -2318,7 +3732,7 @@ Return the trial-averaged waveform for every channel.
 get_sem_waveform(self) -> 'pd.DataFrame'
 ```
 
-Return the standard error across trials at each time.
+Return the across-trial standard error; alias of :meth:`sem`.
 
 **Returns:** pd.DataFrame.
 
@@ -2328,7 +3742,17 @@ Return the standard error across trials at each time.
 get_std_waveform(self) -> 'pd.DataFrame'
 ```
 
-Return the sample standard deviation across trials at each time.
+Return the across-trial standard deviation; alias of :meth:`std`.
+
+**Returns:** pd.DataFrame.
+
+##### `EpochsCore.mean`
+
+```python
+mean(self) -> 'pd.DataFrame'
+```
+
+Return the trial-averaged waveform for every channel (time x channel).
 
 **Returns:** pd.DataFrame.
 
@@ -2349,6 +3773,36 @@ post_artifact_anchor_report(self) -> 'pd.DataFrame'
 ```
 
 Return per-epoch post-artifact zeroing anchors when available.
+
+**Returns:** pd.DataFrame.
+
+##### `EpochsCore.sem`
+
+```python
+sem(self) -> 'pd.DataFrame'
+```
+
+Return the standard error across trials at each time.
+
+**Returns:** pd.DataFrame.
+
+##### `EpochsCore.shape`
+
+```python
+shape  # property
+```
+
+Return ``(n_trials, n_times, n_channels)``, matching :meth:`as_array`.
+
+**Returns:** tuple[int, int, int].
+
+##### `EpochsCore.std`
+
+```python
+std(self) -> 'pd.DataFrame'
+```
+
+Return the sample standard deviation across trials at each time.
 
 **Returns:** pd.DataFrame.
 
@@ -2385,6 +3839,15 @@ EpochsResult(epochs_df: 'pd.DataFrame', sfreq: 'float', tmin: 'float', tmax: 'fl
 ```
 
 Epoched stimulation data backed by a MultiIndex DataFrame.
+
+Examples
+--------
+>>> epochs = patient.epoch("EXAMPLE_SESSION", "STIM_A_1_2")
+>>> epochs
+<Epochs | 20 trials x 751 samples x 64 channels | -0.5 to 1 s at 500 Hz | stim A1, A2>
+>>> clean = epochs.reject_artifacts(mode="nan_response")
+>>> detections = clean.detect()            # primary CRP-energy detector
+>>> fig = clean.plot.summary("CONTACT_B1", detections=detections)
 
 **Parameters**
 
@@ -2425,10 +3888,55 @@ Return channel labels in their stored column order.
 
 **Returns:** list[str].
 
+##### `EpochsResult.detect`
+
+```python
+detect(self, method: 'str' = 'crp_energy', **params: 'Any') -> 'pd.DataFrame'
+```
+
+Run one detector; defaults to the primary CRP-energy conjunction.
+
+Equivalent to :func:`ERPy.detect`. ``params`` are forwarded to the
+detector, for example ``response_window``, ``baseline_window``,
+``alpha`` or ``n_permutations``.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `method` | str | `'crp_energy'` |
+| `params` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+##### `EpochsResult.detect_all`
+
+```python
+detect_all(self, methods: 'Iterable[str] | None' = None, min_consensus: 'int' = 2, wideband_epochs: 'Epochs | None' = None, **params: 'Any') -> 'pd.DataFrame'
+```
+
+Run every requested detector and combine the channel results.
+
+``methods`` defaults to :data:`ERPy.ALL_METHODS`. Pass
+``wideband_epochs`` only when that object truly retains 70-170 Hz; the
+SIGNI/high-gamma detector is otherwise reported as unavailable. See
+:func:`ERPy.erp_detection.detect_erp_all` for the returned columns.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `methods` | Iterable[str] \| None | `None` |
+| `min_consensus` | int | `2` |
+| `wideband_epochs` | Epochs \| None | `None` |
+| `params` | Any | required |
+
+**Returns:** pd.DataFrame.
+
 ##### `EpochsResult.detect_erp`
 
 ```python
-detect_erp(self, method: 'str', *args: 'Any', **kwargs: 'Any') -> 'pd.DataFrame'
+detect_erp(self, method: 'str', baseline_window: 'tuple[float, float]' = (-0.5, -0.03), response_window: 'tuple[float, float]' = (0.01, 0.3), **params: 'Any') -> 'pd.DataFrame'
 ```
 
 Run one named ERP detector and return its channel-level results.
@@ -2438,25 +3946,28 @@ Run one named ERP detector and return its channel-level results.
 | Name | Type | Default |
 | --- | --- | --- |
 | `method` | str | required |
-| `args` | Any | required |
-| `kwargs` | Any | required |
+| `baseline_window` | tuple[float, float] | `(-0.5, -0.03)` |
+| `response_window` | tuple[float, float] | `(0.01, 0.3)` |
+| `params` | Any | required |
 
 **Returns:** pd.DataFrame.
 
 ##### `EpochsResult.detect_erp_all`
 
 ```python
-detect_erp_all(self, *args: 'Any', **kwargs: 'Any') -> 'pd.DataFrame'
+detect_erp_all(self, methods: 'Iterable[str] | None' = None, min_consensus: 'int' = 2, wideband_epochs: 'Epochs | None' = None, **params: 'Any') -> 'pd.DataFrame'
 ```
 
-Run every registered ERP detector and combine the channel results.
+Run every registered ERP detector; alias of :meth:`detect_all`.
 
 **Parameters**
 
 | Name | Type | Default |
 | --- | --- | --- |
-| `args` | Any | required |
-| `kwargs` | Any | required |
+| `methods` | Iterable[str] \| None | `None` |
+| `min_consensus` | int | `2` |
+| `wideband_epochs` | Epochs \| None | `None` |
+| `params` | Any | required |
 
 **Returns:** pd.DataFrame.
 
@@ -2485,6 +3996,8 @@ flag_artifacts(self, *args: 'Any', **kwargs: 'Any')
 
 Score trial-channel responses against the artifact criteria.
 
+Arguments are forwarded to :func:`ERPy.detect_artifactual_responses`.
+
 **Parameters**
 
 | Name | Type | Default |
@@ -2495,7 +4008,7 @@ Score trial-channel responses against the artifact criteria.
 ##### `EpochsResult.from_hdf`
 
 ```python
-from_hdf(cls, path: 'str | Path', key: 'str' = 'epochs', *, allow_unsafe_legacy_pickle: 'bool' = False) -> "'Epochs'"
+from_hdf(cls, path: 'str | Path', key: 'str' = 'epochs', *, allow_unsafe_legacy_pickle: 'bool' = False) -> 'Epochs'
 ```
 
 Load epochs and restore their audit metadata.
@@ -2535,7 +4048,7 @@ UnsafeLegacyEpochMetadataError
 | `key` | str | `'epochs'` |
 | `allow_unsafe_legacy_pickle` | bool | `False` |
 
-**Returns:** 'Epochs'.
+**Returns:** Epochs.
 
 ##### `EpochsResult.get_mean_waveform`
 
@@ -2543,7 +4056,7 @@ UnsafeLegacyEpochMetadataError
 get_mean_waveform(self) -> 'pd.DataFrame'
 ```
 
-Return the trial-averaged waveform for every channel.
+Return the trial-averaged waveform; alias of :meth:`mean`.
 
 **Returns:** pd.DataFrame.
 
@@ -2553,7 +4066,7 @@ Return the trial-averaged waveform for every channel.
 get_sem_waveform(self) -> 'pd.DataFrame'
 ```
 
-Return the standard error across trials at each time.
+Return the across-trial standard error; alias of :meth:`sem`.
 
 **Returns:** pd.DataFrame.
 
@@ -2563,7 +4076,17 @@ Return the standard error across trials at each time.
 get_std_waveform(self) -> 'pd.DataFrame'
 ```
 
-Return the sample standard deviation across trials at each time.
+Return the across-trial standard deviation; alias of :meth:`std`.
+
+**Returns:** pd.DataFrame.
+
+##### `EpochsResult.mean`
+
+```python
+mean(self) -> 'pd.DataFrame'
+```
+
+Return the trial-averaged waveform for every channel (time x channel).
 
 **Returns:** pd.DataFrame.
 
@@ -2598,10 +4121,13 @@ Return per-epoch post-artifact zeroing anchors when available.
 ##### `EpochsResult.reject_artifacts`
 
 ```python
-reject_artifacts(self, *args: 'Any', **kwargs: 'Any') -> "'Epochs'"
+reject_artifacts(self, *args: 'Any', **kwargs: 'Any') -> 'Epochs'
 ```
 
 Return a copy with artifact-contaminated responses rejected.
+
+Arguments are forwarded to :func:`ERPy.reject_artifactual_responses`;
+``mode`` is ``"drop_epoch"``, ``"nan_response"`` or ``"drop_channel"``.
 
 **Parameters**
 
@@ -2610,12 +4136,12 @@ Return a copy with artifact-contaminated responses rejected.
 | `args` | Any | required |
 | `kwargs` | Any | required |
 
-**Returns:** 'Epochs'.
+**Returns:** Epochs.
 
 ##### `EpochsResult.rereference`
 
 ```python
-rereference(self, *, method: 'str' = 'robust_mean', skipped_chs: 'Iterable[str] | None' = None, zscore_threshold: 'float' = 8.0, min_reference_channels: 'int' = 4) -> "'Epochs'"
+rereference(self, *, method: 'str' = 'robust_mean', skipped_chs: 'Iterable[str] | None' = None, zscore_threshold: 'float' = 8.0, min_reference_channels: 'int' = 4) -> 'Epochs'
 ```
 
 Return a re-referenced copy while preserving every channel.
@@ -2629,12 +4155,12 @@ Return a re-referenced copy while preserving every channel.
 | `zscore_threshold` | float | `8.0` |
 | `min_reference_channels` | int | `4` |
 
-**Returns:** 'Epochs'.
+**Returns:** Epochs.
 
 ##### `EpochsResult.rescale`
 
 ```python
-rescale(self, factor: 'float', *, signal_units: 'str' = 'uV', reason: 'str | None' = None) -> "'Epochs'"
+rescale(self, factor: 'float', *, signal_units: 'str' = 'uV', reason: 'str | None' = None) -> 'Epochs'
 ```
 
 Return a copy with channel values multiplied by ``factor``.
@@ -2647,7 +4173,27 @@ Return a copy with channel values multiplied by ``factor``.
 | `signal_units` | str | `'uV'` |
 | `reason` | str \| None | `None` |
 
-**Returns:** 'Epochs'.
+**Returns:** Epochs.
+
+##### `EpochsResult.sem`
+
+```python
+sem(self) -> 'pd.DataFrame'
+```
+
+Return the standard error across trials at each time.
+
+**Returns:** pd.DataFrame.
+
+##### `EpochsResult.shape`
+
+```python
+shape  # property
+```
+
+Return ``(n_trials, n_times, n_channels)``, matching :meth:`as_array`.
+
+**Returns:** tuple[int, int, int].
 
 ##### `EpochsResult.spectral`
 
@@ -2656,6 +4202,16 @@ spectral  # property
 ```
 
 Return a spectral-analysis accessor bound to these epochs.
+
+##### `EpochsResult.std`
+
+```python
+std(self) -> 'pd.DataFrame'
+```
+
+Return the sample standard deviation across trials at each time.
+
+**Returns:** pd.DataFrame.
 
 ##### `EpochsResult.times`
 
@@ -2708,6 +4264,483 @@ Return residual amplitude at the zeroing anchor used for each epoch.
 
 **Returns:** dict[str, float \| int \| bool \| str \| None].
 
+### `UnsafeLegacyEpochMetadataError`
+
+```python
+UnsafeLegacyEpochMetadataError
+```
+
+Raised when a legacy pickle-backed epoch cache is not explicitly trusted.
+
+#### Public members
+
+##### `UnsafeLegacyEpochMetadataError.add_note`
+
+```python
+add_note
+```
+
+Exception.add_note(note) --
+add a note to the exception
+
+##### `UnsafeLegacyEpochMetadataError.with_traceback`
+
+```python
+with_traceback
+```
+
+Exception.with_traceback(tb) --
+set self.__traceback__ to tb and return self.
+
+### `ArtifactResponseReport`
+
+```python
+ArtifactResponseReport(table: 'pd.DataFrame') -> None
+```
+
+Trial-by-channel response-artifact quality-control report.
+
+``table`` contains one row per evaluated trial and channel, including the
+measured artifact features, the ``bad_response`` decision, and its reason.
+Use ``by_channel`` to summarize burden without discarding the
+trial-level audit trail.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `table` | pd.DataFrame | required |
+
+**Returns:** None.
+
+#### Public members
+
+##### `ArtifactResponseReport.bad_channels`
+
+```python
+bad_channels  # property
+```
+
+Return channels whose bad-response fraction exceeds 25 percent.
+
+**Returns:** list[str].
+
+##### `ArtifactResponseReport.bad_epochs`
+
+```python
+bad_epochs  # property
+```
+
+Return trial identifiers containing at least one bad response.
+
+**Returns:** list[int].
+
+##### `ArtifactResponseReport.by_channel`
+
+```python
+by_channel(self, group_cols: 'Iterable[str] | None' = None, hard_artifact_reasons: 'Iterable[str] | None' = None) -> 'pd.DataFrame'
+```
+
+Summarize response-artifact burden by channel.
+
+This is the table used by cohort notebooks before building ranked
+response edges. It keeps saturated/rail-clipped responses auditable
+without requiring downstream code to reimplement the trial-level QC
+rules.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `group_cols` | Iterable[str] \| None | `None` |
+| `hard_artifact_reasons` | Iterable[str] \| None | `None` |
+
+**Returns:** pd.DataFrame.
+
+##### `ArtifactResponseReport.to_csv`
+
+```python
+to_csv(self, path) -> 'None'
+```
+
+Write the trial-by-channel artifact report to a CSV file.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `path` | not specified | required |
+
+**Returns:** None.
+
+### `WaveformAudit`
+
+```python
+WaveformAudit(epochs: 'Any', summary: 'pd.DataFrame', artifact_responses: 'pd.DataFrame', response_window: 'tuple[float, float]', baseline_window: 'tuple[float, float]', _array: 'np.ndarray', _clean_array: 'np.ndarray', _times: 'np.ndarray', _channels: 'list[str]') -> None
+```
+
+Waveform metrics, detector concordance, and trial-level QC context.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | Any | required |
+| `summary` | pd.DataFrame | required |
+| `artifact_responses` | pd.DataFrame | required |
+| `response_window` | tuple[float, float] | required |
+| `baseline_window` | tuple[float, float] | required |
+| `_array` | np.ndarray | required |
+| `_clean_array` | np.ndarray | required |
+| `_times` | np.ndarray | required |
+| `_channels` | list[str] | required |
+
+**Returns:** None.
+
+#### Public members
+
+##### `WaveformAudit.mean_waveforms`
+
+```python
+mean_waveforms(self, *, start_s: 'float' = -0.1, stop_s: 'float' = 0.45, step_ms: 'float' = 2.0) -> 'pd.DataFrame'
+```
+
+Return downsampled clean means for cohort-scale waveform review.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `start_s` | float | `-0.1` |
+| `stop_s` | float | `0.45` |
+| `step_ms` | float | `2.0` |
+
+**Returns:** pd.DataFrame.
+
+##### `WaveformAudit.plot`
+
+```python
+plot(self, channels: 'Iterable[str] | None' = None, *, max_channels: 'int' = 12, full_scale: 'bool' = False, title: 'str | None' = None)
+```
+
+Plot a compact review montage and return the Matplotlib figure.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `channels` | Iterable[str] \| None | `None` |
+| `max_channels` | int | `12` |
+| `full_scale` | bool | `False` |
+| `title` | str \| None | `None` |
+
+##### `WaveformAudit.to_pdf`
+
+```python
+to_pdf(self, path: 'str | Path', *, channels: 'Iterable[str] | None' = None, channels_per_page: 'int' = 24, full_scale: 'bool' = False, include_flagged_full_scale: 'bool' = True, max_flagged_full_scale_channels: 'int | None' = 24, title: 'str | None' = None) -> 'Path'
+```
+
+Write an atomic, multipage review atlas for every selected channel.
+
+The main atlas uses robust limits so physiological morphology remains
+visible in the presence of a large rejected trial. By default, channels
+requiring review are then repeated at full scale so clipping, saturation,
+drift, and sharp transients can be inspected directly.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `path` | str \| Path | required |
+| `channels` | Iterable[str] \| None | `None` |
+| `channels_per_page` | int | `24` |
+| `full_scale` | bool | `False` |
+| `include_flagged_full_scale` | bool | `True` |
+| `max_flagged_full_scale_channels` | int \| None | `24` |
+| `title` | str \| None | `None` |
+
+**Returns:** Path.
+
+### `CRPConfig`
+
+```python
+CRPConfig(response_window: 'tuple[float, float]' = (0.015, 0.3), baseline_window: 'tuple[float, float]' = (-0.5, -0.03), min_trials: 'int' = 3, alpha: 'float' = 0.05, projection_start_s: 'float' = 0.01, projection_step_s: 'float' = 0.005, permutation_n: 'int' = 0, random_state: 'int | None' = 0, eps: 'float' = 1e-12) -> None
+```
+
+Configuration for canonical response parametrization.
+
+The extraction follows Miller et al. (2023): semi-normalized reciprocal
+trial projections determine a data-driven response duration, a balanced
+half of those projections supplies the one-sided extraction test, and a
+linear kernel PCA supplies the canonical response shape.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `response_window` | tuple[float, float] | `(0.015, 0.3)` |
+| `baseline_window` | tuple[float, float] | `(-0.5, -0.03)` |
+| `min_trials` | int | `3` |
+| `alpha` | float | `0.05` |
+| `projection_start_s` | float | `0.01` |
+| `projection_step_s` | float | `0.005` |
+| `permutation_n` | int | `0` |
+| `random_state` | int \| None | `0` |
+| `eps` | float | `1e-12` |
+
+**Returns:** None.
+### `CRPResult`
+
+```python
+CRPResult(channel: 'str', significant: 'bool', score: 'float', p_value: 'float', threshold: 'float', canonical_waveform: 'np.ndarray', times: 'np.ndarray', projections: 'np.ndarray', response_window: 'tuple[float, float]', baseline_window: 'tuple[float, float]', response_duration_s: 'float' = nan, t_value: 'float' = nan, alpha_prime_uv: 'np.ndarray | None' = None, residual_rms_uv: 'np.ndarray | None' = None, snr: 'np.ndarray | None' = None, explained_variance: 'np.ndarray | None' = None, cross_projections: 'np.ndarray | None' = None, projection_times: 'np.ndarray | None' = None, mean_projection_profile: 'np.ndarray | None' = None, full_window_t_value: 'float' = nan, full_window_p_value: 'float' = nan, canonical_weight_times: 'np.ndarray | None' = None, canonical_weight_mean: 'np.ndarray | None' = None, canonical_weight_sem: 'np.ndarray | None' = None, canonical_weight_z: 'np.ndarray | None' = None, baseline_weight_mean: 'float' = nan, baseline_weight_std: 'float' = nan, max_canonical_weight_z: 'float' = nan, reconstruction_rms_uv: 'float' = nan, normalized_reconstruction_energy: 'float' = nan, energy_z: 'float' = nan, permutation_p_value: 'float' = nan, null_distribution: 'np.ndarray | None' = None) -> None
+```
+
+Canonical response parametrization result for one recording channel.
+
+The object retains the fitted waveform, reciprocal trial projections,
+data-driven response duration, extraction-test quantities, reconstruction
+diagnostics, and optional permutation null. Time windows and durations are
+in seconds; amplitude and residual fields carrying an ``_uv`` suffix are
+in microvolts. ``significant`` and ``p_value`` describe the unadjusted CRP
+extraction test, not the separate CRP-energy conjunction.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `channel` | str | required |
+| `significant` | bool | required |
+| `score` | float | required |
+| `p_value` | float | required |
+| `threshold` | float | required |
+| `canonical_waveform` | np.ndarray | required |
+| `times` | np.ndarray | required |
+| `projections` | np.ndarray | required |
+| `response_window` | tuple[float, float] | required |
+| `baseline_window` | tuple[float, float] | required |
+| `response_duration_s` | float | `nan` |
+| `t_value` | float | `nan` |
+| `alpha_prime_uv` | np.ndarray \| None | `None` |
+| `residual_rms_uv` | np.ndarray \| None | `None` |
+| `snr` | np.ndarray \| None | `None` |
+| `explained_variance` | np.ndarray \| None | `None` |
+| `cross_projections` | np.ndarray \| None | `None` |
+| `projection_times` | np.ndarray \| None | `None` |
+| `mean_projection_profile` | np.ndarray \| None | `None` |
+| `full_window_t_value` | float | `nan` |
+| `full_window_p_value` | float | `nan` |
+| `canonical_weight_times` | np.ndarray \| None | `None` |
+| `canonical_weight_mean` | np.ndarray \| None | `None` |
+| `canonical_weight_sem` | np.ndarray \| None | `None` |
+| `canonical_weight_z` | np.ndarray \| None | `None` |
+| `baseline_weight_mean` | float | `nan` |
+| `baseline_weight_std` | float | `nan` |
+| `max_canonical_weight_z` | float | `nan` |
+| `reconstruction_rms_uv` | float | `nan` |
+| `normalized_reconstruction_energy` | float | `nan` |
+| `energy_z` | float | `nan` |
+| `permutation_p_value` | float | `nan` |
+| `null_distribution` | np.ndarray \| None | `None` |
+
+**Returns:** None.
+
+#### Public members
+
+##### `CRPResult.canonical_response_curve`
+
+```python
+canonical_response_curve  # property
+```
+
+Return the fitted canonical waveform as a compatibility alias.
+
+**Returns:** np.ndarray.
+
+### `CRPEnergyConfig`
+
+```python
+CRPEnergyConfig(response_window: 'tuple[float, float]' = (0.015, 1.0), baseline_window: 'tuple[float, float]' = (-1.0, -0.015), alpha: 'float' = 0.05, correction: 'str' = 'fdr_bh', min_clean_trials: 'int' = 8, n_permutations: 'int' = 5000, max_exact_trials: 'int' = 16, max_exact_reproducibility_trials: 'int' = 12, canonical_energy_cv: 'bool' = True, random_state: 'int | None' = 42, artifact_interval: 'tuple[float, float]' = (0.0, 0.015), projection_start_s: 'float' = 0.01, projection_step_s: 'float' = 0.005, eps: 'float' = 1e-12) -> None
+```
+
+Configuration for the CRP-energy conjunction.
+
+The response and baseline windows are matched sample-for-sample. Samples
+in ``artifact_interval`` are excluded before either component is fitted.
+The inferential reproducibility window is the complete effective response
+window; CRP duration selection is retained only for descriptive effects.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `response_window` | tuple[float, float] | `(0.015, 1.0)` |
+| `baseline_window` | tuple[float, float] | `(-1.0, -0.015)` |
+| `alpha` | float | `0.05` |
+| `correction` | str | `'fdr_bh'` |
+| `min_clean_trials` | int | `8` |
+| `n_permutations` | int | `5000` |
+| `max_exact_trials` | int | `16` |
+| `max_exact_reproducibility_trials` | int | `12` |
+| `canonical_energy_cv` | bool | `True` |
+| `random_state` | int \| None | `42` |
+| `artifact_interval` | tuple[float, float] | `(0.0, 0.015)` |
+| `projection_start_s` | float | `0.01` |
+| `projection_step_s` | float | `0.005` |
+| `eps` | float | `1e-12` |
+
+**Returns:** None.
+
+#### Public members
+
+##### `CRPEnergyConfig.validate`
+
+```python
+validate(self) -> 'None'
+```
+
+Validate scientific windows and finite inference settings.
+
+Validation is explicit because silently coercing an invalid window,
+seed, or randomization count into an ``insufficient_data`` result would
+make configuration errors indistinguishable from unsuitable data.
+
+**Returns:** None.
+
+### `CRPEnergyResult`
+
+```python
+CRPEnergyResult(channel: 'str', significant: 'bool', classification: 'str', p_crp: 'float', p_energy: 'float', p_joint: 'float', q_joint: 'float', crp_significant: 'bool', energy_significant: 'bool', crp_statistic: 'float', energy_statistic: 'float', rms_response: 'float', rms_baseline: 'float', rms_ratio_db: 'float', canonical_energy: 'float', canonical_energy_fraction: 'float', response_duration: 'float', n_trials_total: 'int', n_trials_clean: 'int', canonical_waveform: 'np.ndarray', canonical_waveform_times: 'np.ndarray', trial_coefficients: 'np.ndarray', clean_trial_indices: 'np.ndarray', crp_explained_variance: 'float', crp_snr: 'float', reproducibility_test_exact: 'bool', reproducibility_n_randomizations: 'int', energy_test_exact: 'bool', energy_n_permutations: 'int', response_window: 'tuple[float, float]', baseline_window: 'tuple[float, float]', qc_status: 'str', parameters: 'str', detector_version: 'str' = '1.0.0', notes: 'str' = '', n_response_samples: 'int' = 0, n_baseline_samples: 'int' = 0) -> None
+```
+
+One channel's unadjusted reproducibility-energy conjunction result.
+
+For backward compatibility, ``p_crp`` and ``crp_statistic`` store the
+fixed-window reproducibility value `p_R` and statistic `T_R`.
+They are distinct from the standalone, selected-duration CRP comparator.
+The canonical waveform, response duration, coefficients, SNR, and
+explained fraction remain descriptive CRP quantities.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `channel` | str | required |
+| `significant` | bool | required |
+| `classification` | str | required |
+| `p_crp` | float | required |
+| `p_energy` | float | required |
+| `p_joint` | float | required |
+| `q_joint` | float | required |
+| `crp_significant` | bool | required |
+| `energy_significant` | bool | required |
+| `crp_statistic` | float | required |
+| `energy_statistic` | float | required |
+| `rms_response` | float | required |
+| `rms_baseline` | float | required |
+| `rms_ratio_db` | float | required |
+| `canonical_energy` | float | required |
+| `canonical_energy_fraction` | float | required |
+| `response_duration` | float | required |
+| `n_trials_total` | int | required |
+| `n_trials_clean` | int | required |
+| `canonical_waveform` | np.ndarray | required |
+| `canonical_waveform_times` | np.ndarray | required |
+| `trial_coefficients` | np.ndarray | required |
+| `clean_trial_indices` | np.ndarray | required |
+| `crp_explained_variance` | float | required |
+| `crp_snr` | float | required |
+| `reproducibility_test_exact` | bool | required |
+| `reproducibility_n_randomizations` | int | required |
+| `energy_test_exact` | bool | required |
+| `energy_n_permutations` | int | required |
+| `response_window` | tuple[float, float] | required |
+| `baseline_window` | tuple[float, float] | required |
+| `qc_status` | str | required |
+| `parameters` | str | required |
+| `detector_version` | str | `'1.0.0'` |
+| `notes` | str | `''` |
+| `n_response_samples` | int | `0` |
+| `n_baseline_samples` | int | `0` |
+
+**Returns:** None.
+
+#### Public members
+
+##### `CRPEnergyResult.to_record`
+
+```python
+to_record(self, *, include_arrays: 'bool' = True) -> 'dict[str, Any]'
+```
+
+Return a detector-table record with optionally compact array fields.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `include_arrays` | bool | `True` |
+
+**Returns:** dict[str, Any].
+
+### `FixedWindowReproducibilityResult`
+
+```python
+FixedWindowReproducibilityResult(statistic: 'float', p_value: 'float', exact: 'bool', n_randomizations: 'int') -> None
+```
+
+Result of the trial-level fixed-window reproducibility randomization.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `statistic` | float | required |
+| `p_value` | float | required |
+| `exact` | bool | required |
+| `n_randomizations` | int | required |
+
+**Returns:** None.
+### `BootstrapInterval`
+
+```python
+BootstrapInterval(estimate: 'float', ci_low: 'float', ci_high: 'float', confidence: 'float', n_resamples: 'int', n_observations: 'int', n_top_level_clusters: 'int') -> None
+```
+
+Patient-balanced hierarchical bootstrap estimate and interval.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `estimate` | float | required |
+| `ci_low` | float | required |
+| `ci_high` | float | required |
+| `confidence` | float | required |
+| `n_resamples` | int | required |
+| `n_observations` | int | required |
+| `n_top_level_clusters` | int | required |
+
+**Returns:** None.
+### `SignFlipResult`
+
+```python
+SignFlipResult(statistic: 'float', p_value: 'float', alternative: 'str', n_observations: 'int', n_permutations: 'int', exact: 'bool') -> None
+```
+
+Result of an exact or Monte Carlo one-sample sign-flip test.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `statistic` | float | required |
+| `p_value` | float | required |
+| `alternative` | str | required |
+| `n_observations` | int | required |
+| `n_permutations` | int | required |
+| `exact` | bool | required |
+
+**Returns:** None.
 ### `EpochsSpectral`
 
 ```python
@@ -2997,1124 +5030,6 @@ Compute a Morlet time-frequency representation for one channel.
 
 **Returns:** TFRResult.
 
-### `EventDetectionError`
-
-```python
-EventDetectionError
-```
-
-Raised when no defensible stimulation-event sequence can be detected.
-
-#### Public members
-
-##### `EventDetectionError.add_note`
-
-```python
-add_note
-```
-
-Exception.add_note(note) --
-add a note to the exception
-
-##### `EventDetectionError.with_traceback`
-
-```python
-with_traceback
-```
-
-Exception.with_traceback(tb) --
-set self.__traceback__ to tb and return self.
-
-### `Events`
-
-```python
-Events(dataloader: 'Any', PYTHON_SCRIPT: 'str | None' = None, BASH_SCRIPT: 'str | None' = None) -> None
-```
-
-Session-event workflow bound to an ERPy ``DataLoader``.
-
-The facade creates canonical event tables for selected stimulation pairs
-and exposes the same processing path for local execution or a configured
-job runner. Event-source parameters remain explicit in each method call.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `dataloader` | Any | required |
-| `PYTHON_SCRIPT` | str \| None | `None` |
-| `BASH_SCRIPT` | str \| None | `None` |
-
-**Returns:** None.
-
-#### Public members
-
-##### `Events.install_standard_scripts`
-
-```python
-install_standard_scripts(cls) -> 'None'
-```
-
-Reset event detection to ERPy's built-in execution path.
-
-**Returns:** None.
-
-##### `Events.process`
-
-```python
-process(self, session_id: 'str', method: 'str' = 'consensus', stim_pairs: 'Iterable[str] | None' = None, **kwargs: 'Any')
-```
-
-Detect events for the requested session and stimulation pairs.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `method` | str | `'consensus'` |
-| `stim_pairs` | Iterable[str] \| None | `None` |
-| `kwargs` | Any | required |
-
-##### `Events.queue_job`
-
-```python
-queue_job(self, session_ids: 'Iterable[str] | None' = None, backend: 'str | None' = None, **kwargs: 'Any')
-```
-
-Process event jobs and return the runner plus execution summaries.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_ids` | Iterable[str] \| None | `None` |
-| `backend` | str \| None | `None` |
-| `kwargs` | Any | required |
-
-##### `Events.use_standard_scripts`
-
-```python
-use_standard_scripts(cls, bash_type: 'str' = 'simple') -> 'None'
-```
-
-Select ERPy's built-in local event-processing hooks.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `bash_type` | str | `'simple'` |
-
-**Returns:** None.
-
-### `PACResult`
-
-```python
-PACResult(phase_channel: 'str', amp_channel: 'str', phase_band: 'tuple[float, float]', amp_band: 'tuple[float, float]', method: 'str', mi: 'float', phase_bin_centers: 'np.ndarray', amplitude_by_phase: 'np.ndarray', preferred_phase: 'float' = nan, n_samples: 'int' = 0) -> None
-```
-
-Phase-amplitude coupling summary for one channel pair and band pair.
-
-The result retains the coupling method and scalar modulation index together
-with the phase-bin centers, mean amplitude profile, preferred phase, and
-number of finite samples used in the estimate.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `phase_channel` | str | required |
-| `amp_channel` | str | required |
-| `phase_band` | tuple[float, float] | required |
-| `amp_band` | tuple[float, float] | required |
-| `method` | str | required |
-| `mi` | float | required |
-| `phase_bin_centers` | np.ndarray | required |
-| `amplitude_by_phase` | np.ndarray | required |
-| `preferred_phase` | float | `nan` |
-| `n_samples` | int | `0` |
-
-**Returns:** None.
-### `PLVResult`
-
-```python
-PLVResult(ch_x: 'str', ch_y: 'str', freqs: 'np.ndarray', times: 'np.ndarray', plv: 'np.ndarray', n_trials: 'int') -> None
-```
-
-Time-frequency phase-locking value between two channels.
-
-``plv`` is a frequency-by-time array bounded from zero to one and computed
-across the retained trials. ``freqs`` are in hertz and ``times`` are epoch-
-relative seconds.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `ch_x` | str | required |
-| `ch_y` | str | required |
-| `freqs` | np.ndarray | required |
-| `times` | np.ndarray | required |
-| `plv` | np.ndarray | required |
-| `n_trials` | int | required |
-
-**Returns:** None.
-### `Pipeline`
-
-```python
-Pipeline(dataloader) -> 'None'
-```
-
-Registry-based preprocessing and epoch extraction.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `dataloader` | not specified | required |
-
-**Returns:** None.
-
-#### Public members
-
-##### `Pipeline.build_custom_pipeline`
-
-```python
-build_custom_pipeline(self, steps: 'list[tuple[str, dict[str, Any]]]') -> 'list[tuple[str, dict[str, Any]]]'
-```
-
-Validate and normalize a user-supplied preprocessing sequence.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `steps` | list[tuple[str, dict[str, Any]]] | required |
-
-**Returns:** list[tuple[str, dict[str, Any]]].
-
-##### `Pipeline.epoch_data`
-
-```python
-epoch_data(self, df: 'pd.DataFrame', event_times: 'Iterable[Any]', tmin: 'float' = -0.5, tmax: 'float' = 1.0, baseline: 'tuple[float, float] | None' = None, zero_time: 'float | str | None' = 'post_artifact', stim_ch: 'str | list[str] | None' = None, artifact_anchor_params: 'dict[str, Any] | None' = None) -> 'Epochs'
-```
-
-Extract event-locked trials from a continuous processed recording.
-
-Epochs may use a fixed zero-time sample or ERPy's post-artifact anchor;
-the latter stores per-trial anchor diagnostics in audit metadata.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `df` | pd.DataFrame | required |
-| `event_times` | Iterable[Any] | required |
-| `tmin` | float | `-0.5` |
-| `tmax` | float | `1.0` |
-| `baseline` | tuple[float, float] \| None | `None` |
-| `zero_time` | float \| str \| None | `'post_artifact'` |
-| `stim_ch` | str \| list[str] \| None | `None` |
-| `artifact_anchor_params` | dict[str, Any] \| None | `None` |
-
-**Returns:** Epochs.
-
-##### `Pipeline.epochs`
-
-```python
-epochs  # property
-```
-
-Return the epoch-job accessor bound to this pipeline.
-
-**Returns:** EpochsRunner.
-
-##### `Pipeline.find_epochs_files`
-
-```python
-find_epochs_files(self, session_id: 'str', stim_pair: 'str', pipeline_steps=None) -> 'list[Path]'
-```
-
-Return matching epoch caches from newest to oldest.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `pipeline_steps` | not specified | `None` |
-
-**Returns:** list[Path].
-
-##### `Pipeline.get_standard_pipeline`
-
-```python
-get_standard_pipeline(self, name: 'str' = 'blank_filt') -> 'list[tuple[str, dict[str, Any]]]'
-```
-
-Return a copy-ready named preprocessing step sequence.
-
-Available presets combine artifact blanking, line-noise filtering,
-band-pass filtering, optional decimation, and a selected reference.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `name` | str | `'blank_filt'` |
-
-**Returns:** list[tuple[str, dict[str, Any]]].
-
-##### `Pipeline.install_standard_scripts`
-
-```python
-install_standard_scripts(cls) -> 'None'
-```
-
-Reset preprocessing to ERPy's built-in execution path.
-
-**Returns:** None.
-
-##### `Pipeline.load_epochs`
-
-```python
-load_epochs(self, session_id: 'str', stim_pair: 'str', pipeline_steps=None, *, allow_unsafe_legacy_pickle: 'bool' = False) -> 'Epochs'
-```
-
-Load the newest matching epoch cache for an acquisition.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `pipeline_steps` | not specified | `None` |
-| `allow_unsafe_legacy_pickle` | bool | `False` |
-
-**Returns:** Epochs.
-
-##### `Pipeline.load_epochs_file`
-
-```python
-load_epochs_file(self, path: 'str | Path', *, allow_unsafe_legacy_pickle: 'bool' = False) -> 'Epochs'
-```
-
-Load a cached epoch file.
-
-Set ``allow_unsafe_legacy_pickle`` only for a pre-1.0 file that you
-created and trust; legacy pickle metadata can execute arbitrary code.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `path` | str \| Path | required |
-| `allow_unsafe_legacy_pickle` | bool | `False` |
-
-**Returns:** Epochs.
-
-##### `Pipeline.load_processed_data`
-
-```python
-load_processed_data(self, path: 'str | Path', *, allow_unsafe_legacy_pickle: 'bool' = False) -> 'pd.DataFrame'
-```
-
-Load processed data and safely restore its provenance metadata.
-
-Parameters
-----------
-path : str or pathlib.Path
-    HDF5 processed-data file to read.
-allow_unsafe_legacy_pickle : bool, default ``False``
-    Permit metadata from a trusted pre-1.0 file. Legacy PyTables
-    attributes use pickle and may execute arbitrary code; never enable
-    this option for an untrusted or downloaded file.
-
-Returns
--------
-pandas.DataFrame
-    Processed samples with restored metadata in ``DataFrame.attrs``.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `path` | str \| Path | required |
-| `allow_unsafe_legacy_pickle` | bool | `False` |
-
-**Returns:** pd.DataFrame.
-
-##### `Pipeline.pipeline_id`
-
-```python
-pipeline_id(self, pipeline_steps: 'list[tuple[str, dict[str, Any]]] | None') -> 'str'
-```
-
-Return a stable identifier for a preprocessing step sequence.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `pipeline_steps` | list[tuple[str, dict[str, Any]]] \| None | required |
-
-**Returns:** str.
-
-##### `Pipeline.process`
-
-```python
-process(self, pipeline_steps: 'list[tuple[str, dict[str, Any]]] | None' = None, session_id: 'str | None' = None, stim_pair: 'str | None' = None, **kwargs: 'Any')
-```
-
-Run preprocessing for one acquisition or all matching acquisitions.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `pipeline_steps` | list[tuple[str, dict[str, Any]]] \| None | `None` |
-| `session_id` | str \| None | `None` |
-| `stim_pair` | str \| None | `None` |
-| `kwargs` | Any | required |
-
-##### `Pipeline.process_all_sessions`
-
-```python
-process_all_sessions(self, pipeline_steps=None, session_ids: 'Iterable[str] | None' = None, **kwargs: 'Any')
-```
-
-Preprocess selected or registered sessions and stimulation pairs.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `pipeline_steps` | not specified | `None` |
-| `session_ids` | Iterable[str] \| None | `None` |
-| `kwargs` | Any | required |
-
-##### `Pipeline.process_and_epoch`
-
-```python
-process_and_epoch(self, session_id: 'str', stim_pair: 'str', pipeline_steps: 'list[tuple[str, dict[str, Any]]] | None' = None, event_times: 'Iterable[Any] | None' = None, tmin: 'float' = -0.5, tmax: 'float' = 1.0, baseline: 'tuple[float, float] | None' = (-0.5, -0.03), zero_time: 'float | str | None' = 'post_artifact', artifact_anchor_params: 'dict[str, Any] | None' = None, processing_margin_s: 'float | None' = None, save_processed: 'bool' = False, save_epochs: 'bool' = False, **kwargs: 'Any') -> 'tuple[Epochs, pd.DataFrame]'
-```
-
-Preprocess one acquisition and extract its event-locked epochs.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `pipeline_steps` | list[tuple[str, dict[str, Any]]] \| None | `None` |
-| `event_times` | Iterable[Any] \| None | `None` |
-| `tmin` | float | `-0.5` |
-| `tmax` | float | `1.0` |
-| `baseline` | tuple[float, float] \| None | `(-0.5, -0.03)` |
-| `zero_time` | float \| str \| None | `'post_artifact'` |
-| `artifact_anchor_params` | dict[str, Any] \| None | `None` |
-| `processing_margin_s` | float \| None | `None` |
-| `save_processed` | bool | `False` |
-| `save_epochs` | bool | `False` |
-| `kwargs` | Any | required |
-
-**Returns:** tuple[Epochs, pd.DataFrame].
-
-##### `Pipeline.process_session`
-
-```python
-process_session(self, session_id: 'str', pipeline_steps=None, stim_pairs: 'Iterable[str] | None' = None, **kwargs: 'Any')
-```
-
-Preprocess selected stimulation pairs within one session.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `pipeline_steps` | not specified | `None` |
-| `stim_pairs` | Iterable[str] \| None | `None` |
-| `kwargs` | Any | required |
-
-##### `Pipeline.process_stim_session`
-
-```python
-process_stim_session(self, session_id: 'str', stim_pair: 'str', pipeline_steps: 'list[tuple[str, dict[str, Any]]] | None' = None, input_source: 'str' = 'auto', load_from_raw: 'bool' = True, save_processed: 'bool' = False, overwrite: 'bool' = False, raw_file: 'str | Path | None' = None, stim_start: 'Any | None' = None, time_window: 'tuple[Any, Any] | None' = None, **context: 'Any') -> 'pd.DataFrame'
-```
-
-Load and preprocess one session/stimulation-pair acquisition.
-
-The returned continuous table records sampling frequency and pipeline
-identity in ``DataFrame.attrs`` and can optionally be cached on disk.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `pipeline_steps` | list[tuple[str, dict[str, Any]]] \| None | `None` |
-| `input_source` | str | `'auto'` |
-| `load_from_raw` | bool | `True` |
-| `save_processed` | bool | `False` |
-| `overwrite` | bool | `False` |
-| `raw_file` | str \| Path \| None | `None` |
-| `stim_start` | Any \| None | `None` |
-| `time_window` | tuple[Any, Any] \| None | `None` |
-| `context` | Any | required |
-
-**Returns:** pd.DataFrame.
-
-##### `Pipeline.queue_job`
-
-```python
-queue_job(self, pipeline_steps=None, session_ids: 'Iterable[str] | None' = None, backend: 'str | None' = None, **kwargs: 'Any')
-```
-
-Process selected acquisitions and return the job-runner summary.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `pipeline_steps` | not specified | `None` |
-| `session_ids` | Iterable[str] \| None | `None` |
-| `backend` | str \| None | `None` |
-| `kwargs` | Any | required |
-
-##### `Pipeline.save_processed_data`
-
-```python
-save_processed_data(self, df: 'pd.DataFrame', path: 'str | Path', **metadata: 'Any') -> 'Path'
-```
-
-Atomically save processed data with deterministic JSON provenance.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `df` | pd.DataFrame | required |
-| `path` | str \| Path | required |
-| `metadata` | Any | required |
-
-**Returns:** Path.
-
-##### `Pipeline.use_standard_scripts`
-
-```python
-use_standard_scripts(cls, bash_type: 'str' = 'simple') -> 'None'
-```
-
-Select ERPy's built-in local preprocessing hooks.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `bash_type` | str | `'simple'` |
-
-**Returns:** None.
-
-### `Patient`
-
-```python
-Patient(patient_id: 'str', config_path: 'str | None' = None, verbose: 'bool' = True) -> 'None'
-```
-
-Quick-use public wrapper for one patient.
-
-Examples
---------
->>> patient = ep.Patient("EXAMPLE_PATIENT")
->>> epochs = patient.epoch("EXAMPLE_SESSION", "STIM_A_1_2")
->>> detections = epochs.detect_erp_all()
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `patient_id` | str | required |
-| `config_path` | str \| None | `None` |
-| `verbose` | bool | `True` |
-
-**Returns:** None.
-
-#### Public members
-
-##### `Patient.analyze`
-
-```python
-analyze(self, session_id: 'str', stim_pair: 'str', **kwargs: 'Any') -> 'AnalysisResult'
-```
-
-Run epoching, response-artifact QC, and ERP detection in one call.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `kwargs` | Any | required |
-
-**Returns:** AnalysisResult.
-
-##### `Patient.detect_events`
-
-```python
-detect_events(self, session_id: 'str', stim_pair: 'str', method: 'str' = 'auto', **kwargs: 'Any') -> 'pd.DataFrame'
-```
-
-Detect stimulation events for one session and stimulation pair.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `method` | str | `'auto'` |
-| `kwargs` | Any | required |
-
-**Returns:** pd.DataFrame.
-
-##### `Patient.epoch`
-
-```python
-epoch(self, session_id: 'str', stim_pair: 'str', pipeline: 'str | list[tuple[str, dict[str, Any]]]' = 'blank_filt', **kwargs: 'Any') -> 'EpochsResult'
-```
-
-Extract or load event-locked epochs for one acquisition.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `pipeline` | str \| list[tuple[str, dict[str, Any]]] | `'blank_filt'` |
-| `kwargs` | Any | required |
-
-**Returns:** EpochsResult.
-
-##### `Patient.from_bids`
-
-```python
-from_bids(cls, bids_root: 'str', subject: 'str', output_root: 'str | None' = None, session: 'str | None' = None, task: 'str | None' = None, patient_id: 'str | None' = None, copy_raw: 'bool' = False, derivatives: 'bool' = True, verbose: 'bool' = True) -> "'Patient'"
-```
-
-Import a BIDS iEEG subject and return a ready-to-use patient facade.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `bids_root` | str | required |
-| `subject` | str | required |
-| `output_root` | str \| None | `None` |
-| `session` | str \| None | `None` |
-| `task` | str \| None | `None` |
-| `patient_id` | str \| None | `None` |
-| `copy_raw` | bool | `False` |
-| `derivatives` | bool | `True` |
-| `verbose` | bool | `True` |
-
-**Returns:** 'Patient'.
-
-##### `Patient.from_nwb`
-
-```python
-from_nwb(cls, nwb_path: 'str', output_root: 'str | None' = None, patient_id: 'str | None' = None, session_id: 'str | None' = None, stim_pair: 'str | None' = None, stim_times: 'Any | None' = None, stim_duration_s: 'float' = 0.001, series_name: 'str | None' = None, copy_raw: 'bool' = False, verbose: 'bool' = True) -> "'Patient'"
-```
-
-Import one NWB recording and return a ready-to-use patient facade.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `nwb_path` | str | required |
-| `output_root` | str \| None | `None` |
-| `patient_id` | str \| None | `None` |
-| `session_id` | str \| None | `None` |
-| `stim_pair` | str \| None | `None` |
-| `stim_times` | Any \| None | `None` |
-| `stim_duration_s` | float | `0.001` |
-| `series_name` | str \| None | `None` |
-| `copy_raw` | bool | `False` |
-| `verbose` | bool | `True` |
-
-**Returns:** 'Patient'.
-
-##### `Patient.recording`
-
-```python
-recording(self, session_id: 'str') -> "'Recording'"
-```
-
-Return the recording facade for one session.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-
-**Returns:** 'Recording'.
-
-##### `Patient.run`
-
-```python
-run(self, session_id: 'str', stim_pair: 'str', pipeline: 'str | list[tuple[str, dict[str, Any]]]' = 'blank_filt', tmin: 'float' = -0.5, tmax: 'float' = 1.0, baseline: 'tuple[float, float] | None' = (-0.5, -0.03), zero_time: 'float | str | None' = 'post_artifact', artifact_anchor_params: 'dict[str, Any] | None' = None, event_method: 'str' = 'auto', **kwargs: 'Any') -> 'EpochsResult'
-```
-
-Run preprocessing and epoch extraction without reusing a cache.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `pipeline` | str \| list[tuple[str, dict[str, Any]]] | `'blank_filt'` |
-| `tmin` | float | `-0.5` |
-| `tmax` | float | `1.0` |
-| `baseline` | tuple[float, float] \| None | `(-0.5, -0.03)` |
-| `zero_time` | float \| str \| None | `'post_artifact'` |
-| `artifact_anchor_params` | dict[str, Any] \| None | `None` |
-| `event_method` | str | `'auto'` |
-| `kwargs` | Any | required |
-
-**Returns:** EpochsResult.
-
-##### `Patient.session`
-
-```python
-session(self, session_id: 'str') -> "'Recording'"
-```
-
-Return a recording facade; alias of ``recording``.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-
-**Returns:** 'Recording'.
-
-##### `Patient.sessions`
-
-```python
-sessions(self) -> 'list[str]'
-```
-
-Return registered session identifiers for this patient.
-
-**Returns:** list[str].
-
-##### `Patient.stim_pairs`
-
-```python
-stim_pairs(self, session_id: 'str') -> 'list[str]'
-```
-
-Return registered stimulation pairs for one session.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-
-**Returns:** list[str].
-
-##### `Patient.warmup`
-
-```python
-warmup(self, session_ids: 'Iterable[str] | None' = None, **kwargs: 'Any') -> 'pd.DataFrame'
-```
-
-Precompute local caches for selected patient sessions.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_ids` | Iterable[str] \| None | `None` |
-| `kwargs` | Any | required |
-
-**Returns:** pd.DataFrame.
-
-##### `Patient.warmup_jobs`
-
-```python
-warmup_jobs(self, session_ids: 'Iterable[str] | None' = None, **kwargs: 'Any') -> 'pd.DataFrame'
-```
-
-Submit cache-warmup jobs for selected patient sessions.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_ids` | Iterable[str] \| None | `None` |
-| `kwargs` | Any | required |
-
-**Returns:** pd.DataFrame.
-
-### `Recording`
-
-```python
-Recording(patient: 'Patient', session_id: 'str') -> None
-```
-
-Session-scoped analysis facade owned by a ``Patient``.
-
-A recording fixes ``session_id`` while exposing event creation, epoching,
-cache loading, and the one-call analysis contract for any registered
-stimulation pair. ``Session`` is a compatibility alias for this class.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `patient` | Patient | required |
-| `session_id` | str | required |
-
-**Returns:** None.
-
-#### Public members
-
-##### `Recording.analyze`
-
-```python
-analyze(self, stim_pair: 'str', *, pipeline: 'str | list[tuple[str, dict[str, Any]]]' = 'blank_filt', methods: 'list[str] | None' = None, min_consensus: 'int' = 2, response_window: 'tuple[float, float] | None' = None, artifact_kwargs: 'dict[str, Any] | None' = None, artifact_reject: 'str | None' = 'nan_response', max_bad_channel_fraction: 'float' = 0.25, qc_max_bad_response_fraction: 'float' = 0.25, qc_max_hard_artifact_fraction: 'float' = 0.1, qc_min_clean_responses: 'int' = 8, qc_exclude_boundary_peaks: 'bool' = True, hard_artifact_reasons: 'Iterable[str]' = ('absolute_peak', 'absolute_ptp', 'extreme_amplitude_outlier', 'plateau_clipping', 'rail_clipping', 'saturation_or_clipping'), detect_kwargs: 'dict[str, Any] | None' = None, **epoch_kwargs: 'Any') -> 'AnalysisResult'
-```
-
-Run the default ERPy analysis contract for one stimulation pair.
-
-This keeps the common notebook path compact while returning the same
-auditable artifacts available from the lower-level API. Trial-contact
-artifact QC is always evaluated. Persistent-channel detection is
-performed only when the preprocessing pipeline contains an explicit
-``reject_bad_channels`` step, such as ``blank_filt_reject``.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `stim_pair` | str | required |
-| `pipeline` | str \| list[tuple[str, dict[str, Any]]] | `'blank_filt'` |
-| `methods` | list[str] \| None | `None` |
-| `min_consensus` | int | `2` |
-| `response_window` | tuple[float, float] \| None | `None` |
-| `artifact_kwargs` | dict[str, Any] \| None | `None` |
-| `artifact_reject` | str \| None | `'nan_response'` |
-| `max_bad_channel_fraction` | float | `0.25` |
-| `qc_max_bad_response_fraction` | float | `0.25` |
-| `qc_max_hard_artifact_fraction` | float | `0.1` |
-| `qc_min_clean_responses` | int | `8` |
-| `qc_exclude_boundary_peaks` | bool | `True` |
-| `hard_artifact_reasons` | Iterable[str] | `('absolute_peak', 'absolute_ptp', 'extreme_amplitude_outlier', 'plateau_clipping', 'rail_clipping', 'saturation_or_clipping')` |
-| `detect_kwargs` | dict[str, Any] \| None | `None` |
-| `epoch_kwargs` | Any | required |
-
-**Returns:** AnalysisResult.
-
-##### `Recording.dataloader`
-
-```python
-dataloader  # property
-```
-
-Return the patient data loader used by this recording.
-
-**Returns:** DataLoader.
-
-##### `Recording.epoch`
-
-```python
-epoch(self, stim_pair: 'str', pipeline: 'str | list[tuple[str, dict[str, Any]]]' = 'blank_filt', tmin: 'float' = -0.5, tmax: 'float' = 1.0, baseline: 'tuple[float, float] | None' = (-0.5, -0.03), zero_time: 'float | str | None' = 'post_artifact', artifact_anchor_params: 'dict[str, Any] | None' = None, cache: 'bool' = True, event_method: 'str' = 'auto', save_epochs: 'bool' = True, **kwargs: 'Any') -> 'EpochsResult'
-```
-
-Preprocess and epoch one stimulation pair, optionally using a cache.
-
-Automatic reuse verifies current event and source contents plus effective
-processing settings. Legacy caches without this identity are recomputed.
-``auto`` reads registered raw inputs on a miss; a window export is used
-when the original inputs are unavailable. Full source hashing costs I/O.
-NWB and custom processing hooks currently disable automatic reuse.
-Configuration/metadata edits on disk require constructing a new Patient;
-this method uses the DataLoader's current in-memory settings.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `stim_pair` | str | required |
-| `pipeline` | str \| list[tuple[str, dict[str, Any]]] | `'blank_filt'` |
-| `tmin` | float | `-0.5` |
-| `tmax` | float | `1.0` |
-| `baseline` | tuple[float, float] \| None | `(-0.5, -0.03)` |
-| `zero_time` | float \| str \| None | `'post_artifact'` |
-| `artifact_anchor_params` | dict[str, Any] \| None | `None` |
-| `cache` | bool | `True` |
-| `event_method` | str | `'auto'` |
-| `save_epochs` | bool | `True` |
-| `kwargs` | Any | required |
-
-**Returns:** EpochsResult.
-
-##### `Recording.events_for`
-
-```python
-events_for(self, stim_pair: 'str', method: 'str' = 'auto', save_events: 'bool' = True, **kwargs: 'Any') -> 'pd.DataFrame'
-```
-
-Detect and optionally save events for one stimulation pair.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `stim_pair` | str | required |
-| `method` | str | `'auto'` |
-| `save_events` | bool | `True` |
-| `kwargs` | Any | required |
-
-**Returns:** pd.DataFrame.
-
-##### `Recording.load_epochs`
-
-```python
-load_epochs(self, stim_pair: 'str', pipeline: 'str | list[tuple[str, dict[str, Any]]]' = 'blank_filt', **kwargs: 'Any') -> 'EpochsResult'
-```
-
-Load the newest matching epoch cache for a stimulation pair.
-
-``allow_unsafe_legacy_pickle=True`` may be passed only for a trusted
-pre-1.0 cache whose pickle metadata the caller accepts executing.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `stim_pair` | str | required |
-| `pipeline` | str \| list[tuple[str, dict[str, Any]]] | `'blank_filt'` |
-| `kwargs` | Any | required |
-
-**Returns:** EpochsResult.
-
-##### `Recording.pipeline_obj`
-
-```python
-pipeline_obj  # property
-```
-
-Return the patient preprocessing pipeline used by this recording.
-
-**Returns:** Pipeline.
-
-##### `Recording.stim_pairs`
-
-```python
-stim_pairs(self) -> 'list[str]'
-```
-
-Return stimulation pairs registered for this recording session.
-
-**Returns:** list[str].
-
-### `Session`
-
-```python
-Session(patient: 'Patient', session_id: 'str') -> None
-```
-
-Session-scoped analysis facade owned by a ``Patient``.
-
-A recording fixes ``session_id`` while exposing event creation, epoching,
-cache loading, and the one-call analysis contract for any registered
-stimulation pair. ``Session`` is a compatibility alias for this class.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `patient` | Patient | required |
-| `session_id` | str | required |
-
-**Returns:** None.
-
-#### Public members
-
-##### `Session.analyze`
-
-```python
-analyze(self, stim_pair: 'str', *, pipeline: 'str | list[tuple[str, dict[str, Any]]]' = 'blank_filt', methods: 'list[str] | None' = None, min_consensus: 'int' = 2, response_window: 'tuple[float, float] | None' = None, artifact_kwargs: 'dict[str, Any] | None' = None, artifact_reject: 'str | None' = 'nan_response', max_bad_channel_fraction: 'float' = 0.25, qc_max_bad_response_fraction: 'float' = 0.25, qc_max_hard_artifact_fraction: 'float' = 0.1, qc_min_clean_responses: 'int' = 8, qc_exclude_boundary_peaks: 'bool' = True, hard_artifact_reasons: 'Iterable[str]' = ('absolute_peak', 'absolute_ptp', 'extreme_amplitude_outlier', 'plateau_clipping', 'rail_clipping', 'saturation_or_clipping'), detect_kwargs: 'dict[str, Any] | None' = None, **epoch_kwargs: 'Any') -> 'AnalysisResult'
-```
-
-Run the default ERPy analysis contract for one stimulation pair.
-
-This keeps the common notebook path compact while returning the same
-auditable artifacts available from the lower-level API. Trial-contact
-artifact QC is always evaluated. Persistent-channel detection is
-performed only when the preprocessing pipeline contains an explicit
-``reject_bad_channels`` step, such as ``blank_filt_reject``.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `stim_pair` | str | required |
-| `pipeline` | str \| list[tuple[str, dict[str, Any]]] | `'blank_filt'` |
-| `methods` | list[str] \| None | `None` |
-| `min_consensus` | int | `2` |
-| `response_window` | tuple[float, float] \| None | `None` |
-| `artifact_kwargs` | dict[str, Any] \| None | `None` |
-| `artifact_reject` | str \| None | `'nan_response'` |
-| `max_bad_channel_fraction` | float | `0.25` |
-| `qc_max_bad_response_fraction` | float | `0.25` |
-| `qc_max_hard_artifact_fraction` | float | `0.1` |
-| `qc_min_clean_responses` | int | `8` |
-| `qc_exclude_boundary_peaks` | bool | `True` |
-| `hard_artifact_reasons` | Iterable[str] | `('absolute_peak', 'absolute_ptp', 'extreme_amplitude_outlier', 'plateau_clipping', 'rail_clipping', 'saturation_or_clipping')` |
-| `detect_kwargs` | dict[str, Any] \| None | `None` |
-| `epoch_kwargs` | Any | required |
-
-**Returns:** AnalysisResult.
-
-##### `Session.dataloader`
-
-```python
-dataloader  # property
-```
-
-Return the patient data loader used by this recording.
-
-**Returns:** DataLoader.
-
-##### `Session.epoch`
-
-```python
-epoch(self, stim_pair: 'str', pipeline: 'str | list[tuple[str, dict[str, Any]]]' = 'blank_filt', tmin: 'float' = -0.5, tmax: 'float' = 1.0, baseline: 'tuple[float, float] | None' = (-0.5, -0.03), zero_time: 'float | str | None' = 'post_artifact', artifact_anchor_params: 'dict[str, Any] | None' = None, cache: 'bool' = True, event_method: 'str' = 'auto', save_epochs: 'bool' = True, **kwargs: 'Any') -> 'EpochsResult'
-```
-
-Preprocess and epoch one stimulation pair, optionally using a cache.
-
-Automatic reuse verifies current event and source contents plus effective
-processing settings. Legacy caches without this identity are recomputed.
-``auto`` reads registered raw inputs on a miss; a window export is used
-when the original inputs are unavailable. Full source hashing costs I/O.
-NWB and custom processing hooks currently disable automatic reuse.
-Configuration/metadata edits on disk require constructing a new Patient;
-this method uses the DataLoader's current in-memory settings.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `stim_pair` | str | required |
-| `pipeline` | str \| list[tuple[str, dict[str, Any]]] | `'blank_filt'` |
-| `tmin` | float | `-0.5` |
-| `tmax` | float | `1.0` |
-| `baseline` | tuple[float, float] \| None | `(-0.5, -0.03)` |
-| `zero_time` | float \| str \| None | `'post_artifact'` |
-| `artifact_anchor_params` | dict[str, Any] \| None | `None` |
-| `cache` | bool | `True` |
-| `event_method` | str | `'auto'` |
-| `save_epochs` | bool | `True` |
-| `kwargs` | Any | required |
-
-**Returns:** EpochsResult.
-
-##### `Session.events_for`
-
-```python
-events_for(self, stim_pair: 'str', method: 'str' = 'auto', save_events: 'bool' = True, **kwargs: 'Any') -> 'pd.DataFrame'
-```
-
-Detect and optionally save events for one stimulation pair.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `stim_pair` | str | required |
-| `method` | str | `'auto'` |
-| `save_events` | bool | `True` |
-| `kwargs` | Any | required |
-
-**Returns:** pd.DataFrame.
-
-##### `Session.load_epochs`
-
-```python
-load_epochs(self, stim_pair: 'str', pipeline: 'str | list[tuple[str, dict[str, Any]]]' = 'blank_filt', **kwargs: 'Any') -> 'EpochsResult'
-```
-
-Load the newest matching epoch cache for a stimulation pair.
-
-``allow_unsafe_legacy_pickle=True`` may be passed only for a trusted
-pre-1.0 cache whose pickle metadata the caller accepts executing.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `stim_pair` | str | required |
-| `pipeline` | str \| list[tuple[str, dict[str, Any]]] | `'blank_filt'` |
-| `kwargs` | Any | required |
-
-**Returns:** EpochsResult.
-
-##### `Session.pipeline_obj`
-
-```python
-pipeline_obj  # property
-```
-
-Return the patient preprocessing pipeline used by this recording.
-
-**Returns:** Pipeline.
-
-##### `Session.stim_pairs`
-
-```python
-stim_pairs(self) -> 'list[str]'
-```
-
-Return stimulation pairs registered for this recording session.
-
-**Returns:** list[str].
-
-### `SignFlipResult`
-
-```python
-SignFlipResult(statistic: 'float', p_value: 'float', alternative: 'str', n_observations: 'int', n_permutations: 'int', exact: 'bool') -> None
-```
-
-Result of an exact or Monte Carlo one-sample sign-flip test.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `statistic` | float | required |
-| `p_value` | float | required |
-| `alternative` | str | required |
-| `n_observations` | int | required |
-| `n_permutations` | int | required |
-| `exact` | bool | required |
-
-**Returns:** None.
 ### `SpectralConfig`
 
 ```python
@@ -4155,254 +5070,6 @@ Return configured frequencies, capped below the Nyquist limit.
 | `sfreq` | float \| None | `None` |
 
 **Returns:** np.ndarray.
-
-### `Study`
-
-```python
-Study(patient_id: 'str', config_path: 'str | None' = None, verbose: 'bool' = True) -> 'None'
-```
-
-Quick-use public wrapper for one patient.
-
-Examples
---------
->>> patient = ep.Patient("EXAMPLE_PATIENT")
->>> epochs = patient.epoch("EXAMPLE_SESSION", "STIM_A_1_2")
->>> detections = epochs.detect_erp_all()
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `patient_id` | str | required |
-| `config_path` | str \| None | `None` |
-| `verbose` | bool | `True` |
-
-**Returns:** None.
-
-#### Public members
-
-##### `Study.analyze`
-
-```python
-analyze(self, session_id: 'str', stim_pair: 'str', **kwargs: 'Any') -> 'AnalysisResult'
-```
-
-Run epoching, response-artifact QC, and ERP detection in one call.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `kwargs` | Any | required |
-
-**Returns:** AnalysisResult.
-
-##### `Study.detect_events`
-
-```python
-detect_events(self, session_id: 'str', stim_pair: 'str', method: 'str' = 'auto', **kwargs: 'Any') -> 'pd.DataFrame'
-```
-
-Detect stimulation events for one session and stimulation pair.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `method` | str | `'auto'` |
-| `kwargs` | Any | required |
-
-**Returns:** pd.DataFrame.
-
-##### `Study.epoch`
-
-```python
-epoch(self, session_id: 'str', stim_pair: 'str', pipeline: 'str | list[tuple[str, dict[str, Any]]]' = 'blank_filt', **kwargs: 'Any') -> 'EpochsResult'
-```
-
-Extract or load event-locked epochs for one acquisition.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `pipeline` | str \| list[tuple[str, dict[str, Any]]] | `'blank_filt'` |
-| `kwargs` | Any | required |
-
-**Returns:** EpochsResult.
-
-##### `Study.from_bids`
-
-```python
-from_bids(cls, bids_root: 'str', subject: 'str', output_root: 'str | None' = None, session: 'str | None' = None, task: 'str | None' = None, patient_id: 'str | None' = None, copy_raw: 'bool' = False, derivatives: 'bool' = True, verbose: 'bool' = True) -> "'Patient'"
-```
-
-Import a BIDS iEEG subject and return a ready-to-use patient facade.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `bids_root` | str | required |
-| `subject` | str | required |
-| `output_root` | str \| None | `None` |
-| `session` | str \| None | `None` |
-| `task` | str \| None | `None` |
-| `patient_id` | str \| None | `None` |
-| `copy_raw` | bool | `False` |
-| `derivatives` | bool | `True` |
-| `verbose` | bool | `True` |
-
-**Returns:** 'Patient'.
-
-##### `Study.from_nwb`
-
-```python
-from_nwb(cls, nwb_path: 'str', output_root: 'str | None' = None, patient_id: 'str | None' = None, session_id: 'str | None' = None, stim_pair: 'str | None' = None, stim_times: 'Any | None' = None, stim_duration_s: 'float' = 0.001, series_name: 'str | None' = None, copy_raw: 'bool' = False, verbose: 'bool' = True) -> "'Patient'"
-```
-
-Import one NWB recording and return a ready-to-use patient facade.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `nwb_path` | str | required |
-| `output_root` | str \| None | `None` |
-| `patient_id` | str \| None | `None` |
-| `session_id` | str \| None | `None` |
-| `stim_pair` | str \| None | `None` |
-| `stim_times` | Any \| None | `None` |
-| `stim_duration_s` | float | `0.001` |
-| `series_name` | str \| None | `None` |
-| `copy_raw` | bool | `False` |
-| `verbose` | bool | `True` |
-
-**Returns:** 'Patient'.
-
-##### `Study.recording`
-
-```python
-recording(self, session_id: 'str') -> "'Recording'"
-```
-
-Return the recording facade for one session.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-
-**Returns:** 'Recording'.
-
-##### `Study.run`
-
-```python
-run(self, session_id: 'str', stim_pair: 'str', pipeline: 'str | list[tuple[str, dict[str, Any]]]' = 'blank_filt', tmin: 'float' = -0.5, tmax: 'float' = 1.0, baseline: 'tuple[float, float] | None' = (-0.5, -0.03), zero_time: 'float | str | None' = 'post_artifact', artifact_anchor_params: 'dict[str, Any] | None' = None, event_method: 'str' = 'auto', **kwargs: 'Any') -> 'EpochsResult'
-```
-
-Run preprocessing and epoch extraction without reusing a cache.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `pipeline` | str \| list[tuple[str, dict[str, Any]]] | `'blank_filt'` |
-| `tmin` | float | `-0.5` |
-| `tmax` | float | `1.0` |
-| `baseline` | tuple[float, float] \| None | `(-0.5, -0.03)` |
-| `zero_time` | float \| str \| None | `'post_artifact'` |
-| `artifact_anchor_params` | dict[str, Any] \| None | `None` |
-| `event_method` | str | `'auto'` |
-| `kwargs` | Any | required |
-
-**Returns:** EpochsResult.
-
-##### `Study.session`
-
-```python
-session(self, session_id: 'str') -> "'Recording'"
-```
-
-Return a recording facade; alias of ``recording``.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-
-**Returns:** 'Recording'.
-
-##### `Study.sessions`
-
-```python
-sessions(self) -> 'list[str]'
-```
-
-Return registered session identifiers for this patient.
-
-**Returns:** list[str].
-
-##### `Study.stim_pairs`
-
-```python
-stim_pairs(self, session_id: 'str') -> 'list[str]'
-```
-
-Return registered stimulation pairs for one session.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_id` | str | required |
-
-**Returns:** list[str].
-
-##### `Study.warmup`
-
-```python
-warmup(self, session_ids: 'Iterable[str] | None' = None, **kwargs: 'Any') -> 'pd.DataFrame'
-```
-
-Precompute local caches for selected patient sessions.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_ids` | Iterable[str] \| None | `None` |
-| `kwargs` | Any | required |
-
-**Returns:** pd.DataFrame.
-
-##### `Study.warmup_jobs`
-
-```python
-warmup_jobs(self, session_ids: 'Iterable[str] | None' = None, **kwargs: 'Any') -> 'pd.DataFrame'
-```
-
-Submit cache-warmup jobs for selected patient sessions.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `session_ids` | Iterable[str] \| None | `None` |
-| `kwargs` | Any | required |
-
-**Returns:** pd.DataFrame.
 
 ### `TFRResult`
 
@@ -4445,151 +5112,951 @@ Event-related spectral perturbation (baseline-normalized power).
 
 **Returns:** np.ndarray.
 
-### `UnsafeLegacyEpochMetadataError`
+### `PLVResult`
 
 ```python
-UnsafeLegacyEpochMetadataError
+PLVResult(ch_x: 'str', ch_y: 'str', freqs: 'np.ndarray', times: 'np.ndarray', plv: 'np.ndarray', n_trials: 'int') -> None
 ```
 
-Raised when a legacy pickle-backed epoch cache is not explicitly trusted.
+Time-frequency phase-locking value between two channels.
 
-#### Public members
-
-##### `UnsafeLegacyEpochMetadataError.add_note`
-
-```python
-add_note
-```
-
-Exception.add_note(note) --
-add a note to the exception
-
-##### `UnsafeLegacyEpochMetadataError.with_traceback`
-
-```python
-with_traceback
-```
-
-Exception.with_traceback(tb) --
-set self.__traceback__ to tb and return self.
-
-### `UnsafeLegacyProcessedMetadataError`
-
-```python
-UnsafeLegacyProcessedMetadataError
-```
-
-Raised when pickle-backed processed-data metadata are not trusted.
-
-#### Public members
-
-##### `UnsafeLegacyProcessedMetadataError.add_note`
-
-```python
-add_note
-```
-
-Exception.add_note(note) --
-add a note to the exception
-
-##### `UnsafeLegacyProcessedMetadataError.with_traceback`
-
-```python
-with_traceback
-```
-
-Exception.with_traceback(tb) --
-set self.__traceback__ to tb and return self.
-
-### `WaveformAudit`
-
-```python
-WaveformAudit(epochs: 'Any', summary: 'pd.DataFrame', artifact_responses: 'pd.DataFrame', response_window: 'tuple[float, float]', baseline_window: 'tuple[float, float]', _array: 'np.ndarray', _clean_array: 'np.ndarray', _times: 'np.ndarray', _channels: 'list[str]') -> None
-```
-
-Waveform metrics, detector concordance, and trial-level QC context.
+``plv`` is a frequency-by-time array bounded from zero to one and computed
+across the retained trials. ``freqs`` are in hertz and ``times`` are epoch-
+relative seconds.
 
 **Parameters**
 
 | Name | Type | Default |
 | --- | --- | --- |
-| `epochs` | Any | required |
-| `summary` | pd.DataFrame | required |
-| `artifact_responses` | pd.DataFrame | required |
-| `response_window` | tuple[float, float] | required |
-| `baseline_window` | tuple[float, float] | required |
-| `_array` | np.ndarray | required |
-| `_clean_array` | np.ndarray | required |
-| `_times` | np.ndarray | required |
-| `_channels` | list[str] | required |
+| `ch_x` | str | required |
+| `ch_y` | str | required |
+| `freqs` | np.ndarray | required |
+| `times` | np.ndarray | required |
+| `plv` | np.ndarray | required |
+| `n_trials` | int | required |
 
 **Returns:** None.
-
-#### Public members
-
-##### `WaveformAudit.mean_waveforms`
+### `PACResult`
 
 ```python
-mean_waveforms(self, *, start_s: 'float' = -0.1, stop_s: 'float' = 0.45, step_ms: 'float' = 2.0) -> 'pd.DataFrame'
+PACResult(phase_channel: 'str', amp_channel: 'str', phase_band: 'tuple[float, float]', amp_band: 'tuple[float, float]', method: 'str', mi: 'float', phase_bin_centers: 'np.ndarray', amplitude_by_phase: 'np.ndarray', preferred_phase: 'float' = nan, n_samples: 'int' = 0) -> None
 ```
 
-Return downsampled clean means for cohort-scale waveform review.
+Phase-amplitude coupling summary for one channel pair and band pair.
+
+The result retains the coupling method and scalar modulation index together
+with the phase-bin centers, mean amplitude profile, preferred phase, and
+number of finite samples used in the estimate.
 
 **Parameters**
 
 | Name | Type | Default |
 | --- | --- | --- |
-| `start_s` | float | `-0.1` |
-| `stop_s` | float | `0.45` |
-| `step_ms` | float | `2.0` |
+| `phase_channel` | str | required |
+| `amp_channel` | str | required |
+| `phase_band` | tuple[float, float] | required |
+| `amp_band` | tuple[float, float] | required |
+| `method` | str | required |
+| `mi` | float | required |
+| `phase_bin_centers` | np.ndarray | required |
+| `amplitude_by_phase` | np.ndarray | required |
+| `preferred_phase` | float | `nan` |
+| `n_samples` | int | `0` |
+
+**Returns:** None.
+### `ComodulogramResult`
+
+```python
+ComodulogramResult(phase_channel: 'str', amp_channel: 'str', phase_freqs: 'np.ndarray', amp_freqs: 'np.ndarray', mi: 'np.ndarray', method: 'str', bandwidth_phase: 'float' = 2.0, bandwidth_amp: 'float' = 20.0) -> None
+```
+
+Phase-amplitude coupling values across frequency-band centers.
+
+``mi`` is arranged as amplitude-frequency by phase-frequency. Frequency
+centers and bandwidths are expressed in hertz, and ``method`` records the
+modulation-index estimator.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `phase_channel` | str | required |
+| `amp_channel` | str | required |
+| `phase_freqs` | np.ndarray | required |
+| `amp_freqs` | np.ndarray | required |
+| `mi` | np.ndarray | required |
+| `method` | str | required |
+| `bandwidth_phase` | float | `2.0` |
+| `bandwidth_amp` | float | `20.0` |
+
+**Returns:** None.
+### Functions
+
+### `discover_bids_ieeg`
+
+```python
+discover_bids_ieeg(bids_root: 'str | Path', subject: 'str | None' = None, session: 'str | None' = None, task: 'str | None' = None, derivatives: 'bool' = True) -> 'pd.DataFrame'
+```
+
+Discover BIDS iEEG recordings and their available sidecar files.
+
+The returned table contains one row per supported ``*_ieeg`` recording,
+including parsed subject, session, task, and run entities plus paths to
+matching events, channels, electrodes, and JSON sidecars when present.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `bids_root` | str \| Path | required |
+| `subject` | str \| None | `None` |
+| `session` | str \| None | `None` |
+| `task` | str \| None | `None` |
+| `derivatives` | bool | `True` |
 
 **Returns:** pd.DataFrame.
 
-##### `WaveformAudit.plot`
+### `import_bids_project`
 
 ```python
-plot(self, channels: 'Iterable[str] | None' = None, *, max_channels: 'int' = 12, full_scale: 'bool' = False, title: 'str | None' = None)
+import_bids_project(bids_root: 'str | Path', output_root: 'str | Path', subject: 'str', session: 'str | None' = None, task: 'str | None' = None, patient_id: 'str | None' = None, copy_raw: 'bool' = False, derivatives: 'bool' = True) -> 'BIDSImportResult'
 ```
 
-Plot a compact review montage and return the Matplotlib figure.
+Build an ERPy config/metadata project from BIDS/OpenNeuro iEEG files.
 
 **Parameters**
 
 | Name | Type | Default |
 | --- | --- | --- |
-| `channels` | Iterable[str] \| None | `None` |
-| `max_channels` | int | `12` |
-| `full_scale` | bool | `False` |
-| `title` | str \| None | `None` |
+| `bids_root` | str \| Path | required |
+| `output_root` | str \| Path | required |
+| `subject` | str | required |
+| `session` | str \| None | `None` |
+| `task` | str \| None | `None` |
+| `patient_id` | str \| None | `None` |
+| `copy_raw` | bool | `False` |
+| `derivatives` | bool | `True` |
 
-##### `WaveformAudit.to_pdf`
+**Returns:** BIDSImportResult.
+
+### `complete_contact_coordinates`
 
 ```python
-to_pdf(self, path: 'str | Path', *, channels: 'Iterable[str] | None' = None, channels_per_page: 'int' = 24, full_scale: 'bool' = False, include_flagged_full_scale: 'bool' = True, max_flagged_full_scale_channels: 'int | None' = 24, title: 'str | None' = None) -> 'Path'
+complete_contact_coordinates(contacts: 'pd.DataFrame', *, maximum_fit_rmse_mm: 'float' = 2.5, maximum_contact_step_mm: 'float' = 15.0) -> 'pd.DataFrame'
 ```
 
-Write an atomic, multipage review atlas for every selected channel.
+Fill an isolated missing contact from a well-fit linear lead trajectory.
 
-The main atlas uses robust limits so physiological morphology remains
-visible in the presence of a large rejected trial. By default, channels
-requiring review are then repeated at full scale so clipping, saturation,
-drift, and sharp transients can be inspected directly.
+Contacts are grouped by patient, session, and the nonnumeric prefix of
+``elec_label``. A three-dimensional linear fit is accepted only when at
+least four localized contacts are available, the fit error is within
+``maximum_fit_rmse_mm``, and the estimated contact spacing is plausible.
+Interpolation or one-contact extrapolation is allowed; an entirely
+unlocalized lead is left unchanged.
+
+The returned table records ``mni_coordinate_source``, fit RMSE, and the
+number of localized contacts used. These provenance columns distinguish
+inferred positions from measured or imported coordinates.
+
+Parameters
+----------
+contacts:
+    Electrode metadata containing ``elec_label`` and, when available,
+    ``mni_x``, ``mni_y``, and ``mni_z``. ``patient_id`` and ``session_id``
+    are used to prevent fits from crossing acquisitions.
+maximum_fit_rmse_mm:
+    Largest accepted three-dimensional root-mean-square fit residual.
+maximum_contact_step_mm:
+    Largest accepted distance between adjacent fitted contacts. The lower
+    bound is fixed at 0.5 mm.
+
+Returns
+-------
+pandas.DataFrame
+    A copy of the input table with conservatively completed coordinates
+    and explicit coordinate-provenance columns.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `contacts` | pd.DataFrame | required |
+| `maximum_fit_rmse_mm` | float | `2.5` |
+| `maximum_contact_step_mm` | float | `15.0` |
+
+**Returns:** pd.DataFrame.
+
+### `load_continuous_npz`
+
+```python
+load_continuous_npz(path: 'str | Path', *, nrows: 'int | None' = None) -> 'pd.DataFrame'
+```
+
+Load an ERPy continuous NPZ file without enabling pickle deserialization.
 
 **Parameters**
 
 | Name | Type | Default |
 | --- | --- | --- |
 | `path` | str \| Path | required |
-| `channels` | Iterable[str] \| None | `None` |
-| `channels_per_page` | int | `24` |
-| `full_scale` | bool | `False` |
-| `include_flagged_full_scale` | bool | `True` |
-| `max_flagged_full_scale_channels` | int \| None | `24` |
-| `title` | str \| None | `None` |
+| `nrows` | int \| None | `None` |
+
+**Returns:** pd.DataFrame.
+
+### `resample_continuous`
+
+```python
+resample_continuous(df: 'pd.DataFrame', target_sfreq: 'float', *, source_sfreq: 'float | None' = None) -> 'pd.DataFrame'
+```
+
+Resample every numeric channel while preserving a time-like index.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `df` | pd.DataFrame | required |
+| `target_sfreq` | float | required |
+| `source_sfreq` | float \| None | `None` |
+
+**Returns:** pd.DataFrame.
+
+### `save_continuous_npz`
+
+```python
+save_continuous_npz(df: 'pd.DataFrame', path: 'str | Path', *, dtype: 'str | np.dtype' = 'float32', compressed: 'bool' = True, metadata: 'dict[str, Any] | None' = None) -> 'Path'
+```
+
+Atomically save continuous numeric channels in ERPy's portable NPZ format.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `df` | pd.DataFrame | required |
+| `path` | str \| Path | required |
+| `dtype` | str \| np.dtype | `'float32'` |
+| `compressed` | bool | `True` |
+| `metadata` | dict[str, Any] \| None | `None` |
 
 **Returns:** Path.
 
-### Functions
+### `create_events_from_binary_series`
+
+```python
+create_events_from_binary_series(series: 'Iterable[Any] | pd.Series | pd.DataFrame', start_datetime: 'Any | None' = None, end_datetime: 'Any | None' = None, sfreq: 'float | None' = None, event_value: 'int | float | str' = 1, event_column: 'int | str' = 0, edge: 'str' = 'rising') -> 'tuple[pd.DataFrame, pd.DataFrame]'
+```
+
+Convert a binary marker vector into a datetime-indexed table and events.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `series` | Iterable[Any] \| pd.Series \| pd.DataFrame | required |
+| `start_datetime` | Any \| None | `None` |
+| `end_datetime` | Any \| None | `None` |
+| `sfreq` | float \| None | `None` |
+| `event_value` | int \| float \| str | `1` |
+| `event_column` | int \| str | `0` |
+| `edge` | str | `'rising'` |
+
+**Returns:** tuple[pd.DataFrame, pd.DataFrame].
+
+### `create_events_from_timestamps`
+
+```python
+create_events_from_timestamps(timestamps: 'Iterable[Any] | pd.Series | pd.DataFrame', label: 'str | None' = None, time_column: 'str' = 'times') -> 'pd.DataFrame'
+```
+
+Create canonical ERPy event annotations from timestamp rows.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `timestamps` | Iterable[Any] \| pd.Series \| pd.DataFrame | required |
+| `label` | str \| None | `None` |
+| `time_column` | str | `'times'` |
+
+**Returns:** pd.DataFrame.
+
+### `detect_events_from_artifacts`
+
+```python
+detect_events_from_artifacts(dataloader, session_id: 'str', stim_pair: 'str', method: 'str' = 'consensus', stim_freq: 'float | None' = None, min_peak_height: 'float' = 1000.0, raw_source: 'str' = 'auto', min_window_coverage: 'float' = 0.95, save_events: 'bool' = False, raw_file: 'str | Path | None' = None, stim_start: 'Any | None' = None, signal_data: 'pd.DataFrame | None' = None, **kwargs: 'Any') -> 'pd.DataFrame'
+```
+
+Unified event detector for artifact, trigger, annotation, and binary sources.
+
+``method="auto"`` searches only the annotated stimulation interval. It first
+tries explicit annotations/triggers and the configured amplitude threshold,
+then uses a robust noise-qualified threshold down to
+``auto_min_peak_height`` (100 microvolts by default). Every automatic result
+must match the expected pulse count and cadence.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `dataloader` | not specified | required |
+| `session_id` | str | required |
+| `stim_pair` | str | required |
+| `method` | str | `'consensus'` |
+| `stim_freq` | float \| None | `None` |
+| `min_peak_height` | float | `1000.0` |
+| `raw_source` | str | `'auto'` |
+| `min_window_coverage` | float | `0.95` |
+| `save_events` | bool | `False` |
+| `raw_file` | str \| Path \| None | `None` |
+| `stim_start` | Any \| None | `None` |
+| `signal_data` | pd.DataFrame \| None | `None` |
+| `kwargs` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+### `evoked_to_datetime`
+
+```python
+evoked_to_datetime(df: 'pd.DataFrame', start_datetime: 'Any', end_datetime: 'Any', event_column: 'int | str' = 0, event_value: 'int | float | str' = 1) -> 'tuple[pd.DataFrame, pd.DataFrame]'
+```
+
+Assign a datetime axis and extract rising binary-event onsets.
+
+This compatibility helper returns both the timestamp-indexed input frame
+and a one-column ``times`` table containing detected onset timestamps.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `df` | pd.DataFrame | required |
+| `start_datetime` | Any | required |
+| `end_datetime` | Any | required |
+| `event_column` | int \| str | `0` |
+| `event_value` | int \| float \| str | `1` |
+
+**Returns:** tuple[pd.DataFrame, pd.DataFrame].
+
+### `process_events_for_session`
+
+```python
+process_events_for_session(dataloader, session_id: 'str', method: 'str' = 'consensus', stim_pairs: 'Iterable[str] | None' = None, save_events: 'bool' = True, **kwargs: 'Any') -> 'dict[str, pd.DataFrame]'
+```
+
+Detect and optionally save events for each stimulation pair in a session.
+
+Returns a mapping from stimulation-pair label to its normalized event table.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `dataloader` | not specified | required |
+| `session_id` | str | required |
+| `method` | str | `'consensus'` |
+| `stim_pairs` | Iterable[str] \| None | `None` |
+| `save_events` | bool | `True` |
+| `kwargs` | Any | required |
+
+**Returns:** dict[str, pd.DataFrame].
+
+### `detect_bad_channels`
+
+```python
+detect_bad_channels(df: 'pd.DataFrame', zscore_threshold: 'float' = 5.0, flat_std: 'float' = 1e-12, max_nan_fraction: 'float' = 0.05, min_correlation: 'float | None' = -0.2) -> 'BadChannelReport'
+```
+
+Detect flat, noisy, NaN-heavy, and anticorrelated channels.
+
+The rule is deliberately transparent: each feature receives a robust z-score
+and a channel is bad when any hard QC flag fires. The report table records
+the reason string so clinical users can audit the decision.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `df` | pd.DataFrame | required |
+| `zscore_threshold` | float | `5.0` |
+| `flat_std` | float | `1e-12` |
+| `max_nan_fraction` | float | `0.05` |
+| `min_correlation` | float \| None | `-0.2` |
+
+**Returns:** BadChannelReport.
+
+### `reject_bad_channels`
+
+```python
+reject_bad_channels(df: 'pd.DataFrame', bad_channels: 'Iterable[str] | str | None' = None, method: 'str' = 'drop', detection_params: 'dict | None' = None, exclude: 'Iterable[str] | None' = None, return_report: 'bool' = False)
+```
+
+Reject or repair bad channels.
+
+Parameters
+----------
+bad_channels:
+    Explicit channel list, ``"auto"`` for data-driven detection, or ``None``.
+method:
+    ``"drop"`` removes bad columns, ``"nan"`` keeps them as NaN, and
+    ``"interpolate"`` replaces them with the median good-channel signal.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `df` | pd.DataFrame | required |
+| `bad_channels` | Iterable[str] \| str \| None | `None` |
+| `method` | str | `'drop'` |
+| `detection_params` | dict \| None | `None` |
+| `exclude` | Iterable[str] \| None | `None` |
+| `return_report` | bool | `False` |
+
+### `artifact_envelope`
+
+```python
+artifact_envelope(epoch_df: 'pd.DataFrame', stim_ch: 'str | Iterable[str] | None' = None) -> 'tuple[np.ndarray, list[str]]'
+```
+
+Return a robust stimulation-artifact envelope for one epoch.
+
+Stimulation channels are included first when present, but the envelope also
+considers the remaining numeric channels. This catches adjacent-contact or
+amplifier-wide onset spikes without requiring the user to know where the
+artifact is largest.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epoch_df` | pd.DataFrame | required |
+| `stim_ch` | str \| Iterable[str] \| None | `None` |
+
+**Returns:** tuple[np.ndarray, list[str]].
+
+### `detect_post_artifact_anchor`
+
+```python
+detect_post_artifact_anchor(epoch_df: 'pd.DataFrame', *, stim_ch: 'str | Iterable[str] | None' = None, baseline_window: 'tuple[float, float] | None' = None, search_window: 'tuple[float, float]' = (-0.002, 0.02), min_anchor_time_s: 'float' = 0.003, settle_z: 'float' = 2.0, settle_slope_z: 'float' = 2.0, settle_duration_s: 'float' = 0.002, smooth_s: 'float' = 0.001, onset_artifact_z: 'float' = 6.0, consecutive_samples: 'int | None' = None) -> 'dict[str, object]'
+```
+
+Detect a post-stimulation-artifact zeroing anchor for one epoch.
+
+The detector finds the largest artifact-envelope sample near stimulation
+onset, then chooses the first post-peak sample at which the artifact has
+truly *settled* — i.e. the (lightly smoothed) envelope has both returned to
+near baseline (below ``settle_z``) and flattened out (sample-to-sample slope
+below ``settle_slope_z`` in baseline units), and stays settled for
+``settle_duration_s``. Requiring a sustained return to baseline rather than a
+single threshold crossing places the anchor at the end of the artifact — the
+inflection where the steep stimulation transient gives way to the
+physiological response — instead of part-way down the still-decaying tail.
+
+If no sustained settled run is found, the anchor falls back to the first
+post-peak sample that meets the amplitude criterion, and finally to the
+quietest sample in the search window; it never lands on the artifact peak.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epoch_df` | pd.DataFrame | required |
+| `stim_ch` | str \| Iterable[str] \| None | `None` |
+| `baseline_window` | tuple[float, float] \| None | `None` |
+| `search_window` | tuple[float, float] | `(-0.002, 0.02)` |
+| `min_anchor_time_s` | float | `0.003` |
+| `settle_z` | float | `2.0` |
+| `settle_slope_z` | float | `2.0` |
+| `settle_duration_s` | float | `0.002` |
+| `smooth_s` | float | `0.001` |
+| `onset_artifact_z` | float | `6.0` |
+| `consecutive_samples` | int \| None | `None` |
+
+**Returns:** dict[str, object].
+
+### `detect_zero_time_artifact`
+
+```python
+detect_zero_time_artifact(epoch_df: 'pd.DataFrame', *, stim_ch: 'str | Iterable[str] | None' = None, zero_time: 'float' = 0.0, baseline_window: 'tuple[float, float] | None' = None, artifact_z: 'float' = 6.0) -> 'dict[str, object]'
+```
+
+Report whether a requested zeroing time falls on a stimulation artifact.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epoch_df` | pd.DataFrame | required |
+| `stim_ch` | str \| Iterable[str] \| None | `None` |
+| `zero_time` | float | `0.0` |
+| `baseline_window` | tuple[float, float] \| None | `None` |
+| `artifact_z` | float | `6.0` |
+
+**Returns:** dict[str, object].
+
+### `detect_artifactual_responses`
+
+```python
+detect_artifactual_responses(epochs, response_window: 'tuple[float, float] | None' = None, baseline_window: 'tuple[float, float] | None' = None, zscore_threshold: 'float' = 6.0, max_nan_fraction: 'float' = 0.02, saturation_fraction: 'float' = 0.02, plateau_fraction: 'float' = 0.015, plateau_min_run_s: 'float' = 0.003, plateau_epsilon_uv: 'float | None' = None, rail_fraction: 'float' = 0.02, rail_epsilon_fraction: 'float' = 0.002, rail_epsilon_uv: 'float | None' = None, rail_limits_uv: 'tuple[float, float] | Mapping[str, tuple[float, float]] | None' = None, absolute_peak_uv: 'float | None' = None, absolute_ptp_uv: 'float | None' = None, extreme_zscore_threshold: 'float | None' = 12.0, ringing_zscore_threshold: 'float' = 6.0, late_high_frequency_zscore_threshold: 'float | None' = None) -> 'ArtifactResponseReport'
+```
+
+Flag aberrant trial-by-channel responses after epoching.
+
+This catches problems that are not persistent bad channels: amplifier
+saturations on one trial, plateau or known-rail clipping, extreme
+trial-relative amplitude outliers, late-response roughness-ratio outliers,
+isolated movement/noise bursts, and NaN-heavy extracted windows. The
+roughness ratio compares mean absolute sample gradients from 50–500 ms and
+0–50 ms (bounded by the available epoch); the serialized
+``late_high_frequency_ratio`` name is retained for compatibility and does
+not denote spectral energy. Local waveform
+minima and maxima are retained as an ``extreme_dwell_fraction`` diagnostic,
+but are not treated as amplifier rails unless explicit ``rail_limits_uv``
+are supplied.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `response_window` | tuple[float, float] \| None | `None` |
+| `baseline_window` | tuple[float, float] \| None | `None` |
+| `zscore_threshold` | float | `6.0` |
+| `max_nan_fraction` | float | `0.02` |
+| `saturation_fraction` | float | `0.02` |
+| `plateau_fraction` | float | `0.015` |
+| `plateau_min_run_s` | float | `0.003` |
+| `plateau_epsilon_uv` | float \| None | `None` |
+| `rail_fraction` | float | `0.02` |
+| `rail_epsilon_fraction` | float | `0.002` |
+| `rail_epsilon_uv` | float \| None | `None` |
+| `rail_limits_uv` | tuple[float, float] \| Mapping[str, tuple[float, float]] \| None | `None` |
+| `absolute_peak_uv` | float \| None | `None` |
+| `absolute_ptp_uv` | float \| None | `None` |
+| `extreme_zscore_threshold` | float \| None | `12.0` |
+| `ringing_zscore_threshold` | float | `6.0` |
+| `late_high_frequency_zscore_threshold` | float \| None | `None` |
+
+**Returns:** ArtifactResponseReport.
+
+### `reject_artifactual_responses`
+
+```python
+reject_artifactual_responses(epochs, report: 'ArtifactResponseReport | None' = None, mode: 'str' = 'drop_epoch', max_bad_channel_fraction: 'float' = 0.25, max_bad_response_fraction: 'float' = 0.25, **detect_kwargs)
+```
+
+Remove or mask aberrant trial-channel responses from an Epochs object.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `report` | ArtifactResponseReport \| None | `None` |
+| `mode` | str | `'drop_epoch'` |
+| `max_bad_channel_fraction` | float | `0.25` |
+| `max_bad_response_fraction` | float | `0.25` |
+| `detect_kwargs` | not specified | required |
+
+### `response_artifact_summary`
+
+```python
+response_artifact_summary(report: 'ArtifactResponseReport | pd.DataFrame', group_cols: 'Iterable[str] | None' = None, hard_artifact_reasons: 'Iterable[str] | None' = None) -> 'pd.DataFrame'
+```
+
+Return an auditable channel-level response-artifact summary.
+
+Parameters
+----------
+report:
+    Artifact response report or its table.
+group_cols:
+    Optional columns such as ``patient_id``, ``session_id``, or
+    ``stim_pair`` to preserve in the grouping.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `report` | ArtifactResponseReport \| pd.DataFrame | required |
+| `group_cols` | Iterable[str] \| None | `None` |
+| `hard_artifact_reasons` | Iterable[str] \| None | `None` |
+
+**Returns:** pd.DataFrame.
+
+### `audit_waveforms`
+
+```python
+audit_waveforms(epochs: 'Any', detections: 'pd.DataFrame', artifact_responses: 'pd.DataFrame', *, response_window: 'tuple[float, float]' = (0.01, 0.35), baseline_window: 'tuple[float, float]' = (-0.5, -0.03), min_consensus: 'int' = 2, artifact_thresholds: 'Mapping[str, float] | None' = None, max_bad_response_fraction: 'float' = 0.25, max_hard_artifact_fraction: 'float' = 0.1, min_clean_responses: 'int' = 10, fdr_alpha: 'float' = 0.05) -> 'WaveformAudit'
+```
+
+Recompute waveform metrics and classify responses needing review.
+
+Default component decisions are ``primary_reproducibility_pass`` and
+``primary_energy_pass``. ``primary_detector_pass`` is the joint BH decision
+(``primary_significant`` in the detection table); ``primary_qc_pass`` also
+requires contact-QC eligibility.
+
+Standalone CRP/Kundu calls use nullable ``comparator_crp_pass`` and
+``comparator_kundu_pass`` with explicit availability and reason fields.
+``primary_shape_pass`` and ``primary_magnitude_pass`` are deprecated aliases
+for CRP and Kundu respectively, including their missing states; they are
+not the default reproducibility/energy components. Missing comparator calls
+indicate not run or unavailable, not a negative result. Matching
+``comparator_*_available`` and ``comparator_*_availability_reason`` columns
+retain the evidence status and distinguish ``not_run``.
+``comparator_crp_kundu_disagreement`` is reported only when both comparator
+calls have applicable evidence; this diagnostic does not change eligibility.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | Any | required |
+| `detections` | pd.DataFrame | required |
+| `artifact_responses` | pd.DataFrame | required |
+| `response_window` | tuple[float, float] | `(0.01, 0.35)` |
+| `baseline_window` | tuple[float, float] | `(-0.5, -0.03)` |
+| `min_consensus` | int | `2` |
+| `artifact_thresholds` | Mapping[str, float] \| None | `None` |
+| `max_bad_response_fraction` | float | `0.25` |
+| `max_hard_artifact_fraction` | float | `0.1` |
+| `min_clean_responses` | int | `10` |
+| `fdr_alpha` | float | `0.05` |
+
+**Returns:** WaveformAudit.
+
+### `common_mode_recovery_diagnostic`
+
+```python
+common_mode_recovery_diagnostic(frame: 'pd.DataFrame', *, response_window: 'tuple[float, float]' = (0.01, 0.35), thresholds: 'Mapping[str, Any] | None' = None, consensus_column: 'str | None' = None) -> 'dict[str, Any]'
+```
+
+Detect an acquisition-wide early step followed by shared recovery.
+
+A physiological early response may occur on one or several connected
+contacts. Amplifier recovery is different: many anatomically distributed
+detector-positive channels begin with a large offset, peak at nearly the
+same first post-blanking sample, and drift together toward baseline. The
+returned diagnostics make the acquisition-level quarantine auditable.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `frame` | pd.DataFrame | required |
+| `response_window` | tuple[float, float] | `(0.01, 0.35)` |
+| `thresholds` | Mapping[str, Any] \| None | `None` |
+| `consensus_column` | str \| None | `None` |
+
+**Returns:** dict[str, Any].
+
+### `detect`
+
+```python
+detect(epochs, method: 'str' = 'crp_energy', **params: 'Any') -> 'pd.DataFrame'
+```
+
+Low-syntax detector entry point; defaults to the primary conjunction.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `method` | str | `'crp_energy'` |
+| `params` | Any | required |
+
+**Returns:** pd.DataFrame.
+
+### `run_crp`
+
+```python
+run_crp(epochs, channel: 'str', config: 'CRPConfig | None' = None) -> 'CRPResult'
+```
+
+Fit canonical response parameterization to one epoch channel.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `channel` | str | required |
+| `config` | CRPConfig \| None | `None` |
+
+**Returns:** CRPResult.
+
+### `run_crp_all`
+
+```python
+run_crp_all(epochs, config: 'CRPConfig | None' = None) -> 'pd.DataFrame'
+```
+
+Fit canonical response parameterization to every epoch channel.
+
+Per-channel failures are retained as nonsignificant rows with an ``error``
+field so that one unsuitable channel does not discard the full analysis.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `config` | CRPConfig \| None | `None` |
+
+**Returns:** pd.DataFrame.
+
+### `compare_crp_across_stim_sites`
+
+```python
+compare_crp_across_stim_sites(crp_tables: 'dict[str, pd.DataFrame] | pd.DataFrame', *, stim_col: 'str' = 'stim_pair', channel_col: 'str' = 'channel', weight_col: 'str' = 'mean_projection', baseline_col: 'str' = 'max_canonical_weight_z', reconstruction_col: 'str' = 'reconstruction_rms_uv', permutation_col: 'str' = 'permutation_p_value', alpha: 'float' = 0.05) -> 'pd.DataFrame'
+```
+
+Compare CRP response expression across stimulation sites.
+
+Accept either one table containing ``stim_col`` or a mapping from
+stimulation-pair labels to tables returned by ``run_crp_all``. The
+returned long-form table preserves the source columns and adds within-site
+z-scores, baseline-normalized expression, reconstruction ranks, and the
+supplied permutation-test summaries. ``permutation_significant`` applies
+the unadjusted ``alpha`` threshold; this helper does not perform
+multiplicity correction.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `crp_tables` | dict[str, pd.DataFrame] \| pd.DataFrame | required |
+| `stim_col` | str | `'stim_pair'` |
+| `channel_col` | str | `'channel'` |
+| `weight_col` | str | `'mean_projection'` |
+| `baseline_col` | str | `'max_canonical_weight_z'` |
+| `reconstruction_col` | str | `'reconstruction_rms_uv'` |
+| `permutation_col` | str | `'permutation_p_value'` |
+| `alpha` | float | `0.05` |
+
+**Returns:** pd.DataFrame.
+
+### `run_crp_energy_array`
+
+```python
+run_crp_energy_array(x: 'np.ndarray', times: 'np.ndarray', *, channel: 'str' = '', config: 'CRPEnergyConfig | None' = None) -> 'CRPEnergyResult'
+```
+
+Evaluate fixed-window reproducibility and paired energy for one channel.
+
+Whole-trial sign flips supply the reproducibility component over the full
+declared response window. Matched response and baseline segments are each
+demeaned separately before paired log-RMS sign flips. A descriptive CRP
+model is fitted independently of the inferential window selection. An
+unavailable descriptive model does not discard valid component p-values.
+Epochs must cover the effective response window within half a sample;
+truncated windows return an unavailable result rather than a shorter test.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `x` | np.ndarray | required |
+| `times` | np.ndarray | required |
+| `channel` | str | `''` |
+| `config` | CRPEnergyConfig \| None | `None` |
+
+**Returns:** CRPEnergyResult.
+
+### `fixed_window_reproducibility_sign_flip_test`
+
+```python
+fixed_window_reproducibility_sign_flip_test(response: 'np.ndarray', *, sfreq: 'float', n_permutations: 'int' = 5000, max_exact_trials: 'int' = 12, random_state: 'int | np.random.Generator | None' = 42, eps: 'float' = 1e-12) -> 'FixedWindowReproducibilityResult'
+```
+
+Test fixed-window trial reproducibility by whole-trial sign flips.
+
+The statistic is the mean of all ordered, semi-normalized cross-trial
+projections. Whole-trial Rademacher signs preserve every trial norm and
+account for the dependence among projections that share trials. The
+null requires joint invariance of the response vectors under independent
+whole-trial sign changes; independent centrally symmetric trials suffice.
+This condition must hold after preprocessing and trial selection. The
+response window must be fixed before this function is called; a
+data-selected CRP duration must not define this inferential array.
+
+For exact enumeration, the observed all-positive assignment is omitted
+from the matrix calculation and counted explicitly. This guarantees the
+exact randomization floor even when floating-point summation order makes
+the separately calculated observed statistic differ by roundoff.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `response` | np.ndarray | required |
+| `sfreq` | float | required |
+| `n_permutations` | int | `5000` |
+| `max_exact_trials` | int | `12` |
+| `random_state` | int \| np.random.Generator \| None | `42` |
+| `eps` | float | `1e-12` |
+
+**Returns:** FixedWindowReproducibilityResult.
+
+### `paired_log_rms_sign_flip_test`
+
+```python
+paired_log_rms_sign_flip_test(log_rms_differences: 'np.ndarray', *, n_permutations: 'int' = 5000, max_exact_trials: 'int' = 16, random_state: 'int | np.random.Generator | None' = 42) -> 'tuple[float, float, bool, int]'
+```
+
+Upper-tail sign-flip test of paired log RMS differences.
+
+Null validity requires joint invariance under coordinate-wise sign
+changes, as supplied by independent centrally symmetric differences.
+It is not an unrestricted finite-sample test of every distribution with
+a nonpositive mean difference.
+
+Exact enumeration omits the observed all-positive assignment and adds it
+back through the standard plus-one formula. This is algebraically the
+exact randomization p-value while sharing the Monte Carlo implementation's
+finite-sample form.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `log_rms_differences` | np.ndarray | required |
+| `n_permutations` | int | `5000` |
+| `max_exact_trials` | int | `16` |
+| `random_state` | int \| np.random.Generator \| None | `42` |
+
+**Returns:** tuple[float, float, bool, int].
+
+### `exact_sign_flip_test`
+
+```python
+exact_sign_flip_test(values: 'Iterable[float]', *, null_value: 'float' = 0.0, alternative: 'str' = 'two-sided', statistic: 'str | Callable[[np.ndarray], float]' = 'mean', max_exact_observations: 'int' = 20, n_resamples: 'int' = 100000, random_state: 'int | np.random.Generator | None' = 0) -> 'SignFlipResult'
+```
+
+Test a paired or one-sample contrast by flipping observation signs.
+
+The test is exact when the number of finite observations does not exceed
+``max_exact_observations``. For larger samples, deterministic Monte Carlo
+resampling is used by default. Monte Carlo signs are sampled uniformly
+with replacement; the observed assignment is additionally counted with
+the plus-one correction, so a sampled p-value cannot be zero.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `values` | Iterable[float] | required |
+| `null_value` | float | `0.0` |
+| `alternative` | str | `'two-sided'` |
+| `statistic` | str \| Callable[[np.ndarray], float] | `'mean'` |
+| `max_exact_observations` | int | `20` |
+| `n_resamples` | int | `100000` |
+| `random_state` | int \| np.random.Generator \| None | `0` |
+
+**Returns:** SignFlipResult.
+
+### `fdr_bh`
+
+```python
+fdr_bh(p_values: 'Iterable[float]', *, alpha: 'float' = 0.05) -> 'tuple[np.ndarray, np.ndarray]'
+```
+
+Adjust p-values with the Benjamini-Hochberg FDR procedure.
+
+Nonfinite inputs remain nonfinite in the adjusted array and are never
+rejected. The returned arrays preserve the input order.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `p_values` | Iterable[float] | required |
+| `alpha` | float | `0.05` |
+
+**Returns:** tuple[np.ndarray, np.ndarray].
+
+### `hierarchical_bootstrap_interval`
+
+```python
+hierarchical_bootstrap_interval(data: 'pd.DataFrame', *, value_col: 'str', levels: 'Sequence[str]', statistic: 'str | Callable[[np.ndarray], float]' = 'median', confidence: 'float' = 0.95, n_resamples: 'int' = 5000, random_state: 'int | np.random.Generator | None' = 0) -> 'BootstrapInterval'
+```
+
+Estimate an equal-top-cluster interval for nested observations.
+
+The first level is treated as the biological replicate. Each bootstrap
+draw resamples those clusters, then recursively resamples lower-level
+clusters and observations. A statistic is computed within every selected
+top-level cluster and then across those cluster statistics, preventing
+patients with more acquisitions or contacts from dominating the estimate.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `data` | pd.DataFrame | required |
+| `value_col` | str | required |
+| `levels` | Sequence[str] | required |
+| `statistic` | str \| Callable[[np.ndarray], float] | `'median'` |
+| `confidence` | float | `0.95` |
+| `n_resamples` | int | `5000` |
+| `random_state` | int \| np.random.Generator \| None | `0` |
+
+**Returns:** BootstrapInterval.
+
+### `zscore_metric_within_stim`
+
+```python
+zscore_metric_within_stim(data: 'pd.DataFrame', metric: 'str', *, stim_col: 'str' = 'stim_pair', channel_col: 'str | None' = None, absolute: 'bool' = False, output_col: 'str | None' = None) -> 'pd.DataFrame'
+```
+
+Z-score a response metric across recording contacts within each stim site.
+
+This is an exploratory ranking transform: for each stimulation site, ERPy
+normalizes the selected response metric across recording electrodes so that
+unusually high contacts for that stimulation site are easy to inspect.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `data` | pd.DataFrame | required |
+| `metric` | str | required |
+| `stim_col` | str | `'stim_pair'` |
+| `channel_col` | str \| None | `None` |
+| `absolute` | bool | `False` |
+| `output_col` | str \| None | `None` |
+
+**Returns:** pd.DataFrame.
+
+### `compute_psd`
+
+```python
+compute_psd(epochs, channels: 'Iterable[str] | str | None' = None, *, fmin: 'float' = 1.0, fmax: 'float | None' = None, on: 'str' = 'trials', nperseg: 'int | None' = None, detrend: 'str' = 'constant', relative: 'bool' = False) -> 'pd.DataFrame'
+```
+
+Welch power spectral density per channel.
+
+``on="trials"`` computes the PSD per trial and averages across trials (the
+standard estimate for evoked data); ``on="mean"`` computes the PSD of the
+trial-mean response waveform. Returns a DataFrame indexed by frequency with
+one column per channel.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `channels` | Iterable[str] \| str \| None | `None` |
+| `fmin` | float | `1.0` |
+| `fmax` | float \| None | `None` |
+| `on` | str | `'trials'` |
+| `nperseg` | int \| None | `None` |
+| `detrend` | str | `'constant'` |
+| `relative` | bool | `False` |
+
+**Returns:** pd.DataFrame.
 
 ### `band_power`
 
@@ -4611,31 +6078,286 @@ Average PSD power within named frequency bands -> channels x bands DataFrame.
 
 **Returns:** pd.DataFrame.
 
-### `bidirectional_edge_summary`
+### `compute_tfr`
 
 ```python
-bidirectional_edge_summary(edges: 'pd.DataFrame', *, source_col: 'str' = 'source', target_col: 'str' = 'target', weight_col: 'str' = 'weight', group_cols: 'Iterable[str] | None' = None, min_weight: 'float' = 0.0, agg: 'str' = 'mean', eps: 'float' = 1e-12) -> 'pd.DataFrame'
+compute_tfr(epochs, channel: 'str', config: 'SpectralConfig | None' = None, *, return_per_trial: 'bool' = False) -> 'TFRResult'
 ```
 
-Summarize reciprocal directed edges and directional asymmetry.
+Morlet time-frequency power and inter-trial phase coherence for one channel.
 
-Rows are unordered node pairs within optional grouping columns. ``a_to_b``
-and ``b_to_a`` are aggregated directed weights; ``asymmetry_log2`` is
-positive when the first listed direction is stronger and negative when the
-reverse direction is stronger.
+When ``config.baseline`` is set, ``power`` is the baseline-normalized
+event-related spectral perturbation (ERSP). ``itc`` is the inter-trial phase
+coherence (a.k.a. inter-trial phase clustering / phase locking to stimulus).
 
 **Parameters**
 
 | Name | Type | Default |
 | --- | --- | --- |
-| `edges` | pd.DataFrame | required |
-| `source_col` | str | `'source'` |
-| `target_col` | str | `'target'` |
-| `weight_col` | str | `'weight'` |
-| `group_cols` | Iterable[str] \| None | `None` |
-| `min_weight` | float | `0.0` |
-| `agg` | str | `'mean'` |
-| `eps` | float | `1e-12` |
+| `epochs` | not specified | required |
+| `channel` | str | required |
+| `config` | SpectralConfig \| None | `None` |
+| `return_per_trial` | bool | `False` |
+
+**Returns:** TFRResult.
+
+### `compute_ersp`
+
+```python
+compute_ersp(epochs, channel: 'str', config: 'SpectralConfig | None' = None) -> 'TFRResult'
+```
+
+Event-related spectral perturbation (baseline-normalized TFR power).
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `channel` | str | required |
+| `config` | SpectralConfig \| None | `None` |
+
+**Returns:** TFRResult.
+
+### `inter_trial_phase_coherence`
+
+```python
+inter_trial_phase_coherence(epochs, channel: 'str', config: 'SpectralConfig | None' = None) -> 'TFRResult'
+```
+
+Inter-trial phase coherence / clustering (ITPC) time-frequency map.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `channel` | str | required |
+| `config` | SpectralConfig \| None | `None` |
+
+**Returns:** TFRResult.
+
+### `phase_locking_value`
+
+```python
+phase_locking_value(epochs, ch_x: 'str', ch_y: 'str', config: 'SpectralConfig | None' = None) -> 'PLVResult'
+```
+
+Time-frequency phase-locking value between two contacts across trials.
+
+PLV(f, t) = |mean over trials exp(i (phi_x - phi_y))|, a measure of how
+consistently the two contacts hold a fixed phase relationship at each
+time-frequency point.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `ch_x` | str | required |
+| `ch_y` | str | required |
+| `config` | SpectralConfig \| None | `None` |
+
+**Returns:** PLVResult.
+
+### `plv_matrix`
+
+```python
+plv_matrix(epochs, band: 'tuple[float, float]' = (8.0, 13.0), channels: 'Iterable[str] | None' = None, *, time_window: 'tuple[float, float] | None' = None, order: 'int' = 4) -> 'pd.DataFrame'
+```
+
+Band-limited inter-trial PLV connectivity matrix.
+
+For each channel the band-limited analytic phase is computed per trial; the
+PLV between every channel pair is taken across trials at each time point and
+averaged over ``time_window`` (defaults to the full post-stimulus epoch).
+Returns a symmetric channels x channels DataFrame.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `band` | tuple[float, float] | `(8.0, 13.0)` |
+| `channels` | Iterable[str] \| None | `None` |
+| `time_window` | tuple[float, float] \| None | `None` |
+| `order` | int | `4` |
+
+**Returns:** pd.DataFrame.
+
+### `coherence_matrix`
+
+```python
+coherence_matrix(epochs, band: 'tuple[float, float]' = (8.0, 13.0), channels: 'Iterable[str] | None' = None, *, mode: 'str' = 'coherence', time_window: 'tuple[float, float] | None' = None) -> 'pd.DataFrame'
+```
+
+Band-averaged spectral coherence connectivity matrix across trials.
+
+``mode="coherence"`` returns magnitude-squared coherence; ``mode="imaginary"``
+returns the imaginary part of coherency (insensitive to zero-lag/volume-
+conduction effects). Cross-spectra are estimated over trials, which act as
+the averaging ensemble for evoked data.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `band` | tuple[float, float] | `(8.0, 13.0)` |
+| `channels` | Iterable[str] \| None | `None` |
+| `mode` | str | `'coherence'` |
+| `time_window` | tuple[float, float] \| None | `None` |
+
+**Returns:** pd.DataFrame.
+
+### `granger_causality_matrix`
+
+```python
+granger_causality_matrix(epochs, channels: 'Iterable[str] | None' = None, *, time_window: 'tuple[float, float] | None' = None, maxlag: 'int' = 5, return_pvalues: 'bool' = False) -> 'pd.DataFrame | tuple[pd.DataFrame, pd.DataFrame]'
+```
+
+Pairwise linear Granger causality matrix across trials.
+
+Rows are source channels and columns are target channels. Trial boundaries
+are preserved when constructing lagged regressions.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `channels` | Iterable[str] \| None | `None` |
+| `time_window` | tuple[float, float] \| None | `None` |
+| `maxlag` | int | `5` |
+| `return_pvalues` | bool | `False` |
+
+**Returns:** pd.DataFrame \| tuple[pd.DataFrame, pd.DataFrame].
+
+### `mutual_information_matrix`
+
+```python
+mutual_information_matrix(epochs, channels: 'Iterable[str] | None' = None, *, time_window: 'tuple[float, float] | None' = None, n_bins: 'int' = 16, normalized: 'bool' = True) -> 'pd.DataFrame'
+```
+
+Histogram mutual-information matrix across trial/time samples.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `channels` | Iterable[str] \| None | `None` |
+| `time_window` | tuple[float, float] \| None | `None` |
+| `n_bins` | int | `16` |
+| `normalized` | bool | `True` |
+
+**Returns:** pd.DataFrame.
+
+### `phase_amplitude_coupling`
+
+```python
+phase_amplitude_coupling(epochs, phase_channel: 'str', amp_channel: 'str | None' = None, *, phase_band: 'tuple[float, float]' = (4.0, 8.0), amp_band: 'tuple[float, float]' = (80.0, 150.0), method: 'str' = 'tort', n_bins: 'int' = 18, time_window: 'tuple[float, float] | None' = None, order: 'int' = 4) -> 'PACResult'
+```
+
+Phase-amplitude coupling within or between contacts.
+
+The low-frequency phase of ``phase_channel`` modulates the high-frequency
+amplitude of ``amp_channel`` (defaults to the same contact). ``method="tort"``
+returns the normalized Kullback-Leibler modulation index; ``method="mvl"``
+returns the Canolty mean-vector-length. Trials are concatenated over the
+selected ``time_window`` to estimate the coupling.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `phase_channel` | str | required |
+| `amp_channel` | str \| None | `None` |
+| `phase_band` | tuple[float, float] | `(4.0, 8.0)` |
+| `amp_band` | tuple[float, float] | `(80.0, 150.0)` |
+| `method` | str | `'tort'` |
+| `n_bins` | int | `18` |
+| `time_window` | tuple[float, float] \| None | `None` |
+| `order` | int | `4` |
+
+**Returns:** PACResult.
+
+### `phase_amplitude_comodulogram`
+
+```python
+phase_amplitude_comodulogram(epochs, phase_channel: 'str', amp_channel: 'str | None' = None, *, phase_freqs: 'Iterable[float] | None' = None, amp_freqs: 'Iterable[float] | None' = None, bandwidth_phase: 'float' = 2.0, bandwidth_amp: 'float' = 20.0, method: 'str' = 'tort', n_bins: 'int' = 18, time_window: 'tuple[float, float] | None' = None) -> 'ComodulogramResult'
+```
+
+PAC comodulogram: modulation index over a grid of phase and amplitude bands.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `phase_channel` | str | required |
+| `amp_channel` | str \| None | `None` |
+| `phase_freqs` | Iterable[float] \| None | `None` |
+| `amp_freqs` | Iterable[float] \| None | `None` |
+| `bandwidth_phase` | float | `2.0` |
+| `bandwidth_amp` | float | `20.0` |
+| `method` | str | `'tort'` |
+| `n_bins` | int | `18` |
+| `time_window` | tuple[float, float] \| None | `None` |
+
+**Returns:** ComodulogramResult.
+
+### `phase_phase_coupling`
+
+```python
+phase_phase_coupling(epochs, ch_x: 'str', ch_y: 'str', *, freq_x: 'float', freq_y: 'float', n: 'int' = 1, m: 'int' = 1, n_cycles: 'float' = 7.0, time_window: 'tuple[float, float] | None' = None) -> 'float'
+```
+
+n:m phase-phase coupling between two contacts (or one contact, two bands).
+
+Returns the n:m phase-locking value
+``|mean exp(i (n*phi_x - m*phi_y))|`` over trials and the selected time
+window, where ``phi_x`` is the phase at ``freq_x`` and ``phi_y`` at
+``freq_y``. ``ch_x == ch_y`` gives within-contact harmonic coupling.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `ch_x` | str | required |
+| `ch_y` | str | required |
+| `freq_x` | float | required |
+| `freq_y` | float | required |
+| `n` | int | `1` |
+| `m` | int | `1` |
+| `n_cycles` | float | `7.0` |
+| `time_window` | tuple[float, float] \| None | `None` |
+
+**Returns:** float.
+
+### `phase_phase_matrix`
+
+```python
+phase_phase_matrix(epochs, ch_x: 'str', ch_y: 'str | None' = None, *, freqs_x: 'Iterable[float] | None' = None, freqs_y: 'Iterable[float] | None' = None, n: 'int' = 1, m: 'int' = 1, n_cycles: 'float' = 7.0, time_window: 'tuple[float, float] | None' = None) -> 'pd.DataFrame'
+```
+
+n:m phase-locking over a grid of frequencies -> DataFrame [freq_y x freq_x].
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `epochs` | not specified | required |
+| `ch_x` | str | required |
+| `ch_y` | str \| None | `None` |
+| `freqs_x` | Iterable[float] \| None | `None` |
+| `freqs_y` | Iterable[float] \| None | `None` |
+| `n` | int | `1` |
+| `m` | int | `1` |
+| `n_cycles` | float | `7.0` |
+| `time_window` | tuple[float, float] \| None | `None` |
 
 **Returns:** pd.DataFrame.
 
@@ -4664,30 +6386,27 @@ corresponding endpoint labels.
 
 **Returns:** pd.DataFrame.
 
-### `coherence_matrix`
+### `connectivity_matrix_from_dataframe`
 
 ```python
-coherence_matrix(epochs, band: 'tuple[float, float]' = (8.0, 13.0), channels: 'Iterable[str] | None' = None, *, mode: 'str' = 'coherence', time_window: 'tuple[float, float] | None' = None) -> 'pd.DataFrame'
+connectivity_matrix_from_dataframe(df: 'pd.DataFrame', sfreq: 'float', *, method: 'str', channels: 'Iterable[str] | None' = None, band: 'tuple[float, float]' = (8.0, 13.0), time_window: 'tuple[object, object] | None' = None, **kwargs) -> 'pd.DataFrame | tuple[pd.DataFrame, pd.DataFrame]'
 ```
 
-Band-averaged spectral coherence connectivity matrix across trials.
-
-``mode="coherence"`` returns magnitude-squared coherence; ``mode="imaginary"``
-returns the imaginary part of coherency (insensitive to zero-lag/volume-
-conduction effects). Cross-spectra are estimated over trials, which act as
-the averaging ensemble for evoked data.
+Dispatch common continuous-window connectivity metrics.
 
 **Parameters**
 
 | Name | Type | Default |
 | --- | --- | --- |
-| `epochs` | not specified | required |
-| `band` | tuple[float, float] | `(8.0, 13.0)` |
+| `df` | pd.DataFrame | required |
+| `sfreq` | float | required |
+| `method` | str | required |
 | `channels` | Iterable[str] \| None | `None` |
-| `mode` | str | `'coherence'` |
-| `time_window` | tuple[float, float] \| None | `None` |
+| `band` | tuple[float, float] | `(8.0, 13.0)` |
+| `time_window` | tuple[object, object] \| None | `None` |
+| `kwargs` | not specified | required |
 
-**Returns:** pd.DataFrame.
+**Returns:** pd.DataFrame \| tuple[pd.DataFrame, pd.DataFrame].
 
 ### `coherence_matrix_from_dataframe`
 
@@ -4750,13 +6469,18 @@ pd.DataFrame
 
 **Returns:** pd.DataFrame.
 
-### `connectivity_matrix_from_dataframe`
+### `multitaper_coherence_matrices_from_dataframe`
 
 ```python
-connectivity_matrix_from_dataframe(df: 'pd.DataFrame', sfreq: 'float', *, method: 'str', channels: 'Iterable[str] | None' = None, band: 'tuple[float, float]' = (8.0, 13.0), time_window: 'tuple[object, object] | None' = None, **kwargs) -> 'pd.DataFrame | tuple[pd.DataFrame, pd.DataFrame]'
+multitaper_coherence_matrices_from_dataframe(df: 'pd.DataFrame', sfreq: 'float', *, band: 'tuple[float, float]' = (8.0, 13.0), channels: 'Iterable[str] | None' = None, time_window: 'tuple[object, object] | None' = None, time_bandwidth: 'float' = 3.0, n_tapers: 'int' = 5) -> 'tuple[pd.DataFrame, pd.DataFrame]'
 ```
 
-Dispatch common continuous-window connectivity metrics.
+Multitaper coherence and absolute imaginary-coherency matrices.
+
+Both matrices use one shared DPSS decomposition. This is especially useful
+for short matched windows where Welch segmentation would leave few stable
+alpha-band estimates. Imaginary coherency is returned as a prespecified
+sensitivity measure for zero-lag coupling.
 
 **Parameters**
 
@@ -4764,223 +6488,180 @@ Dispatch common continuous-window connectivity metrics.
 | --- | --- | --- |
 | `df` | pd.DataFrame | required |
 | `sfreq` | float | required |
-| `method` | str | required |
-| `channels` | Iterable[str] \| None | `None` |
 | `band` | tuple[float, float] | `(8.0, 13.0)` |
+| `channels` | Iterable[str] \| None | `None` |
 | `time_window` | tuple[object, object] \| None | `None` |
-| `kwargs` | not specified | required |
-
-**Returns:** pd.DataFrame \| tuple[pd.DataFrame, pd.DataFrame].
-
-### `complete_contact_coordinates`
-
-```python
-complete_contact_coordinates(contacts: 'pd.DataFrame', *, maximum_fit_rmse_mm: 'float' = 2.5, maximum_contact_step_mm: 'float' = 15.0) -> 'pd.DataFrame'
-```
-
-Fill an isolated missing contact from a well-fit linear lead trajectory.
-
-Contacts are grouped by patient, session, and the nonnumeric prefix of
-``elec_label``. A three-dimensional linear fit is accepted only when at
-least four localized contacts are available, the fit error is within
-``maximum_fit_rmse_mm``, and the estimated contact spacing is plausible.
-Interpolation or one-contact extrapolation is allowed; an entirely
-unlocalized lead is left unchanged.
-
-The returned table records ``mni_coordinate_source``, fit RMSE, and the
-number of localized contacts used. These provenance columns distinguish
-inferred positions from measured or imported coordinates.
-
-Parameters
-----------
-contacts:
-    Electrode metadata containing ``elec_label`` and, when available,
-    ``mni_x``, ``mni_y``, and ``mni_z``. ``patient_id`` and ``session_id``
-    are used to prevent fits from crossing acquisitions.
-maximum_fit_rmse_mm:
-    Largest accepted three-dimensional root-mean-square fit residual.
-maximum_contact_step_mm:
-    Largest accepted distance between adjacent fitted contacts. The lower
-    bound is fixed at 0.5 mm.
-
-Returns
--------
-pandas.DataFrame
-    A copy of the input table with conservatively completed coordinates
-    and explicit coordinate-provenance columns.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `contacts` | pd.DataFrame | required |
-| `maximum_fit_rmse_mm` | float | `2.5` |
-| `maximum_contact_step_mm` | float | `15.0` |
-
-**Returns:** pd.DataFrame.
-
-### `compute_ersp`
-
-```python
-compute_ersp(epochs, channel: 'str', config: 'SpectralConfig | None' = None) -> 'TFRResult'
-```
-
-Event-related spectral perturbation (baseline-normalized TFR power).
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `channel` | str | required |
-| `config` | SpectralConfig \| None | `None` |
-
-**Returns:** TFRResult.
-
-### `compute_psd`
-
-```python
-compute_psd(epochs, channels: 'Iterable[str] | str | None' = None, *, fmin: 'float' = 1.0, fmax: 'float | None' = None, on: 'str' = 'trials', nperseg: 'int | None' = None, detrend: 'str' = 'constant', relative: 'bool' = False) -> 'pd.DataFrame'
-```
-
-Welch power spectral density per channel.
-
-``on="trials"`` computes the PSD per trial and averages across trials (the
-standard estimate for evoked data); ``on="mean"`` computes the PSD of the
-trial-mean response waveform. Returns a DataFrame indexed by frequency with
-one column per channel.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `channels` | Iterable[str] \| str \| None | `None` |
-| `fmin` | float | `1.0` |
-| `fmax` | float \| None | `None` |
-| `on` | str | `'trials'` |
-| `nperseg` | int \| None | `None` |
-| `detrend` | str | `'constant'` |
-| `relative` | bool | `False` |
-
-**Returns:** pd.DataFrame.
-
-### `compute_tfr`
-
-```python
-compute_tfr(epochs, channel: 'str', config: 'SpectralConfig | None' = None, *, return_per_trial: 'bool' = False) -> 'TFRResult'
-```
-
-Morlet time-frequency power and inter-trial phase coherence for one channel.
-
-When ``config.baseline`` is set, ``power`` is the baseline-normalized
-event-related spectral perturbation (ERSP). ``itc`` is the inter-trial phase
-coherence (a.k.a. inter-trial phase clustering / phase locking to stimulus).
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `channel` | str | required |
-| `config` | SpectralConfig \| None | `None` |
-| `return_per_trial` | bool | `False` |
-
-**Returns:** TFRResult.
-
-### `common_mode_recovery_diagnostic`
-
-```python
-common_mode_recovery_diagnostic(frame: 'pd.DataFrame', *, response_window: 'tuple[float, float]' = (0.01, 0.35), thresholds: 'Mapping[str, Any] | None' = None, consensus_column: 'str | None' = None) -> 'dict[str, Any]'
-```
-
-Detect an acquisition-wide early step followed by shared recovery.
-
-A physiological early response may occur on one or several connected
-contacts. Amplifier recovery is different: many anatomically distributed
-detector-positive channels begin with a large offset, peak at nearly the
-same first post-blanking sample, and drift together toward baseline. The
-returned diagnostics make the acquisition-level quarantine auditable.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `frame` | pd.DataFrame | required |
-| `response_window` | tuple[float, float] | `(0.01, 0.35)` |
-| `thresholds` | Mapping[str, Any] \| None | `None` |
-| `consensus_column` | str \| None | `None` |
-
-**Returns:** dict[str, Any].
-
-### `compare_crp_across_stim_sites`
-
-```python
-compare_crp_across_stim_sites(crp_tables: 'dict[str, pd.DataFrame] | pd.DataFrame', *, stim_col: 'str' = 'stim_pair', channel_col: 'str' = 'channel', weight_col: 'str' = 'mean_projection', baseline_col: 'str' = 'max_canonical_weight_z', reconstruction_col: 'str' = 'reconstruction_rms_uv', permutation_col: 'str' = 'permutation_p_value', alpha: 'float' = 0.05) -> 'pd.DataFrame'
-```
-
-Compare CRP response expression across stimulation sites.
-
-Accept either one table containing ``stim_col`` or a mapping from
-stimulation-pair labels to tables returned by ``run_crp_all``. The
-returned long-form table preserves the source columns and adds within-site
-z-scores, baseline-normalized expression, reconstruction ranks, and the
-supplied permutation-test summaries. ``permutation_significant`` applies
-the unadjusted ``alpha`` threshold; this helper does not perform
-multiplicity correction.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `crp_tables` | dict[str, pd.DataFrame] \| pd.DataFrame | required |
-| `stim_col` | str | `'stim_pair'` |
-| `channel_col` | str | `'channel'` |
-| `weight_col` | str | `'mean_projection'` |
-| `baseline_col` | str | `'max_canonical_weight_z'` |
-| `reconstruction_col` | str | `'reconstruction_rms_uv'` |
-| `permutation_col` | str | `'permutation_p_value'` |
-| `alpha` | float | `0.05` |
-
-**Returns:** pd.DataFrame.
-
-### `create_events_from_binary_series`
-
-```python
-create_events_from_binary_series(series: 'Iterable[Any] | pd.Series | pd.DataFrame', start_datetime: 'Any | None' = None, end_datetime: 'Any | None' = None, sfreq: 'float | None' = None, event_value: 'int | float | str' = 1, event_column: 'int | str' = 0, edge: 'str' = 'rising') -> 'tuple[pd.DataFrame, pd.DataFrame]'
-```
-
-Convert a binary marker vector into a datetime-indexed table and events.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `series` | Iterable[Any] \| pd.Series \| pd.DataFrame | required |
-| `start_datetime` | Any \| None | `None` |
-| `end_datetime` | Any \| None | `None` |
-| `sfreq` | float \| None | `None` |
-| `event_value` | int \| float \| str | `1` |
-| `event_column` | int \| str | `0` |
-| `edge` | str | `'rising'` |
+| `time_bandwidth` | float | `3.0` |
+| `n_tapers` | int | `5` |
 
 **Returns:** tuple[pd.DataFrame, pd.DataFrame].
 
-### `create_events_from_timestamps`
+### `plv_matrix_from_dataframe`
 
 ```python
-create_events_from_timestamps(timestamps: 'Iterable[Any] | pd.Series | pd.DataFrame', label: 'str | None' = None, time_column: 'str' = 'times') -> 'pd.DataFrame'
+plv_matrix_from_dataframe(df: 'pd.DataFrame', sfreq: 'float', *, band: 'tuple[float, float]' = (8.0, 13.0), channels: 'Iterable[str] | None' = None, time_window: 'tuple[object, object] | None' = None, order: 'int' = 4) -> 'pd.DataFrame'
 ```
 
-Create canonical ERPy event annotations from timestamp rows.
+Estimate band-limited phase-locking value in a continuous window.
+
+ERPy band-pass filters each selected numeric channel, obtains its analytic
+phase with a Hilbert transform, and computes the pairwise phase-locking
+value (PLV)
+
+``PLV_ij = abs(mean(exp(1j * (phase_i - phase_j))))``
+
+across samples in the requested interval. Unlike ``plv_matrix``, this
+function treats continuous time samples, rather than trials, as the
+averaging observations.
+
+Parameters
+----------
+df:
+    Samples-by-channels table. The index may contain numeric time values or
+    datetimes; nonnumeric columns are ignored.
+sfreq:
+    Sampling frequency in hertz.
+band:
+    Inclusive lower and upper passband frequencies in hertz.
+channels:
+    Channel columns to include, in output order. By default, all numeric
+    columns are used.
+time_window:
+    Inclusive start and stop boundaries in the same coordinate system as
+    ``df.index``. The complete table is used when omitted.
+order:
+    Order of the Butterworth band-pass filter applied before phase
+    extraction.
+
+Returns
+-------
+pd.DataFrame
+    Symmetric channel-by-channel PLV matrix with values from zero to one
+    and a unit diagonal. A pair is ``NaN`` when no finite phase samples are
+    available for that comparison.
 
 **Parameters**
 
 | Name | Type | Default |
 | --- | --- | --- |
-| `timestamps` | Iterable[Any] \| pd.Series \| pd.DataFrame | required |
-| `label` | str \| None | `None` |
-| `time_column` | str | `'times'` |
+| `df` | pd.DataFrame | required |
+| `sfreq` | float | required |
+| `band` | tuple[float, float] | `(8.0, 13.0)` |
+| `channels` | Iterable[str] \| None | `None` |
+| `time_window` | tuple[object, object] \| None | `None` |
+| `order` | int | `4` |
+
+**Returns:** pd.DataFrame.
+
+### `granger_causality_matrix_from_dataframe`
+
+```python
+granger_causality_matrix_from_dataframe(df: 'pd.DataFrame', *, channels: 'Iterable[str] | None' = None, time_window: 'tuple[object, object] | None' = None, maxlag: 'int' = 5, return_pvalues: 'bool' = False) -> 'pd.DataFrame | tuple[pd.DataFrame, pd.DataFrame]'
+```
+
+Estimate directed pairwise Granger causality in a data window.
+
+Matrix rows are putative source channels and columns are targets. When
+``return_pvalues`` is true, the F-statistic and p-value matrices are
+returned as a pair.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `df` | pd.DataFrame | required |
+| `channels` | Iterable[str] \| None | `None` |
+| `time_window` | tuple[object, object] \| None | `None` |
+| `maxlag` | int | `5` |
+| `return_pvalues` | bool | `False` |
+
+**Returns:** pd.DataFrame \| tuple[pd.DataFrame, pd.DataFrame].
+
+### `mutual_information_matrix_from_dataframe`
+
+```python
+mutual_information_matrix_from_dataframe(df: 'pd.DataFrame', *, channels: 'Iterable[str] | None' = None, time_window: 'tuple[object, object] | None' = None, n_bins: 'int' = 16, normalized: 'bool' = True) -> 'pd.DataFrame'
+```
+
+Estimate pairwise mutual information in a continuous data window.
+
+Numeric columns are discretized into ``n_bins`` before estimating the
+symmetric channel matrix. Normalized values range from zero to one.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `df` | pd.DataFrame | required |
+| `channels` | Iterable[str] \| None | `None` |
+| `time_window` | tuple[object, object] \| None | `None` |
+| `n_bins` | int | `16` |
+| `normalized` | bool | `True` |
+
+**Returns:** pd.DataFrame.
+
+### `dataframe_time_window`
+
+```python
+dataframe_time_window(df: 'pd.DataFrame', start: 'object', stop: 'object') -> 'pd.DataFrame'
+```
+
+Return rows between two numeric or datetime boundaries.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `df` | pd.DataFrame | required |
+| `start` | object | required |
+| `stop` | object | required |
+
+**Returns:** pd.DataFrame.
+
+### `post_stim_rest_window`
+
+```python
+post_stim_rest_window(df: 'pd.DataFrame', stim_stop: 'object', *, start_offset_s: 'float' = 0.0, duration_s: 'float' = 60.0) -> 'pd.DataFrame'
+```
+
+Extract a continuous rest window after a stimulation train stops.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `df` | pd.DataFrame | required |
+| `stim_stop` | object | required |
+| `start_offset_s` | float | `0.0` |
+| `duration_s` | float | `60.0` |
+
+**Returns:** pd.DataFrame.
+
+### `bidirectional_edge_summary`
+
+```python
+bidirectional_edge_summary(edges: 'pd.DataFrame', *, source_col: 'str' = 'source', target_col: 'str' = 'target', weight_col: 'str' = 'weight', group_cols: 'Iterable[str] | None' = None, min_weight: 'float' = 0.0, agg: 'str' = 'mean', eps: 'float' = 1e-12) -> 'pd.DataFrame'
+```
+
+Summarize reciprocal directed edges and directional asymmetry.
+
+Rows are unordered node pairs within optional grouping columns. ``a_to_b``
+and ``b_to_a`` are aggregated directed weights; ``asymmetry_log2`` is
+positive when the first listed direction is stronger and negative when the
+reverse direction is stronger.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `edges` | pd.DataFrame | required |
+| `source_col` | str | `'source'` |
+| `target_col` | str | `'target'` |
+| `weight_col` | str | `'weight'` |
+| `group_cols` | Iterable[str] \| None | `None` |
+| `min_weight` | float | `0.0` |
+| `agg` | str | `'mean'` |
+| `eps` | float | `1e-12` |
 
 **Returns:** pd.DataFrame.
 
@@ -5033,21 +6714,108 @@ Consecutive Jensen-Shannon distance measures target-profile reconfiguration.
 
 **Returns:** tuple[pd.DataFrame, pd.DataFrame].
 
-### `dataframe_time_window`
+### `evoked_graph_metric_timecourse`
 
 ```python
-dataframe_time_window(df: 'pd.DataFrame', start: 'object', stop: 'object') -> 'pd.DataFrame'
+evoked_graph_metric_timecourse(runs: 'list[dict]', elec_meta: 'pd.DataFrame | None' = None, *, metrics: 'Iterable[str]' = ('in_strength', 'out_strength', 'total_strength', 'hub', 'authority'), **kwargs) -> 'pd.DataFrame'
 ```
 
-Return rows between two numeric or datetime boundaries.
+Build dynamic evoked-response edges and return node graph metrics.
 
 **Parameters**
 
 | Name | Type | Default |
 | --- | --- | --- |
-| `df` | pd.DataFrame | required |
-| `start` | object | required |
-| `stop` | object | required |
+| `runs` | list[dict] | required |
+| `elec_meta` | pd.DataFrame \| None | `None` |
+| `metrics` | Iterable[str] | `('in_strength', 'out_strength', 'total_strength', 'hub', 'authority')` |
+| `kwargs` | not specified | required |
+
+**Returns:** pd.DataFrame.
+
+### `evoked_response_edges_over_time`
+
+```python
+evoked_response_edges_over_time(runs: 'list[dict]', elec_meta: 'pd.DataFrame | None' = None, *, response_window: 'tuple[float, float]' = (0.0, 0.35), frame_step_ms: 'float' = 12.0, top_n_per_stim: 'int' = 18, top_n_total: 'int | None' = 90, detection_metric: 'str' = 'peak_amplitude_uv', consensus_only: 'bool' = True, significance_column: 'str | None' = None, response_metric_frame_key: 'str' = 'response_metric_frame', metric_label: 'str' = 'Mean evoked voltage (uV)', elec_col: 'str' = 'elec_label', baseline_window: 'tuple[float, float] | None' = None, exclude_stimulation_contacts: 'bool' = True) -> 'pd.DataFrame'
+```
+
+Create a dynamic edge table from evoked-response epochs.
+
+Rows are directed stimulation-source -> recording-contact edges at sampled
+post-stimulus times. ``weight`` is the nonnegative response magnitude used
+for graph metrics; ``signed_value`` preserves the original metric polarity.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `runs` | list[dict] | required |
+| `elec_meta` | pd.DataFrame \| None | `None` |
+| `response_window` | tuple[float, float] | `(0.0, 0.35)` |
+| `frame_step_ms` | float | `12.0` |
+| `top_n_per_stim` | int | `18` |
+| `top_n_total` | int \| None | `90` |
+| `detection_metric` | str | `'peak_amplitude_uv'` |
+| `consensus_only` | bool | `True` |
+| `significance_column` | str \| None | `None` |
+| `response_metric_frame_key` | str | `'response_metric_frame'` |
+| `metric_label` | str | `'Mean evoked voltage (uV)'` |
+| `elec_col` | str | `'elec_label'` |
+| `baseline_window` | tuple[float, float] \| None | `None` |
+| `exclude_stimulation_contacts` | bool | `True` |
+
+**Returns:** pd.DataFrame.
+
+### `opportunity_conditioned_reciprocity`
+
+```python
+opportunity_conditioned_reciprocity(edges: 'pd.DataFrame', *, source_col: 'str' = 'source', target_col: 'str' = 'target', response_col: 'str' = 'responding', group_cols: 'Iterable[str] | None' = None) -> 'pd.DataFrame'
+```
+
+Estimate reciprocity only where both directions were sampled.
+
+The denominator is the number of bidirectionally tested unordered node
+pairs with at least one detected response. This prevents an unavailable
+reverse stimulation direction from being interpreted as a negative edge.
+Duplicate directed opportunities are collapsed with an ``any`` response
+rule before pair-level counting.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `edges` | pd.DataFrame | required |
+| `source_col` | str | `'source'` |
+| `target_col` | str | `'target'` |
+| `response_col` | str | `'responding'` |
+| `group_cols` | Iterable[str] \| None | `None` |
+
+**Returns:** pd.DataFrame.
+
+### `weighted_directed_node_metrics`
+
+```python
+weighted_directed_node_metrics(edges: 'pd.DataFrame', *, source_col: 'str' = 'source', target_col: 'str' = 'target', weight_col: 'str' = 'weight', group_cols: 'Iterable[str] | None' = None, min_weight: 'float' = 0.0, agg: 'str' = 'median') -> 'pd.DataFrame'
+```
+
+Compute interpretable weighted metrics for directed network nodes.
+
+Edge weights must be nonnegative connection strengths. Shortest-path
+measures use their reciprocal as distance, while local reaching centrality
+receives the original strength because its definition already treats larger
+weights as shorter, stronger connections.
+
+**Parameters**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `edges` | pd.DataFrame | required |
+| `source_col` | str | `'source'` |
+| `target_col` | str | `'target'` |
+| `weight_col` | str | `'weight'` |
+| `group_cols` | Iterable[str] \| None | `None` |
+| `min_weight` | float | `0.0` |
+| `agg` | str | `'median'` |
 
 **Returns:** pd.DataFrame.
 
@@ -5136,1121 +6904,6 @@ whether the observed weighted planar-model R-squared exceeds the null, and
 
 **Returns:** pd.DataFrame.
 
-### `exact_sign_flip_test`
-
-```python
-exact_sign_flip_test(values: 'Iterable[float]', *, null_value: 'float' = 0.0, alternative: 'str' = 'two-sided', statistic: 'str | Callable[[np.ndarray], float]' = 'mean', max_exact_observations: 'int' = 20, n_resamples: 'int' = 100000, random_state: 'int | np.random.Generator | None' = 0) -> 'SignFlipResult'
-```
-
-Test a paired or one-sample contrast by flipping observation signs.
-
-The test is exact when the number of finite observations does not exceed
-``max_exact_observations``. For larger samples, deterministic Monte Carlo
-resampling is used by default. Monte Carlo signs are sampled uniformly
-with replacement; the observed assignment is additionally counted with
-the plus-one correction, so a sampled p-value cannot be zero.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `values` | Iterable[float] | required |
-| `null_value` | float | `0.0` |
-| `alternative` | str | `'two-sided'` |
-| `statistic` | str \| Callable[[np.ndarray], float] | `'mean'` |
-| `max_exact_observations` | int | `20` |
-| `n_resamples` | int | `100000` |
-| `random_state` | int \| np.random.Generator \| None | `0` |
-
-**Returns:** SignFlipResult.
-
-### `fdr_bh`
-
-```python
-fdr_bh(p_values: 'Iterable[float]', *, alpha: 'float' = 0.05) -> 'tuple[np.ndarray, np.ndarray]'
-```
-
-Adjust p-values with the Benjamini-Hochberg FDR procedure.
-
-Nonfinite inputs remain nonfinite in the adjusted array and are never
-rejected. The returned arrays preserve the input order.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `p_values` | Iterable[float] | required |
-| `alpha` | float | `0.05` |
-
-**Returns:** tuple[np.ndarray, np.ndarray].
-
-### `fixed_window_reproducibility_sign_flip_test`
-
-```python
-fixed_window_reproducibility_sign_flip_test(response: 'np.ndarray', *, sfreq: 'float', n_permutations: 'int' = 5000, max_exact_trials: 'int' = 12, random_state: 'int | np.random.Generator | None' = 42, eps: 'float' = 1e-12) -> 'FixedWindowReproducibilityResult'
-```
-
-Test fixed-window trial reproducibility by whole-trial sign flips.
-
-The statistic is the mean of all ordered, semi-normalized cross-trial
-projections. Whole-trial Rademacher signs preserve every trial norm and
-account for the dependence among projections that share trials. The
-null requires joint invariance of the response vectors under independent
-whole-trial sign changes; independent centrally symmetric trials suffice.
-This condition must hold after preprocessing and trial selection. The
-response window must be fixed before this function is called; a
-data-selected CRP duration must not define this inferential array.
-
-For exact enumeration, the observed all-positive assignment is omitted
-from the matrix calculation and counted explicitly. This guarantees the
-exact randomization floor even when floating-point summation order makes
-the separately calculated observed statistic differ by roundoff.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `response` | np.ndarray | required |
-| `sfreq` | float | required |
-| `n_permutations` | int | `5000` |
-| `max_exact_trials` | int | `12` |
-| `random_state` | int \| np.random.Generator \| None | `42` |
-| `eps` | float | `1e-12` |
-
-**Returns:** FixedWindowReproducibilityResult.
-
-### `granger_causality_matrix`
-
-```python
-granger_causality_matrix(epochs, channels: 'Iterable[str] | None' = None, *, time_window: 'tuple[float, float] | None' = None, maxlag: 'int' = 5, return_pvalues: 'bool' = False) -> 'pd.DataFrame | tuple[pd.DataFrame, pd.DataFrame]'
-```
-
-Pairwise linear Granger causality matrix across trials.
-
-Rows are source channels and columns are target channels. Trial boundaries
-are preserved when constructing lagged regressions.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `channels` | Iterable[str] \| None | `None` |
-| `time_window` | tuple[float, float] \| None | `None` |
-| `maxlag` | int | `5` |
-| `return_pvalues` | bool | `False` |
-
-**Returns:** pd.DataFrame \| tuple[pd.DataFrame, pd.DataFrame].
-
-### `granger_causality_matrix_from_dataframe`
-
-```python
-granger_causality_matrix_from_dataframe(df: 'pd.DataFrame', *, channels: 'Iterable[str] | None' = None, time_window: 'tuple[object, object] | None' = None, maxlag: 'int' = 5, return_pvalues: 'bool' = False) -> 'pd.DataFrame | tuple[pd.DataFrame, pd.DataFrame]'
-```
-
-Estimate directed pairwise Granger causality in a data window.
-
-Matrix rows are putative source channels and columns are targets. When
-``return_pvalues`` is true, the F-statistic and p-value matrices are
-returned as a pair.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `df` | pd.DataFrame | required |
-| `channels` | Iterable[str] \| None | `None` |
-| `time_window` | tuple[object, object] \| None | `None` |
-| `maxlag` | int | `5` |
-| `return_pvalues` | bool | `False` |
-
-**Returns:** pd.DataFrame \| tuple[pd.DataFrame, pd.DataFrame].
-
-### `inter_trial_phase_coherence`
-
-```python
-inter_trial_phase_coherence(epochs, channel: 'str', config: 'SpectralConfig | None' = None) -> 'TFRResult'
-```
-
-Inter-trial phase coherence / clustering (ITPC) time-frequency map.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `channel` | str | required |
-| `config` | SpectralConfig \| None | `None` |
-
-**Returns:** TFRResult.
-
-### `hierarchical_bootstrap_interval`
-
-```python
-hierarchical_bootstrap_interval(data: 'pd.DataFrame', *, value_col: 'str', levels: 'Sequence[str]', statistic: 'str | Callable[[np.ndarray], float]' = 'median', confidence: 'float' = 0.95, n_resamples: 'int' = 5000, random_state: 'int | np.random.Generator | None' = 0) -> 'BootstrapInterval'
-```
-
-Estimate an equal-top-cluster interval for nested observations.
-
-The first level is treated as the biological replicate. Each bootstrap
-draw resamples those clusters, then recursively resamples lower-level
-clusters and observations. A statistic is computed within every selected
-top-level cluster and then across those cluster statistics, preventing
-patients with more acquisitions or contacts from dominating the estimate.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `data` | pd.DataFrame | required |
-| `value_col` | str | required |
-| `levels` | Sequence[str] | required |
-| `statistic` | str \| Callable[[np.ndarray], float] | `'median'` |
-| `confidence` | float | `0.95` |
-| `n_resamples` | int | `5000` |
-| `random_state` | int \| np.random.Generator \| None | `0` |
-
-**Returns:** BootstrapInterval.
-
-### `load_continuous_npz`
-
-```python
-load_continuous_npz(path: 'str | Path', *, nrows: 'int | None' = None) -> 'pd.DataFrame'
-```
-
-Load an ERPy continuous NPZ file without enabling pickle deserialization.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `path` | str \| Path | required |
-| `nrows` | int \| None | `None` |
-
-**Returns:** pd.DataFrame.
-
-### `mutual_information_matrix`
-
-```python
-mutual_information_matrix(epochs, channels: 'Iterable[str] | None' = None, *, time_window: 'tuple[float, float] | None' = None, n_bins: 'int' = 16, normalized: 'bool' = True) -> 'pd.DataFrame'
-```
-
-Histogram mutual-information matrix across trial/time samples.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `channels` | Iterable[str] \| None | `None` |
-| `time_window` | tuple[float, float] \| None | `None` |
-| `n_bins` | int | `16` |
-| `normalized` | bool | `True` |
-
-**Returns:** pd.DataFrame.
-
-### `mutual_information_matrix_from_dataframe`
-
-```python
-mutual_information_matrix_from_dataframe(df: 'pd.DataFrame', *, channels: 'Iterable[str] | None' = None, time_window: 'tuple[object, object] | None' = None, n_bins: 'int' = 16, normalized: 'bool' = True) -> 'pd.DataFrame'
-```
-
-Estimate pairwise mutual information in a continuous data window.
-
-Numeric columns are discretized into ``n_bins`` before estimating the
-symmetric channel matrix. Normalized values range from zero to one.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `df` | pd.DataFrame | required |
-| `channels` | Iterable[str] \| None | `None` |
-| `time_window` | tuple[object, object] \| None | `None` |
-| `n_bins` | int | `16` |
-| `normalized` | bool | `True` |
-
-**Returns:** pd.DataFrame.
-
-### `multitaper_coherence_matrices_from_dataframe`
-
-```python
-multitaper_coherence_matrices_from_dataframe(df: 'pd.DataFrame', sfreq: 'float', *, band: 'tuple[float, float]' = (8.0, 13.0), channels: 'Iterable[str] | None' = None, time_window: 'tuple[object, object] | None' = None, time_bandwidth: 'float' = 3.0, n_tapers: 'int' = 5) -> 'tuple[pd.DataFrame, pd.DataFrame]'
-```
-
-Multitaper coherence and absolute imaginary-coherency matrices.
-
-Both matrices use one shared DPSS decomposition. This is especially useful
-for short matched windows where Welch segmentation would leave few stable
-alpha-band estimates. Imaginary coherency is returned as a prespecified
-sensitivity measure for zero-lag coupling.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `df` | pd.DataFrame | required |
-| `sfreq` | float | required |
-| `band` | tuple[float, float] | `(8.0, 13.0)` |
-| `channels` | Iterable[str] \| None | `None` |
-| `time_window` | tuple[object, object] \| None | `None` |
-| `time_bandwidth` | float | `3.0` |
-| `n_tapers` | int | `5` |
-
-**Returns:** tuple[pd.DataFrame, pd.DataFrame].
-
-### `opportunity_conditioned_reciprocity`
-
-```python
-opportunity_conditioned_reciprocity(edges: 'pd.DataFrame', *, source_col: 'str' = 'source', target_col: 'str' = 'target', response_col: 'str' = 'responding', group_cols: 'Iterable[str] | None' = None) -> 'pd.DataFrame'
-```
-
-Estimate reciprocity only where both directions were sampled.
-
-The denominator is the number of bidirectionally tested unordered node
-pairs with at least one detected response. This prevents an unavailable
-reverse stimulation direction from being interpreted as a negative edge.
-Duplicate directed opportunities are collapsed with an ``any`` response
-rule before pair-level counting.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `edges` | pd.DataFrame | required |
-| `source_col` | str | `'source'` |
-| `target_col` | str | `'target'` |
-| `response_col` | str | `'responding'` |
-| `group_cols` | Iterable[str] \| None | `None` |
-
-**Returns:** pd.DataFrame.
-
-### `phase_amplitude_comodulogram`
-
-```python
-phase_amplitude_comodulogram(epochs, phase_channel: 'str', amp_channel: 'str | None' = None, *, phase_freqs: 'Iterable[float] | None' = None, amp_freqs: 'Iterable[float] | None' = None, bandwidth_phase: 'float' = 2.0, bandwidth_amp: 'float' = 20.0, method: 'str' = 'tort', n_bins: 'int' = 18, time_window: 'tuple[float, float] | None' = None) -> 'ComodulogramResult'
-```
-
-PAC comodulogram: modulation index over a grid of phase and amplitude bands.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `phase_channel` | str | required |
-| `amp_channel` | str \| None | `None` |
-| `phase_freqs` | Iterable[float] \| None | `None` |
-| `amp_freqs` | Iterable[float] \| None | `None` |
-| `bandwidth_phase` | float | `2.0` |
-| `bandwidth_amp` | float | `20.0` |
-| `method` | str | `'tort'` |
-| `n_bins` | int | `18` |
-| `time_window` | tuple[float, float] \| None | `None` |
-
-**Returns:** ComodulogramResult.
-
-### `phase_amplitude_coupling`
-
-```python
-phase_amplitude_coupling(epochs, phase_channel: 'str', amp_channel: 'str | None' = None, *, phase_band: 'tuple[float, float]' = (4.0, 8.0), amp_band: 'tuple[float, float]' = (80.0, 150.0), method: 'str' = 'tort', n_bins: 'int' = 18, time_window: 'tuple[float, float] | None' = None, order: 'int' = 4) -> 'PACResult'
-```
-
-Phase-amplitude coupling within or between contacts.
-
-The low-frequency phase of ``phase_channel`` modulates the high-frequency
-amplitude of ``amp_channel`` (defaults to the same contact). ``method="tort"``
-returns the normalized Kullback-Leibler modulation index; ``method="mvl"``
-returns the Canolty mean-vector-length. Trials are concatenated over the
-selected ``time_window`` to estimate the coupling.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `phase_channel` | str | required |
-| `amp_channel` | str \| None | `None` |
-| `phase_band` | tuple[float, float] | `(4.0, 8.0)` |
-| `amp_band` | tuple[float, float] | `(80.0, 150.0)` |
-| `method` | str | `'tort'` |
-| `n_bins` | int | `18` |
-| `time_window` | tuple[float, float] \| None | `None` |
-| `order` | int | `4` |
-
-**Returns:** PACResult.
-
-### `phase_locking_value`
-
-```python
-phase_locking_value(epochs, ch_x: 'str', ch_y: 'str', config: 'SpectralConfig | None' = None) -> 'PLVResult'
-```
-
-Time-frequency phase-locking value between two contacts across trials.
-
-PLV(f, t) = |mean over trials exp(i (phi_x - phi_y))|, a measure of how
-consistently the two contacts hold a fixed phase relationship at each
-time-frequency point.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `ch_x` | str | required |
-| `ch_y` | str | required |
-| `config` | SpectralConfig \| None | `None` |
-
-**Returns:** PLVResult.
-
-### `paired_log_rms_sign_flip_test`
-
-```python
-paired_log_rms_sign_flip_test(log_rms_differences: 'np.ndarray', *, n_permutations: 'int' = 5000, max_exact_trials: 'int' = 16, random_state: 'int | np.random.Generator | None' = 42) -> 'tuple[float, float, bool, int]'
-```
-
-Upper-tail sign-flip test of paired log RMS differences.
-
-Null validity requires joint invariance under coordinate-wise sign
-changes, as supplied by independent centrally symmetric differences.
-It is not an unrestricted finite-sample test of every distribution with
-a nonpositive mean difference.
-
-Exact enumeration omits the observed all-positive assignment and adds it
-back through the standard plus-one formula. This is algebraically the
-exact randomization p-value while sharing the Monte Carlo implementation's
-finite-sample form.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `log_rms_differences` | np.ndarray | required |
-| `n_permutations` | int | `5000` |
-| `max_exact_trials` | int | `16` |
-| `random_state` | int \| np.random.Generator \| None | `42` |
-
-**Returns:** tuple[float, float, bool, int].
-
-### `phase_phase_coupling`
-
-```python
-phase_phase_coupling(epochs, ch_x: 'str', ch_y: 'str', *, freq_x: 'float', freq_y: 'float', n: 'int' = 1, m: 'int' = 1, n_cycles: 'float' = 7.0, time_window: 'tuple[float, float] | None' = None) -> 'float'
-```
-
-n:m phase-phase coupling between two contacts (or one contact, two bands).
-
-Returns the n:m phase-locking value
-``|mean exp(i (n*phi_x - m*phi_y))|`` over trials and the selected time
-window, where ``phi_x`` is the phase at ``freq_x`` and ``phi_y`` at
-``freq_y``. ``ch_x == ch_y`` gives within-contact harmonic coupling.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `ch_x` | str | required |
-| `ch_y` | str | required |
-| `freq_x` | float | required |
-| `freq_y` | float | required |
-| `n` | int | `1` |
-| `m` | int | `1` |
-| `n_cycles` | float | `7.0` |
-| `time_window` | tuple[float, float] \| None | `None` |
-
-**Returns:** float.
-
-### `phase_phase_matrix`
-
-```python
-phase_phase_matrix(epochs, ch_x: 'str', ch_y: 'str | None' = None, *, freqs_x: 'Iterable[float] | None' = None, freqs_y: 'Iterable[float] | None' = None, n: 'int' = 1, m: 'int' = 1, n_cycles: 'float' = 7.0, time_window: 'tuple[float, float] | None' = None) -> 'pd.DataFrame'
-```
-
-n:m phase-locking over a grid of frequencies -> DataFrame [freq_y x freq_x].
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `ch_x` | str | required |
-| `ch_y` | str \| None | `None` |
-| `freqs_x` | Iterable[float] \| None | `None` |
-| `freqs_y` | Iterable[float] \| None | `None` |
-| `n` | int | `1` |
-| `m` | int | `1` |
-| `n_cycles` | float | `7.0` |
-| `time_window` | tuple[float, float] \| None | `None` |
-
-**Returns:** pd.DataFrame.
-
-### `plv_matrix_from_dataframe`
-
-```python
-plv_matrix_from_dataframe(df: 'pd.DataFrame', sfreq: 'float', *, band: 'tuple[float, float]' = (8.0, 13.0), channels: 'Iterable[str] | None' = None, time_window: 'tuple[object, object] | None' = None, order: 'int' = 4) -> 'pd.DataFrame'
-```
-
-Estimate band-limited phase-locking value in a continuous window.
-
-ERPy band-pass filters each selected numeric channel, obtains its analytic
-phase with a Hilbert transform, and computes the pairwise phase-locking
-value (PLV)
-
-``PLV_ij = abs(mean(exp(1j * (phase_i - phase_j))))``
-
-across samples in the requested interval. Unlike ``plv_matrix``, this
-function treats continuous time samples, rather than trials, as the
-averaging observations.
-
-Parameters
-----------
-df:
-    Samples-by-channels table. The index may contain numeric time values or
-    datetimes; nonnumeric columns are ignored.
-sfreq:
-    Sampling frequency in hertz.
-band:
-    Inclusive lower and upper passband frequencies in hertz.
-channels:
-    Channel columns to include, in output order. By default, all numeric
-    columns are used.
-time_window:
-    Inclusive start and stop boundaries in the same coordinate system as
-    ``df.index``. The complete table is used when omitted.
-order:
-    Order of the Butterworth band-pass filter applied before phase
-    extraction.
-
-Returns
--------
-pd.DataFrame
-    Symmetric channel-by-channel PLV matrix with values from zero to one
-    and a unit diagonal. A pair is ``NaN`` when no finite phase samples are
-    available for that comparison.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `df` | pd.DataFrame | required |
-| `sfreq` | float | required |
-| `band` | tuple[float, float] | `(8.0, 13.0)` |
-| `channels` | Iterable[str] \| None | `None` |
-| `time_window` | tuple[object, object] \| None | `None` |
-| `order` | int | `4` |
-
-**Returns:** pd.DataFrame.
-
-### `plv_matrix`
-
-```python
-plv_matrix(epochs, band: 'tuple[float, float]' = (8.0, 13.0), channels: 'Iterable[str] | None' = None, *, time_window: 'tuple[float, float] | None' = None, order: 'int' = 4) -> 'pd.DataFrame'
-```
-
-Band-limited inter-trial PLV connectivity matrix.
-
-For each channel the band-limited analytic phase is computed per trial; the
-PLV between every channel pair is taken across trials at each time point and
-averaged over ``time_window`` (defaults to the full post-stimulus epoch).
-Returns a symmetric channels x channels DataFrame.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `band` | tuple[float, float] | `(8.0, 13.0)` |
-| `channels` | Iterable[str] \| None | `None` |
-| `time_window` | tuple[float, float] \| None | `None` |
-| `order` | int | `4` |
-
-**Returns:** pd.DataFrame.
-
-### `post_stim_rest_window`
-
-```python
-post_stim_rest_window(df: 'pd.DataFrame', stim_stop: 'object', *, start_offset_s: 'float' = 0.0, duration_s: 'float' = 60.0) -> 'pd.DataFrame'
-```
-
-Extract a continuous rest window after a stimulation train stops.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `df` | pd.DataFrame | required |
-| `stim_stop` | object | required |
-| `start_offset_s` | float | `0.0` |
-| `duration_s` | float | `60.0` |
-
-**Returns:** pd.DataFrame.
-
-### `run_crp`
-
-```python
-run_crp(epochs, channel: 'str', config: 'CRPConfig | None' = None) -> 'CRPResult'
-```
-
-Fit canonical response parameterization to one epoch channel.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `channel` | str | required |
-| `config` | CRPConfig \| None | `None` |
-
-**Returns:** CRPResult.
-
-### `run_crp_all`
-
-```python
-run_crp_all(epochs, config: 'CRPConfig | None' = None) -> 'pd.DataFrame'
-```
-
-Fit canonical response parameterization to every epoch channel.
-
-Per-channel failures are retained as nonsignificant rows with an ``error``
-field so that one unsuitable channel does not discard the full analysis.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `config` | CRPConfig \| None | `None` |
-
-**Returns:** pd.DataFrame.
-
-### `run_crp_energy_array`
-
-```python
-run_crp_energy_array(x: 'np.ndarray', times: 'np.ndarray', *, channel: 'str' = '', config: 'CRPEnergyConfig | None' = None) -> 'CRPEnergyResult'
-```
-
-Evaluate fixed-window reproducibility and paired energy for one channel.
-
-Whole-trial sign flips supply the reproducibility component over the full
-declared response window. Matched response and baseline segments are each
-demeaned separately before paired log-RMS sign flips. A descriptive CRP
-model is fitted independently of the inferential window selection. An
-unavailable descriptive model does not discard valid component p-values.
-Epochs must cover the effective response window within half a sample;
-truncated windows return an unavailable result rather than a shorter test.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `x` | np.ndarray | required |
-| `times` | np.ndarray | required |
-| `channel` | str | `''` |
-| `config` | CRPEnergyConfig \| None | `None` |
-
-**Returns:** CRPEnergyResult.
-
-### `artifact_envelope`
-
-```python
-artifact_envelope(epoch_df: 'pd.DataFrame', stim_ch: 'str | Iterable[str] | None' = None) -> 'tuple[np.ndarray, list[str]]'
-```
-
-Return a robust stimulation-artifact envelope for one epoch.
-
-Stimulation channels are included first when present, but the envelope also
-considers the remaining numeric channels. This catches adjacent-contact or
-amplifier-wide onset spikes without requiring the user to know where the
-artifact is largest.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epoch_df` | pd.DataFrame | required |
-| `stim_ch` | str \| Iterable[str] \| None | `None` |
-
-**Returns:** tuple[np.ndarray, list[str]].
-
-### `audit_waveforms`
-
-```python
-audit_waveforms(epochs: 'Any', detections: 'pd.DataFrame', artifact_responses: 'pd.DataFrame', *, response_window: 'tuple[float, float]' = (0.01, 0.35), baseline_window: 'tuple[float, float]' = (-0.5, -0.03), min_consensus: 'int' = 2, artifact_thresholds: 'Mapping[str, float] | None' = None, max_bad_response_fraction: 'float' = 0.25, max_hard_artifact_fraction: 'float' = 0.1, min_clean_responses: 'int' = 10, fdr_alpha: 'float' = 0.05) -> 'WaveformAudit'
-```
-
-Recompute waveform metrics and classify responses needing review.
-
-Default component decisions are ``primary_reproducibility_pass`` and
-``primary_energy_pass``. ``primary_detector_pass`` is the joint BH decision
-(``primary_significant`` in the detection table); ``primary_qc_pass`` also
-requires contact-QC eligibility.
-
-Standalone CRP/Kundu calls use nullable ``comparator_crp_pass`` and
-``comparator_kundu_pass`` with explicit availability and reason fields.
-``primary_shape_pass`` and ``primary_magnitude_pass`` are deprecated aliases
-for CRP and Kundu respectively, including their missing states; they are
-not the default reproducibility/energy components. Missing comparator calls
-indicate not run or unavailable, not a negative result. Matching
-``comparator_*_available`` and ``comparator_*_availability_reason`` columns
-retain the evidence status and distinguish ``not_run``.
-``comparator_crp_kundu_disagreement`` is reported only when both comparator
-calls have applicable evidence; this diagnostic does not change eligibility.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | Any | required |
-| `detections` | pd.DataFrame | required |
-| `artifact_responses` | pd.DataFrame | required |
-| `response_window` | tuple[float, float] | `(0.01, 0.35)` |
-| `baseline_window` | tuple[float, float] | `(-0.5, -0.03)` |
-| `min_consensus` | int | `2` |
-| `artifact_thresholds` | Mapping[str, float] \| None | `None` |
-| `max_bad_response_fraction` | float | `0.25` |
-| `max_hard_artifact_fraction` | float | `0.1` |
-| `min_clean_responses` | int | `10` |
-| `fdr_alpha` | float | `0.05` |
-
-**Returns:** WaveformAudit.
-
-### `discover_bids_ieeg`
-
-```python
-discover_bids_ieeg(bids_root: 'str | Path', subject: 'str | None' = None, session: 'str | None' = None, task: 'str | None' = None, derivatives: 'bool' = True) -> 'pd.DataFrame'
-```
-
-Discover BIDS iEEG recordings and their available sidecar files.
-
-The returned table contains one row per supported ``*_ieeg`` recording,
-including parsed subject, session, task, and run entities plus paths to
-matching events, channels, electrodes, and JSON sidecars when present.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `bids_root` | str \| Path | required |
-| `subject` | str \| None | `None` |
-| `session` | str \| None | `None` |
-| `task` | str \| None | `None` |
-| `derivatives` | bool | `True` |
-
-**Returns:** pd.DataFrame.
-
-### `detect`
-
-```python
-detect(epochs, method: 'str' = 'crp_energy', **params: 'Any') -> 'pd.DataFrame'
-```
-
-Low-syntax detector entry point; defaults to the primary conjunction.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `method` | str | `'crp_energy'` |
-| `params` | Any | required |
-
-**Returns:** pd.DataFrame.
-
-### `detect_artifactual_responses`
-
-```python
-detect_artifactual_responses(epochs, response_window: 'tuple[float, float] | None' = None, baseline_window: 'tuple[float, float] | None' = None, zscore_threshold: 'float' = 6.0, max_nan_fraction: 'float' = 0.02, saturation_fraction: 'float' = 0.02, plateau_fraction: 'float' = 0.015, plateau_min_run_s: 'float' = 0.003, plateau_epsilon_uv: 'float | None' = None, rail_fraction: 'float' = 0.02, rail_epsilon_fraction: 'float' = 0.002, rail_epsilon_uv: 'float | None' = None, rail_limits_uv: 'tuple[float, float] | Mapping[str, tuple[float, float]] | None' = None, absolute_peak_uv: 'float | None' = None, absolute_ptp_uv: 'float | None' = None, extreme_zscore_threshold: 'float | None' = 12.0, ringing_zscore_threshold: 'float' = 6.0, late_high_frequency_zscore_threshold: 'float | None' = None) -> 'ArtifactResponseReport'
-```
-
-Flag aberrant trial-by-channel responses after epoching.
-
-This catches problems that are not persistent bad channels: amplifier
-saturations on one trial, plateau or known-rail clipping, extreme
-trial-relative amplitude outliers, late-response roughness-ratio outliers,
-isolated movement/noise bursts, and NaN-heavy extracted windows. The
-roughness ratio compares mean absolute sample gradients from 50–500 ms and
-0–50 ms (bounded by the available epoch); the serialized
-``late_high_frequency_ratio`` name is retained for compatibility and does
-not denote spectral energy. Local waveform
-minima and maxima are retained as an ``extreme_dwell_fraction`` diagnostic,
-but are not treated as amplifier rails unless explicit ``rail_limits_uv``
-are supplied.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `response_window` | tuple[float, float] \| None | `None` |
-| `baseline_window` | tuple[float, float] \| None | `None` |
-| `zscore_threshold` | float | `6.0` |
-| `max_nan_fraction` | float | `0.02` |
-| `saturation_fraction` | float | `0.02` |
-| `plateau_fraction` | float | `0.015` |
-| `plateau_min_run_s` | float | `0.003` |
-| `plateau_epsilon_uv` | float \| None | `None` |
-| `rail_fraction` | float | `0.02` |
-| `rail_epsilon_fraction` | float | `0.002` |
-| `rail_epsilon_uv` | float \| None | `None` |
-| `rail_limits_uv` | tuple[float, float] \| Mapping[str, tuple[float, float]] \| None | `None` |
-| `absolute_peak_uv` | float \| None | `None` |
-| `absolute_ptp_uv` | float \| None | `None` |
-| `extreme_zscore_threshold` | float \| None | `12.0` |
-| `ringing_zscore_threshold` | float | `6.0` |
-| `late_high_frequency_zscore_threshold` | float \| None | `None` |
-
-**Returns:** ArtifactResponseReport.
-
-### `detect_bad_channels`
-
-```python
-detect_bad_channels(df: 'pd.DataFrame', zscore_threshold: 'float' = 5.0, flat_std: 'float' = 1e-12, max_nan_fraction: 'float' = 0.05, min_correlation: 'float | None' = -0.2) -> 'BadChannelReport'
-```
-
-Detect flat, noisy, NaN-heavy, and anticorrelated channels.
-
-The rule is deliberately transparent: each feature receives a robust z-score
-and a channel is bad when any hard QC flag fires. The report table records
-the reason string so clinical users can audit the decision.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `df` | pd.DataFrame | required |
-| `zscore_threshold` | float | `5.0` |
-| `flat_std` | float | `1e-12` |
-| `max_nan_fraction` | float | `0.05` |
-| `min_correlation` | float \| None | `-0.2` |
-
-**Returns:** BadChannelReport.
-
-### `detect_events_from_artifacts`
-
-```python
-detect_events_from_artifacts(dataloader, session_id: 'str', stim_pair: 'str', method: 'str' = 'consensus', stim_freq: 'float | None' = None, min_peak_height: 'float' = 1000.0, raw_source: 'str' = 'auto', min_window_coverage: 'float' = 0.95, save_events: 'bool' = False, raw_file: 'str | Path | None' = None, stim_start: 'Any | None' = None, signal_data: 'pd.DataFrame | None' = None, **kwargs: 'Any') -> 'pd.DataFrame'
-```
-
-Unified event detector for artifact, trigger, annotation, and binary sources.
-
-``method="auto"`` searches only the annotated stimulation interval. It first
-tries explicit annotations/triggers and the configured amplitude threshold,
-then uses a robust noise-qualified threshold down to
-``auto_min_peak_height`` (100 microvolts by default). Every automatic result
-must match the expected pulse count and cadence.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `dataloader` | not specified | required |
-| `session_id` | str | required |
-| `stim_pair` | str | required |
-| `method` | str | `'consensus'` |
-| `stim_freq` | float \| None | `None` |
-| `min_peak_height` | float | `1000.0` |
-| `raw_source` | str | `'auto'` |
-| `min_window_coverage` | float | `0.95` |
-| `save_events` | bool | `False` |
-| `raw_file` | str \| Path \| None | `None` |
-| `stim_start` | Any \| None | `None` |
-| `signal_data` | pd.DataFrame \| None | `None` |
-| `kwargs` | Any | required |
-
-**Returns:** pd.DataFrame.
-
-### `detect_post_artifact_anchor`
-
-```python
-detect_post_artifact_anchor(epoch_df: 'pd.DataFrame', *, stim_ch: 'str | Iterable[str] | None' = None, baseline_window: 'tuple[float, float] | None' = None, search_window: 'tuple[float, float]' = (-0.002, 0.02), min_anchor_time_s: 'float' = 0.003, settle_z: 'float' = 2.0, settle_slope_z: 'float' = 2.0, settle_duration_s: 'float' = 0.002, smooth_s: 'float' = 0.001, onset_artifact_z: 'float' = 6.0, consecutive_samples: 'int | None' = None) -> 'dict[str, object]'
-```
-
-Detect a post-stimulation-artifact zeroing anchor for one epoch.
-
-The detector finds the largest artifact-envelope sample near stimulation
-onset, then chooses the first post-peak sample at which the artifact has
-truly *settled* — i.e. the (lightly smoothed) envelope has both returned to
-near baseline (below ``settle_z``) and flattened out (sample-to-sample slope
-below ``settle_slope_z`` in baseline units), and stays settled for
-``settle_duration_s``. Requiring a sustained return to baseline rather than a
-single threshold crossing places the anchor at the end of the artifact — the
-inflection where the steep stimulation transient gives way to the
-physiological response — instead of part-way down the still-decaying tail.
-
-If no sustained settled run is found, the anchor falls back to the first
-post-peak sample that meets the amplitude criterion, and finally to the
-quietest sample in the search window; it never lands on the artifact peak.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epoch_df` | pd.DataFrame | required |
-| `stim_ch` | str \| Iterable[str] \| None | `None` |
-| `baseline_window` | tuple[float, float] \| None | `None` |
-| `search_window` | tuple[float, float] | `(-0.002, 0.02)` |
-| `min_anchor_time_s` | float | `0.003` |
-| `settle_z` | float | `2.0` |
-| `settle_slope_z` | float | `2.0` |
-| `settle_duration_s` | float | `0.002` |
-| `smooth_s` | float | `0.001` |
-| `onset_artifact_z` | float | `6.0` |
-| `consecutive_samples` | int \| None | `None` |
-
-**Returns:** dict[str, object].
-
-### `detect_zero_time_artifact`
-
-```python
-detect_zero_time_artifact(epoch_df: 'pd.DataFrame', *, stim_ch: 'str | Iterable[str] | None' = None, zero_time: 'float' = 0.0, baseline_window: 'tuple[float, float] | None' = None, artifact_z: 'float' = 6.0) -> 'dict[str, object]'
-```
-
-Report whether a requested zeroing time falls on a stimulation artifact.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epoch_df` | pd.DataFrame | required |
-| `stim_ch` | str \| Iterable[str] \| None | `None` |
-| `zero_time` | float | `0.0` |
-| `baseline_window` | tuple[float, float] \| None | `None` |
-| `artifact_z` | float | `6.0` |
-
-**Returns:** dict[str, object].
-
-### `evoked_graph_metric_timecourse`
-
-```python
-evoked_graph_metric_timecourse(runs: 'list[dict]', elec_meta: 'pd.DataFrame | None' = None, *, metrics: 'Iterable[str]' = ('in_strength', 'out_strength', 'total_strength', 'hub', 'authority'), **kwargs) -> 'pd.DataFrame'
-```
-
-Build dynamic evoked-response edges and return node graph metrics.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `runs` | list[dict] | required |
-| `elec_meta` | pd.DataFrame \| None | `None` |
-| `metrics` | Iterable[str] | `('in_strength', 'out_strength', 'total_strength', 'hub', 'authority')` |
-| `kwargs` | not specified | required |
-
-**Returns:** pd.DataFrame.
-
-### `evoked_response_edges_over_time`
-
-```python
-evoked_response_edges_over_time(runs: 'list[dict]', elec_meta: 'pd.DataFrame | None' = None, *, response_window: 'tuple[float, float]' = (0.0, 0.35), frame_step_ms: 'float' = 12.0, top_n_per_stim: 'int' = 18, top_n_total: 'int | None' = 90, detection_metric: 'str' = 'peak_amplitude_uv', consensus_only: 'bool' = True, significance_column: 'str | None' = None, response_metric_frame_key: 'str' = 'response_metric_frame', metric_label: 'str' = 'Mean evoked voltage (uV)', elec_col: 'str' = 'elec_label', baseline_window: 'tuple[float, float] | None' = None, exclude_stimulation_contacts: 'bool' = True) -> 'pd.DataFrame'
-```
-
-Create a dynamic edge table from evoked-response epochs.
-
-Rows are directed stimulation-source -> recording-contact edges at sampled
-post-stimulus times. ``weight`` is the nonnegative response magnitude used
-for graph metrics; ``signed_value`` preserves the original metric polarity.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `runs` | list[dict] | required |
-| `elec_meta` | pd.DataFrame \| None | `None` |
-| `response_window` | tuple[float, float] | `(0.0, 0.35)` |
-| `frame_step_ms` | float | `12.0` |
-| `top_n_per_stim` | int | `18` |
-| `top_n_total` | int \| None | `90` |
-| `detection_metric` | str | `'peak_amplitude_uv'` |
-| `consensus_only` | bool | `True` |
-| `significance_column` | str \| None | `None` |
-| `response_metric_frame_key` | str | `'response_metric_frame'` |
-| `metric_label` | str | `'Mean evoked voltage (uV)'` |
-| `elec_col` | str | `'elec_label'` |
-| `baseline_window` | tuple[float, float] \| None | `None` |
-| `exclude_stimulation_contacts` | bool | `True` |
-
-**Returns:** pd.DataFrame.
-
-### `evoked_to_datetime`
-
-```python
-evoked_to_datetime(df: 'pd.DataFrame', start_datetime: 'Any', end_datetime: 'Any', event_column: 'int | str' = 0, event_value: 'int | float | str' = 1) -> 'tuple[pd.DataFrame, pd.DataFrame]'
-```
-
-Assign a datetime axis and extract rising binary-event onsets.
-
-This compatibility helper returns both the timestamp-indexed input frame
-and a one-column ``times`` table containing detected onset timestamps.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `df` | pd.DataFrame | required |
-| `start_datetime` | Any | required |
-| `end_datetime` | Any | required |
-| `event_column` | int \| str | `0` |
-| `event_value` | int \| float \| str | `1` |
-
-**Returns:** tuple[pd.DataFrame, pd.DataFrame].
-
-### `import_bids_project`
-
-```python
-import_bids_project(bids_root: 'str | Path', output_root: 'str | Path', subject: 'str', session: 'str | None' = None, task: 'str | None' = None, patient_id: 'str | None' = None, copy_raw: 'bool' = False, derivatives: 'bool' = True) -> 'BIDSImportResult'
-```
-
-Build an ERPy config/metadata project from BIDS/OpenNeuro iEEG files.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `bids_root` | str \| Path | required |
-| `output_root` | str \| Path | required |
-| `subject` | str | required |
-| `session` | str \| None | `None` |
-| `task` | str \| None | `None` |
-| `patient_id` | str \| None | `None` |
-| `copy_raw` | bool | `False` |
-| `derivatives` | bool | `True` |
-
-**Returns:** BIDSImportResult.
-
-### `process_events_for_session`
-
-```python
-process_events_for_session(dataloader, session_id: 'str', method: 'str' = 'consensus', stim_pairs: 'Iterable[str] | None' = None, save_events: 'bool' = True, **kwargs: 'Any') -> 'dict[str, pd.DataFrame]'
-```
-
-Detect and optionally save events for each stimulation pair in a session.
-
-Returns a mapping from stimulation-pair label to its normalized event table.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `dataloader` | not specified | required |
-| `session_id` | str | required |
-| `method` | str | `'consensus'` |
-| `stim_pairs` | Iterable[str] \| None | `None` |
-| `save_events` | bool | `True` |
-| `kwargs` | Any | required |
-
-**Returns:** dict[str, pd.DataFrame].
-
-### `reject_artifactual_responses`
-
-```python
-reject_artifactual_responses(epochs, report: 'ArtifactResponseReport | None' = None, mode: 'str' = 'drop_epoch', max_bad_channel_fraction: 'float' = 0.25, max_bad_response_fraction: 'float' = 0.25, **detect_kwargs)
-```
-
-Remove or mask aberrant trial-channel responses from an Epochs object.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `epochs` | not specified | required |
-| `report` | ArtifactResponseReport \| None | `None` |
-| `mode` | str | `'drop_epoch'` |
-| `max_bad_channel_fraction` | float | `0.25` |
-| `max_bad_response_fraction` | float | `0.25` |
-| `detect_kwargs` | not specified | required |
-
-### `reject_bad_channels`
-
-```python
-reject_bad_channels(df: 'pd.DataFrame', bad_channels: 'Iterable[str] | str | None' = None, method: 'str' = 'drop', detection_params: 'dict | None' = None, exclude: 'Iterable[str] | None' = None, return_report: 'bool' = False)
-```
-
-Reject or repair bad channels.
-
-Parameters
-----------
-bad_channels:
-    Explicit channel list, ``"auto"`` for data-driven detection, or ``None``.
-method:
-    ``"drop"`` removes bad columns, ``"nan"`` keeps them as NaN, and
-    ``"interpolate"`` replaces them with the median good-channel signal.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `df` | pd.DataFrame | required |
-| `bad_channels` | Iterable[str] \| str \| None | `None` |
-| `method` | str | `'drop'` |
-| `detection_params` | dict \| None | `None` |
-| `exclude` | Iterable[str] \| None | `None` |
-| `return_report` | bool | `False` |
-
-### `response_artifact_summary`
-
-```python
-response_artifact_summary(report: 'ArtifactResponseReport | pd.DataFrame', group_cols: 'Iterable[str] | None' = None, hard_artifact_reasons: 'Iterable[str] | None' = None) -> 'pd.DataFrame'
-```
-
-Return an auditable channel-level response-artifact summary.
-
-Parameters
-----------
-report:
-    Artifact response report or its table.
-group_cols:
-    Optional columns such as ``patient_id``, ``session_id``, or
-    ``stim_pair`` to preserve in the grouping.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `report` | ArtifactResponseReport \| pd.DataFrame | required |
-| `group_cols` | Iterable[str] \| None | `None` |
-| `hard_artifact_reasons` | Iterable[str] \| None | `None` |
-
-**Returns:** pd.DataFrame.
-
-### `resample_continuous`
-
-```python
-resample_continuous(df: 'pd.DataFrame', target_sfreq: 'float', *, source_sfreq: 'float | None' = None) -> 'pd.DataFrame'
-```
-
-Resample every numeric channel while preserving a time-like index.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `df` | pd.DataFrame | required |
-| `target_sfreq` | float | required |
-| `source_sfreq` | float \| None | `None` |
-
-**Returns:** pd.DataFrame.
-
-### `save_continuous_npz`
-
-```python
-save_continuous_npz(df: 'pd.DataFrame', path: 'str | Path', *, dtype: 'str | np.dtype' = 'float32', compressed: 'bool' = True, metadata: 'dict[str, Any] | None' = None) -> 'Path'
-```
-
-Atomically save continuous numeric channels in ERPy's portable NPZ format.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `df` | pd.DataFrame | required |
-| `path` | str \| Path | required |
-| `dtype` | str \| np.dtype | `'float32'` |
-| `compressed` | bool | `True` |
-| `metadata` | dict[str, Any] \| None | `None` |
-
-**Returns:** Path.
-
 ### `latency_wavefront_table`
 
 ```python
@@ -6299,72 +6952,21 @@ Return rows whose anatomical labels belong to the ACC-thalamic-striatal scaffold
 
 **Returns:** pd.Series.
 
-### `zscore_metric_within_stim`
-
-```python
-zscore_metric_within_stim(data: 'pd.DataFrame', metric: 'str', *, stim_col: 'str' = 'stim_pair', channel_col: 'str | None' = None, absolute: 'bool' = False, output_col: 'str | None' = None) -> 'pd.DataFrame'
-```
-
-Z-score a response metric across recording contacts within each stim site.
-
-This is an exploratory ranking transform: for each stimulation site, ERPy
-normalizes the selected response metric across recording electrodes so that
-unusually high contacts for that stimulation site are easy to inspect.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `data` | pd.DataFrame | required |
-| `metric` | str | required |
-| `stim_col` | str | `'stim_pair'` |
-| `channel_col` | str \| None | `None` |
-| `absolute` | bool | `False` |
-| `output_col` | str \| None | `None` |
-
-**Returns:** pd.DataFrame.
-
-### `weighted_directed_node_metrics`
-
-```python
-weighted_directed_node_metrics(edges: 'pd.DataFrame', *, source_col: 'str' = 'source', target_col: 'str' = 'target', weight_col: 'str' = 'weight', group_cols: 'Iterable[str] | None' = None, min_weight: 'float' = 0.0, agg: 'str' = 'median') -> 'pd.DataFrame'
-```
-
-Compute interpretable weighted metrics for directed network nodes.
-
-Edge weights must be nonnegative connection strengths. Shortest-path
-measures use their reciprocal as distance, while local reaching centrality
-receives the original strength because its definition already treats larger
-weights as shorter, stronger connections.
-
-**Parameters**
-
-| Name | Type | Default |
-| --- | --- | --- |
-| `edges` | pd.DataFrame | required |
-| `source_col` | str | `'source'` |
-| `target_col` | str | `'target'` |
-| `weight_col` | str | `'weight'` |
-| `group_cols` | Iterable[str] \| None | `None` |
-| `min_weight` | float | `0.0` |
-| `agg` | str | `'median'` |
-
-**Returns:** pd.DataFrame.
-
 ### Constants
 
-- `CRP_ENERGY_DETECTOR_VERSION` — Public `str` package constant.
+- `__version__` — Public `str` package constant.
 - `CHECKPOINT_COMPATIBILITY_ID` — Public `str` package constant.
-- `DEFAULT_BANDS` — Public `dict` package constant.
+- `STANDARD_PIPELINES` — Public `dict` package constant.
+- `POST_ARTIFACT_ZERO` — Public `str` package constant.
 - `DEFAULT_HARD_ARTIFACT_REASONS` — Public `frozenset` package constant.
-- `DEFAULT_SCAFFOLD_PATTERN` — Public `str` package constant.
+- `ALL_METHODS` — Public `list` package constant.
+- `PRIMARY_CRITERION` — Public `str` package constant.
 - `DETECTOR_DEFINITIONS` — Public `dict` package constant.
 - `DETECTOR_QUANTITY_COLUMNS` — Public `dict` package constant.
 - `DETECTOR_REFERENCES` — Public `dict` package constant.
-- `PRIMARY_CRITERION` — Public `str` package constant.
-- `POST_ARTIFACT_ZERO` — Public `str` package constant.
-- `ALL_METHODS` — Public `list` package constant.
-- `__version__` — Public `str` package constant.
+- `CRP_ENERGY_DETECTOR_VERSION` — Public `str` package constant.
+- `DEFAULT_BANDS` — Public `dict` package constant.
+- `DEFAULT_SCAFFOLD_PATTERN` — Public `str` package constant.
 
 ## Visualization API (`ERPy.viz`)
 
@@ -7361,7 +7963,7 @@ Plot how one node-level graph metric changes through the stim epoch.
 ### `quick_erp`
 
 ```python
-quick_erp(epochs_df: 'pd.DataFrame', channel: 'str', ax=None, mode: 'str' = 'mean_sem', color: 'Optional[str]' = None, label: 'Optional[str]' = None, title: 'Optional[str]' = None)
+quick_erp(epochs_df: 'pd.DataFrame', channel: 'str', ax=None, mode: 'str' = 'mean_sem', color: 'str | None' = None, label: 'str | None' = None, title: 'str | None' = None)
 ```
 
 Plot one channel from an ``(epoch, time)`` indexed epochs DataFrame.
@@ -7374,14 +7976,14 @@ Plot one channel from an ``(epoch, time)`` indexed epochs DataFrame.
 | `channel` | str | required |
 | `ax` | not specified | `None` |
 | `mode` | str | `'mean_sem'` |
-| `color` | Optional[str] | `None` |
-| `label` | Optional[str] | `None` |
-| `title` | Optional[str] | `None` |
+| `color` | str \| None | `None` |
+| `label` | str \| None | `None` |
+| `title` | str \| None | `None` |
 
 ### `plot_erp_grid`
 
 ```python
-plot_erp_grid(epochs_df: 'pd.DataFrame', channels: 'Optional[Sequence[str]]' = None, ncols: 'int' = 4, mode: 'str' = 'mean_sem', figsize_per: 'tuple[float, float]' = (3.2, 2.4), suptitle: 'Optional[str]' = None)
+plot_erp_grid(epochs_df: 'pd.DataFrame', channels: 'Sequence[str] | None' = None, ncols: 'int' = 4, mode: 'str' = 'mean_sem', figsize_per: 'tuple[float, float]' = (3.2, 2.4), suptitle: 'str | None' = None)
 ```
 
 Faceted grid of mean ERPs, one subplot per channel.
@@ -7391,16 +7993,16 @@ Faceted grid of mean ERPs, one subplot per channel.
 | Name | Type | Default |
 | --- | --- | --- |
 | `epochs_df` | pd.DataFrame | required |
-| `channels` | Optional[Sequence[str]] | `None` |
+| `channels` | Sequence[str] \| None | `None` |
 | `ncols` | int | `4` |
 | `mode` | str | `'mean_sem'` |
 | `figsize_per` | tuple[float, float] | `(3.2, 2.4)` |
-| `suptitle` | Optional[str] | `None` |
+| `suptitle` | str \| None | `None` |
 
 ### `plot_mean_erp_dataframe_comparison`
 
 ```python
-plot_mean_erp_dataframe_comparison(series: 'Iterable[tuple[str, pd.DataFrame]]', channel: 'str', ax=None, colors: 'Optional[Sequence[str]]' = None)
+plot_mean_erp_dataframe_comparison(series: 'Iterable[tuple[str, pd.DataFrame]]', channel: 'str', ax=None, colors: 'Sequence[str] | None' = None)
 ```
 
 Overlay mean +/- SEM for several epoched DataFrames.
@@ -7412,12 +8014,12 @@ Overlay mean +/- SEM for several epoched DataFrames.
 | `series` | Iterable[tuple[str, pd.DataFrame]] | required |
 | `channel` | str | required |
 | `ax` | not specified | `None` |
-| `colors` | Optional[Sequence[str]] | `None` |
+| `colors` | Sequence[str] \| None | `None` |
 
 ### `heatmap_channels_time`
 
 ```python
-heatmap_channels_time(epochs_df: 'pd.DataFrame', channels: 'Optional[list[str]]' = None, ax=None, cmap: 'str' = 'viridis')
+heatmap_channels_time(epochs_df: 'pd.DataFrame', channels: 'list[str] | None' = None, ax=None, cmap: 'str' = 'viridis')
 ```
 
 Plot a time-by-channel heatmap after averaging over epochs.
@@ -7427,14 +8029,14 @@ Plot a time-by-channel heatmap after averaging over epochs.
 | Name | Type | Default |
 | --- | --- | --- |
 | `epochs_df` | pd.DataFrame | required |
-| `channels` | Optional[list[str]] | `None` |
+| `channels` | list[str] \| None | `None` |
 | `ax` | not specified | `None` |
 | `cmap` | str | `'viridis'` |
 
 ### `heatmap_epochs`
 
 ```python
-heatmap_epochs(epochs_df: 'pd.DataFrame', channel: 'str', ax=None, cmap: 'str' = 'RdBu_r', vmin: 'Optional[float]' = None, vmax: 'Optional[float]' = None, cbar_label: 'str' = 'Amplitude')
+heatmap_epochs(epochs_df: 'pd.DataFrame', channel: 'str', ax=None, cmap: 'str' = 'RdBu_r', vmin: 'float | None' = None, vmax: 'float | None' = None, cbar_label: 'str' = 'Amplitude')
 ```
 
 Plot a time-by-epoch heatmap for one channel.
@@ -7447,14 +8049,14 @@ Plot a time-by-epoch heatmap for one channel.
 | `channel` | str | required |
 | `ax` | not specified | `None` |
 | `cmap` | str | `'RdBu_r'` |
-| `vmin` | Optional[float] | `None` |
-| `vmax` | Optional[float] | `None` |
+| `vmin` | float \| None | `None` |
+| `vmax` | float \| None | `None` |
 | `cbar_label` | str | `'Amplitude'` |
 
 ### `plot_metric_vs_epoch`
 
 ```python
-plot_metric_vs_epoch(epochs_df: 'pd.DataFrame', channel: 'str', metric_fn: 'Optional[Callable[[np.ndarray], float]]' = None, ax=None, rolling: 'int' = 0, title: 'Optional[str]' = None)
+plot_metric_vs_epoch(epochs_df: 'pd.DataFrame', channel: 'str', metric_fn: 'Callable[[np.ndarray], float] | None' = None, ax=None, rolling: 'int' = 0, title: 'str | None' = None)
 ```
 
 Plot a per-epoch scalar metric in stimulation order.
@@ -7465,15 +8067,15 @@ Plot a per-epoch scalar metric in stimulation order.
 | --- | --- | --- |
 | `epochs_df` | pd.DataFrame | required |
 | `channel` | str | required |
-| `metric_fn` | Optional[Callable[[np.ndarray], float]] | `None` |
+| `metric_fn` | Callable[[np.ndarray], float] \| None | `None` |
 | `ax` | not specified | `None` |
 | `rolling` | int | `0` |
-| `title` | Optional[str] | `None` |
+| `title` | str \| None | `None` |
 
 ### `plot_electrode_mni`
 
 ```python
-plot_electrode_mni(coords: 'np.ndarray', values: 'Optional[np.ndarray]' = None, node_size: 'Union[float, np.ndarray]' = 50.0, title: 'Optional[str]' = None, display_mode: 'str' = 'ortho', **kwargs)
+plot_electrode_mni(coords: 'np.ndarray', values: 'np.ndarray | None' = None, node_size: 'float | np.ndarray' = 50.0, title: 'str | None' = None, display_mode: 'str' = 'ortho', **kwargs)
 ```
 
 Plot electrode locations in MNI space using ``nilearn.plot_connectome``.
@@ -7483,16 +8085,16 @@ Plot electrode locations in MNI space using ``nilearn.plot_connectome``.
 | Name | Type | Default |
 | --- | --- | --- |
 | `coords` | np.ndarray | required |
-| `values` | Optional[np.ndarray] | `None` |
-| `node_size` | Union[float, np.ndarray] | `50.0` |
-| `title` | Optional[str] | `None` |
+| `values` | np.ndarray \| None | `None` |
+| `node_size` | float \| np.ndarray | `50.0` |
+| `title` | str \| None | `None` |
 | `display_mode` | str | `'ortho'` |
 | `kwargs` | not specified | required |
 
 ### `plot_electrodes_from_metadata`
 
 ```python
-plot_electrodes_from_metadata(elec_df: 'pd.DataFrame', value_col: 'Optional[str]' = None, mni_cols: 'tuple[str, str, str]' = ('mni_x', 'mni_y', 'mni_z'), **kwargs)
+plot_electrodes_from_metadata(elec_df: 'pd.DataFrame', value_col: 'str | None' = None, mni_cols: 'tuple[str, str, str]' = ('mni_x', 'mni_y', 'mni_z'), **kwargs)
 ```
 
 Plot electrodes using coordinate columns from electrode metadata.
@@ -7502,7 +8104,7 @@ Plot electrodes using coordinate columns from electrode metadata.
 | Name | Type | Default |
 | --- | --- | --- |
 | `elec_df` | pd.DataFrame | required |
-| `value_col` | Optional[str] | `None` |
+| `value_col` | str \| None | `None` |
 | `mni_cols` | tuple[str, str, str] | `('mni_x', 'mni_y', 'mni_z')` |
 | `kwargs` | not specified | required |
 
@@ -7527,7 +8129,7 @@ Color electrodes by a per-contact scalar metric.
 ### `save_analysis_figure`
 
 ```python
-save_analysis_figure(fig: 'Union[matplotlib.figure.Figure, matplotlib.axes.Axes]', name: 'str', patient_path: 'Optional[str]' = None, subdir: 'str' = '', formats: 'Iterable[str]' = ('png', 'pdf')) -> 'list[str]'
+save_analysis_figure(fig: 'matplotlib.figure.Figure | matplotlib.axes.Axes', name: 'str', patient_path: 'str | None' = None, subdir: 'str' = '', formats: 'Iterable[str]' = ('png', 'pdf')) -> 'list[str]'
 ```
 
 Write a figure to ``{patient_path}/analysis/{subdir}/{name}.{fmt}``.
@@ -7536,9 +8138,9 @@ Write a figure to ``{patient_path}/analysis/{subdir}/{name}.{fmt}``.
 
 | Name | Type | Default |
 | --- | --- | --- |
-| `fig` | Union[matplotlib.figure.Figure, matplotlib.axes.Axes] | required |
+| `fig` | matplotlib.figure.Figure \| matplotlib.axes.Axes | required |
 | `name` | str | required |
-| `patient_path` | Optional[str] | `None` |
+| `patient_path` | str \| None | `None` |
 | `subdir` | str | `''` |
 | `formats` | Iterable[str] | `('png', 'pdf')` |
 
