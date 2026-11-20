@@ -28,6 +28,11 @@ class JobRunner:
     extra: dict[str, Any] = field(default_factory=dict)
 
     def detect_backend(self) -> str:
+        """Return the configured backend, else the first available scheduler.
+
+        ``submit_job`` is preferred over ``sbatch``; ``"local"`` is the fallback.
+        """
+
         if self.backend:
             return self.backend
         if shutil.which("submit_job"):
@@ -38,6 +43,11 @@ class JobRunner:
 
     @staticmethod
     def env_from_kwargs(**kwargs: Any) -> dict[str, str]:
+        """Convert keyword arguments to upper-case environment variables.
+
+        ``None`` values are dropped and containers are JSON-encoded.
+        """
+
         env = {}
         for key, value in kwargs.items():
             if value is None:
@@ -55,6 +65,13 @@ class JobRunner:
         env: dict[str, str] | None = None,
         python: str | Path | None = None,
     ) -> tuple[JobRunner, str, str]:
+        """Run or submit ``python_script`` and return ``(runner, stdout, stderr)``.
+
+        The local backend runs the script synchronously. Scheduler backends
+        submit it and return the scheduler's output; if the scheduler command
+        is unavailable the script runs locally instead.
+        """
+
         backend = self.detect_backend()
         python_script = str(python_script)
         merged_env = os.environ.copy()

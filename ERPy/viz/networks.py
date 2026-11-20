@@ -202,6 +202,8 @@ def stim_pair_to_contact_electrodes(stim_pair: str) -> tuple[str, ...]:
 
 
 def stim_pair_to_source_electrode(stim_pair: str, contact: str = "positive") -> str:
+    """Return the positive (first) or negative (second) contact of a stimulation pair."""
+
     contacts = stim_pair_to_contact_electrodes(stim_pair)
     index = 0 if contact == "positive" else min(1, len(contacts) - 1)
     return contacts[index]
@@ -225,6 +227,8 @@ def _label_key(label: str) -> str:
 
 
 def re_split_label(label: str) -> list[str]:
+    """Split a label into alternating text and digit runs, e.g. ``["LACC", "12"]``."""
+
     return [part for part in re.split(r"(\d+)", str(label)) if part]
 
 
@@ -260,6 +264,8 @@ def adjacency_from_edges(
 
 
 def natural_label_key(label: str) -> tuple:
+    """Return a sort key that orders labels naturally (``A2`` before ``A10``)."""
+
     parts = re_split_label(label)
     out = []
     for part in parts:
@@ -407,6 +413,8 @@ def graph_from_edges(
 
 
 def summarize_graph(graph: nx.Graph) -> pd.DataFrame:
+    """Return each node's degree, in-degree, and out-degree as a table."""
+
     rows = []
     for node in graph.nodes:
         rows.append(
@@ -421,6 +429,8 @@ def summarize_graph(graph: nx.Graph) -> pd.DataFrame:
 
 
 def export_graph_summary(graph: nx.Graph, path: str | Path) -> Path:
+    """Write :func:`summarize_graph` to a CSV file and return its path."""
+
     path = Path(path)
     summarize_graph(graph).to_csv(path, index=False)
     return path
@@ -596,6 +606,8 @@ def region_centroid_coords(
     region_col: str = "anat_label",
     mni_cols=("mni_x", "mni_y", "mni_z"),
 ) -> pd.DataFrame:
+    """Return the mean MNI coordinate of the electrodes in each anatomical region."""
+
     cols = [region_col, *mni_cols]
     data = elec_meta[cols].dropna(subset=[region_col]).copy()
     for col in mni_cols:
@@ -611,6 +623,8 @@ def flag_same_region_edges(
     elec_col: str = "elec_label",
     region_col: str = "anat_label",
 ) -> pd.Series:
+    """Flag edges whose stimulated and recording electrodes share a region."""
+
     mapping = elec_meta.set_index(elec_col)[region_col].to_dict()
     return edges.apply(lambda r: mapping.get(r[stim_col]) == mapping.get(r[record_col]), axis=1)
 
@@ -621,6 +635,8 @@ def electrode_region_mapping_table(
     region_col: str = "anat_label",
     mni_cols=("mni_x", "mni_y", "mni_z"),
 ) -> pd.DataFrame:
+    """Return the unique electrode-to-region rows (with coordinates) of the metadata."""
+
     cols = [c for c in [elec_col, region_col, *mni_cols, "patient_id", "session_id"] if c in elec_meta.columns]
     return elec_meta[cols].drop_duplicates().sort_values(cols[:1]).reset_index(drop=True)
 

@@ -30,16 +30,27 @@ class BIDSImportResult:
 
 
 def normalize_subject(subject: str) -> str:
+    """Return a BIDS subject label without its ``sub-`` prefix."""
+
     return str(subject).replace("sub-", "")
 
 
 def normalize_session(session: str | None) -> str:
+    """Return a BIDS session label without its ``ses-`` prefix (``"A"`` when absent)."""
+
     if session is None:
         return "A"
     return str(session).replace("ses-", "")
 
 
 def normalize_stim_pair(site: str) -> str:
+    """Convert a BIDS stimulation-site label to ERPy's ``LEAD_a_b`` form.
+
+    ``LTG1-LTG2`` becomes ``LTG_1_2``; zero padding is removed. Labels that
+    do not name two numbered contacts are reduced to alphanumerics joined by
+    underscores.
+    """
+
     text = str(site)
     match = re.match(r"([A-Za-z]+)0?(\d+)[-_]([A-Za-z]+)?0?(\d+)", text)
     if match:
@@ -55,6 +66,8 @@ def normalize_stim_pair(site: str) -> str:
 
 
 def bids_sidecar_json(path: Path) -> dict:
+    """Read a JSON sidecar, returning an empty dict when it is missing or invalid."""
+
     if not path.exists():
         return {}
     try:
@@ -128,6 +141,8 @@ def discover_bids_ieeg(
 
 
 def parse_bids_entities(name: str) -> dict[str, str]:
+    """Return the ``key-value`` entities of a BIDS file name, e.g. ``{"sub": "01"}``."""
+
     entities = {}
     for part in Path(name).stem.split("_"):
         if "-" in part:
@@ -137,6 +152,8 @@ def parse_bids_entities(name: str) -> dict[str, str]:
 
 
 def find_electrodes_file(folder: Path, subject: str | None, session: str | None) -> Path | None:
+    """Locate the ``*_electrodes.tsv`` file for a subject/session in ``folder``."""
+
     candidates = []
     if subject and session:
         candidates.append(folder / f"sub-{subject}_ses-{session}_electrodes.tsv")
@@ -298,6 +315,12 @@ def import_bids_project(
 
 
 def build_electrode_metadata(discovered: pd.DataFrame, patient_id: str) -> pd.DataFrame:
+    """Build ERPy electrode metadata from the discovered BIDS files.
+
+    Coordinates and anatomy come from ``*_electrodes.tsv`` when present;
+    otherwise channel names are taken from ``*_channels.tsv``.
+    """
+
     rows = []
     seen = set()
     for _, row in discovered.iterrows():

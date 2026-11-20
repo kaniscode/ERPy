@@ -179,10 +179,14 @@ class N1MorphologyModel:
         }
 
     def save(self, path):
+        """Write the model parameters and feature contract to a JSON file."""
+
         Path(path).write_text(json.dumps(asdict(self), indent=2, allow_nan=False) + "\n")
 
     @classmethod
     def load(cls, path):
+        """Read a model saved by :meth:`save`, requiring its explicit feature contract."""
+
         values = json.loads(Path(path).read_text())
         if not {"expected_feature_config_sha256", "voltage_unit", "feature_version"}.issubset(values):
             raise ValueError("Saved model lacks an explicit feature contract")
@@ -191,16 +195,22 @@ class N1MorphologyModel:
 
 @dataclass(frozen=True)
 class N1FeatureConfig:
+    """Windows and minimum trial count that define the N1 feature contract."""
+
     response_window: tuple[float, float] = (0.010, 0.090)
     baseline_window: tuple[float, float] = (-1.0, -0.1)
     normalization_window: tuple[float, float] = (-0.5, -0.02)
     min_trials: int = 8
 
     def to_dict(self) -> dict:
+        """Return the configuration as a plain dictionary."""
+
         return asdict(self)
 
 
 def feature_config_sha256(config: N1FeatureConfig) -> str:
+    """Return the SHA-256 identity of a feature configuration and feature version."""
+
     contract = dict(settings=config.to_dict(), voltage_unit="uV", feature_version=N1_FEATURE_VERSION)
     return hashlib.sha256(json.dumps(contract, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
@@ -390,6 +400,12 @@ class N1InferenceEvidence:
             raise ValueError("N1 inference provenance must be an object")
 
     def validated_values(self, features: dict) -> dict:
+        """Return the inference values after confirming they belong to ``features``.
+
+        Raises ``ValueError`` when the epoch identity or provenance of the
+        morphology features and the inference evidence differ.
+        """
+
         self.__post_init__()
         if self.feature_sha256 != _n1_feature_identity(features):
             raise ValueError("N1 morphology and inference input/epoch/trial identity mismatch")

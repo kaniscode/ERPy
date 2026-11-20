@@ -157,6 +157,8 @@ class ComodulogramResult:
 
 
 def make_frequencies(fmin: float, fmax: float, n_freqs: int, spacing: str = "log") -> np.ndarray:
+    """Return ``n_freqs`` frequencies from ``fmin`` to ``fmax``, log- or linearly spaced."""
+
     fmin = max(float(fmin), 1e-6)
     fmax = max(float(fmax), fmin * 1.001)
     n_freqs = max(int(n_freqs), 1)

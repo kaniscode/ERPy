@@ -83,7 +83,7 @@ class CRPResult:
 
 
 class CRPError(ValueError):
-    pass
+    """Raised when canonical response parameterization cannot be computed."""
 
 
 def epochs_to_matrix(epochs, channel: str) -> tuple[np.ndarray, np.ndarray]:

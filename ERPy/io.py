@@ -4,6 +4,12 @@ import re
 
 
 def parse_brainvision_header(vhdr_text: str) -> dict:
+    """Parse the text of a BrainVision ``.vhdr`` header.
+
+    Returns channel names and resolutions, sampling frequency, and the data
+    and marker file names. Only multiplexed IEEE float32 data are supported.
+    """
+
     info: dict[str, object] = {"channels": [], "resolutions": []}
     section = None
     for raw_line in vhdr_text.splitlines():
@@ -48,6 +54,8 @@ def parse_brainvision_header(vhdr_text: str) -> dict:
 
 
 def clean_channel_label(label: str) -> str:
+    """Strip ``POL`` prefixes, ``-Ref`` suffixes and spaces from a channel label."""
+
     text = str(label).strip()
     text = re.sub(r"^POL\s*", "", text, flags=re.I)
     text = re.sub(r"[-\s_]*Ref$", "", text, flags=re.I)

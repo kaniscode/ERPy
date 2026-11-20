@@ -62,6 +62,8 @@ class MultiScaleConfig:
     )
 
     def validate(self) -> None:
+        """Check that the window bank is non-empty, valid, and free of duplicates."""
+
         if not self.windows:
             raise ValueError("windows must contain a predeclared nonempty bank")
         normalized = []
@@ -77,6 +79,8 @@ class MultiScaleConfig:
 
 @dataclass
 class WindowEvidence:
+    """Component evidence for one declared response window."""
+
     declared_window: tuple[float, float]
     p_joint: float
     p_for_combination: float
@@ -88,6 +92,8 @@ class WindowEvidence:
 
 @dataclass
 class MultiScaleResult:
+    """Combined evidence across the declared response windows for one contact."""
+
     channel: str
     p_multiscale: float
     q_multiscale: float

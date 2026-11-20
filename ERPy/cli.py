@@ -15,6 +15,14 @@ def _template_path(name: str) -> Path:
 def init_project(
     config_path: Path, data_root: Path, config_only: bool = False, dry_run: bool = False, force: bool = False
 ) -> list[Path]:
+    """Write a project configuration and blank metadata tables.
+
+    Returns the paths written (or, with ``dry_run``, the paths that would be
+    written). Existing files are kept unless ``force`` is set; an existing
+    configuration raises ``FileExistsError``. ``config_only`` skips the data
+    folders and metadata stubs.
+    """
+
     written: list[Path] = []
     config_path = config_path.expanduser()
     data_root = data_root.expanduser()
@@ -58,6 +66,8 @@ def init_project(
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Run the ``erpy-init`` command line interface and return its exit status."""
+
     parser = argparse.ArgumentParser(description="Initialize an ERPy project config and metadata stubs.")
     parser.add_argument("command", nargs="?", default="init", choices=["init", "show-config"])
     parser.add_argument("--config", default=str(Path.home() / ".erpy" / "config.yaml"))

@@ -1604,6 +1604,11 @@ def detect_erp(
     response_window: tuple[float, float] = (0.01, 0.3),
     **params: Any,
 ) -> pd.DataFrame:
+    """Run one named detector and return its channel-level results.
+
+    Equivalent to :func:`detect_erp_all` restricted to ``method``.
+    """
+
     return detect_erp_all(
         epochs,
         methods=[method],
@@ -1625,24 +1630,36 @@ def detect(
 
 
 def n1_latency(epochs, channel: str) -> float:
+    """Return the N1 latency (ms) of the mean response on ``channel``."""
+
     return float(_feature_table(epochs).set_index("channel").loc[channel, "n1_latency_ms"])
 
 
 def peak_amplitude(epochs, channel: str) -> float:
+    """Return the peak amplitude (µV) of the mean response on ``channel``."""
+
     return float(_feature_table(epochs).set_index("channel").loc[channel, "peak_amplitude_uv"])
 
 
 def rms_response(epochs, channel: str) -> float:
+    """Return the response-window RMS (µV) of the mean response on ``channel``."""
+
     return float(_feature_table(epochs).set_index("channel").loc[channel, "rms_uv"])
 
 
 def auc_response(epochs, channel: str) -> float:
+    """Return the response-window area under the curve (µV·ms) on ``channel``."""
+
     return float(_feature_table(epochs).set_index("channel").loc[channel, "auc_uv_ms"])
 
 
 def maximal_descent(epochs, channel: str) -> float:
+    """Return the latency (ms) of the steepest descent of the mean response on ``channel``."""
+
     return float(_feature_table(epochs).set_index("channel").loc[channel, "max_descent_ms"])
 
 
 def high_gamma_envelope(epochs, channel: str) -> float:
+    """Return the high-gamma envelope z-score of the response on ``channel``."""
+
     return _high_gamma_z(epochs, channel)

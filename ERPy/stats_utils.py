@@ -17,6 +17,14 @@ def compare_groups(
     test: str = "welch",
     correction: str | None = "fdr_bh",
 ) -> pd.DataFrame:
+    """Compare a numeric column between every pair of groups.
+
+    Each pair is tested with Welch's t-test (``test="welch"``) or the
+    Mann-Whitney U test (``"mannwhitney"``). The returned table has one row
+    per pair with the statistic, p-value, effect size, and, when
+    ``correction`` is set, the adjusted p-value.
+    """
+
     groups = list(groups or df[group_col].dropna().unique())
     rows = []
     for a, b in itertools.combinations(groups, 2):
@@ -61,6 +69,8 @@ def compare_groups(
 
 
 def forest_plot(table: pd.DataFrame, effect_col: str = "cohens_d", label_cols=("group_a", "group_b")):
+    """Plot one effect size per group comparison and return ``(figure, axes)``."""
+
     labels = table[list(label_cols)].astype(str).agg(" vs ".join, axis=1)
     effects = pd.to_numeric(table[effect_col], errors="coerce")
     fig, ax = plt.subplots(figsize=(7, max(2, 0.35 * len(table))))

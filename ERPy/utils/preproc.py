@@ -70,6 +70,8 @@ def common_reference(
 
 
 def remove_drift(df: pd.DataFrame, fs: float | None = None, cutoff: float = 0.01) -> pd.DataFrame:
+    """High-pass filter numeric channels (zero-phase, 2nd-order Butterworth) to remove drift."""
+
     fs = fs or infer_sfreq(df)
     if cutoff <= 0:
         return df.copy()
@@ -82,6 +84,11 @@ def remove_drift(df: pd.DataFrame, fs: float | None = None, cutoff: float = 0.01
 
 
 def bandpass(df: pd.DataFrame, lowcut: float, highcut: float, fs: float | None = None, order: int = 4) -> pd.DataFrame:
+    """Band-pass filter numeric channels with a zero-phase Butterworth filter.
+
+    The upper edge is limited to just below the Nyquist frequency.
+    """
+
     fs = fs or infer_sfreq(df)
     nyq = fs / 2.0
     low = max(float(lowcut), 1e-6)
@@ -103,6 +110,12 @@ def notch_line(
     bw: float = 2.0,
     harm: bool = True,
 ) -> pd.DataFrame:
+    """Remove line noise with zero-phase IIR notch filters.
+
+    ``harm`` also notches the harmonics of ``notch_freq`` below the Nyquist
+    frequency; ``bw`` is the notch bandwidth in Hz.
+    """
+
     fs = fs or infer_sfreq(df)
     out = df.copy()
     values, cols = _numeric_values(out)
@@ -129,6 +142,12 @@ def notch_line(
 
 
 def decimate(df: pd.DataFrame, fs_new: float, fs: float | None = None) -> pd.DataFrame:
+    """Downsample to approximately ``fs_new`` with an anti-aliasing filter.
+
+    The integer decimation factor is ``round(fs / fs_new)``; the achieved
+    rate is stored in ``DataFrame.attrs["sfreq"]``.
+    """
+
     fs = fs or infer_sfreq(df)
     if fs_new >= fs:
         out = df.copy()

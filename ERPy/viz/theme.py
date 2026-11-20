@@ -4,6 +4,8 @@ import matplotlib as mpl
 
 
 def apply_erpy_theme() -> None:
+    """Apply ERPy's Matplotlib defaults (clean spines, readable labels, embeddable fonts)."""
+
     mpl.rcParams.update(
         {
             "figure.dpi": 110,
