@@ -258,3 +258,30 @@ def test_nwb_dependencies_are_explicitly_unverifiable(project):
     recording.dataloader.raw_meta.loc[:, "raw_file"] = nwb.name
     identity, source = epoch_cache_identity(recording.pipeline_obj, "A", "A_1_2", [], events.read_bytes(), {})
     assert identity is None and source == "raw"
+
+
+
+def test_file_digest_retries_a_one_time_status_change(tmp_path, monkeypatch):
+    """A first read that alters file status (cloud placeholder download) is retried."""
+    from ERPy import _epoch_cache
+
+    target = tmp_path / "input.bin"
+    target.write_bytes(b"signal")
+    expected = _epoch_cache.file_digest(target)
+    stable = _epoch_cache._stat_identity(target)
+    transient = (*stable[:-1], stable[-1] - 1)
+
+    statuses = iter([transient, stable, stable, stable])
+    monkeypatch.setattr(_epoch_cache, "_stat_identity", lambda path: next(statuses))
+    assert _epoch_cache.file_digest(target) == expected
+
+
+def test_file_digest_rejects_a_file_that_keeps_changing(tmp_path, monkeypatch):
+    from ERPy import _epoch_cache
+
+    target = tmp_path / "input.bin"
+    target.write_bytes(b"signal")
+    counter = iter(range(100))
+    monkeypatch.setattr(_epoch_cache, "_stat_identity", lambda path: (next(counter),))
+    with pytest.raises(RuntimeError, match="changed during content verification"):
+        _epoch_cache.file_digest(target)

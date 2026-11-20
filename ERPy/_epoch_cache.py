@@ -16,18 +16,33 @@ from .epochs import _metadata_to_json_value
 from .io import parse_brainvision_header
 
 
+_STAT_IDENTITY_FIELDS = ("st_dev", "st_ino", "st_size", "st_mtime_ns", "st_ctime_ns")
+_DIGEST_BLOCK_BYTES = 8 * 1024 * 1024
+_DIGEST_ATTEMPTS = 3
+
+
+def _stat_identity(path: Path) -> tuple:
+    status = path.stat()
+    return tuple(getattr(status, name) for name in _STAT_IDENTITY_FIELDS)
+
+
 def file_digest(path: Path) -> str:
-    """Hash full contents and reject an ordinary concurrent file replacement."""
-    before = path.stat()
-    digest = hashlib.sha256()
-    with path.open("rb") as stream:
-        for block in iter(lambda: stream.read(8 * 1024 * 1024), b""):
-            digest.update(block)
-    after = path.stat()
-    fields = ("st_dev", "st_ino", "st_size", "st_mtime_ns", "st_ctime_ns")
-    if any(getattr(before, key) != getattr(after, key) for key in fields):
-        raise RuntimeError("An epoch input changed during content verification; retry after writes finish")
-    return digest.hexdigest()
+    """Hash full contents and reject an ordinary concurrent file replacement.
+
+    The digest is accepted only when the file status is identical before and
+    after one complete read. Reading can itself change the status once, for
+    example when a cloud-synchronized placeholder is downloaded on first
+    access, so an unstable read is retried before the input is rejected.
+    """
+    for _ in range(_DIGEST_ATTEMPTS):
+        before = _stat_identity(path)
+        digest = hashlib.sha256()
+        with path.open("rb") as stream:
+            for block in iter(lambda: stream.read(_DIGEST_BLOCK_BYTES), b""):
+                digest.update(block)
+        if _stat_identity(path) == before:
+            return digest.hexdigest()
+    raise RuntimeError("An epoch input changed during content verification; retry after writes finish")
 
 
 def _digest(value) -> str:
