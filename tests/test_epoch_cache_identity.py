@@ -102,7 +102,7 @@ def test_missing_events_are_regenerated_before_cache_lookup(project, monkeypatch
     def regenerate(*args, **kwargs):
         write_events(events, [4.0])
 
-    monkeypatch.setattr(recording, "events_for", regenerate)
+    monkeypatch.setattr(recording, "detect_events", regenerate)
     assert run(recording).n_trials() == 1
 
 

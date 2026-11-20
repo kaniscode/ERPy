@@ -409,7 +409,7 @@ def test_epochs_hdf_roundtrip_supports_large_audit_metadata(tmp_path):
 
 
 def test_epochs_json_metadata_payload_is_deterministic():
-    from ERPy.epochs import _decode_metadata_payload, _encode_metadata_payload
+    from ERPy._metadata import _decode_metadata_payload, _encode_metadata_payload
 
     first = {
         "zero_anchor_reports": [{"epoch": np.int64(2), "settled": True}],
@@ -455,7 +455,7 @@ def _write_legacy_epochs_file(path: Path, frame: pd.DataFrame, metadata: dict) -
 def test_epochs_hdf_rejects_legacy_pickle_metadata_by_default(tmp_path, monkeypatch):
     from types import SimpleNamespace
 
-    import ERPy.epochs as epoch_storage
+    import ERPy._metadata as epoch_storage
 
     index = pd.MultiIndex.from_product([[0], [-0.1, 0.0, 0.1]], names=["epoch", "time"])
     frame = pd.DataFrame({"C1": [0.0, 1.0, 0.0]}, index=index)

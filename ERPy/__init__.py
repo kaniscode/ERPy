@@ -1,5 +1,30 @@
-"""ERPy public API."""
+"""ERPy: stimulation-evoked intracranial response detection and analysis.
 
+The usual entry point is :class:`Patient`::
+
+    import ERPy as ep
+
+    patient = ep.Patient("EXAMPLE_PATIENT", config_path="config.yaml")
+    result = patient.analyze("EXAMPLE_SESSION", "STIM_A_1_2")
+    result.primary_significant
+
+The names exported here follow the workflow:
+
+* **Projects and data** - :class:`Patient`, :class:`Recording`,
+  :class:`DataLoader`, BIDS/NWB import, continuous-signal storage.
+* **Events and preprocessing** - :class:`Events`, :class:`Pipeline`,
+  bad-channel screening, artifact anchors.
+* **Epochs and quality control** - :class:`Epochs`, trial-by-channel artifact
+  QC, :func:`audit_waveforms`.
+* **Response detection** - :func:`detect`, CRP and CRP-energy, statistical
+  inference helpers.
+* **Spectral, connectivity, and network analysis** - time-frequency and
+  coupling measures, directed graph metrics, travelling waves.
+
+Plotting lives in :mod:`ERPy.viz` and is reachable from ``epochs.plot``.
+"""
+
+from ._version import CHECKPOINT_COMPATIBILITY_ID, __version__
 from .analysis import Analysis
 from .artifact_anchor import (
     POST_ARTIFACT_ZERO,
@@ -76,7 +101,7 @@ from .inference import (
     fdr_bh,
     hierarchical_bootstrap_interval,
 )
-from .pipeline import Pipeline, UnsafeLegacyProcessedMetadataError
+from .pipeline import STANDARD_PIPELINES, Pipeline, UnsafeLegacyProcessedMetadataError
 from .response_metrics import zscore_metric_within_stim
 from .spectral import (
     DEFAULT_BANDS,
@@ -116,123 +141,124 @@ from .waveform_qc import (
     common_mode_recovery_diagnostic,
 )
 
-__version__ = "1.1.0rc1"
-# This developer-maintained checkpoint is shared by every installation with
-# the same numerical and QC semantics. It is not a participant identifier, a
-# local release-record label, or a network destination. Bump it only when
-# numerical analysis results or QC semantics change.
-CHECKPOINT_COMPATIBILITY_ID = "415a636abd5b9a28"
-
 __all__ = [
+    "__version__",
+    "CHECKPOINT_COMPATIBILITY_ID",
+    # Projects and data
+    "Patient",
+    "Recording",
+    "Session",
+    "Study",
+    "DataLoader",
     "Analysis",
     "AnalysisResult",
-    "ArtifactResponseReport",
     "BIDSImportResult",
+    "discover_bids_ieeg",
+    "import_bids_project",
+    "complete_contact_coordinates",
+    "load_continuous_npz",
+    "resample_continuous",
+    "save_continuous_npz",
+    # Events and preprocessing
+    "Events",
+    "EventDetectionError",
+    "create_events_from_binary_series",
+    "create_events_from_timestamps",
+    "detect_events_from_artifacts",
+    "evoked_to_datetime",
+    "process_events_for_session",
+    "Pipeline",
+    "STANDARD_PIPELINES",
+    "UnsafeLegacyProcessedMetadataError",
     "BadChannelReport",
-    "BootstrapInterval",
-    "ComodulogramResult",
-    "CRPConfig",
-    "CRPEnergyConfig",
-    "CRPEnergyResult",
-    "CRP_ENERGY_DETECTOR_VERSION",
-    "CRPResult",
-    "FixedWindowReproducibilityResult",
-    "CHECKPOINT_COMPATIBILITY_ID",
-    "DEFAULT_BANDS",
-    "DEFAULT_HARD_ARTIFACT_REASONS",
-    "DEFAULT_SCAFFOLD_PATTERN",
-    "DataLoader",
-    "DETECTOR_DEFINITIONS",
-    "DETECTOR_QUANTITY_COLUMNS",
-    "DETECTOR_REFERENCES",
+    "detect_bad_channels",
+    "reject_bad_channels",
+    "POST_ARTIFACT_ZERO",
+    "artifact_envelope",
+    "detect_post_artifact_anchor",
+    "detect_zero_time_artifact",
+    # Epochs and quality control
     "Epochs",
     "EpochsCore",
     "EpochsResult",
-    "EpochsSpectral",
-    "EventDetectionError",
-    "Events",
-    "PACResult",
-    "PLVResult",
-    "Pipeline",
-    "PRIMARY_CRITERION",
-    "Patient",
-    "POST_ARTIFACT_ZERO",
-    "Recording",
-    "Session",
-    "SignFlipResult",
-    "SpectralConfig",
-    "Study",
-    "TFRResult",
     "UnsafeLegacyEpochMetadataError",
-    "UnsafeLegacyProcessedMetadataError",
-    "ALL_METHODS",
+    "ArtifactResponseReport",
+    "DEFAULT_HARD_ARTIFACT_REASONS",
+    "detect_artifactual_responses",
+    "reject_artifactual_responses",
+    "response_artifact_summary",
     "WaveformAudit",
-    "__version__",
-    "band_power",
-    "bidirectional_edge_summary",
-    "canonicalize_connectivity_edges",
-    "coherence_matrix",
-    "coherence_matrix_from_dataframe",
-    "connectivity_matrix_from_dataframe",
-    "complete_contact_coordinates",
-    "compute_ersp",
-    "compute_psd",
-    "compute_tfr",
+    "audit_waveforms",
     "common_mode_recovery_diagnostic",
+    # Response detection
+    "detect",
+    "ALL_METHODS",
+    "PRIMARY_CRITERION",
+    "DETECTOR_DEFINITIONS",
+    "DETECTOR_QUANTITY_COLUMNS",
+    "DETECTOR_REFERENCES",
+    "CRPConfig",
+    "CRPResult",
+    "run_crp",
+    "run_crp_all",
     "compare_crp_across_stim_sites",
-    "create_events_from_binary_series",
-    "create_events_from_timestamps",
+    "CRPEnergyConfig",
+    "CRPEnergyResult",
+    "CRP_ENERGY_DETECTOR_VERSION",
+    "FixedWindowReproducibilityResult",
+    "run_crp_energy_array",
+    "fixed_window_reproducibility_sign_flip_test",
+    "paired_log_rms_sign_flip_test",
+    "BootstrapInterval",
+    "SignFlipResult",
+    "exact_sign_flip_test",
+    "fdr_bh",
+    "hierarchical_bootstrap_interval",
+    "zscore_metric_within_stim",
+    # Spectral analysis
+    "EpochsSpectral",
+    "SpectralConfig",
+    "DEFAULT_BANDS",
+    "TFRResult",
+    "PLVResult",
+    "PACResult",
+    "ComodulogramResult",
+    "compute_psd",
+    "band_power",
+    "compute_tfr",
+    "compute_ersp",
+    "inter_trial_phase_coherence",
+    "phase_locking_value",
+    "plv_matrix",
+    "coherence_matrix",
+    "granger_causality_matrix",
+    "mutual_information_matrix",
+    "phase_amplitude_coupling",
+    "phase_amplitude_comodulogram",
+    "phase_phase_coupling",
+    "phase_phase_matrix",
+    # Connectivity from continuous recordings
+    "canonicalize_connectivity_edges",
+    "connectivity_matrix_from_dataframe",
+    "coherence_matrix_from_dataframe",
+    "multitaper_coherence_matrices_from_dataframe",
+    "plv_matrix_from_dataframe",
+    "granger_causality_matrix_from_dataframe",
+    "mutual_information_matrix_from_dataframe",
+    "dataframe_time_window",
+    "post_stim_rest_window",
+    # Network analysis and travelling waves
+    "bidirectional_edge_summary",
     "compute_dynamic_graph_metrics",
     "dynamic_target_distribution_metrics",
-    "dataframe_time_window",
+    "evoked_graph_metric_timecourse",
+    "evoked_response_edges_over_time",
+    "opportunity_conditioned_reciprocity",
+    "weighted_directed_node_metrics",
+    "DEFAULT_SCAFFOLD_PATTERN",
     "estimate_latency_gradient",
     "latency_distance_permutation_test",
     "latency_gradient_permutation_test",
-    "exact_sign_flip_test",
-    "fdr_bh",
-    "fixed_window_reproducibility_sign_flip_test",
-    "granger_causality_matrix",
-    "granger_causality_matrix_from_dataframe",
-    "inter_trial_phase_coherence",
-    "hierarchical_bootstrap_interval",
-    "load_continuous_npz",
-    "mutual_information_matrix",
-    "mutual_information_matrix_from_dataframe",
-    "multitaper_coherence_matrices_from_dataframe",
-    "opportunity_conditioned_reciprocity",
-    "phase_amplitude_comodulogram",
-    "phase_amplitude_coupling",
-    "phase_locking_value",
-    "paired_log_rms_sign_flip_test",
-    "phase_phase_coupling",
-    "phase_phase_matrix",
-    "plv_matrix_from_dataframe",
-    "plv_matrix",
-    "post_stim_rest_window",
-    "run_crp",
-    "run_crp_all",
-    "run_crp_energy_array",
-    "artifact_envelope",
-    "audit_waveforms",
-    "discover_bids_ieeg",
-    "detect",
-    "detect_artifactual_responses",
-    "detect_bad_channels",
-    "detect_events_from_artifacts",
-    "detect_post_artifact_anchor",
-    "detect_zero_time_artifact",
-    "evoked_graph_metric_timecourse",
-    "evoked_response_edges_over_time",
-    "evoked_to_datetime",
-    "import_bids_project",
-    "process_events_for_session",
-    "reject_artifactual_responses",
-    "reject_bad_channels",
-    "response_artifact_summary",
-    "resample_continuous",
-    "save_continuous_npz",
     "latency_wavefront_table",
     "scaffold_region_mask",
-    "zscore_metric_within_stim",
-    "weighted_directed_node_metrics",
 ]

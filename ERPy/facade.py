@@ -1,135 +1,124 @@
+"""High-level entry points: :class:`Patient` and its per-session :class:`Recording`."""
+
 from __future__ import annotations
 
 import inspect
 import io
-import json
 import math
 from collections.abc import Iterable
-from dataclasses import dataclass, field
-from pathlib import Path
+from dataclasses import dataclass
 from typing import Any
 
 import pandas as pd
 
 from ._epoch_cache import epoch_cache_identity
+from ._version import CHECKPOINT_COMPATIBILITY_ID, __version__
 from .analysis import Analysis
 from .artifact_anchor import POST_ARTIFACT_ZERO
-from .bad_channels import DEFAULT_HARD_ARTIFACT_REASONS, ArtifactResponseReport
+from .bad_channels import DEFAULT_HARD_ARTIFACT_REASONS, detect_artifactual_responses
 from .dataloader import DataLoader
+from .defaults import DEFAULT_BASELINE, DEFAULT_PIPELINE, DEFAULT_RESPONSE_WINDOW, DEFAULT_TMAX, DEFAULT_TMIN
 from .epochs import Epochs
+from .erp_detection import ALL_METHODS
 from .events import Events, detect_events_from_artifacts
-from .pipeline import Pipeline
+from .pipeline import Pipeline, PipelineSpec, PipelineSteps
+
+# Re-exported so existing imports from ``ERPy.facade`` keep working.
+from .results import (  # noqa: F401
+    AnalysisResult,
+    _annotate_detection_artifact_qc,
+    _metadata_value,
+    _result_prefix,
+    _significant_rows,
+)
+from .utils.utils import parse_event_times
 
 EpochsResult = Epochs
 
+#: Epoch options with a named parameter in :meth:`Recording.epoch`.
+_EPOCH_OPTION_DEFAULTS: dict[str, Any] = {
+    "tmin": DEFAULT_TMIN,
+    "tmax": DEFAULT_TMAX,
+    "baseline": DEFAULT_BASELINE,
+    "zero_time": POST_ARTIFACT_ZERO,
+    "artifact_anchor_params": None,
+    "cache": True,
+    "event_method": "auto",
+    "save_epochs": True,
+}
 
-@dataclass
-class AnalysisResult:
-    """One-call result for the common ERPy stimulation-response workflow."""
+#: Extra keyword arguments of :meth:`Recording.epoch` that select or bound the
+#: recording to process, and therefore take part in the cache identity.
+_PROCESSING_OPTION_NAMES = (
+    "input_source",
+    "raw_file",
+    "stim_start",
+    "processing_margin_s",
+    "load_from_raw",
+    "overwrite",
+)
 
-    epochs: Epochs
-    detections: pd.DataFrame
-    artifact_report: ArtifactResponseReport
-    artifact_summary: pd.DataFrame
-    qc_detections: pd.DataFrame
-    clean_epochs: Epochs | None = None
-    metadata: dict[str, Any] = field(default_factory=dict)
+#: Detection options recorded in the audit metadata's ``effective_core``.
+_CORE_DETECTION_OPTION_NAMES = frozenset(
+    {
+        "methods",
+        "min_consensus",
+        "baseline_window",
+        "response_window",
+        "response_boundary_guard_s",
+        "wideband_epochs",
+    }
+)
 
-    @property
-    def significant(self) -> pd.DataFrame:
-        """Return significant response rows from the full detection table."""
-
-        return _significant_rows(self.detections)
-
-    @property
-    def primary_significant(self) -> pd.DataFrame:
-        """Return one CRP-energy row per primary response after artifact QC."""
-
-        data = self.qc_detections.copy()
-        if "primary_qc_pass" not in data.columns:
-            return data.iloc[0:0].copy()
-        data = data[data["primary_qc_pass"].fillna(False)].copy()
-        if "method" in data.columns:
-            primary_rows = data[data["method"].astype(str).eq("crp_energy")]
-            if not primary_rows.empty:
-                return primary_rows.reset_index(drop=True)
-        identity = [
-            column
-            for column in (
-                "patient_id",
-                "session_id",
-                "stim_pair",
-                "acquisition_id",
-                "raw_file",
-                "channel",
-            )
-            if column in data.columns
-        ]
-        return data.drop_duplicates(identity).reset_index(drop=True) if identity else data.reset_index(drop=True)
-
-    @property
-    def qc_pass_detections(self) -> pd.DataFrame:
-        """Return detection rows that pass response-artifact QC."""
-
-        if self.qc_detections.empty or "artifact_qc_pass" not in self.qc_detections.columns:
-            return self.qc_detections.copy()
-        return self.qc_detections[self.qc_detections["artifact_qc_pass"].fillna(False)].copy()
-
-    def save(self, output_dir: str | Path, prefix: str | None = None) -> dict[str, Path]:
-        """Save the standard tables and deterministic audit metadata.
-
-        The metadata record includes resolved epoch and pipeline options,
-        whether persistent-channel screening was configured, effective
-        response-artifact settings, detector windows and overrides, and one
-        method-native parameter record for every executed detector.
-
-        This method writes only to ``output_dir``. It does not upload data,
-        contact a registry, or create a release-record identifier.
-        Projects that use an opaque release-record label should keep its local
-        mapping under their own governance controls.
-        """
-
-        output_dir = Path(output_dir)
-        output_dir.mkdir(parents=True, exist_ok=True)
-        prefix = prefix or _result_prefix(self.metadata)
-        paths = {
-            "detections": output_dir / f"{prefix}_detections.csv",
-            "detections_qc": output_dir / f"{prefix}_detections_qc.csv",
-            "detections_qc_pass": output_dir / f"{prefix}_detections_qc_pass.csv",
-            "detections_primary": output_dir / f"{prefix}_detections_primary.csv",
-            "artifact_response_table": output_dir / f"{prefix}_artifact_response_table.csv",
-            "artifact_channel_summary": output_dir / f"{prefix}_artifact_channel_summary.csv",
-            "zero_anchor_report": output_dir / f"{prefix}_zero_anchor_report.csv",
-            "metadata": output_dir / f"{prefix}_metadata.json",
-        }
-        self.detections.to_csv(paths["detections"], index=False)
-        self.qc_detections.to_csv(paths["detections_qc"], index=False)
-        self.qc_pass_detections.to_csv(paths["detections_qc_pass"], index=False)
-        self.primary_significant.to_csv(paths["detections_primary"], index=False)
-        self.artifact_report.table.to_csv(paths["artifact_response_table"], index=False)
-        self.artifact_summary.to_csv(paths["artifact_channel_summary"], index=False)
-        self.epochs.post_artifact_anchor_report().to_csv(paths["zero_anchor_report"], index=False)
-        paths["metadata"].write_text(
-            json.dumps(
-                _metadata_value(self.metadata),
-                indent=2,
-                sort_keys=True,
-                allow_nan=False,
-            )
-            + "\n",
-            encoding="utf-8",
-        )
-        return paths
+#: Detector-table columns summarized once per method in the audit metadata.
+_DETECTOR_PARAMETER_COLUMNS = (
+    "detector_version",
+    "detector_input",
+    "detector_definition",
+    "detector_reference",
+    "threshold",
+    "response_window",
+    "baseline_window",
+    "parameters",
+    "testing_family_size",
+    "multiple_comparison_correction",
+    "reproducibility_test_exact",
+    "reproducibility_n_randomizations",
+    "energy_n_permutations",
+    "random_state_root",
+    "random_state_effective",
+    "random_stream_derivation",
+    "signi_n_permutations",
+    "hays_n1_threshold_z",
+    "kundu_envelope_threshold_uv",
+)
 
 
 class Patient:
     """Quick-use public wrapper for one patient.
 
+    A patient bundles the configured :class:`DataLoader`, the preprocessing
+    :class:`Pipeline`, event detection, and the analysis helpers. Index it by
+    session (``patient["A"]``) to obtain a :class:`Recording`.
+
+    Parameters
+    ----------
+    patient_id
+        Identifier used in the metadata tables.
+    config_path
+        ERPy YAML configuration. When omitted, ``$ERPY_CONFIG``, the working
+        directory and ``~/.erpy`` are searched.
+    verbose
+        Forwarded to the :class:`DataLoader`.
+
     Examples
     --------
-    >>> patient = ep.Patient("EXAMPLE_PATIENT")
+    >>> patient = ep.Patient("EXAMPLE_PATIENT", config_path="config.yaml")
+    >>> result = patient.analyze("EXAMPLE_SESSION", "STIM_A_1_2")
+    >>> result.primary_significant.head()
+
     >>> epochs = patient.epoch("EXAMPLE_SESSION", "STIM_A_1_2")
-    >>> detections = epochs.detect_erp_all()
+    >>> detections = epochs.detect_all()
     """
 
     def __init__(self, patient_id: str, config_path: str | None = None, verbose: bool = True) -> None:
@@ -142,6 +131,13 @@ class Patient:
         self.stim_meta = self.dataloader.stim_meta
         self.raw_meta = self.dataloader.raw_meta
 
+    def __repr__(self) -> str:
+        sessions = ", ".join(map(str, self.session_ids)) or "none"
+        return f"<Patient {self.patient_id} | sessions: {sessions}>"
+
+    # ------------------------------------------------------------------
+    # Construction from standard formats
+    # ------------------------------------------------------------------
     @classmethod
     def from_bids(
         cls,
@@ -200,8 +196,11 @@ class Patient:
             copy_raw=copy_raw,
             verbose=verbose,
         )
-        return cls(dataloader.patient_id, config_path=str(dataloader.CONFIG_PATH), verbose=verbose)
+        return cls(dataloader.patient_id, config_path=str(dataloader.config_path), verbose=verbose)
 
+    # ------------------------------------------------------------------
+    # Navigation
+    # ------------------------------------------------------------------
     def __getitem__(self, session_id: str) -> Recording:
         return self.recording(session_id)
 
@@ -215,29 +214,41 @@ class Patient:
 
         return self.recording(session_id)
 
-    def sessions(self) -> list[str]:
-        """Return registered session identifiers for this patient."""
+    @property
+    def session_ids(self) -> list[str]:
+        """Registered session identifiers for this patient."""
 
         return self.dataloader.session_ids
 
-    def stim_pairs(self, session_id: str) -> list[str]:
-        """Return registered stimulation pairs for one session."""
+    def sessions(self) -> list[str]:
+        """Return registered session identifiers; same as :attr:`session_ids`."""
+
+        return self.session_ids
+
+    def stim_pairs(self, session_id: str | None = None) -> list[str]:
+        """Return registered stimulation pairs, optionally for one session."""
 
         return self.dataloader.stim_pairs(session_id)
 
+    # ------------------------------------------------------------------
+    # Workflow shortcuts (each delegates to the session's Recording)
+    # ------------------------------------------------------------------
     def detect_events(self, session_id: str, stim_pair: str, method: str = "auto", **kwargs: Any) -> pd.DataFrame:
         """Detect stimulation events for one session and stimulation pair."""
 
-        return self.recording(session_id).events_for(stim_pair, method=method, **kwargs)
+        return self.recording(session_id).detect_events(stim_pair, method=method, **kwargs)
 
     def epoch(
         self,
         session_id: str,
         stim_pair: str,
-        pipeline: str | list[tuple[str, dict[str, Any]]] = "blank_filt",
+        pipeline: PipelineSpec = DEFAULT_PIPELINE,
         **kwargs: Any,
-    ) -> EpochsResult:
-        """Extract or load event-locked epochs for one acquisition."""
+    ) -> Epochs:
+        """Extract or load event-locked epochs for one acquisition.
+
+        See :meth:`Recording.epoch` for the epoch and caching options.
+        """
 
         return self.recording(session_id).epoch(stim_pair, pipeline=pipeline, **kwargs)
 
@@ -245,15 +256,15 @@ class Patient:
         self,
         session_id: str,
         stim_pair: str,
-        pipeline: str | list[tuple[str, dict[str, Any]]] = "blank_filt",
-        tmin: float = -0.5,
-        tmax: float = 1.0,
-        baseline: tuple[float, float] | None = (-0.5, -0.03),
+        pipeline: PipelineSpec = DEFAULT_PIPELINE,
+        tmin: float = DEFAULT_TMIN,
+        tmax: float = DEFAULT_TMAX,
+        baseline: tuple[float, float] | None = DEFAULT_BASELINE,
         zero_time: float | str | None = POST_ARTIFACT_ZERO,
         artifact_anchor_params: dict[str, Any] | None = None,
         event_method: str = "auto",
         **kwargs: Any,
-    ) -> EpochsResult:
+    ) -> Epochs:
         """Run preprocessing and epoch extraction without reusing a cache."""
 
         return self.recording(session_id).epoch(
@@ -276,7 +287,10 @@ class Patient:
         stim_pair: str,
         **kwargs: Any,
     ) -> AnalysisResult:
-        """Run epoching, response-artifact QC, and ERP detection in one call."""
+        """Run epoching, response-artifact QC, and ERP detection in one call.
+
+        See :meth:`Recording.analyze` for the available options.
+        """
 
         return self.recording(session_id).analyze(stim_pair, **kwargs)
 
@@ -285,7 +299,7 @@ class Patient:
 
         from .warmup import warm_patient
 
-        return warm_patient(self.patient_id, config_path=self.dataloader.CONFIG_PATH, session_ids=session_ids, **kwargs)
+        return warm_patient(self.patient_id, config_path=self.dataloader.config_path, session_ids=session_ids, **kwargs)
 
     def warmup_jobs(self, session_ids: Iterable[str] | None = None, **kwargs: Any) -> pd.DataFrame:
         """Submit cache-warmup jobs for selected patient sessions."""
@@ -293,7 +307,7 @@ class Patient:
         from .warmup import submit_warmup_jobs
 
         return submit_warmup_jobs(
-            self.patient_id, config_path=self.dataloader.CONFIG_PATH, session_ids=session_ids, **kwargs
+            self.patient_id, config_path=self.dataloader.config_path, session_ids=session_ids, **kwargs
         )
 
 
@@ -304,6 +318,13 @@ class Recording:
     A recording fixes ``session_id`` while exposing event creation, epoching,
     cache loading, and the one-call analysis contract for any registered
     stimulation pair. ``Session`` is a compatibility alias for this class.
+
+    Examples
+    --------
+    >>> recording = patient["EXAMPLE_SESSION"]
+    >>> recording.stim_pairs()
+    ['STIM_A_1_2', 'STIM_A_3_4']
+    >>> result = recording.analyze("STIM_A_1_2")
     """
 
     patient: Patient
@@ -326,14 +347,17 @@ class Recording:
 
         return self.dataloader.stim_pairs(self.session_id)
 
-    def events_for(
+    def detect_events(
         self,
         stim_pair: str,
         method: str = "auto",
         save_events: bool = True,
         **kwargs: Any,
     ) -> pd.DataFrame:
-        """Detect and optionally save events for one stimulation pair."""
+        """Detect and optionally save events for one stimulation pair.
+
+        ``kwargs`` are forwarded to :func:`ERPy.detect_events_from_artifacts`.
+        """
 
         return detect_events_from_artifacts(
             self.dataloader,
@@ -344,39 +368,69 @@ class Recording:
             **kwargs,
         )
 
-    def load_epochs(
-        self, stim_pair: str, pipeline: str | list[tuple[str, dict[str, Any]]] = "blank_filt", **kwargs: Any
-    ) -> EpochsResult:
+    def events_for(self, stim_pair: str, method: str = "auto", save_events: bool = True, **kwargs: Any) -> pd.DataFrame:
+        """Detect events for one stimulation pair; alias of :meth:`detect_events`."""
+
+        return self.detect_events(stim_pair, method=method, save_events=save_events, **kwargs)
+
+    def load_epochs(self, stim_pair: str, pipeline: PipelineSpec = DEFAULT_PIPELINE, **kwargs: Any) -> Epochs:
         """Load the newest matching epoch cache for a stimulation pair.
 
         ``allow_unsafe_legacy_pickle=True`` may be passed only for a trusted
         pre-1.0 cache whose pickle metadata the caller accepts executing.
         """
 
-        steps = self._steps(pipeline)
         return self.pipeline_obj.load_epochs(
             self.session_id,
             stim_pair,
-            pipeline_steps=steps,
+            pipeline_steps=self._steps(pipeline),
             allow_unsafe_legacy_pickle=bool(kwargs.pop("allow_unsafe_legacy_pickle", False)),
         )
 
     def epoch(
         self,
         stim_pair: str,
-        pipeline: str | list[tuple[str, dict[str, Any]]] = "blank_filt",
-        tmin: float = -0.5,
-        tmax: float = 1.0,
-        baseline: tuple[float, float] | None = (-0.5, -0.03),
+        pipeline: PipelineSpec = DEFAULT_PIPELINE,
+        tmin: float = DEFAULT_TMIN,
+        tmax: float = DEFAULT_TMAX,
+        baseline: tuple[float, float] | None = DEFAULT_BASELINE,
         zero_time: float | str | None = POST_ARTIFACT_ZERO,
         artifact_anchor_params: dict[str, Any] | None = None,
         cache: bool = True,
         event_method: str = "auto",
         save_epochs: bool = True,
         **kwargs: Any,
-    ) -> EpochsResult:
+    ) -> Epochs:
         """Preprocess and epoch one stimulation pair, optionally using a cache.
 
+        Parameters
+        ----------
+        stim_pair
+            Registered stimulation pair, for example ``"STIM_A_1_2"``.
+        pipeline
+            Name of a standard pipeline or a list of ``(step, parameters)``.
+        tmin, tmax
+            Epoch limits in seconds relative to stimulation onset.
+        baseline
+            Window whose mean is subtracted from each trial, or ``None``.
+        zero_time
+            Post-baseline recentring: ERPy's post-artifact anchor (default), a
+            fixed time in seconds, or ``None`` to skip.
+        artifact_anchor_params
+            Overrides for the post-artifact anchor search.
+        cache
+            Reuse a verified epoch cache when one matches.
+        event_method
+            Detector used when no event file exists yet.
+        save_epochs
+            Write the extracted epochs to the cache.
+        **kwargs
+            Recording selection (``input_source``, ``raw_file``,
+            ``stim_start``, ``processing_margin_s``, ``overwrite``) and, when
+            events must be detected first, event-detection options.
+
+        Notes
+        -----
         Automatic reuse verifies current event and source contents plus effective
         processing settings. Legacy caches without this identity are recomputed.
         ``auto`` reads registered raw inputs on a miss; a window export is used
@@ -389,24 +443,14 @@ class Recording:
         steps = self._steps(pipeline)
         event_path = self.dataloader.get_event_path(self.session_id, stim_pair)
         if not event_path.exists():
-            self.events_for(stim_pair, method=event_method, save_events=True, **kwargs)
+            self.detect_events(stim_pair, method=event_method, save_events=True, **kwargs)
         event_bytes = event_path.read_bytes()
         event_info = pd.read_csv(io.BytesIO(event_bytes))
         if "times" not in event_info:
             raise ValueError(f"Event file must contain a 'times' column: {event_path}")
-        event_times = _parse_event_times(event_info["times"])
-        processing_options = {
-            key: kwargs[key]
-            for key in (
-                "input_source",
-                "raw_file",
-                "stim_start",
-                "processing_margin_s",
-                "load_from_raw",
-                "overwrite",
-            )
-            if key in kwargs
-        }
+        event_times = parse_event_times(event_info["times"])
+
+        processing_options = {name: kwargs[name] for name in _PROCESSING_OPTION_NAMES if name in kwargs}
         options = {
             "tmin": float(tmin),
             "tmax": float(tmax),
@@ -417,12 +461,7 @@ class Recording:
             **processing_options,
         }
         identity, source = epoch_cache_identity(
-            self.pipeline_obj,
-            self.session_id,
-            stim_pair,
-            steps,
-            event_bytes,
-            options,
+            self.pipeline_obj, self.session_id, stim_pair, steps, event_bytes, options
         )
         path = self.pipeline_obj._epochs_path(
             self.session_id,
@@ -441,6 +480,7 @@ class Recording:
                     return cached
             except (FileNotFoundError, ValueError):
                 pass
+
         # Lower caches have no binding to current events/source. A facade miss
         # must not silently reconstruct an epoch from stale in-memory signals.
         self.dataloader.clear_memory_cache()
@@ -459,15 +499,11 @@ class Recording:
             save_epochs=False,
             **processing_options,
         )
-        current, _ = epoch_cache_identity(
-            self.pipeline_obj,
-            self.session_id,
-            stim_pair,
-            steps,
-            event_path.read_bytes(),
-            options,
+        current_event_bytes = event_path.read_bytes()
+        current_identity, _ = epoch_cache_identity(
+            self.pipeline_obj, self.session_id, stim_pair, steps, current_event_bytes, options
         )
-        if current != identity or event_path.read_bytes() != event_bytes:
+        if current_identity != identity or event_path.read_bytes() != event_bytes:
             raise RuntimeError("Epoch inputs changed during processing; retry after writes finish")
         epochs.metadata["epoch_cache_identity"] = identity
         epochs.metadata["epoch_source_kind"] = source
@@ -479,7 +515,7 @@ class Recording:
         self,
         stim_pair: str,
         *,
-        pipeline: str | list[tuple[str, dict[str, Any]]] = "blank_filt",
+        pipeline: PipelineSpec = DEFAULT_PIPELINE,
         methods: list[str] | None = None,
         min_consensus: int = 2,
         response_window: tuple[float, float] | None = None,
@@ -496,21 +532,57 @@ class Recording:
     ) -> AnalysisResult:
         """Run the default ERPy analysis contract for one stimulation pair.
 
-        This keeps the common notebook path compact while returning the same
-        auditable artifacts available from the lower-level API. Trial-contact
-        artifact QC is always evaluated. Persistent-channel detection is
-        performed only when the preprocessing pipeline contains an explicit
-        ``reject_bad_channels`` step, such as ``blank_filt_reject``.
+        The call epochs the acquisition, scores every trial-by-channel response
+        for artifacts, rejects contaminated responses, runs the detectors on
+        the cleaned epochs, and annotates each detection with artifact-QC
+        eligibility. It returns the same auditable artifacts available from
+        the lower-level API.
+
+        Parameters
+        ----------
+        stim_pair
+            Registered stimulation pair.
+        pipeline
+            Standard pipeline name or custom step list.
+        methods
+            Detectors to run; defaults to :data:`ERPy.ALL_METHODS`.
+        min_consensus
+            Number of standalone detectors required by the legacy consensus.
+        response_window
+            Response window applied to both artifact QC and detection.
+        artifact_kwargs
+            Options for :meth:`Epochs.flag_artifacts`.
+        artifact_reject
+            Rejection mode (``"nan_response"``, ``"drop_epoch"``,
+            ``"drop_channel"``) or ``None`` to detect on the unmasked epochs.
+        max_bad_channel_fraction
+            Rejection threshold forwarded to :meth:`Epochs.reject_artifacts`.
+        qc_max_bad_response_fraction, qc_max_hard_artifact_fraction, \
+qc_min_clean_responses, qc_exclude_boundary_peaks
+            Channel eligibility criteria behind ``artifact_qc_pass``.
+        hard_artifact_reasons
+            Artifact reasons counted as hard failures.
+        detect_kwargs
+            Additional options for :meth:`Epochs.detect_all`.
+        **epoch_kwargs
+            Options for :meth:`epoch` (``tmin``, ``tmax``, ``baseline``, ...).
+
+        Notes
+        -----
+        Trial-contact artifact QC is always evaluated. Persistent-channel
+        detection is performed only when the preprocessing pipeline contains
+        an explicit ``reject_bad_channels`` step, such as ``blank_filt_reject``.
         """
 
         resolved_pipeline_steps = self._steps(pipeline)
         epochs = self.epoch(stim_pair, pipeline=pipeline, **epoch_kwargs)
-        hard_reason_values = tuple(str(reason) for reason in hard_artifact_reasons)
+
+        hard_reasons = tuple(str(reason) for reason in hard_artifact_reasons)
         artifact_options = dict(artifact_kwargs or {})
         if response_window is not None:
             artifact_options["response_window"] = response_window
         artifact_report = epochs.flag_artifacts(**artifact_options)
-        artifact_summary = artifact_report.by_channel(hard_artifact_reasons=hard_reason_values)
+        artifact_summary = artifact_report.by_channel(hard_artifact_reasons=hard_reasons)
 
         clean_epochs = epochs
         if artifact_reject:
@@ -526,7 +598,7 @@ class Recording:
         if response_window is not None:
             detection_options["response_window"] = response_window
         detection_options.setdefault("min_consensus", min_consensus)
-        detections = clean_epochs.detect_erp_all(**detection_options)
+        detections = clean_epochs.detect_all(**detection_options)
         qc_detections = _annotate_detection_artifact_qc(
             detections,
             artifact_summary,
@@ -535,88 +607,10 @@ class Recording:
             min_clean_responses=qc_min_clean_responses,
             exclude_boundary_peaks=qc_exclude_boundary_peaks,
         )
-        from . import CHECKPOINT_COMPATIBILITY_ID
-        from . import __version__ as erpy_version
-        from .bad_channels import detect_artifactual_responses
-        from .erp_detection import ALL_METHODS
-
-        effective_artifact_options = _effective_defaults(
-            detect_artifactual_responses,
-            artifact_options,
-            skip={"epochs"},
-        )
-        if effective_artifact_options.get("baseline_window") is None:
-            effective_artifact_options["baseline_window"] = epochs.baseline
-        if effective_artifact_options.get("response_window") is None:
-            effective_artifact_options["response_window"] = (
-                max(0.005, float(epochs.tmin)),
-                min(float(epochs.tmax), 0.5),
-            )
-
-        selected_methods = [str(method).lower() for method in detection_options.get("methods", ALL_METHODS)]
-        effective_detection_core = {
-            "methods": selected_methods,
-            "min_consensus": int(detection_options.get("min_consensus", 2)),
-            "baseline_window": detection_options.get("baseline_window", (-0.5, -0.03)),
-            "response_window": detection_options.get("response_window", (0.01, 0.3)),
-            "response_boundary_guard_s": detection_options.get("response_boundary_guard_s", 0.002),
-            "detector_input": (
-                "wideband_epochs" if detection_options.get("wideband_epochs") is not None else "primary_epochs"
-            ),
-        }
-        method_overrides = {
-            method: detection_options[method] for method in selected_methods if method in detection_options
-        }
-        shared_detection_overrides = {
-            key: value
-            for key, value in detection_options.items()
-            if key
-            not in {
-                "methods",
-                "min_consensus",
-                "baseline_window",
-                "response_window",
-                "response_boundary_guard_s",
-                "wideband_epochs",
-                *ALL_METHODS,
-            }
-        }
-        epoch_options = {
-            "pipeline": pipeline,
-            "resolved_pipeline_steps": resolved_pipeline_steps,
-            "tmin": epoch_kwargs.get("tmin", -0.5),
-            "tmax": epoch_kwargs.get("tmax", 1.0),
-            "baseline": epoch_kwargs.get("baseline", (-0.5, -0.03)),
-            "zero_time": epoch_kwargs.get("zero_time", POST_ARTIFACT_ZERO),
-            "artifact_anchor_params": epoch_kwargs.get("artifact_anchor_params", None),
-            "cache": bool(epoch_kwargs.get("cache", True)),
-            "event_method": epoch_kwargs.get("event_method", "auto"),
-            "save_epochs": bool(epoch_kwargs.get("save_epochs", True)),
-            "additional_options": {
-                key: value
-                for key, value in epoch_kwargs.items()
-                if key
-                not in {
-                    "tmin",
-                    "tmax",
-                    "baseline",
-                    "zero_time",
-                    "artifact_anchor_params",
-                    "cache",
-                    "event_method",
-                    "save_epochs",
-                }
-            },
-        }
-        persistent_steps = [
-            {"step": str(step), "parameters": params}
-            for step, params in resolved_pipeline_steps
-            if str(step) == "reject_bad_channels"
-        ]
 
         metadata = {
             "audit_schema_version": 1,
-            "erpy_version": str(erpy_version),
+            "erpy_version": str(__version__),
             "erpy_compatibility_id": str(CHECKPOINT_COMPATIBILITY_ID),
             "patient_id": self.patient.patient_id,
             "session_id": self.session_id,
@@ -629,23 +623,15 @@ class Recording:
             "qc_max_hard_artifact_fraction": qc_max_hard_artifact_fraction,
             "qc_min_clean_responses": int(qc_min_clean_responses),
             "qc_exclude_boundary_peaks": bool(qc_exclude_boundary_peaks),
-            "epoch": epoch_options,
+            "epoch": _epoch_audit_record(pipeline, resolved_pipeline_steps, epoch_kwargs),
             "epoch_metadata": epochs.metadata,
-            "persistent_channel_qc": {
-                "configured": bool(persistent_steps),
-                "steps": persistent_steps,
-                "note": (
-                    "Persistent-channel rejection was configured in the preprocessing pipeline."
-                    if persistent_steps
-                    else "Persistent-channel detection was not configured; only predeclared exclusions and reference screening may apply."
-                ),
-            },
+            "persistent_channel_qc": _persistent_channel_qc_record(resolved_pipeline_steps),
             "artifact_qc": {
                 "requested_options": artifact_kwargs or {},
-                "effective_options": effective_artifact_options,
+                "effective_options": _effective_artifact_options(artifact_options, epochs),
                 "reject_mode": artifact_reject,
                 "max_bad_channel_fraction": float(max_bad_channel_fraction),
-                "hard_artifact_reasons": sorted(hard_reason_values),
+                "hard_artifact_reasons": sorted(hard_reasons),
                 "eligibility": {
                     "max_bad_response_fraction": float(qc_max_bad_response_fraction),
                     "max_hard_artifact_fraction": float(qc_max_hard_artifact_fraction),
@@ -653,13 +639,7 @@ class Recording:
                     "exclude_boundary_peaks": bool(qc_exclude_boundary_peaks),
                 },
             },
-            "detection": {
-                "requested_options": detect_kwargs or {},
-                "effective_core": effective_detection_core,
-                "shared_overrides": shared_detection_overrides,
-                "method_overrides": method_overrides,
-                "method_parameter_records": _detector_parameter_records(detections),
-            },
+            "detection": _detection_audit_record(detect_kwargs, detection_options, detections),
         }
         return AnalysisResult(
             epochs=epochs,
@@ -671,10 +651,93 @@ class Recording:
             metadata=metadata,
         )
 
-    def _steps(self, pipeline: str | list[tuple[str, dict[str, Any]]]):
-        if isinstance(pipeline, str):
-            return self.pipeline_obj.get_standard_pipeline(pipeline)
-        return self.pipeline_obj.build_custom_pipeline(pipeline)
+    def _steps(self, pipeline: PipelineSpec) -> PipelineSteps:
+        return self.pipeline_obj.resolve_pipeline(pipeline)
+
+
+# Backward-compatible aliases for notebooks written against the recovered docs.
+Study = Patient
+Session = Recording
+
+
+# ----------------------------------------------------------------------
+# Audit metadata
+# ----------------------------------------------------------------------
+def _epoch_audit_record(
+    pipeline: PipelineSpec, resolved_steps: PipelineSteps, epoch_kwargs: dict[str, Any]
+) -> dict[str, Any]:
+    """Describe the epoch settings in effect, including untouched defaults."""
+
+    record: dict[str, Any] = {"pipeline": pipeline, "resolved_pipeline_steps": resolved_steps}
+    for name, default in _EPOCH_OPTION_DEFAULTS.items():
+        value = epoch_kwargs.get(name, default)
+        record[name] = bool(value) if name in {"cache", "save_epochs"} else value
+    record["additional_options"] = {
+        key: value for key, value in epoch_kwargs.items() if key not in _EPOCH_OPTION_DEFAULTS
+    }
+    return record
+
+
+def _persistent_channel_qc_record(resolved_steps: PipelineSteps) -> dict[str, Any]:
+    """Record whether the pipeline screened persistently bad channels."""
+
+    steps = [
+        {"step": str(step), "parameters": params}
+        for step, params in resolved_steps
+        if str(step) == "reject_bad_channels"
+    ]
+    return {
+        "configured": bool(steps),
+        "steps": steps,
+        "note": (
+            "Persistent-channel rejection was configured in the preprocessing pipeline."
+            if steps
+            else "Persistent-channel detection was not configured; only predeclared exclusions and reference screening may apply."
+        ),
+    }
+
+
+def _effective_artifact_options(artifact_options: dict[str, Any], epochs: Epochs) -> dict[str, Any]:
+    """Resolve the artifact-QC settings actually applied to ``epochs``."""
+
+    effective = _effective_defaults(detect_artifactual_responses, artifact_options, skip={"epochs"})
+    if effective.get("baseline_window") is None:
+        effective["baseline_window"] = epochs.baseline
+    if effective.get("response_window") is None:
+        effective["response_window"] = (max(0.005, float(epochs.tmin)), min(float(epochs.tmax), 0.5))
+    return effective
+
+
+def _detection_audit_record(
+    detect_kwargs: dict[str, Any] | None,
+    detection_options: dict[str, Any],
+    detections: pd.DataFrame,
+) -> dict[str, Any]:
+    """Describe requested and effective detector settings."""
+
+    selected_methods = [str(method).lower() for method in detection_options.get("methods", ALL_METHODS)]
+    return {
+        "requested_options": detect_kwargs or {},
+        "effective_core": {
+            "methods": selected_methods,
+            "min_consensus": int(detection_options.get("min_consensus", 2)),
+            "baseline_window": detection_options.get("baseline_window", DEFAULT_BASELINE),
+            "response_window": detection_options.get("response_window", DEFAULT_RESPONSE_WINDOW),
+            "response_boundary_guard_s": detection_options.get("response_boundary_guard_s", 0.002),
+            "detector_input": (
+                "wideband_epochs" if detection_options.get("wideband_epochs") is not None else "primary_epochs"
+            ),
+        },
+        "shared_overrides": {
+            key: value
+            for key, value in detection_options.items()
+            if key not in _CORE_DETECTION_OPTION_NAMES and key not in ALL_METHODS
+        },
+        "method_overrides": {
+            method: detection_options[method] for method in selected_methods if method in detection_options
+        },
+        "method_parameter_records": _detector_parameter_records(detections),
+    }
 
 
 def _effective_defaults(function, supplied: dict[str, Any], *, skip: set[str]) -> dict[str, Any]:
@@ -694,6 +757,8 @@ def _effective_defaults(function, supplied: dict[str, Any], *, skip: set[str]) -
 
 
 def _first_record_value(frame: pd.DataFrame, column: str) -> Any | None:
+    """Return the first non-missing value of ``column``, if any."""
+
     if column not in frame.columns:
         return None
     for value in frame[column]:
@@ -710,34 +775,10 @@ def _detector_parameter_records(detections: pd.DataFrame) -> list[dict[str, Any]
 
     if detections.empty or "method" not in detections.columns:
         return []
-    columns = (
-        "method",
-        "detector_version",
-        "detector_input",
-        "detector_definition",
-        "detector_reference",
-        "threshold",
-        "response_window",
-        "baseline_window",
-        "parameters",
-        "testing_family_size",
-        "multiple_comparison_correction",
-        "reproducibility_test_exact",
-        "reproducibility_n_randomizations",
-        "energy_n_permutations",
-        "random_state_root",
-        "random_state_effective",
-        "random_stream_derivation",
-        "signi_n_permutations",
-        "hays_n1_threshold_z",
-        "kundu_envelope_threshold_uv",
-    )
     records: list[dict[str, Any]] = []
     for method, frame in detections.groupby("method", sort=True, dropna=False):
         record: dict[str, Any] = {"method": str(method)}
-        for column in columns:
-            if column == "method":
-                continue
+        for column in _DETECTOR_PARAMETER_COLUMNS:
             value = _first_record_value(frame, column)
             if value is not None:
                 record[column] = value
@@ -745,180 +786,7 @@ def _detector_parameter_records(detections: pd.DataFrame) -> list[dict[str, Any]
     return records
 
 
-def _metadata_value(value: Any) -> Any:
-    """Convert analysis metadata to deterministic, JSON-safe values."""
-
-    if value is None or isinstance(value, (str, bool, int)):
-        return value
-    if isinstance(value, float):
-        return value if math.isfinite(value) else None
-    if isinstance(value, Path):
-        return str(value)
-    if isinstance(value, dict):
-        return {str(key): _metadata_value(item) for key, item in sorted(value.items(), key=lambda pair: str(pair[0]))}
-    if isinstance(value, (list, tuple)):
-        return [_metadata_value(item) for item in value]
-    if isinstance(value, (set, frozenset)):
-        return [_metadata_value(item) for item in sorted(value, key=str)]
-    if isinstance(value, Epochs):
-        return {
-            "type": "Epochs",
-            "n_trials": int(value.n_trials()),
-            "n_channels": int(len(value.channels)),
-            "sfreq": float(value.sfreq),
-            "tmin": float(value.tmin),
-            "tmax": float(value.tmax),
-        }
-    if callable(value):
-        module = getattr(value, "__module__", "")
-        name = getattr(value, "__qualname__", getattr(value, "__name__", type(value).__name__))
-        return f"{module}.{name}".lstrip(".")
-    item = getattr(value, "item", None)
-    if callable(item):
-        try:
-            return _metadata_value(item())
-        except (TypeError, ValueError):
-            pass
-    return f"<{type(value).__module__}.{type(value).__qualname__}>"
-
-
-# Backward-compatible aliases for notebooks written against the recovered docs.
-Study = Patient
-Session = Recording
-
-
 def _parse_event_times(values):
-    if pd.api.types.is_numeric_dtype(values):
-        return values.to_numpy()
-    parsed = pd.to_datetime(values, errors="coerce")
-    return parsed if parsed.notna().mean() > 0.8 else values
+    """Retained name of :func:`ERPy.utils.parse_event_times`."""
 
-
-def _annotate_detection_artifact_qc(
-    detections: pd.DataFrame,
-    artifact_summary: pd.DataFrame,
-    *,
-    max_bad_response_fraction: float,
-    max_hard_artifact_fraction: float,
-    min_clean_responses: int,
-    exclude_boundary_peaks: bool = True,
-) -> pd.DataFrame:
-    out = detections.copy()
-    if out.empty:
-        out["artifact_qc_pass"] = True
-        out["primary_qc_pass"] = False
-        out["crp_energy_qc_pass"] = False
-        out["shape_magnitude_qc_pass"] = False
-        return out
-    if "channel" not in out.columns:
-        out["artifact_qc_pass"] = True
-        out["primary_qc_pass"] = False
-        out["crp_energy_qc_pass"] = False
-        out["shape_magnitude_qc_pass"] = False
-        return out
-
-    if artifact_summary.empty or "channel" not in artifact_summary.columns:
-        out["bad_response_fraction"] = 0.0
-        out["hard_artifact_fraction"] = 0.0
-        out["n_clean_response"] = pd.to_numeric(
-            out.get("n_trials", pd.Series(0, index=out.index)),
-            errors="coerce",
-        ).fillna(0)
-        out["artifact_reasons"] = ""
-    else:
-        keep_cols = [
-            col
-            for col in (
-                "channel",
-                "n_epochs",
-                "n_bad_response",
-                "n_clean_response",
-                "bad_response_fraction",
-                "n_hard_artifact_response",
-                "hard_artifact_fraction",
-                "artifact_reasons",
-                "max_peak_abs",
-                "max_ptp",
-                "max_saturation_fraction",
-                "max_plateau_fraction",
-                "max_plateau_run_s",
-                "max_rail_fraction",
-            )
-            if col in artifact_summary.columns
-        ]
-        out = out.merge(
-            artifact_summary[keep_cols],
-            on="channel",
-            how="left",
-            suffixes=("", "_artifact"),
-        )
-    bad_fraction = out["bad_response_fraction"] if "bad_response_fraction" in out else pd.Series(0.0, index=out.index)
-    hard_fraction = (
-        out["hard_artifact_fraction"] if "hard_artifact_fraction" in out else pd.Series(0.0, index=out.index)
-    )
-    if "n_clean_response" in out:
-        clean_count = out["n_clean_response"]
-    elif {"n_epochs", "n_bad_response"}.issubset(out.columns):
-        clean_count = pd.to_numeric(out["n_epochs"], errors="coerce") - pd.to_numeric(
-            out["n_bad_response"], errors="coerce"
-        )
-    else:
-        clean_count = pd.Series(0, index=out.index)
-    out["bad_response_fraction"] = pd.to_numeric(bad_fraction, errors="coerce").fillna(0.0)
-    out["hard_artifact_fraction"] = pd.to_numeric(hard_fraction, errors="coerce").fillna(0.0)
-    out["n_clean_response"] = pd.to_numeric(clean_count, errors="coerce").fillna(0).astype(int)
-    out["artifact_reasons"] = out.get("artifact_reasons", "").fillna("").astype(str)
-    out["artifact_hard_fail"] = out["hard_artifact_fraction"] >= float(max_hard_artifact_fraction)
-    out["artifact_insufficient_clean_responses"] = out["n_clean_response"] < int(min_clean_responses)
-    if "peak_at_response_boundary" in out.columns:
-        boundary_peak = out["peak_at_response_boundary"]
-        if not pd.api.types.is_bool_dtype(boundary_peak):
-            boundary_peak = (
-                boundary_peak.fillna(False).astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
-            )
-        else:
-            boundary_peak = boundary_peak.fillna(False)
-    else:
-        boundary_peak = pd.Series(False, index=out.index)
-    out["artifact_boundary_peak_fail"] = boundary_peak & bool(exclude_boundary_peaks)
-    out["artifact_qc_pass"] = (
-        (out["bad_response_fraction"] < float(max_bad_response_fraction))
-        & ~out["artifact_hard_fail"]
-        & ~out["artifact_insufficient_clean_responses"]
-        & ~out["artifact_boundary_peak_fail"]
-    )
-    if "primary_significant" in out.columns:
-        primary = out["primary_significant"]
-        if not pd.api.types.is_bool_dtype(primary):
-            primary = primary.fillna(False).astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
-        out["primary_qc_pass"] = primary.fillna(False) & out["artifact_qc_pass"]
-    else:
-        out["primary_qc_pass"] = False
-    out["crp_energy_qc_pass"] = out["primary_qc_pass"]
-    if "shape_magnitude_significant" in out.columns:
-        primary = out["shape_magnitude_significant"]
-        if not pd.api.types.is_bool_dtype(primary):
-            primary = primary.fillna(False).astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
-        out["shape_magnitude_qc_pass"] = primary.fillna(False) & out["artifact_qc_pass"]
-    else:
-        out["shape_magnitude_qc_pass"] = False
-    return out
-
-
-def _significant_rows(detections: pd.DataFrame) -> pd.DataFrame:
-    if detections.empty:
-        return detections.copy()
-    if "consensus_ch" in detections.columns:
-        return detections[detections["consensus_ch"].fillna(False)].copy()
-    if "significant" in detections.columns:
-        return detections[detections["significant"].fillna(False)].copy()
-    return detections.copy()
-
-
-def _result_prefix(metadata: dict[str, Any]) -> str:
-    parts = [
-        str(metadata.get("patient_id", "patient")),
-        str(metadata.get("session_id", "session")),
-        str(metadata.get("stim_pair", "stim")),
-    ]
-    return "_".join(part.replace("/", "-").replace(" ", "-") for part in parts if part)
+    return parse_event_times(values)

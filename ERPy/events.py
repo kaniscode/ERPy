@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 from scipy import signal
 
+from ._legacy import LegacyScriptHooks
 from .utils.jobrunner import JobRunner
 from .utils.utils import ensure_dir, infer_sfreq, parse_list, read_time_series_csv
 
@@ -1137,7 +1138,7 @@ def process_events_for_session(
 
 
 @dataclass
-class Events:
+class Events(LegacyScriptHooks):
     """Session-event workflow bound to an ERPy ``DataLoader``.
 
     The facade creates canonical event tables for selected stimulation pairs
@@ -1147,28 +1148,12 @@ class Events:
 
     dataloader: Any
 
-    PYTHON_SCRIPT: str | None = None
-    BASH_SCRIPT: str | None = None
-
     def process(
         self, session_id: str, method: str = "consensus", stim_pairs: Iterable[str] | None = None, **kwargs: Any
     ):
         """Detect events for the requested session and stimulation pairs."""
 
         return process_events_for_session(self.dataloader, session_id, method=method, stim_pairs=stim_pairs, **kwargs)
-
-    @classmethod
-    def install_standard_scripts(cls) -> None:
-        """Reset event detection to ERPy's built-in execution path."""
-
-        return None
-
-    @classmethod
-    def use_standard_scripts(cls, bash_type: str = "simple") -> None:
-        """Select ERPy's built-in local event-processing hooks."""
-
-        cls.PYTHON_SCRIPT = None
-        cls.BASH_SCRIPT = None
 
     def queue_job(self, session_ids: Iterable[str] | None = None, backend: str | None = None, **kwargs: Any):
         """Process event jobs and return the runner plus execution summaries."""

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "erpy-neuro"
-version = "1.1.0rc1"
+dynamic = ["version"]
 description = "ERPy: an auditable complete pipeline for intracranial stimulation response detection and analysis"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -52,6 +52,9 @@ erpy-init = "ERPy.cli:main"
 
 [tool.setuptools]
 include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {attr = "ERPy._version.__version__"}
 
 [tool.setuptools.packages.find]
 include = ["ERPy*"]

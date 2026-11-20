@@ -12,6 +12,7 @@ import numpy as np
 import pandas as pd
 import yaml
 
+from ._legacy import legacy_alias
 from .io import parse_brainvision_header
 from .storage import load_continuous_npz, save_continuous_npz
 from .utils.utils import (
@@ -57,8 +58,82 @@ def _empty(columns: list[str]) -> pd.DataFrame:
     return pd.DataFrame(columns=columns)
 
 
+def _bare_session(session_id: Any) -> str:
+    """Return a session identifier without a BIDS ``ses-`` prefix."""
+
+    return str(session_id).replace("ses-", "")
+
+
+def _bare_patient(patient_id: Any) -> str:
+    """Return a patient identifier without a BIDS ``sub-`` prefix."""
+
+    return str(patient_id).replace("sub-", "")
+
+
 class DataLoader:
-    """Configuration and metadata access for one ERPy patient."""
+    """Configuration, metadata, and raw-signal access for one ERPy patient.
+
+    The loader reads the YAML configuration and the three metadata tables,
+    keeps the rows belonging to ``patient_id``, and resolves where raw
+    recordings, events, processed data and epochs live on disk.
+
+    Parameters
+    ----------
+    patient_id
+        Identifier used in the metadata tables (a ``sub-`` prefix is ignored).
+    config_path
+        ERPy YAML configuration; see :func:`ERPy.utils.load_config` for the
+        search order when omitted.
+    load_data
+        Export a raw window for every registered stimulation acquisition.
+    create_tree
+        Create the per-session output folders.
+    verbose
+        Retained for compatibility with scripts that pass it.
+
+    Attributes
+    ----------
+    config : dict
+        Parsed configuration with resolved paths.
+    raw_meta, stim_meta, elec_meta : pandas.DataFrame
+        Recording, stimulation and electrode metadata for this patient.
+    all_raw_meta, all_stim_meta, all_elec_meta : pandas.DataFrame
+        The same tables for every patient in the project.
+    session_ids : list of str
+        Sessions registered in the configuration or metadata.
+    rawdata_path, procdata_path, patient_path : str
+        Raw-data root, processed-data root, and this patient's output folder.
+
+    Notes
+    -----
+    Releases before 1.1 exposed these settings under upper-case names such as
+    ``RAWDATA_PATH`` and ``RAW_META_DF``. Those names remain available as
+    aliases of the snake_case attributes.
+
+    Examples
+    --------
+    >>> loader = DataLoader("EXAMPLE_PATIENT", config_path="config.yaml")
+    >>> loader.stim_pairs("EXAMPLE_SESSION")
+    ['STIM_A_1_2']
+    >>> raw = loader.load_stim_data("EXAMPLE_SESSION", "STIM_A_1_2")
+    """
+
+    # Retained upper-case names (pre-1.1) for the attributes set in __init__.
+    CONFIG_PATH = legacy_alias("config_path")
+    RAWDATA_PATH = legacy_alias("rawdata_path")
+    PROCDATA_PATH = legacy_alias("procdata_path")
+    RAW_META_PATH = legacy_alias("raw_meta_path")
+    STIM_META_PATH = legacy_alias("stim_meta_path")
+    ELEC_META_PATH = legacy_alias("elec_meta_path")
+    EVENT_PATH = legacy_alias("event_path")
+    RAW_CACHE_FORMAT = legacy_alias("raw_cache_format")
+    RAW_CACHE_DTYPE = legacy_alias("raw_cache_dtype")
+    RAW_STAGING_PATH = legacy_alias("raw_staging_path")
+    RAW_META_DF = legacy_alias("all_raw_meta")
+    STIM_META_DF = legacy_alias("all_stim_meta")
+    ELEC_META_DF = legacy_alias("all_elec_meta")
+    PATIENT_PATH = legacy_alias("patient_path")
+    SESSION_PATHS = legacy_alias("session_paths")
 
     def __init__(
         self,
@@ -71,47 +146,51 @@ class DataLoader:
         self.patient_id = str(patient_id)
         self.verbose = verbose
         self.config = load_config(config_path)
-        self.CONFIG_PATH = self.config.get("_config_path")
-        self.RAWDATA_PATH = str(resolve_path(self.config.get("rawdata_path")) or Path.cwd())
-        self.PROCDATA_PATH = str(resolve_path(self.config.get("procdata_path")) or Path.cwd() / "procdata")
-        self.RAW_META_PATH = str(resolve_path(self.config.get("rawdata_meta_path")) or "")
-        self.STIM_META_PATH = str(resolve_path(self.config.get("stim_meta_path")) or "")
-        self.ELEC_META_PATH = str(resolve_path(self.config.get("elec_meta_path")) or "")
-        self.EVENT_PATH = str(resolve_path(self.config.get("event_path")) or "")
+        self.config_path = self.config.get("_config_path")
+        self.rawdata_path = str(resolve_path(self.config.get("rawdata_path")) or Path.cwd())
+        self.procdata_path = str(resolve_path(self.config.get("procdata_path")) or Path.cwd() / "procdata")
+        self.raw_meta_path = str(resolve_path(self.config.get("rawdata_meta_path")) or "")
+        self.stim_meta_path = str(resolve_path(self.config.get("stim_meta_path")) or "")
+        self.elec_meta_path = str(resolve_path(self.config.get("elec_meta_path")) or "")
+        self.event_path = str(resolve_path(self.config.get("event_path")) or "")
         self.python_path = self.config.get("python_path")
-        self.RAW_CACHE_FORMAT = str(self.config.get("raw_cache_format", "csv")).strip().lower()
-        self.RAW_CACHE_DTYPE = str(self.config.get("raw_cache_dtype", "float32")).strip()
+        self.raw_cache_format = str(self.config.get("raw_cache_format", "csv")).strip().lower()
+        self.raw_cache_dtype = str(self.config.get("raw_cache_dtype", "float32")).strip()
         staging = resolve_path(self.config.get("raw_staging_path"))
-        self.RAW_STAGING_PATH = Path(staging) if staging is not None else None
+        self.raw_staging_path = Path(staging) if staging is not None else None
         self._stim_memory_cache_key: tuple[str, str, str] | None = None
         self._stim_memory_cache_df: pd.DataFrame | None = None
 
-        self.RAW_META_DF = self._load_metadata(
-            self.RAW_META_PATH, RAW_ALIASES, ["patient_id", "session_id", "raw_file"]
+        self.all_raw_meta = self._load_metadata(
+            self.raw_meta_path, RAW_ALIASES, ["patient_id", "session_id", "raw_file"]
         )
-        self.STIM_META_DF = self._load_metadata(
-            self.STIM_META_PATH,
+        self.all_stim_meta = self._load_metadata(
+            self.stim_meta_path,
             STIM_ALIASES,
             ["patient_id", "session_id", "stim_pair", "stim_start", "stim_stop", "stim_freq"],
         )
-        self.ELEC_META_DF = self._load_metadata(
-            self.ELEC_META_PATH,
+        self.all_elec_meta = self._load_metadata(
+            self.elec_meta_path,
             ELEC_ALIASES,
             ["patient_id", "session_id", "elec_label", "anat_label", "bad_channel"],
         )
 
-        self.raw_meta = self._filter_patient(self.RAW_META_DF)
-        self.stim_meta = self._filter_patient(self.STIM_META_DF)
-        self.elec_meta = self._filter_patient(self.ELEC_META_DF)
+        self.raw_meta = self._filter_patient(self.all_raw_meta)
+        self.stim_meta = self._filter_patient(self.all_stim_meta)
+        self.elec_meta = self._filter_patient(self.all_elec_meta)
 
         self.session_ids = self._resolve_session_ids()
         self._validate_patient()
-        self.PATIENT_PATH = str(Path(self.PROCDATA_PATH) / self.patient_id)
-        self.SESSION_PATHS = {sid: str(Path(self.PATIENT_PATH) / str(sid)) for sid in self.session_ids}
+        self.patient_path = str(Path(self.procdata_path) / self.patient_id)
+        self.session_paths = {sid: str(Path(self.patient_path) / str(sid)) for sid in self.session_ids}
         if create_tree:
             self.create_session_tree()
         if load_data:
             self.prepare_raw_windows()
+
+    def __repr__(self) -> str:
+        sessions = ", ".join(map(str, self.session_ids)) or "none"
+        return f"<DataLoader {self.patient_id} | sessions: {sessions}>"
 
     @classmethod
     def from_bids(
@@ -285,7 +364,7 @@ class DataLoader:
     def _filter_patient(self, df: pd.DataFrame) -> pd.DataFrame:
         if df.empty or "patient_id" not in df.columns:
             return df.copy()
-        pid = self.patient_id.replace("sub-", "")
+        pid = _bare_patient(self.patient_id)
         return df[df["patient_id"].astype(str).str.replace("^sub-", "", regex=True) == pid].copy()
 
     def _resolve_session_ids(self) -> list[str]:
@@ -293,41 +372,41 @@ class DataLoader:
         values = configured.get(self.patient_id) or configured.get(f"sub-{self.patient_id}") or []
         if isinstance(values, str):
             values = [values]
-        sessions = [str(v).replace("ses-", "") for v in values]
+        sessions = [_bare_session(v) for v in values]
         for df in (self.raw_meta, self.stim_meta, self.elec_meta):
             if not df.empty and "session_id" in df.columns:
-                sessions.extend(str(v).replace("ses-", "") for v in df["session_id"].dropna().unique())
+                sessions.extend(_bare_session(v) for v in df["session_id"].dropna().unique())
         return sorted({s for s in sessions if s and s.lower() != "nan"})
 
     def _validate_patient(self) -> None:
         known = set()
-        for df in (self.RAW_META_DF, self.STIM_META_DF, self.ELEC_META_DF):
+        for df in (self.all_raw_meta, self.all_stim_meta, self.all_elec_meta):
             if not df.empty and "patient_id" in df.columns:
                 known.update(df["patient_id"].dropna().astype(str).str.replace("^sub-", "", regex=True))
-        if known and self.patient_id.replace("sub-", "") not in known:
+        if known and _bare_patient(self.patient_id) not in known:
             raise ValueError(f"Unknown patient_id {self.patient_id!r}. Known patients: {sorted(known)}")
 
     def create_session_tree(self) -> None:
         """Create the standard raw, event, epoch, analysis, and log folders."""
 
-        for session_path in self.SESSION_PATHS.values():
+        for session_path in self.session_paths.values():
             for sub in ("raw", "events", "processed", "epochs", "analysis", "logs"):
                 ensure_dir(Path(session_path) / sub)
 
     def get_session_path(self, session_id: str, kind: str | None = None) -> Path:
         """Return a session directory or one named subdirectory within it."""
 
-        sid = str(session_id).replace("ses-", "")
-        if sid not in self.SESSION_PATHS:
-            self.SESSION_PATHS[sid] = str(Path(self.PATIENT_PATH) / sid)
-        path = Path(self.SESSION_PATHS[sid])
+        sid = _bare_session(session_id)
+        if sid not in self.session_paths:
+            self.session_paths[sid] = str(Path(self.patient_path) / sid)
+        path = Path(self.session_paths[sid])
         return path / kind if kind else path
 
     def get_analysis_path(self, session_id: str | None = None) -> Path:
         """Return and create the patient- or session-level analysis directory."""
 
         if session_id is None:
-            return ensure_dir(Path(self.PATIENT_PATH) / "analysis")
+            return ensure_dir(Path(self.patient_path) / "analysis")
         return ensure_dir(self.get_session_path(session_id, "analysis"))
 
     def stim_pairs(self, session_id: str | None = None) -> list[str]:
@@ -335,7 +414,7 @@ class DataLoader:
 
         df = self.stim_meta
         if session_id is not None and not df.empty:
-            df = df[df["session_id"].astype(str) == str(session_id).replace("ses-", "")]
+            df = df[df["session_id"].astype(str) == _bare_session(session_id)]
         if df.empty or "stim_pair" not in df.columns:
             return []
         return sorted(df["stim_pair"].dropna().astype(str).unique())
@@ -353,7 +432,7 @@ class DataLoader:
         registered start time.
         """
 
-        sid = str(session_id).replace("ses-", "")
+        sid = _bare_session(session_id)
         mask = (self.stim_meta["session_id"].astype(str) == sid) & (
             self.stim_meta["stim_pair"].astype(str) == str(stim_pair)
         )
@@ -381,7 +460,7 @@ class DataLoader:
                 pass
         df = self.raw_meta
         if session_id is not None and not df.empty:
-            df = df[df["session_id"].astype(str) == str(session_id).replace("ses-", "")]
+            df = df[df["session_id"].astype(str) == _bare_session(session_id)]
         if "sampling_freq" in df.columns and df["sampling_freq"].notna().any():
             return float(df["sampling_freq"].dropna().iloc[0])
         return None
@@ -402,7 +481,7 @@ class DataLoader:
 
         df = self.raw_meta
         if session_id is not None and not df.empty:
-            df = df[df["session_id"].astype(str) == str(session_id).replace("ses-", "")]
+            df = df[df["session_id"].astype(str) == _bare_session(session_id)]
         if stim_pair is not None and not df.empty and "stim_pair" in df.columns:
             pair_mask = df["stim_pair"].astype(str) == str(stim_pair)
             if pair_mask.any():
@@ -445,7 +524,7 @@ class DataLoader:
         for value in df.get("raw_file", pd.Series(dtype=str)).dropna().astype(str):
             path = Path(value).expanduser()
             if not path.is_absolute():
-                path = Path(self.RAWDATA_PATH) / path
+                path = Path(self.rawdata_path) / path
             files.append(path.resolve())
         return files
 
@@ -462,7 +541,7 @@ class DataLoader:
             if candidate.name == target_name:
                 return True
             if not candidate.is_absolute():
-                candidate = Path(self.RAWDATA_PATH) / candidate
+                candidate = Path(self.rawdata_path) / candidate
             try:
                 return candidate.resolve() == target.resolve()
             except OSError:
@@ -481,7 +560,7 @@ class DataLoader:
     def _value_scale_to_uv_for_stim(self, session_id: str, stim_pair: str) -> float:
         rows = self.raw_meta
         if not rows.empty:
-            rows = rows[rows["session_id"].astype(str) == str(session_id).replace("ses-", "")]
+            rows = rows[rows["session_id"].astype(str) == _bare_session(session_id)]
             if "stim_pair" in rows.columns:
                 paired = rows[rows["stim_pair"].astype(str) == str(stim_pair)]
                 if not paired.empty:
@@ -514,7 +593,7 @@ class DataLoader:
             save_continuous_npz(
                 df,
                 path,
-                dtype=self.RAW_CACHE_DTYPE,
+                dtype=self.raw_cache_dtype,
                 compressed=False,
                 metadata={"cache_role": "temporary_full_rate"},
             )
@@ -566,7 +645,7 @@ class DataLoader:
     ) -> Path:
         """Return the configured binary or text cache path for an acquisition."""
 
-        if self.RAW_CACHE_FORMAT in {"npz", "binary", "continuous_npz"}:
+        if self.raw_cache_format in {"npz", "binary", "continuous_npz"}:
             discriminator = self._raw_cache_discriminator(raw_file)
             return self.get_session_path(session_id, "raw") / f"{stim_pair}_{session_id}{discriminator}.npz"
         return self.get_raw_csv_path(session_id, stim_pair, raw_file=raw_file)
@@ -674,7 +753,7 @@ class DataLoader:
         raw_file: str | Path | None,
     ) -> tuple[str, str, str]:
         return (
-            str(session_id).replace("ses-", ""),
+            _bare_session(session_id),
             str(stim_pair),
             str(raw_file or ""),
         )
@@ -687,12 +766,12 @@ class DataLoader:
     ) -> tuple[Path, Path | None]:
         name = path.name.lower()
         if (
-            self.RAW_STAGING_PATH is None
+            self.raw_staging_path is None
             or not name.endswith((".csv", ".tsv", ".csv.gz", ".tsv.gz"))
             or not path.is_file()
         ):
             return path, None
-        stage_dir = self.RAW_STAGING_PATH / self.patient_id
+        stage_dir = self.raw_staging_path / self.patient_id
         stage_dir.mkdir(parents=True, exist_ok=True)
         digest = hashlib.sha256(str(path).encode("utf-8")).hexdigest()[:10]
         staged = stage_dir / f"{digest}_{path.name}"
@@ -737,7 +816,7 @@ class DataLoader:
         if df.empty or "bad_channel" not in df.columns:
             return []
         if session_id is not None and "session_id" in df.columns:
-            sid = str(session_id).replace("ses-", "")
+            sid = _bare_session(session_id)
             df = df[(df["session_id"].astype(str) == sid) | (df["session_id"].astype(str) == "")]
         bad = df["bad_channel"].astype(str).str.lower().isin({"1", "true", "yes", "bad", "exclude"})
         return df.loc[bad, "elec_label"].dropna().astype(str).tolist()

@@ -1,37 +1,87 @@
+"""Preprocessing pipelines and event-locked epoch extraction."""
+
 from __future__ import annotations
 
+import copy
 import os
+import re
 import uuid
 from collections.abc import Iterable
 from pathlib import Path
-from typing import Any
+from typing import Any, Union
 
 import numpy as np
 import pandas as pd
 
+from ._legacy import LegacyScriptHooks
+from ._metadata import UnsafeLegacyMetadataError, _read_metadata_node, _write_metadata_node
 from .artifact_anchor import POST_ARTIFACT_ZERO, detect_post_artifact_anchor
 from .bad_channels import reject_bad_channels
-from .epochs import (
-    Epochs,
-    EpochsRunner,
-    UnsafeLegacyMetadataError,
-    _read_metadata_node,
-    _write_metadata_node,
-)
+from .defaults import DEFAULT_BASELINE, DEFAULT_PIPELINE, DEFAULT_TMAX, DEFAULT_TMIN
+from .epochs import Epochs, EpochsRunner
 from .utils import preproc
 from .utils.jobrunner import JobRunner
-from .utils.utils import ensure_dir, infer_sfreq, stable_hash
+from .utils.utils import ensure_dir, infer_sfreq, parse_event_times, stable_hash
+
+#: An ordered preprocessing recipe: ``[(step_name, parameters), ...]``.
+PipelineSteps = list[tuple[str, dict[str, Any]]]
+#: Either the name of a standard pipeline or an explicit list of steps.
+PipelineSpec = Union[str, PipelineSteps]
+
+# Building blocks of the standard pipelines. Their parameters are part of the
+# cache file names (through ``Pipeline.pipeline_id``), so changing a value here
+# deliberately invalidates previously processed data.
+_BLANK = ("artifact_blank", {"width_s": 0.003})
+_NOTCH = ("notch_filter", {"notch_freq": 60.0, "bw": 2.0, "harm": True})
+_BANDPASS = ("bandpass_filter", {"lowcut": 0.1, "highcut": 50.0, "order": 4})
+_BANDPASS_WIDE = ("bandpass_filter", {"lowcut": 0.1, "highcut": 180.0, "order": 4})
+_DECIMATE = ("decimate", {"fs_new": 500.0})
+_COMMON_AVERAGE = ("commonavg_ref", {"method": "robust_mean", "zscore_threshold": 8.0})
+_REJECT_BAD_CHANNELS = ("reject_bad_channels", {"bad_channels": "auto", "method": "drop"})
+
+#: Named preprocessing recipes accepted wherever a pipeline is requested.
+#:
+#: The standard pipelines apply a robust common-average reference after
+#: blanking and filtering, excluding the stimulation contacts. ``*_noref``,
+#: ``raw`` and ``none`` skip re-referencing; ``*_bipolar`` and ``*_laplacian``
+#: use the alternative montages.
+STANDARD_PIPELINES: dict[str, PipelineSteps] = {
+    "raw": [],
+    "none": [],
+    "blank_filt": [_BLANK, _NOTCH, _BANDPASS, _COMMON_AVERAGE],
+    "blank_filt_noref": [_BLANK, _NOTCH, _BANDPASS],
+    "blank_filt_bipolar": [_BLANK, _NOTCH, _BANDPASS, ("bipolar_ref", {})],
+    "blank_filt_laplacian": [_BLANK, _NOTCH, _BANDPASS, ("laplacian_ref", {})],
+    "blank_dec_filt": [_BLANK, _DECIMATE, _NOTCH, _BANDPASS, _COMMON_AVERAGE],
+    "blank_dec_wide": [_BLANK, _DECIMATE, _NOTCH, _BANDPASS_WIDE, _COMMON_AVERAGE],
+    "blank_filt_reject": [_REJECT_BAD_CHANNELS, _BLANK, _NOTCH, _BANDPASS, _COMMON_AVERAGE],
+}
+
+#: Width of the post-anchor window subtracted from each trial. A short window
+#: is far more robust than a single sample on the still-decaying artifact tail.
+_POST_ANCHOR_BASELINE_S = 0.005
+
+_CONTACT_LABEL = re.compile(r"([A-Za-z]+)(\d+)$")
 
 
 class UnsafeLegacyProcessedMetadataError(UnsafeLegacyMetadataError):
     """Raised when pickle-backed processed-data metadata are not trusted."""
 
 
-class Pipeline:
-    """Registry-based preprocessing and epoch extraction."""
+class Pipeline(LegacyScriptHooks):
+    """Registry-based preprocessing and epoch extraction.
 
-    PYTHON_SCRIPT: str | None = None
-    BASH_SCRIPT: str | None = None
+    Each step in :attr:`registry` maps a name to a function that transforms a
+    continuous recording. A pipeline is an ordered list of
+    ``(step_name, parameters)`` tuples, either one of
+    :data:`STANDARD_PIPELINES` or a custom list.
+
+    Examples
+    --------
+    >>> pipeline = Pipeline(dataloader)
+    >>> steps = pipeline.get_standard_pipeline("blank_filt")
+    >>> epochs, processed = pipeline.process_and_epoch("SESSION", "STIM_A_1_2", steps)
+    """
 
     def __init__(self, dataloader) -> None:
         self.dataloader = dataloader
@@ -41,78 +91,28 @@ class Pipeline:
             "bandpass_filter": self._step_bandpass_filter,
             "decimate": self._step_decimate,
             "commonavg_ref": self._step_commonavg_ref,
+            "car_ref": self._step_commonavg_ref,  # alias
             "bipolar_ref": self._step_bipolar_ref,
             "laplacian_ref": self._step_laplacian_ref,
             "reject_bad_channels": self._step_reject_bad_channels,
         }
-        # Re-reference aliases. Common-average referencing (CAR) is the default
-        # montage; bipolar and Laplacian are available alternatives.
-        self.registry["car_ref"] = self._step_commonavg_ref
 
-    def get_standard_pipeline(self, name: str = "blank_filt") -> list[tuple[str, dict[str, Any]]]:
-        """Return a copy-ready named preprocessing step sequence.
+    # ------------------------------------------------------------------
+    # Pipeline definitions
+    # ------------------------------------------------------------------
+    def get_standard_pipeline(self, name: str = DEFAULT_PIPELINE) -> PipelineSteps:
+        """Return an independent copy of a named preprocessing step sequence.
 
-        Available presets combine artifact blanking, line-noise filtering,
-        band-pass filtering, optional decimation, and a selected reference.
+        Available presets (see :data:`STANDARD_PIPELINES`) combine artifact
+        blanking, line-noise filtering, band-pass filtering, optional
+        decimation, and a selected reference.
         """
 
-        if name in {"raw", "none"}:
-            return []
-        # Standard pipelines apply common-average referencing (CAR) by default,
-        # after blanking/filtering, excluding the stimulation contacts from the
-        # reference. ``*_noref`` variants and ``raw``/``none`` skip re-referencing;
-        # the ``bipolar_ref`` and ``laplacian_ref`` steps offer alternative montages.
-        pipelines = {
-            "blank_filt": [
-                ("artifact_blank", {"width_s": 0.003}),
-                ("notch_filter", {"notch_freq": 60.0, "bw": 2.0, "harm": True}),
-                ("bandpass_filter", {"lowcut": 0.1, "highcut": 50.0, "order": 4}),
-                ("commonavg_ref", {"method": "robust_mean", "zscore_threshold": 8.0}),
-            ],
-            "blank_filt_noref": [
-                ("artifact_blank", {"width_s": 0.003}),
-                ("notch_filter", {"notch_freq": 60.0, "bw": 2.0, "harm": True}),
-                ("bandpass_filter", {"lowcut": 0.1, "highcut": 50.0, "order": 4}),
-            ],
-            "blank_filt_bipolar": [
-                ("artifact_blank", {"width_s": 0.003}),
-                ("notch_filter", {"notch_freq": 60.0, "bw": 2.0, "harm": True}),
-                ("bandpass_filter", {"lowcut": 0.1, "highcut": 50.0, "order": 4}),
-                ("bipolar_ref", {}),
-            ],
-            "blank_filt_laplacian": [
-                ("artifact_blank", {"width_s": 0.003}),
-                ("notch_filter", {"notch_freq": 60.0, "bw": 2.0, "harm": True}),
-                ("bandpass_filter", {"lowcut": 0.1, "highcut": 50.0, "order": 4}),
-                ("laplacian_ref", {}),
-            ],
-            "blank_dec_filt": [
-                ("artifact_blank", {"width_s": 0.003}),
-                ("decimate", {"fs_new": 500.0}),
-                ("notch_filter", {"notch_freq": 60.0, "bw": 2.0, "harm": True}),
-                ("bandpass_filter", {"lowcut": 0.1, "highcut": 50.0, "order": 4}),
-                ("commonavg_ref", {"method": "robust_mean", "zscore_threshold": 8.0}),
-            ],
-            "blank_dec_wide": [
-                ("artifact_blank", {"width_s": 0.003}),
-                ("decimate", {"fs_new": 500.0}),
-                ("notch_filter", {"notch_freq": 60.0, "bw": 2.0, "harm": True}),
-                ("bandpass_filter", {"lowcut": 0.1, "highcut": 180.0, "order": 4}),
-                ("commonavg_ref", {"method": "robust_mean", "zscore_threshold": 8.0}),
-            ],
-            "blank_filt_reject": [
-                ("reject_bad_channels", {"bad_channels": "auto", "method": "drop"}),
-                ("artifact_blank", {"width_s": 0.003}),
-                ("notch_filter", {"notch_freq": 60.0, "bw": 2.0, "harm": True}),
-                ("bandpass_filter", {"lowcut": 0.1, "highcut": 50.0, "order": 4}),
-                ("commonavg_ref", {"method": "robust_mean", "zscore_threshold": 8.0}),
-            ],
-        }
-        if name not in pipelines:
-            raise KeyError(f"Unknown standard pipeline {name!r}. Available: {sorted(pipelines)}")
-        return pipelines[name]
+        if name not in STANDARD_PIPELINES:
+            raise KeyError(f"Unknown standard pipeline {name!r}. Available: {sorted(STANDARD_PIPELINES)}")
+        return copy.deepcopy(STANDARD_PIPELINES[name])
 
-    def build_custom_pipeline(self, steps: list[tuple[str, dict[str, Any]]]) -> list[tuple[str, dict[str, Any]]]:
+    def build_custom_pipeline(self, steps: PipelineSteps) -> PipelineSteps:
         """Validate and normalize a user-supplied preprocessing sequence."""
 
         validated = []
@@ -122,16 +122,24 @@ class Pipeline:
             validated.append((step, dict(params or {})))
         return validated
 
-    def pipeline_id(self, pipeline_steps: list[tuple[str, dict[str, Any]]] | None) -> str:
+    def resolve_pipeline(self, pipeline: PipelineSpec) -> PipelineSteps:
+        """Return validated steps for a standard-pipeline name or a step list."""
+
+        if isinstance(pipeline, str):
+            return self.get_standard_pipeline(pipeline)
+        return self.build_custom_pipeline(pipeline)
+
+    def pipeline_id(self, pipeline_steps: PipelineSteps | None) -> str:
         """Return a stable identifier for a preprocessing step sequence."""
 
         return stable_hash(pipeline_steps or [], length=10)
 
+    # ------------------------------------------------------------------
+    # Cache locations and event files
+    # ------------------------------------------------------------------
     def _processed_path(self, session_id: str, stim_pair: str, pipeline_steps) -> Path:
-        pid = self.pipeline_id(pipeline_steps)
-        return (
-            self.dataloader.get_session_path(session_id, "processed") / f"{stim_pair}_{session_id}_{pid}_processed.h5"
-        )
+        name = f"{stim_pair}_{session_id}_{self.pipeline_id(pipeline_steps)}_processed.h5"
+        return self.dataloader.get_session_path(session_id, "processed") / name
 
     def _epochs_path(
         self,
@@ -144,8 +152,7 @@ class Pipeline:
         zero_time=POST_ARTIFACT_ZERO,
         artifact_anchor_params: dict[str, Any] | None = None,
     ) -> Path:
-        pid = self.pipeline_id(pipeline_steps)
-        tag = stable_hash(
+        epoch_tag = stable_hash(
             {
                 "tmin": tmin,
                 "tmax": tmax,
@@ -155,50 +162,52 @@ class Pipeline:
             },
             length=8,
         )
-        return (
-            self.dataloader.get_session_path(session_id, "epochs") / f"{stim_pair}_{session_id}_{pid}_{tag}_epochs.h5"
-        )
+        name = f"{stim_pair}_{session_id}_{self.pipeline_id(pipeline_steps)}_{epoch_tag}_epochs.h5"
+        return self.dataloader.get_session_path(session_id, "epochs") / name
 
     def _load_event_info(self, session_id: str, stim_pair: str) -> pd.DataFrame:
         path = self.dataloader.get_event_path(session_id, stim_pair)
         if not path.exists():
             raise FileNotFoundError(f"Missing event file: {path}")
-        df = pd.read_csv(path)
-        if "times" not in df.columns:
+        events = pd.read_csv(path)
+        if "times" not in events.columns:
             raise ValueError(f"Event file must contain a 'times' column: {path}")
-        return df
+        return events
 
-    def _event_times(self, session_id: str, stim_pair: str):
-        df = self._load_event_info(session_id, stim_pair)
-        if pd.api.types.is_numeric_dtype(df["times"]):
-            return df["times"].to_numpy()
-        parsed = pd.to_datetime(df["times"], errors="coerce")
-        return parsed.to_numpy() if parsed.notna().mean() > 0.8 else df["times"].to_numpy()
+    def _event_times(self, session_id: str, stim_pair: str) -> np.ndarray:
+        times = parse_event_times(self._load_event_info(session_id, stim_pair)["times"])
+        return times if isinstance(times, np.ndarray) else times.to_numpy()
 
+    # ------------------------------------------------------------------
+    # Continuous preprocessing
+    # ------------------------------------------------------------------
     def process(
         self,
-        pipeline_steps: list[tuple[str, dict[str, Any]]] | None = None,
+        pipeline_steps: PipelineSteps | None = None,
         session_id: str | None = None,
         stim_pair: str | None = None,
         **kwargs: Any,
     ):
-        """Run preprocessing for one acquisition or all matching acquisitions."""
+        """Run preprocessing for one acquisition or all matching acquisitions.
+
+        With both ``session_id`` and ``stim_pair`` the processed recording is
+        returned directly; otherwise a ``{(session_id, stim_pair): frame}``
+        dictionary covers every matching acquisition.
+        """
 
         if session_id is not None and stim_pair is not None:
             return self.process_stim_session(session_id, stim_pair, pipeline_steps, **kwargs)
         results = {}
-        sessions = [session_id] if session_id else self.dataloader.session_ids
-        for sid in sessions:
-            pairs = [stim_pair] if stim_pair else self.dataloader.stim_pairs(sid)
-            for sp in pairs:
-                results[(sid, sp)] = self.process_stim_session(sid, sp, pipeline_steps, **kwargs)
+        for session in [session_id] if session_id else self.dataloader.session_ids:
+            for pair in [stim_pair] if stim_pair else self.dataloader.stim_pairs(session):
+                results[(session, pair)] = self.process_stim_session(session, pair, pipeline_steps, **kwargs)
         return results
 
     def process_stim_session(
         self,
         session_id: str,
         stim_pair: str,
-        pipeline_steps: list[tuple[str, dict[str, Any]]] | None = None,
+        pipeline_steps: PipelineSteps | None = None,
         input_source: str = "auto",
         load_from_raw: bool = True,
         save_processed: bool = False,
@@ -212,19 +221,20 @@ class Pipeline:
 
         The returned continuous table records sampling frequency and pipeline
         identity in ``DataFrame.attrs`` and can optionally be cached on disk.
+        A cached result is reused only when ``input_source="processed"``;
+        ``load_from_raw`` is accepted for backward compatibility and has no
+        further effect.
         """
 
         steps = self.build_custom_pipeline(pipeline_steps or [])
         path = self._processed_path(session_id, stim_pair, steps)
-        if path.exists() and not overwrite and not load_from_raw and input_source == "processed":
-            return self.load_processed_data(path)
         if input_source == "processed" and path.exists() and not overwrite:
             return self.load_processed_data(path)
 
         df = self.dataloader.load_stim_data(
             session_id,
             stim_pair,
-            source="auto" if input_source == "auto" else input_source,
+            source=input_source,
             raw_file=raw_file,
             stim_start=stim_start,
         )
@@ -255,25 +265,24 @@ class Pipeline:
     ):
         """Preprocess selected stimulation pairs within one session."""
 
-        return {
-            sp: self.process_stim_session(session_id, sp, pipeline_steps, **kwargs)
-            for sp in (list(stim_pairs) if stim_pairs is not None else self.dataloader.stim_pairs(session_id))
-        }
+        pairs = list(stim_pairs) if stim_pairs is not None else self.dataloader.stim_pairs(session_id)
+        return {pair: self.process_stim_session(session_id, pair, pipeline_steps, **kwargs) for pair in pairs}
 
     def process_all_sessions(self, pipeline_steps=None, session_ids: Iterable[str] | None = None, **kwargs: Any):
         """Preprocess selected or registered sessions and stimulation pairs."""
 
-        return {
-            sid: self.process_session(sid, pipeline_steps, **kwargs)
-            for sid in (list(session_ids) if session_ids is not None else self.dataloader.session_ids)
-        }
+        sessions = list(session_ids) if session_ids is not None else self.dataloader.session_ids
+        return {session: self.process_session(session, pipeline_steps, **kwargs) for session in sessions}
 
+    # ------------------------------------------------------------------
+    # Epoching
+    # ------------------------------------------------------------------
     def epoch_data(
         self,
         df: pd.DataFrame,
         event_times: Iterable[Any],
-        tmin: float = -0.5,
-        tmax: float = 1.0,
+        tmin: float = DEFAULT_TMIN,
+        tmax: float = DEFAULT_TMAX,
         baseline: tuple[float, float] | None = None,
         zero_time: float | str | None = POST_ARTIFACT_ZERO,
         stim_ch: str | list[str] | None = None,
@@ -281,8 +290,11 @@ class Pipeline:
     ) -> Epochs:
         """Extract event-locked trials from a continuous processed recording.
 
-        Epochs may use a fixed zero-time sample or ERPy's post-artifact anchor;
-        the latter stores per-trial anchor diagnostics in audit metadata.
+        Every trial is first corrected by its ``baseline`` window. When
+        ``zero_time`` is set, each trial is then recentred on a short window
+        that starts at one anchor time shared by all trials: the fixed
+        ``zero_time`` (seconds), or ERPy's post-artifact anchor, which stores
+        per-trial anchor diagnostics in the audit metadata.
         """
 
         events = list(event_times)
@@ -291,106 +303,44 @@ class Pipeline:
         sfreq = float(df.attrs.get("sfreq") or infer_sfreq(df))
         n_pre = int(round(abs(tmin) * sfreq))
         n_post = int(round(tmax * sfreq))
-        n = n_pre + n_post + 1
-        times = np.round((np.arange(n) - n_pre) / sfreq, decimals=9)
-        zero_anchor_reports: list[dict[str, Any]] = []
-        anchor_params = dict(artifact_anchor_params or {})
-        # Width of the post-anchor baseline window (subtracted per trial so the
-        # response starts from a clean, artifact-free zero). A short window is far
-        # more robust than a single sample on the still-decaying artifact tail.
-        post_baseline_s = float(anchor_params.pop("post_baseline_s", 0.005))
+        times = np.round((np.arange(n_pre + n_post + 1) - n_pre) / sfreq, decimals=9)
 
-        if isinstance(df.index, pd.DatetimeIndex):
-            idx = df.index
-            event_values = pd.to_datetime(pd.Series(events), errors="coerce")
-            positions = idx.searchsorted(event_values)
-        else:
-            idx_values = pd.to_numeric(pd.Series(df.index), errors="coerce").to_numpy(dtype=float)
-            event_values = pd.to_numeric(pd.Series(events), errors="coerce").to_numpy(dtype=float)
-            positions = np.searchsorted(idx_values, event_values)
+        anchor_params = dict(artifact_anchor_params or {})
+        post_baseline_s = float(anchor_params.pop("post_baseline_s", _POST_ANCHOR_BASELINE_S))
+        n_window = max(int(round(post_baseline_s * sfreq)), 1)
 
         values = df.select_dtypes(include=[np.number])
-        # First pass: extract and baseline-window-correct every epoch.
-        chunks: list[tuple[int, pd.DataFrame]] = []
-        for epoch_i, pos in enumerate(positions):
-            start = int(pos) - n_pre
-            stop = int(pos) + n_post + 1
-            if start < 0 or stop > len(values):
-                continue
-            chunk = values.iloc[start:stop].copy()
-            if len(chunk) != n:
-                continue
-            chunk.index = times
-            if baseline is not None:
-                mask = (times >= baseline[0]) & (times <= baseline[1])
-                if mask.any():
-                    chunk = chunk - chunk.loc[mask].mean(axis=0)
-            chunks.append((int(epoch_i), chunk))
-        if not chunks:
+        trials = _extract_baselined_trials(
+            values, _event_sample_positions(df.index, events), n_pre, n_post, times, baseline
+        )
+        if not trials:
             raise ValueError("No full epochs could be extracted; check event times and tmin/tmax")
 
-        # Post-artifact zero anchoring. The anchor is applied at a single COMMON
-        # time across trials, using a short windowed baseline, so the trial-
-        # averaged waveform is genuinely zero at the anchor (a per-trial, single-
-        # sample anchor leaves the average non-zero because trials settle at
-        # slightly different times). The common anchor is detected on the trial
-        # average, which is robust to per-trial noise and ensures the artifact has
-        # settled for the cohort.
-        n_win = max(int(round(post_baseline_s * sfreq)), 1)
-        common_anchor_idx = -1
+        anchor_reports: list[dict[str, Any]] = []
         common_anchor_time = float("nan")
         if zero_time is not None:
             if zero_time == POST_ARTIFACT_ZERO:
-                for epoch_i, chunk in chunks:
-                    rep = detect_post_artifact_anchor(chunk, stim_ch=stim_ch, baseline_window=baseline, **anchor_params)
-                    rep = {**rep, "epoch": int(epoch_i), "zero_time_strategy": POST_ARTIFACT_ZERO}
-                    zero_anchor_reports.append(rep)
-                mean_arr = np.nanmean(np.stack([c.to_numpy(dtype=float) for _, c in chunks]), axis=0)
-                mean_chunk = pd.DataFrame(mean_arr, index=times, columns=values.columns)
-                mean_rep = detect_post_artifact_anchor(
-                    mean_chunk, stim_ch=stim_ch, baseline_window=baseline, **anchor_params
+                anchor_reports, anchor_index = _post_artifact_anchor(
+                    trials, times, stim_ch=stim_ch, baseline=baseline, anchor_params=anchor_params
                 )
-                common_anchor_idx = int(mean_rep.get("anchor_index", -1))
-                if not (0 <= common_anchor_idx < n):
-                    valid = [int(r.get("anchor_index", -1)) for r in zero_anchor_reports]
-                    valid = [i for i in valid if 0 <= i < n]
-                    common_anchor_idx = int(np.median(valid)) if valid else int(np.argmin(np.abs(times)))
             else:
-                common_anchor_idx = int(np.argmin(np.abs(times - float(zero_time))))
-                for epoch_i, _ in chunks:
-                    zero_anchor_reports.append(
-                        {
-                            "epoch": int(epoch_i),
-                            "anchor_time_s": float(times[common_anchor_idx]),
-                            "anchor_index": int(common_anchor_idx),
-                            "artifact_peak_time_s": np.nan,
-                            "artifact_peak_score_z": np.nan,
-                            "onset_score_z": np.nan,
-                            "onset_is_artifact": False,
-                            "settled": True,
-                            "method": "fixed_zero_time",
-                            "reference_channels": "",
-                            "zero_time_strategy": "fixed",
-                        }
-                    )
-            common_anchor_time = float(times[common_anchor_idx])
-            win_lo = int(common_anchor_idx)
-            win_hi = int(min(common_anchor_idx + n_win, n))
-            for rep in zero_anchor_reports:
-                rep["common_anchor_time_s"] = common_anchor_time
-                rep["common_anchor_index"] = int(common_anchor_idx)
-                rep["post_baseline_window_s"] = float(n_win / sfreq)
-            # Second pass: subtract each trial's mean over the common post-anchor window.
-            for _, chunk in chunks:
-                window = chunk.iloc[win_lo:win_hi].replace([np.inf, -np.inf], np.nan)
-                offset = window.mean(axis=0).fillna(0.0)
-                chunk -= offset
+                anchor_reports, anchor_index = _fixed_anchor(trials, times, float(zero_time))
+            common_anchor_time = float(times[anchor_index])
+            for report in anchor_reports:
+                report["common_anchor_time_s"] = common_anchor_time
+                report["common_anchor_index"] = int(anchor_index)
+                report["post_baseline_window_s"] = float(n_window / sfreq)
+            _subtract_window_mean(trials, anchor_index, min(anchor_index + n_window, len(times)))
 
-        rows = [chunk.to_numpy(dtype=float) for _, chunk in chunks]
-        index_parts = [(epoch_i, float(t)) for epoch_i, _ in chunks for t in times]
-        data = np.vstack(rows)
-        idx = pd.MultiIndex.from_tuples(index_parts, names=["epoch", "time"])
-        epochs_df = pd.DataFrame(data, index=idx, columns=list(values.columns))
+        index = pd.MultiIndex.from_tuples(
+            [(trial_id, float(t)) for trial_id, _ in trials for t in times],
+            names=["epoch", "time"],
+        )
+        epochs_df = pd.DataFrame(
+            np.vstack([trial.to_numpy(dtype=float) for _, trial in trials]),
+            index=index,
+            columns=list(values.columns),
+        )
         return Epochs(
             epochs_df=epochs_df,
             sfreq=sfreq,
@@ -400,18 +350,18 @@ class Pipeline:
             stim_ch=stim_ch,
             metadata={
                 "n_events_input": len(events),
-                "n_epochs": len(rows),
+                "n_epochs": len(trials),
                 "signal_units": df.attrs.get("signal_units"),
                 "value_scale_to_uv_applied": df.attrs.get("value_scale_to_uv_applied", 1.0),
                 "reference_method": df.attrs.get("reference_method"),
                 "reference_channels": df.attrs.get("reference_channels"),
                 "reference_zscore_threshold": df.attrs.get("reference_zscore_threshold"),
                 "zero_time_strategy": zero_time,
-                "zero_anchor_reports": zero_anchor_reports,
+                "zero_anchor_reports": anchor_reports,
                 "artifact_anchor_params": anchor_params,
                 "common_anchor_time_s": common_anchor_time,
-                "post_baseline_window_s": float(n_win / sfreq),
-                "post_baseline_samples": int(n_win),
+                "post_baseline_window_s": float(n_window / sfreq),
+                "post_baseline_samples": int(n_window),
             },
             zero_time=zero_time,
         )
@@ -420,11 +370,11 @@ class Pipeline:
         self,
         session_id: str,
         stim_pair: str,
-        pipeline_steps: list[tuple[str, dict[str, Any]]] | None = None,
+        pipeline_steps: PipelineSteps | None = None,
         event_times: Iterable[Any] | None = None,
-        tmin: float = -0.5,
-        tmax: float = 1.0,
-        baseline: tuple[float, float] | None = (-0.5, -0.03),
+        tmin: float = DEFAULT_TMIN,
+        tmax: float = DEFAULT_TMAX,
+        baseline: tuple[float, float] | None = DEFAULT_BASELINE,
         zero_time: float | str | None = POST_ARTIFACT_ZERO,
         artifact_anchor_params: dict[str, Any] | None = None,
         processing_margin_s: float | None = None,
@@ -432,25 +382,24 @@ class Pipeline:
         save_epochs: bool = False,
         **kwargs: Any,
     ) -> tuple[Epochs, pd.DataFrame]:
-        """Preprocess one acquisition and extract its event-locked epochs."""
+        """Preprocess one acquisition and extract its event-locked epochs.
+
+        Returns ``(epochs, processed)``. Event times default to the saved
+        event file. ``processing_margin_s`` limits preprocessing to the span of
+        the events plus that margin instead of the whole recording.
+        """
 
         steps = self.build_custom_pipeline(pipeline_steps or [])
         if event_times is None:
             event_times = self._event_times(session_id, stim_pair)
         event_times = list(event_times)
-        time_window = _event_processing_window(
-            event_times,
-            tmin=tmin,
-            tmax=tmax,
-            margin_s=processing_margin_s,
-        )
         processed = self.process_stim_session(
             session_id,
             stim_pair,
             steps,
             save_processed=save_processed,
             event_times=event_times,
-            time_window=time_window,
+            time_window=_event_processing_window(event_times, tmin=tmin, tmax=tmax, margin_s=processing_margin_s),
             **kwargs,
         )
         epochs = self.epoch_data(
@@ -491,6 +440,9 @@ class Pipeline:
             )
         return epochs, processed
 
+    # ------------------------------------------------------------------
+    # Persistence
+    # ------------------------------------------------------------------
     def save_processed_data(self, df: pd.DataFrame, path: str | Path, **metadata: Any) -> Path:
         """Atomically save processed data with deterministic JSON provenance."""
 
@@ -535,19 +487,19 @@ class Pipeline:
         """
 
         path = Path(path)
-        md = _read_metadata_node(
+        metadata = _read_metadata_node(
             path,
             "data",
             allow_unsafe_legacy_pickle=allow_unsafe_legacy_pickle,
             legacy_error_type=UnsafeLegacyProcessedMetadataError,
             metadata_description="ERPy processed-data",
-            unsafe_opt_in_example=("Pipeline.load_processed_data(..., allow_unsafe_legacy_pickle=True)"),
+            unsafe_opt_in_example="Pipeline.load_processed_data(..., allow_unsafe_legacy_pickle=True)",
         )
         with pd.HDFStore(path, mode="r") as store:
             df = store["data"]
-            if md is None and allow_unsafe_legacy_pickle:
-                md = getattr(store.get_storer("data").attrs, "metadata", {}) or {}
-        df.attrs.update(md or {})
+            if metadata is None and allow_unsafe_legacy_pickle:
+                metadata = getattr(store.get_storer("data").attrs, "metadata", {}) or {}
+        df.attrs.update(metadata or {})
         return df
 
     def load_epochs_file(
@@ -595,6 +547,13 @@ class Pipeline:
             allow_unsafe_legacy_pickle=allow_unsafe_legacy_pickle,
         )
 
+    # ------------------------------------------------------------------
+    # Registered preprocessing steps
+    #
+    # Each step receives the recording, its own parameters, and the run
+    # ``state`` (session, stimulation pair, sampling frequency, stimulation
+    # contacts, plus any caller context such as ``event_times``).
+    # ------------------------------------------------------------------
     def _step_artifact_blank(
         self, df: pd.DataFrame, event_freq_to_width: dict | None = None, width_s: float = 0.003, **state
     ):
@@ -607,25 +566,21 @@ class Pipeline:
         if event_freq_to_width:
             try:
                 row = self.dataloader.get_stim_row(state["session_id"], state["stim_pair"])
-                freq = float(row["stim_freq"])
-                width_s = float(event_freq_to_width.get(freq, width_s))
+                width_s = float(event_freq_to_width.get(float(row["stim_freq"]), width_s))
             except Exception:
                 pass
         out = preproc.artifact_blank(df, events, fs=state.get("sfreq"), width_s=width_s)
-        out.attrs["sfreq"] = state.get("sfreq") or df.attrs.get("sfreq")
-        return out
+        return _carry_sfreq(out, df, state)
 
     def _step_notch_filter(
         self, df: pd.DataFrame, notch_freq: float = 60.0, bw: float = 2.0, harm: bool = True, **state
     ):
         out = preproc.notch_line(df, notch_freq=notch_freq, bw=bw, harm=harm, fs=state.get("sfreq"))
-        out.attrs["sfreq"] = state.get("sfreq") or df.attrs.get("sfreq")
-        return out
+        return _carry_sfreq(out, df, state)
 
     def _step_bandpass_filter(self, df: pd.DataFrame, lowcut: float, highcut: float, order: int = 4, **state):
         out = preproc.bandpass(df, lowcut=lowcut, highcut=highcut, order=order, fs=state.get("sfreq"))
-        out.attrs["sfreq"] = state.get("sfreq") or df.attrs.get("sfreq")
-        return out
+        return _carry_sfreq(out, df, state)
 
     def _step_decimate(self, df: pd.DataFrame, fs_new: float, **state):
         return preproc.decimate(df, fs_new=fs_new, fs=state.get("sfreq"))
@@ -639,13 +594,14 @@ class Pipeline:
         min_reference_channels: int = 4,
         **state,
     ):
+        """Subtract a common average that excludes stimulation and bad contacts."""
+
         skipped = _expand_skips(skipped_chs, state)
         skipped.update(self.dataloader.bad_channels(state.get("session_id")))
         numeric = df.select_dtypes(include=[np.number])
-        ref_cols = [c for c in numeric.columns if c not in skipped]
         return preproc.common_reference(
             df,
-            reference_channels=ref_cols,
+            reference_channels=[column for column in numeric.columns if column not in skipped],
             method=method,
             zscore_threshold=zscore_threshold,
             min_reference_channels=min_reference_channels,
@@ -668,23 +624,17 @@ class Pipeline:
 
         skipped = _expand_skips(skipped_chs, state)
         numeric = df.select_dtypes(include=[np.number])
-        groups: dict[str, list[tuple[int, str]]] = {}
-        for col in numeric.columns:
-            parsed = _split_channel(col)
-            if parsed:
-                groups.setdefault(parsed[0], []).append((parsed[1], col))
 
         bipolar: dict[str, pd.Series] = {}
         used: set[str] = set()
-        for _, contacts in groups.items():
-            contacts = sorted(contacts)
-            for (n1, c1), (n2, c2) in zip(contacts[:-1], contacts[1:]):
-                if n2 - n1 != 1:
+        for contacts in _contacts_by_lead(numeric.columns).values():
+            for (first_number, first), (second_number, second) in zip(contacts[:-1], contacts[1:]):
+                if second_number - first_number != 1:
                     continue
-                if c1 in skipped or c2 in skipped:
+                if first in skipped or second in skipped:
                     continue
-                bipolar[f"{c1}-{c2}"] = numeric[c1] - numeric[c2]
-                used.update({c1, c2})
+                bipolar[f"{first}-{second}"] = numeric[first] - numeric[second]
+                used.update({first, second})
 
         if not bipolar:
             out = df.copy()
@@ -693,15 +643,14 @@ class Pipeline:
 
         out = pd.DataFrame(bipolar, index=df.index)
         if keep_unpaired:
-            for col in numeric.columns:
-                if col not in used:
-                    out[col] = numeric[col]
-        for col in df.columns:
-            if col not in numeric.columns:
-                out[col] = df[col]
+            for column in numeric.columns:
+                if column not in used:
+                    out[column] = numeric[column]
+        for column in df.columns:
+            if column not in numeric.columns:
+                out[column] = df[column]
         out.attrs.update(df.attrs)
-        out.attrs["sfreq"] = state.get("sfreq") or df.attrs.get("sfreq")
-        return out
+        return _carry_sfreq(out, df, state)
 
     def _step_laplacian_ref(
         self,
@@ -711,26 +660,27 @@ class Pipeline:
         decay: float = 1.0,
         **state,
     ):
+        """Subtract the distance-weighted mean of each contact's lead neighbours."""
+
         skipped = _expand_skips(skipped_chs, state) | set(ref_grounds or [])
         numeric = df.select_dtypes(include=[np.number])
         out = df.copy()
-        groups: dict[str, list[tuple[int, str]]] = {}
-        for col in numeric.columns:
-            parsed = _split_channel(col)
-            if parsed:
-                groups.setdefault(parsed[0], []).append((parsed[1], col))
-        for _, contacts in groups.items():
-            contacts = sorted(contacts)
-            by_num = {n: col for n, col in contacts}
-            for n, col in contacts:
-                if col in skipped:
+        for contacts in _contacts_by_lead(numeric.columns).values():
+            label_by_number = dict(contacts)
+            for number, column in contacts:
+                if column in skipped:
                     continue
-                neigh = [by_num[k] for k in (n - 1, n + 1) if k in by_num and by_num[k] not in skipped]
-                if not neigh:
+                neighbours = [
+                    (neighbour, label_by_number[neighbour])
+                    for neighbour in (number - 1, number + 1)
+                    if neighbour in label_by_number and label_by_number[neighbour] not in skipped
+                ]
+                if not neighbours:
                     continue
-                weights = np.array([np.exp(-abs(_split_channel(ch)[1] - n) / max(decay, 1e-9)) for ch in neigh])
-                ref = numeric[neigh].mul(weights / weights.sum(), axis=1).sum(axis=1)
-                out[col] = numeric[col] - ref
+                weights = np.array([np.exp(-abs(neighbour - number) / max(decay, 1e-9)) for neighbour, _ in neighbours])
+                labels = [label for _, label in neighbours]
+                reference = numeric[labels].mul(weights / weights.sum(), axis=1).sum(axis=1)
+                out[column] = numeric[column] - reference
         out.attrs.update(df.attrs)
         return out
 
@@ -745,22 +695,11 @@ class Pipeline:
         if bad_channels is None:
             bad_channels = self.dataloader.bad_channels(state.get("session_id"))
         out = reject_bad_channels(df, bad_channels=bad_channels, method=method, detection_params=detection_params)
-        out.attrs["sfreq"] = state.get("sfreq") or df.attrs.get("sfreq")
-        return out
+        return _carry_sfreq(out, df, state)
 
-    @classmethod
-    def install_standard_scripts(cls) -> None:
-        """Reset preprocessing to ERPy's built-in execution path."""
-
-        return None
-
-    @classmethod
-    def use_standard_scripts(cls, bash_type: str = "simple") -> None:
-        """Select ERPy's built-in local preprocessing hooks."""
-
-        cls.PYTHON_SCRIPT = None
-        cls.BASH_SCRIPT = None
-
+    # ------------------------------------------------------------------
+    # Batch execution
+    # ------------------------------------------------------------------
     def queue_job(
         self, pipeline_steps=None, session_ids: Iterable[str] | None = None, backend: str | None = None, **kwargs: Any
     ):
@@ -773,18 +712,16 @@ class Pipeline:
             memory=kwargs.get("memory"),
             job_name=kwargs.get("job_name", "erpy_pipeline"),
         )
-        steps = pipeline_steps or self.get_standard_pipeline(kwargs.get("pipeline_name", "blank_filt"))
-        sessions = list(session_ids or self.dataloader.session_ids)
+        steps = pipeline_steps or self.get_standard_pipeline(kwargs.get("pipeline_name", DEFAULT_PIPELINE))
+        overwrite = bool(kwargs.get("overwrite_existing", False))
         lines = []
-        for sid in sessions:
-            pairs = kwargs.get("stim_pairs") or self.dataloader.stim_pairs(sid)
+        for session_id in list(session_ids or self.dataloader.session_ids):
+            pairs = kwargs.get("stim_pairs") or self.dataloader.stim_pairs(session_id)
             if isinstance(pairs, str):
-                pairs = [p.strip() for p in pairs.split(",") if p.strip()]
-            for sp in pairs:
-                self.process_stim_session(
-                    sid, sp, steps, save_processed=True, overwrite=bool(kwargs.get("overwrite_existing", False))
-                )
-                lines.append(f"{sid}/{sp}: processed")
+                pairs = [pair.strip() for pair in pairs.split(",") if pair.strip()]
+            for stim_pair in pairs:
+                self.process_stim_session(session_id, stim_pair, steps, save_processed=True, overwrite=overwrite)
+                lines.append(f"{session_id}/{stim_pair}: processed")
         return runner, "\n".join(lines), ""
 
     @property
@@ -794,6 +731,126 @@ class Pipeline:
         return EpochsRunner(self)
 
 
+# ----------------------------------------------------------------------
+# Epoching helpers
+# ----------------------------------------------------------------------
+def _event_sample_positions(index: pd.Index, events: list[Any]) -> np.ndarray:
+    """Return the row position of each event in a continuous recording index."""
+
+    if isinstance(index, pd.DatetimeIndex):
+        return index.searchsorted(pd.to_datetime(pd.Series(events), errors="coerce"))
+    index_seconds = pd.to_numeric(pd.Series(index), errors="coerce").to_numpy(dtype=float)
+    event_seconds = pd.to_numeric(pd.Series(events), errors="coerce").to_numpy(dtype=float)
+    return np.searchsorted(index_seconds, event_seconds)
+
+
+def _extract_baselined_trials(
+    values: pd.DataFrame,
+    positions: np.ndarray,
+    n_pre: int,
+    n_post: int,
+    times: np.ndarray,
+    baseline: tuple[float, float] | None,
+) -> list[tuple[int, pd.DataFrame]]:
+    """Cut one baseline-corrected, time-indexed trial per event.
+
+    Events too close to either end of the recording for a full epoch are
+    skipped; the returned identifiers are positions in the original event list.
+    """
+
+    trials: list[tuple[int, pd.DataFrame]] = []
+    for trial_id, position in enumerate(positions):
+        start = int(position) - n_pre
+        stop = int(position) + n_post + 1
+        if start < 0 or stop > len(values):
+            continue
+        trial = values.iloc[start:stop].copy()
+        if len(trial) != len(times):
+            continue
+        trial.index = times
+        if baseline is not None:
+            in_baseline = (times >= baseline[0]) & (times <= baseline[1])
+            if in_baseline.any():
+                trial = trial - trial.loc[in_baseline].mean(axis=0)
+        trials.append((int(trial_id), trial))
+    return trials
+
+
+def _post_artifact_anchor(
+    trials: list[tuple[int, pd.DataFrame]],
+    times: np.ndarray,
+    *,
+    stim_ch: str | list[str] | None,
+    baseline: tuple[float, float] | None,
+    anchor_params: dict[str, Any],
+) -> tuple[list[dict[str, Any]], int]:
+    """Locate the post-artifact anchor shared by all trials.
+
+    The anchor is detected on the trial average, which is robust to per-trial
+    noise and makes the averaged waveform genuinely zero at the anchor. (A
+    per-trial, single-sample anchor leaves the average non-zero because trials
+    settle at slightly different times.) Per-trial anchors are still computed
+    and returned as audit reports; their median is the fallback when the
+    averaged waveform yields no usable anchor.
+    """
+
+    n_times = len(times)
+    reports = []
+    for trial_id, trial in trials:
+        report = detect_post_artifact_anchor(trial, stim_ch=stim_ch, baseline_window=baseline, **anchor_params)
+        reports.append({**report, "epoch": int(trial_id), "zero_time_strategy": POST_ARTIFACT_ZERO})
+
+    columns = trials[0][1].columns
+    mean_trial = pd.DataFrame(
+        np.nanmean(np.stack([trial.to_numpy(dtype=float) for _, trial in trials]), axis=0),
+        index=times,
+        columns=columns,
+    )
+    mean_report = detect_post_artifact_anchor(mean_trial, stim_ch=stim_ch, baseline_window=baseline, **anchor_params)
+    anchor_index = int(mean_report.get("anchor_index", -1))
+    if not 0 <= anchor_index < n_times:
+        per_trial = [int(report.get("anchor_index", -1)) for report in reports]
+        per_trial = [index for index in per_trial if 0 <= index < n_times]
+        anchor_index = int(np.median(per_trial)) if per_trial else int(np.argmin(np.abs(times)))
+    return reports, anchor_index
+
+
+def _fixed_anchor(
+    trials: list[tuple[int, pd.DataFrame]], times: np.ndarray, zero_time: float
+) -> tuple[list[dict[str, Any]], int]:
+    """Use the sample nearest a caller-chosen zero time as the common anchor."""
+
+    anchor_index = int(np.argmin(np.abs(times - zero_time)))
+    reports = [
+        {
+            "epoch": int(trial_id),
+            "anchor_time_s": float(times[anchor_index]),
+            "anchor_index": int(anchor_index),
+            "artifact_peak_time_s": np.nan,
+            "artifact_peak_score_z": np.nan,
+            "onset_score_z": np.nan,
+            "onset_is_artifact": False,
+            "settled": True,
+            "method": "fixed_zero_time",
+            "reference_channels": "",
+            "zero_time_strategy": "fixed",
+        }
+        for trial_id, _ in trials
+    ]
+    return reports, anchor_index
+
+
+def _subtract_window_mean(trials: list[tuple[int, pd.DataFrame]], start: int, stop: int) -> None:
+    """Recentre each trial in place on its mean over samples ``start:stop``."""
+
+    for _, trial in trials:
+        window = trial.iloc[start:stop].replace([np.inf, -np.inf], np.nan)
+        trial -= window.mean(axis=0).fillna(0.0)
+
+
+# ----------------------------------------------------------------------
+# Continuous-recording helpers
+# ----------------------------------------------------------------------
 def _event_processing_window(
     event_times: list[Any],
     *,
@@ -801,28 +858,28 @@ def _event_processing_window(
     tmax: float,
     margin_s: float | None,
 ) -> tuple[Any, Any] | None:
+    """Return the recording span needed to epoch ``event_times``, or ``None``."""
+
     if margin_s is None or not event_times:
         return None
     margin_s = max(float(margin_s), 0.0)
+
+    def numeric_window(seconds: pd.Series) -> tuple[float, float]:
+        return (
+            float(seconds.min()) + float(tmin) - margin_s,
+            float(seconds.max()) + float(tmax) + margin_s,
+        )
+
     values = pd.Series(event_times)
     if pd.api.types.is_numeric_dtype(values):
-        numeric = pd.to_numeric(values, errors="coerce").dropna()
-        return (
-            float(numeric.min()) + float(tmin) - margin_s,
-            float(numeric.max()) + float(tmax) + margin_s,
-        )
+        return numeric_window(pd.to_numeric(values, errors="coerce").dropna())
     parsed = pd.to_datetime(values, errors="coerce")
     if parsed.notna().mean() > 0.8:
         start = parsed.min() + pd.to_timedelta(float(tmin) - margin_s, unit="s")
         stop = parsed.max() + pd.to_timedelta(float(tmax) + margin_s, unit="s")
         return start, stop
     numeric = pd.to_numeric(values, errors="coerce").dropna()
-    if numeric.empty:
-        return None
-    return (
-        float(numeric.min()) + float(tmin) - margin_s,
-        float(numeric.max()) + float(tmax) + margin_s,
-    )
+    return None if numeric.empty else numeric_window(numeric)
 
 
 def _crop_continuous_window(df: pd.DataFrame, start: Any, stop: Any) -> pd.DataFrame:
@@ -830,8 +887,8 @@ def _crop_continuous_window(df: pd.DataFrame, start: Any, stop: Any) -> pd.DataF
     if isinstance(df.index, pd.DatetimeIndex):
         selected = df.loc[(df.index >= pd.Timestamp(start)) & (df.index <= pd.Timestamp(stop))].copy()
     else:
-        values = pd.to_numeric(pd.Series(df.index), errors="coerce").to_numpy(dtype=float)
-        selected = df.loc[(values >= float(start)) & (values <= float(stop))].copy()
+        seconds = pd.to_numeric(pd.Series(df.index), errors="coerce").to_numpy(dtype=float)
+        selected = df.loc[(seconds >= float(start)) & (seconds <= float(stop))].copy()
     if selected.empty:
         raise ValueError(f"ERP processing window {start!r} to {stop!r} contains no samples")
     selected.attrs.update(attrs)
@@ -840,7 +897,16 @@ def _crop_continuous_window(df: pd.DataFrame, start: Any, stop: Any) -> pd.DataF
     return selected
 
 
+def _carry_sfreq(out: pd.DataFrame, source: pd.DataFrame, state: dict[str, Any]) -> pd.DataFrame:
+    """Record the sampling frequency on a step's output and return it."""
+
+    out.attrs["sfreq"] = state.get("sfreq") or source.attrs.get("sfreq")
+    return out
+
+
 def _stim_channels(stim_pair: str) -> list[str]:
+    """Return the two contact labels named by a pair such as ``LACC_1_2``."""
+
     parts = str(stim_pair).split("_")
     if len(parts) >= 3:
         return [f"{parts[0]}{parts[1]}", f"{parts[0]}{parts[2]}"]
@@ -848,23 +914,36 @@ def _stim_channels(stim_pair: str) -> list[str]:
 
 
 def _split_channel(label: str) -> tuple[str, int] | None:
-    match = re_match_channel(str(label))
-    if match is None:
-        return None
-    return match
+    """Split a contact label such as ``LACC3`` into ``("LACC", 3)``."""
 
-
-def re_match_channel(label: str) -> tuple[str, int] | None:
-    import re
-
-    text = label.replace("_", "")
-    match = re.match(r"([A-Za-z]+)(\d+)$", text)
+    match = _CONTACT_LABEL.match(str(label).replace("_", ""))
     if not match:
         return None
     return match.group(1), int(match.group(2))
 
 
+#: Retained name of :func:`_split_channel`.
+re_match_channel = _split_channel
+
+
+def _contacts_by_lead(columns: Iterable[str]) -> dict[str, list[tuple[int, str]]]:
+    """Group contact labels by lead as sorted ``(contact_number, label)`` lists."""
+
+    leads: dict[str, list[tuple[int, str]]] = {}
+    for column in columns:
+        parsed = _split_channel(column)
+        if parsed:
+            leads.setdefault(parsed[0], []).append((parsed[1], column))
+    return {lead: sorted(contacts) for lead, contacts in leads.items()}
+
+
 def _expand_skips(skipped_chs: Iterable[str] | None, state: dict[str, Any]) -> set[str]:
+    """Resolve channels excluded from a reference.
+
+    ``None`` means the stimulation contacts; the literal entry ``"stim_chs"``
+    in a list is replaced by them.
+    """
+
     if skipped_chs is None:
         return set(state.get("stim_chs") or [])
     values = set(skipped_chs)

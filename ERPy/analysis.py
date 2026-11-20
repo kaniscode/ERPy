@@ -6,6 +6,7 @@ from typing import Any
 
 import pandas as pd
 
+from ._legacy import LegacyScriptHooks
 from .crp import CRPConfig, compare_crp_across_stim_sites, run_crp, run_crp_all
 from .graph_metrics import (
     compute_dynamic_graph_metrics,
@@ -61,11 +62,14 @@ from .viz.spectral import (
 from .viz.waveforms import plot_grid, plot_heatmap, plot_mean, plot_ranked_grid
 
 
-class Analysis:
-    """High-level analysis and visualization helpers bound to a pipeline."""
+class Analysis(LegacyScriptHooks):
+    """High-level analysis and visualization helpers bound to a pipeline.
 
-    PYTHON_SCRIPT: str | None = None
-    BASH_SCRIPT: str | None = None
+    Every method is a thin wrapper around a public ERPy function that fills in
+    the patient's electrode metadata where one is needed, so analyses can be
+    written against ``patient.analysis`` without importing each function.
+    ``plot_*`` methods that wrap an axes-level function return the figure.
+    """
 
     def __init__(self, pipeline) -> None:
         self.pipeline = pipeline
@@ -388,19 +392,6 @@ class Analysis:
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         return path
 
-    @classmethod
-    def install_standard_scripts(cls) -> None:
-        """Reset external analysis-script hooks to ERPy's built-in execution."""
-
-        return None
-
-    @classmethod
-    def use_standard_scripts(cls, bash_type: str = "simple") -> None:
-        """Select ERPy's built-in local analysis execution hooks."""
-
-        cls.PYTHON_SCRIPT = None
-        cls.BASH_SCRIPT = None
-
     def queue_job(self, session_ids: Iterable[str] | None = None, backend: str | None = None, **kwargs: Any):
         """Create an analysis job runner and return its dispatch summary."""
 
@@ -409,4 +400,6 @@ class Analysis:
 
 
 def dispatch_analysis_batch(*args: Any, **kwargs: Any):
+    """Return an :class:`Analysis`; retained entry point of the pre-1.0 batch scripts."""
+
     return Analysis(*args, **kwargs)
