@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 import importlib.util
-from pathlib import Path
 import sys
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import pytest
-
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
@@ -18,6 +17,7 @@ benchmark = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
 sys.modules[SPEC.name] = benchmark
 SPEC.loader.exec_module(benchmark)
+
 
 def test_wilson_interval_handles_boundary_counts() -> None:
     empty_low, empty_high = benchmark.wilson_interval(0, 10)
@@ -45,12 +45,8 @@ def test_simulated_scenario_is_deterministic_and_retains_truth() -> None:
         artifact_fraction=0.25,
     )
 
-    first_values, first_times, first_channels, first_truth = (
-        benchmark.simulate_scenario(config, spec)
-    )
-    second_values, second_times, second_channels, second_truth = (
-        benchmark.simulate_scenario(config, spec)
-    )
+    first_values, first_times, first_channels, first_truth = benchmark.simulate_scenario(config, spec)
+    second_values, second_times, second_channels, second_truth = benchmark.simulate_scenario(config, spec)
 
     np.testing.assert_array_equal(first_values, second_values)
     np.testing.assert_array_equal(first_times, second_times)
@@ -103,31 +99,18 @@ def test_one_scenario_uses_public_detectors_and_joint_identity() -> None:
 
     scenario, records = benchmark.run_scenario(config, spec)
     target = [record for record in records if record["is_target"]]
-    primary_records = [
-        record for record in records if record["detector"] == "crp_energy"
-    ]
+    primary_records = [record for record in records if record["detector"] == "crp_energy"]
 
-    assert {record["detector"] for record in target} == set(
-        benchmark.DETECTORS
-    )
+    assert {record["detector"] for record in target} == set(benchmark.DETECTORS)
     assert scenario["primary_qc_status"] == "pass"
     assert scenario["primary_p_joint_identity"]
     assert scenario["primary_n_trials_clean"] == 8
     assert scenario["crp__energy__evaluable"]
     assert len(primary_records) == config.n_family_channels
-    assert {
-        record["crp_energy_random_state_root"] for record in primary_records
-    } == {scenario["detector_random_state"]}
-    assert len(
-        {
-            record["crp_energy_random_state_effective"]
-            for record in primary_records
-        }
-    ) == config.n_family_channels
+    assert {record["crp_energy_random_state_root"] for record in primary_records} == {scenario["detector_random_state"]}
+    assert len({record["crp_energy_random_state_effective"] for record in primary_records}) == config.n_family_channels
     assert scenario["primary_random_state_effective"] == next(
-        record["crp_energy_random_state_effective"]
-        for record in primary_records
-        if record["is_target"]
+        record["crp_energy_random_state_effective"] for record in primary_records if record["is_target"]
     )
 
 
@@ -142,42 +125,28 @@ def test_family_calibration_keeps_target_and_reference_errors_distinct() -> None
                 {
                     "scenario_id": scenario_id,
                     "detector": "crp_energy",
-                    "multiplicity_adjustment": benchmark.MULTIPLICITY_ADJUSTMENT[
-                        "crp_energy"
-                    ],
-                    "channel": "target"
-                    if channel_index == 0
-                    else f"reference_{channel_index}",
+                    "multiplicity_adjustment": benchmark.MULTIPLICITY_ADJUSTMENT["crp_energy"],
+                    "channel": "target" if channel_index == 0 else f"reference_{channel_index}",
                     "is_target": channel_index == 0,
-                    "truth": target_truth
-                    if channel_index == 0
-                    else "null_reference",
+                    "truth": target_truth if channel_index == 0 else "null_reference",
                     "call": call,
                     "evaluable": True,
                     "replicate": 0,
                     "n_trials_total": 12,
                     "artifact_fraction": 0.0,
                     "n_clean_trials_expected": 12,
-                    "snr_nominal": 0.0
-                    if target_truth == benchmark.NULL_TRUTH
-                    else 2.0,
+                    "snr_nominal": 0.0 if target_truth == benchmark.NULL_TRUTH else 2.0,
                 }
             )
 
-    families = benchmark.family_scenario_results(pd.DataFrame(rows)).set_index(
-        "family_type"
-    )
+    families = benchmark.family_scenario_results(pd.DataFrame(rows)).set_index("family_type")
 
     assert families.loc["all_null", "n_false_calls"] == 1
-    assert families.loc["all_null", "null_channel_call_fraction"] == pytest.approx(
-        1 / 3
-    )
+    assert families.loc["all_null", "null_channel_call_fraction"] == pytest.approx(1 / 3)
     assert families.loc["all_null", "false_discovery_proportion"] == 1.0
     assert families.loc["mixed_signal", "target_call"]
     assert families.loc["mixed_signal", "n_false_calls"] == 1
-    assert families.loc[
-        "mixed_signal", "false_discovery_proportion"
-    ] == pytest.approx(0.5)
+    assert families.loc["mixed_signal", "false_discovery_proportion"] == pytest.approx(0.5)
     summary = benchmark.summarize_family_calibration(
         families.reset_index(),
         group_columns=["detector", "family_type"],
@@ -186,9 +155,7 @@ def test_family_calibration_keeps_target_and_reference_errors_distinct() -> None
     ).set_index("family_type")
     assert summary.loc["all_null", "probability_any_null_call"] == 1.0
     assert summary.loc["mixed_signal", "target_power_unconditional"] == 1.0
-    assert summary.loc[
-        "mixed_signal", "mean_false_discovery_proportion"
-    ] == pytest.approx(0.5)
+    assert summary.loc["mixed_signal", "mean_false_discovery_proportion"] == pytest.approx(0.5)
 
 
 def test_family_calibration_separates_generated_and_evaluable_nulls() -> None:
@@ -203,16 +170,10 @@ def test_family_calibration_separates_generated_and_evaluable_nulls() -> None:
             {
                 "scenario_id": "masked_null_family",
                 "detector": "crp_energy",
-                "multiplicity_adjustment": benchmark.MULTIPLICITY_ADJUSTMENT[
-                    "crp_energy"
-                ],
+                "multiplicity_adjustment": benchmark.MULTIPLICITY_ADJUSTMENT["crp_energy"],
                 "channel": channel,
                 "is_target": channel == "target",
-                "truth": (
-                    benchmark.NULL_TRUTH
-                    if channel == "target"
-                    else "null_reference"
-                ),
+                "truth": (benchmark.NULL_TRUTH if channel == "target" else "null_reference"),
                 "call": call,
                 "evaluable": evaluable,
                 "replicate": 0,
@@ -286,9 +247,7 @@ def test_separate_demean_energy_is_invariant_to_segment_dc_offsets() -> None:
         min_clean_trials=int(config.min_clean_trials),
         n_permutations=int(config.n_permutations),
         max_exact_trials=int(config.max_exact_trials),
-        max_exact_reproducibility_trials=int(
-            config.max_exact_reproducibility_trials
-        ),
+        max_exact_reproducibility_trials=int(config.max_exact_reproducibility_trials),
         canonical_energy_cv=False,
         random_state=int(truth["detector_random_state"]),
     )
@@ -300,13 +259,9 @@ def test_separate_demean_energy_is_invariant_to_segment_dc_offsets() -> None:
     )
     shifted = values[:, :, 0].copy()
     response = np.flatnonzero(
-        (times >= max(config.response_window[0], config.artifact_interval[1]))
-        & (times <= config.response_window[1])
+        (times >= max(config.response_window[0], config.artifact_interval[1])) & (times <= config.response_window[1])
     )
-    baseline_candidates = np.flatnonzero(
-        (times >= config.baseline_window[0])
-        & (times <= config.baseline_window[1])
-    )
+    baseline_candidates = np.flatnonzero((times >= config.baseline_window[0]) & (times <= config.baseline_window[1]))
     baseline = baseline_candidates[-len(response) :]
     shifted[:, baseline] -= np.arange(12, dtype=float)[:, None]
     shifted[:, response] += 2.0 * np.arange(12, dtype=float)[:, None]
@@ -318,6 +273,4 @@ def test_separate_demean_energy_is_invariant_to_segment_dc_offsets() -> None:
     )
 
     assert changed.p_energy == pytest.approx(original.p_energy)
-    assert changed.energy_statistic == pytest.approx(
-        original.energy_statistic
-    )
+    assert changed.energy_statistic == pytest.approx(original.energy_statistic)

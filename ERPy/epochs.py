@@ -1,22 +1,22 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 import json
 import math
 import os
-from pathlib import Path
 import pickle
-from typing import Any, Iterable
 import uuid
 import warnings
 import zlib
+from collections.abc import Iterable
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any
 
 import numpy as np
 import pandas as pd
 
 from .artifact_anchor import POST_ARTIFACT_ZERO, detect_zero_time_artifact
 from .utils.jobrunner import JobRunner
-
 
 _METADATA_NODE_NAME = "erpy_metadata_v2"
 _METADATA_STORAGE_FORMAT = "zlib+json-v2"
@@ -54,10 +54,7 @@ def _metadata_to_json_value(value: Any) -> Any:
             raise TypeError("ERPy epoch metadata dictionaries must use string keys")
         return {
             _JSON_TYPE_KEY: "dict",
-            "items": [
-                [key, _metadata_to_json_value(value[key])]
-                for key in sorted(value)
-            ],
+            "items": [[key, _metadata_to_json_value(value[key])] for key in sorted(value)],
         }
     if isinstance(value, list):
         return {
@@ -84,10 +81,7 @@ def _metadata_to_json_value(value: Any) -> Any:
             "shape": list(value.shape),
             "items": _metadata_to_json_value(value.tolist()),
         }
-    raise TypeError(
-        "Unsupported ERPy epoch metadata value "
-        f"{type(value).__module__}.{type(value).__qualname__}"
-    )
+    raise TypeError(f"Unsupported ERPy epoch metadata value {type(value).__module__}.{type(value).__qualname__}")
 
 
 def _metadata_from_json_value(value: Any) -> Any:
@@ -116,12 +110,7 @@ def _metadata_from_json_value(value: Any) -> Any:
             raise ValueError("Invalid dictionary in ERPy metadata")
         restored: dict[str, Any] = {}
         for pair in items:
-            if (
-                not isinstance(pair, list)
-                or len(pair) != 2
-                or not isinstance(pair[0], str)
-                or pair[0] in restored
-            ):
+            if not isinstance(pair, list) or len(pair) != 2 or not isinstance(pair[0], str) or pair[0] in restored:
                 raise ValueError("Invalid dictionary entry in ERPy metadata")
             restored[pair[0]] = _metadata_from_json_value(pair[1])
         return restored
@@ -136,10 +125,7 @@ def _metadata_from_json_value(value: Any) -> Any:
         if dtype.hasobject:
             raise ValueError("Object arrays are not allowed in ERPy JSON metadata")
         shape = value.get("shape")
-        if (
-            not isinstance(shape, list)
-            or not all(isinstance(size, int) and size >= 0 for size in shape)
-        ):
+        if not isinstance(shape, list) or not all(isinstance(size, int) and size >= 0 for size in shape):
             raise ValueError("Invalid array shape in ERPy metadata")
         items = _metadata_from_json_value(value.get("items"))
         array = np.asarray(items, dtype=dtype)
@@ -178,17 +164,10 @@ def _decompress_metadata_payload(payload: bytes) -> bytes:
         payload,
         _MAX_DECOMPRESSED_METADATA_BYTES + 1,
     )
-    if (
-        len(raw) > _MAX_DECOMPRESSED_METADATA_BYTES
-        or decompressor.unconsumed_tail
-    ):
+    if len(raw) > _MAX_DECOMPRESSED_METADATA_BYTES or decompressor.unconsumed_tail:
         raise ValueError("Decompressed ERPy epoch metadata exceed the safety limit")
     raw += decompressor.flush()
-    if (
-        len(raw) > _MAX_DECOMPRESSED_METADATA_BYTES
-        or not decompressor.eof
-        or decompressor.unused_data
-    ):
+    if len(raw) > _MAX_DECOMPRESSED_METADATA_BYTES or not decompressor.eof or decompressor.unused_data:
         raise ValueError("Invalid or oversized compressed ERPy epoch metadata")
     return raw
 
@@ -372,7 +351,11 @@ class EpochsCore:
                     "zero_time_s": 0.0,
                     "nearest_sample_s": 0.0,
                     "artifact_score_z": pd.to_numeric(anchor_reports["onset_score_z"], errors="coerce"),
-                    "zero_time_is_artifact": anchor_reports.get("onset_is_artifact", pd.Series(False, index=anchor_reports.index)).fillna(False).astype(bool),
+                    "zero_time_is_artifact": anchor_reports.get(
+                        "onset_is_artifact", pd.Series(False, index=anchor_reports.index)
+                    )
+                    .fillna(False)
+                    .astype(bool),
                     "artifact_z_threshold": float(artifact_z),
                     "source": "pre_zero_anchor_report",
                 }
@@ -440,8 +423,12 @@ class EpochsCore:
                 "n_values": int(finite.size),
                 "max_abs_uv": max_abs,
                 "is_zeroed": bool(np.isfinite(max_abs) and max_abs <= 1e-9),
-                "n_onset_artifact_epochs": int(pd.Series(onset_flags).fillna(False).astype(bool).sum()) if onset_flags is not None else 0,
-                "n_settled_epochs": int(pd.Series(settled).fillna(False).astype(bool).sum()) if settled is not None else 0,
+                "n_onset_artifact_epochs": int(pd.Series(onset_flags).fillna(False).astype(bool).sum())
+                if onset_flags is not None
+                else 0,
+                "n_settled_epochs": int(pd.Series(settled).fillna(False).astype(bool).sum())
+                if settled is not None
+                else 0,
                 "n_anchor_reports": int(len(anchor_reports)),
             }
 
@@ -501,7 +488,7 @@ class Epochs(EpochsCore):
 
         from .erp_detection import detect_erp
 
-        return detect_erp(self, method=method, *args, **kwargs)
+        return detect_erp(self, method, *args, **kwargs)
 
     def flag_artifacts(self, *args: Any, **kwargs: Any):
         """Score trial-channel responses against the artifact criteria."""
@@ -510,7 +497,7 @@ class Epochs(EpochsCore):
 
         return detect_artifactual_responses(self, *args, **kwargs)
 
-    def reject_artifacts(self, *args: Any, **kwargs: Any) -> "Epochs":
+    def reject_artifacts(self, *args: Any, **kwargs: Any) -> Epochs:
         """Return a copy with artifact-contaminated responses rejected."""
 
         from .bad_channels import reject_artifactual_responses
@@ -523,7 +510,7 @@ class Epochs(EpochsCore):
         *,
         signal_units: str = "uV",
         reason: str | None = None,
-    ) -> "Epochs":
+    ) -> Epochs:
         """Return a copy with channel values multiplied by ``factor``."""
 
         scaled = self.epochs_df.copy()
@@ -555,7 +542,7 @@ class Epochs(EpochsCore):
         skipped_chs: Iterable[str] | None = None,
         zscore_threshold: float = 8.0,
         min_reference_channels: int = 4,
-    ) -> "Epochs":
+    ) -> Epochs:
         """Return a re-referenced copy while preserving every channel."""
 
         from .utils.preproc import common_reference
@@ -613,9 +600,7 @@ class Epochs(EpochsCore):
         numeric = stored.select_dtypes(include=[np.number]).columns
         if storage_dtype is not None and len(numeric):
             target_dtype = np.dtype(storage_dtype)
-            stored = stored.astype(
-                {column: target_dtype for column in numeric}
-            )
+            stored = stored.astype({column: target_dtype for column in numeric})
         storage_dtype_name = str(np.dtype(storage_dtype)) if storage_dtype is not None else "preserve"
         md = {
             "sfreq": self.sfreq,
@@ -652,7 +637,7 @@ class Epochs(EpochsCore):
         key: str = "epochs",
         *,
         allow_unsafe_legacy_pickle: bool = False,
-    ) -> "Epochs":
+    ) -> Epochs:
         """Load epochs and restore their audit metadata.
 
         Files written by ERPy 1.0 and later use deterministic JSON metadata.

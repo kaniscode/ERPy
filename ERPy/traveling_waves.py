@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
-import re
 
 import numpy as np
 import pandas as pd
@@ -12,7 +11,6 @@ from .viz.networks import (
     resolve_electrode_label,
     stim_pair_to_contact_electrodes,
 )
-
 
 DEFAULT_SCAFFOLD_PATTERN = (
     r"\bACC\b|anterior[\s_-]*cingulat|cingul(?:ate)?(?:[\s_-]*mid)?[\s_-]*ant\b|"
@@ -104,12 +102,8 @@ def latency_wavefront_table(
             resolved = resolve_electrode_label(str(row[channel_col]), available)
             if exclude_stimulation_contacts and "stim_pair" in row.index:
                 stimulation_contacts = {
-                    electrode_label_identity(
-                        resolve_electrode_label(contact, available)
-                    )
-                    for contact in stim_pair_to_contact_electrodes(
-                        str(row["stim_pair"])
-                    )
+                    electrode_label_identity(resolve_electrode_label(contact, available))
+                    for contact in stim_pair_to_contact_electrodes(str(row["stim_pair"]))
                 }
                 if electrode_label_identity(resolved) in stimulation_contacts:
                     continue
@@ -120,7 +114,9 @@ def latency_wavefront_table(
             out["record_elec"] = resolved
             out["record_region"] = meta_row.get(region_col, "") if region_col in meta_lookup.columns else ""
             out["latency_ms"] = float(row[latency_col])
-            out["metric_abs"] = abs(float(row[metric_col])) if metric_col in row and pd.notna(row[metric_col]) else np.nan
+            out["metric_abs"] = (
+                abs(float(row[metric_col])) if metric_col in row and pd.notna(row[metric_col]) else np.nan
+            )
             for axis, col in zip(("x", "y", "z"), coord_cols):
                 out[f"mni_{axis}"] = float(meta_row[col])
             out["in_scaffold"] = bool(scaffold_region_mask(pd.Series([out["record_region"]])).iloc[0])
@@ -131,9 +127,7 @@ def latency_wavefront_table(
 def _boolean_mask(values: pd.Series) -> pd.Series:
     if pd.api.types.is_bool_dtype(values):
         return values.fillna(False)
-    return values.fillna(False).astype(str).str.strip().str.lower().isin(
-        {"true", "1", "yes", "y"}
-    )
+    return values.fillna(False).astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
 
 
 def _collapse_detector_rows(
@@ -175,11 +169,7 @@ def _collapse_detector_rows(
         first[metric_col] = first.pop("_metric")
     first["n_detector_rows"] = first.set_index(keys).index.map(grouped.size())
     if "method" in data.columns:
-        methods = grouped["method"].agg(
-            lambda values: ";".join(
-                sorted(set(values.dropna().astype(str)))
-            )
-        )
+        methods = grouped["method"].agg(lambda values: ";".join(sorted(set(values.dropna().astype(str)))))
         first["detector_methods"] = first.set_index(keys).index.map(methods)
     return first.reset_index(drop=True)
 
@@ -307,11 +297,7 @@ def latency_gradient_permutation_test(
         data[col] = pd.to_numeric(data[col], errors="coerce")
     data = data.dropna(subset=[latency_col, *coord_cols])
     groups = data.groupby(group_cols, dropna=False) if group_cols else [((), data)]
-    rng = (
-        random_state
-        if isinstance(random_state, np.random.Generator)
-        else np.random.default_rng(random_state)
-    )
+    rng = random_state if isinstance(random_state, np.random.Generator) else np.random.default_rng(random_state)
     rows: list[dict] = []
     for group_values, frame in groups:
         if not isinstance(group_values, tuple):
@@ -371,15 +357,9 @@ def latency_gradient_permutation_test(
                 null_r2[permutation_index] = fitted["latency_r2"]
         finite_null = null_r2[np.isfinite(null_r2)]
         if len(finite_null):
-            p_value = (
-                1.0
-                + float(
-                    np.sum(
-                        finite_null
-                        >= float(observed["latency_r2"]) - 1e-15
-                    )
-                )
-            ) / (len(finite_null) + 1.0)
+            p_value = (1.0 + float(np.sum(finite_null >= float(observed["latency_r2"]) - 1e-15))) / (
+                len(finite_null) + 1.0
+            )
             null_median = float(np.nanmedian(finite_null))
             null_p95 = float(np.nanquantile(finite_null, 0.95))
         else:
@@ -444,11 +424,7 @@ def latency_distance_permutation_test(
         data[col] = pd.to_numeric(data[col], errors="coerce")
     data = data.dropna(subset=[latency_col, distance_col])
     groups = data.groupby(group_cols, dropna=False) if group_cols else [((), data)]
-    rng = (
-        random_state
-        if isinstance(random_state, np.random.Generator)
-        else np.random.default_rng(random_state)
-    )
+    rng = random_state if isinstance(random_state, np.random.Generator) else np.random.default_rng(random_state)
     rows: list[dict] = []
     for group_values, frame in groups:
         if not isinstance(group_values, tuple):
@@ -504,15 +480,9 @@ def latency_distance_permutation_test(
                 null_r2[permutation_index] = fitted["distance_r2"]
         finite_null = null_r2[np.isfinite(null_r2)]
         if len(finite_null):
-            p_value = (
-                1.0
-                + float(
-                    np.sum(
-                        finite_null
-                        >= float(observed["distance_r2"]) - 1e-15
-                    )
-                )
-            ) / (len(finite_null) + 1.0)
+            p_value = (1.0 + float(np.sum(finite_null >= float(observed["distance_r2"]) - 1e-15))) / (
+                len(finite_null) + 1.0
+            )
             null_median = float(np.nanmedian(finite_null))
             null_p95 = float(np.nanquantile(finite_null, 0.95))
         else:
@@ -557,9 +527,7 @@ def _unweighted_permutation_r2(
         keepdims=True,
     )
     latency_centered = latency - float(np.nanmean(latency))
-    design = np.column_stack(
-        [coords_centered, np.ones(len(coords_centered))]
-    )
+    design = np.column_stack([coords_centered, np.ones(len(coords_centered))])
     try:
         design_pinv = np.linalg.pinv(design)
     except np.linalg.LinAlgError:
@@ -614,11 +582,7 @@ def _fit_latency_gradient(
     fitted = design @ coef
     residual = latency_centered - fitted
     ss_res = float(np.nansum(residual**2))
-    ss_tot = float(
-        np.nansum(
-            (latency_centered - np.nanmean(latency_centered)) ** 2
-        )
-    )
+    ss_tot = float(np.nansum((latency_centered - np.nanmean(latency_centered)) ** 2))
     r2 = 1.0 - ss_res / ss_tot if ss_tot > 0 else np.nan
     grad_norm = float(np.linalg.norm(gradient))
     if grad_norm > 0 and np.isfinite(grad_norm):
@@ -651,9 +615,7 @@ def _unweighted_distance_permutation_r2(
 ) -> np.ndarray:
     distance_centered = distance - float(np.nanmean(distance))
     latency_centered = latency - float(np.nanmean(latency))
-    design = np.column_stack(
-        [distance_centered, np.ones(len(distance_centered))]
-    )
+    design = np.column_stack([distance_centered, np.ones(len(distance_centered))])
     try:
         design_pinv = np.linalg.pinv(design)
     except np.linalg.LinAlgError:
@@ -687,9 +649,7 @@ def _fit_latency_distance(
     if not np.isfinite(distance_centered).all() or np.ptp(distance_centered) <= 0:
         return _empty_distance_fit("constant_distance")
     latency_centered = latency - float(np.nanmean(latency))
-    design = np.column_stack(
-        [distance_centered, np.ones(len(distance_centered))]
-    )
+    design = np.column_stack([distance_centered, np.ones(len(distance_centered))])
     try:
         if weights is not None:
             sw = np.sqrt(weights)[:, None]
@@ -713,11 +673,7 @@ def _fit_latency_distance(
     ss_res = float(np.nansum(residual**2))
     ss_tot = float(np.nansum(latency_centered**2))
     r2 = 1.0 - ss_res / ss_tot if ss_tot > 0 else np.nan
-    speed = (
-        float(1.0 / abs(slope))
-        if np.isfinite(slope) and not np.isclose(slope, 0.0)
-        else np.nan
-    )
+    speed = float(1.0 / abs(slope)) if np.isfinite(slope) and not np.isclose(slope, 0.0) else np.nan
     return {
         "distance_slope_ms_per_mm": slope,
         "apparent_radial_speed_m_per_s": speed,

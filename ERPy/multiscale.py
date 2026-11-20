@@ -24,18 +24,18 @@ also offers an intertrial-CRP fixed-window t-threshold mode (van den Boom et al.
 whole-trial randomization/energy conjunctions with a standard Bonferroni bank;
 neither CRP projection nor fixed-window CRP detection is claimed as new here.
 """
+
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field, replace
 import hashlib
 import json
-from typing import Sequence
+from collections.abc import Sequence
+from dataclasses import asdict, dataclass, field, replace
 
 import numpy as np
 
 from .crp_energy import CRPEnergyConfig, CRPEnergyResult, run_crp_energy_array
 from .inference import fdr_bh
-
 
 MULTISCALE_VERSION = "experimental-fixed-bank-2"
 DEFAULT_WINDOWS = ((0.010, 0.090), (0.090, 0.300), (0.010, 0.300))
@@ -52,10 +52,14 @@ class MultiScaleConfig:
 
     windows: tuple[tuple[float, float], ...] = DEFAULT_WINDOWS
     weights: tuple[float, ...] | None = None
-    component_config: CRPEnergyConfig = field(default_factory=lambda: CRPEnergyConfig(
-        response_window=(0.010, 0.300), baseline_window=(-0.5, -0.02),
-        artifact_interval=(0.0, 0.009), canonical_energy_cv=False,
-    ))
+    component_config: CRPEnergyConfig = field(
+        default_factory=lambda: CRPEnergyConfig(
+            response_window=(0.010, 0.300),
+            baseline_window=(-0.5, -0.02),
+            artifact_interval=(0.0, 0.009),
+            canonical_energy_cv=False,
+        )
+    )
 
     def validate(self) -> None:
         if not self.windows:
@@ -99,18 +103,28 @@ class MultiScaleResult:
     def to_record(self) -> dict:
         """Return compact provenance without descriptive waveform arrays."""
         return {
-            "channel": self.channel, "p_multiscale": self.p_multiscale,
-            "q_multiscale": self.q_multiscale, "significant": self.significant,
-            "available": self.available, "n_declared_windows": self.n_declared_windows,
+            "channel": self.channel,
+            "p_multiscale": self.p_multiscale,
+            "q_multiscale": self.q_multiscale,
+            "significant": self.significant,
+            "available": self.available,
+            "n_declared_windows": self.n_declared_windows,
             "n_available_windows": self.n_available_windows,
             "common_clean_trial_indices": self.common_clean_trial_indices.tolist(),
-            "parameters": self.parameters, "detector_version": self.detector_version,
-            "windows": [{
-                "declared_window": list(w.declared_window), "p_joint": w.p_joint,
-                "p_for_combination": w.p_for_combination, "available": w.available,
-                "status": w.status, "seed": w.seed,
-                "component_result": w.result.to_record(include_arrays=False) if w.result else None,
-            } for w in self.windows],
+            "parameters": self.parameters,
+            "detector_version": self.detector_version,
+            "windows": [
+                {
+                    "declared_window": list(w.declared_window),
+                    "p_joint": w.p_joint,
+                    "p_for_combination": w.p_for_combination,
+                    "available": w.available,
+                    "status": w.status,
+                    "seed": w.seed,
+                    "component_result": w.result.to_record(include_arrays=False) if w.result else None,
+                }
+                for w in self.windows
+            ],
         }
 
 
@@ -135,15 +149,20 @@ def conservative_bonferroni(p_values: Sequence[float]) -> float:
 
 def _validate_weights(weights: Sequence[float], count: int) -> np.ndarray:
     values = np.asarray(weights, dtype=float)
-    if (values.ndim != 1 or len(values) != count or
-            not np.all(np.isfinite(values)) or np.any(values <= 0) or
-            not np.isclose(values.sum(), 1.0, rtol=0, atol=1e-12)):
+    if (
+        values.ndim != 1
+        or len(values) != count
+        or not np.all(np.isfinite(values))
+        or np.any(values <= 0)
+        or not np.isclose(values.sum(), 1.0, rtol=0, atol=1e-12)
+    ):
         raise ValueError("weights must be finite, positive, match the full bank, and sum to one")
     return values
 
 
 def conservative_weighted_bonferroni(
-    p_values: Sequence[float], weights: Sequence[float],
+    p_values: Sequence[float],
+    weights: Sequence[float],
 ) -> float:
     """Use the complete predeclared allocation, without missing-data reweighting.
 
@@ -170,11 +189,14 @@ def _window_support(times: np.ndarray, config: CRPEnergyConfig) -> np.ndarray | 
     baseline = np.flatnonzero((times >= config.baseline_window[0]) & (times <= config.baseline_window[1]))
     if len(response) < 2 or len(baseline) < len(response):
         return None
-    return np.r_[response, baseline[-len(response):]]
+    return np.r_[response, baseline[-len(response) :]]
 
 
 def run_multiscale_array(
-    x: np.ndarray, times: np.ndarray, *, channel: str = "",
+    x: np.ndarray,
+    times: np.ndarray,
+    *,
+    channel: str = "",
     config: MultiScaleConfig | None = None,
 ) -> MultiScaleResult:
     """Evaluate one contact using a fixed bank and common complete-case trials.
@@ -193,11 +215,20 @@ def run_multiscale_array(
         raise ValueError("times must contain at least two finite samples")
     steps = np.diff(time_values)
     median = float(np.median(steps))
-    if median <= 0 or not np.all(steps > 0) or not np.allclose(steps, median, rtol=1e-6, atol=max(1e-12, abs(median)*1e-9)):
+    if (
+        median <= 0
+        or not np.all(steps > 0)
+        or not np.allclose(steps, median, rtol=1e-6, atol=max(1e-12, abs(median) * 1e-9))
+    ):
         raise ValueError("times must be uniformly sampled and strictly increasing")
-    components = [replace(config.component_config, response_window=tuple(window),
-                          random_state=window_seed(config.component_config.random_state, channel, window))
-                  for window in config.windows]
+    components = [
+        replace(
+            config.component_config,
+            response_window=tuple(window),
+            random_state=window_seed(config.component_config.random_state, channel, window),
+        )
+        for window in config.windows
+    ]
     supports = [_window_support(time_values, c) for c in components]
     present = [s for s in supports if s is not None]
     union = np.unique(np.concatenate(present)) if present else np.array([], dtype=int)
@@ -217,22 +248,37 @@ def run_multiscale_array(
             status = result.qc_status
             p = float(result.p_joint)
         available = bool(np.isfinite(p) and status == "pass")
-        windows.append(WindowEvidence(tuple(window), p, p if available else 1.0,
-                                      available, status, result, int(component.random_state)))
+        windows.append(
+            WindowEvidence(
+                tuple(window), p, p if available else 1.0, available, status, result, int(component.random_state)
+            )
+        )
     window_ps = [w.p_for_combination for w in windows]
-    p = (conservative_bonferroni(window_ps) if config.weights is None else
-         conservative_weighted_bonferroni(window_ps, config.weights))
+    p = (
+        conservative_bonferroni(window_ps)
+        if config.weights is None
+        else conservative_weighted_bonferroni(window_ps, config.weights)
+    )
     available = any(w.available for w in windows)
     return MultiScaleResult(
-        str(channel), p, np.nan,
-        bool(available and p <= config.component_config.alpha), available,
-        len(windows), sum(w.available for w in windows), clean, tuple(windows),
+        str(channel),
+        p,
+        np.nan,
+        bool(available and p <= config.component_config.alpha),
+        available,
+        len(windows),
+        sum(w.available for w in windows),
+        clean,
+        tuple(windows),
         json.dumps(asdict(config), sort_keys=True),
     )
 
 
 def run_multiscale_family(
-    x: np.ndarray, times: np.ndarray, *, channels: Sequence[str] | None = None,
+    x: np.ndarray,
+    times: np.ndarray,
+    *,
+    channels: Sequence[str] | None = None,
     config: MultiScaleConfig | None = None,
 ) -> list[MultiScaleResult]:
     """Evaluate trial × time × contact data; adjust all declared contacts.
@@ -250,8 +296,10 @@ def run_multiscale_family(
     labels = list(channels) if channels is not None else [str(i) for i in range(values.shape[2])]
     if len(labels) != values.shape[2] or len(set(labels)) != len(labels):
         raise ValueError("channels must be unique and match the contact dimension")
-    results = [run_multiscale_array(values[:, :, c], times, channel=str(label), config=config)
-               for c, label in enumerate(labels)]
+    results = [
+        run_multiscale_array(values[:, :, c], times, channel=str(label), config=config)
+        for c, label in enumerate(labels)
+    ]
     ps = np.array([r.p_multiscale for r in results])
     if str(config.component_config.correction).strip().lower() == "fdr_bh":
         qs, calls = fdr_bh(ps, alpha=config.component_config.alpha)

@@ -37,9 +37,7 @@ def test_generic_monte_carlo_counts_observed_assignment(alternative, sign):
 
 def test_generic_exact_and_monte_carlo_keep_all_ties():
     for exact_limit in (0, 8):
-        result = exact_sign_flip_test(
-            np.zeros(8), max_exact_observations=exact_limit, n_resamples=9
-        )
+        result = exact_sign_flip_test(np.zeros(8), max_exact_observations=exact_limit, n_resamples=9)
         assert result.p_value == 1.0
     exact = exact_sign_flip_test(np.ones(8), alternative="greater")
     assert exact.exact
@@ -48,13 +46,10 @@ def test_generic_exact_and_monte_carlo_keep_all_ties():
 
 @pytest.mark.parametrize("scale", [1.0, 1e-8])
 def test_duration_profile_equals_mean_of_ordered_projections(scale):
-    voltage = scale * np.array([[1., -1., 2.], [2., 2., -1.], [1., 3., 4.]])
+    voltage = scale * np.array([[1.0, -1.0, 2.0], [2.0, 2.0, -1.0], [1.0, 3.0, 4.0]])
     counts = np.array([2, 3])
     profile = _mean_projection_profile(voltage, counts, 250.0, 1e-12)
-    expected = [
-        np.mean(semi_normalized_cross_projections(voltage[:count], sfreq=250.0))
-        for count in counts
-    ]
+    expected = [np.mean(semi_normalized_cross_projections(voltage[:count], sfreq=250.0)) for count in counts]
     np.testing.assert_allclose(profile, expected, rtol=1e-14, atol=0.0)
 
 
@@ -106,10 +101,8 @@ def test_undefined_projection_is_insufficient_not_a_negative_component():
 
 
 def test_zero_training_direction_has_no_canonical_energy_estimate():
-    response = np.array([[1., -1.], [0., 0.], [0., 0.]])
-    energy, fraction = _canonical_energy_effects(
-        response, response_samples=2, cross_validated=True, eps=1e-12
-    )
+    response = np.array([[1.0, -1.0], [0.0, 0.0], [0.0, 0.0]])
+    energy, fraction = _canonical_energy_effects(response, response_samples=2, cross_validated=True, eps=1e-12)
     assert np.isnan(energy)
     assert np.isnan(fraction)
 
@@ -121,11 +114,9 @@ def test_canonical_energy_matches_held_out_projection_equation():
         training = np.delete(response, i, axis=0).T
         canonical = np.linalg.svd(training, full_matrices=False)[0][:, 0]
         held_out_energies.append((response[i] @ canonical) ** 2)
-    energy, fraction = _canonical_energy_effects(
-        response, response_samples=12, cross_validated=True, eps=1e-12
-    )
+    energy, fraction = _canonical_energy_effects(response, response_samples=12, cross_validated=True, eps=1e-12)
     assert energy == pytest.approx(sum(held_out_energies) / response.size)
-    assert fraction == pytest.approx(sum(held_out_energies) / np.sum(response ** 2))
+    assert fraction == pytest.approx(sum(held_out_energies) / np.sum(response**2))
 
 
 def test_crp_snr_and_scaled_coefficient_preserve_square_roots():
@@ -136,15 +127,15 @@ def test_crp_snr_and_scaled_coefficient_preserve_square_roots():
     baseline = (times >= config.baseline_window[0]) & (times <= config.baseline_window[1])
     response = (times >= config.response_window[0]) & (times <= config.response_window[1])
     centered = values - values[:, baseline].mean(axis=1, keepdims=True)
-    selected = centered[:, response][:, :len(result.canonical_waveform)]
+    selected = centered[:, response][:, : len(result.canonical_waveform)]
     residual = selected - np.outer(result.projections, result.canonical_waveform)
-    expected_snr = result.projections / np.sqrt(np.maximum(np.sum(residual ** 2, axis=1), config.eps))
+    expected_snr = result.projections / np.sqrt(np.maximum(np.sum(residual**2, axis=1), config.eps))
     np.testing.assert_allclose(result.snr, expected_snr)
     np.testing.assert_allclose(result.alpha_prime_uv, result.projections / np.sqrt(selected.shape[1]))
 
 
 def test_primary_exact_energy_agrees_with_complete_enumeration():
-    differences = np.array([-2., -1., 0., 1., 2., 3., 4., 5.])
+    differences = np.array([-2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0])
     observed, p_value, exact, draws = paired_log_rms_sign_flip_test(differences)
     null = np.array([np.mean(np.array(signs) * differences) for signs in product((-1, 1), repeat=8)])
     assert observed == differences.mean()

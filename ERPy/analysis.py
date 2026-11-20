@@ -1,13 +1,17 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
-import matplotlib.pyplot as plt
 import pandas as pd
 
 from .crp import CRPConfig, compare_crp_across_stim_sites, run_crp, run_crp_all
-from .graph_metrics import compute_dynamic_graph_metrics, evoked_graph_metric_timecourse, evoked_response_edges_over_time
+from .graph_metrics import (
+    compute_dynamic_graph_metrics,
+    evoked_graph_metric_timecourse,
+    evoked_response_edges_over_time,
+)
 from .response_metrics import zscore_metric_within_stim
 from .spectral import (
     SpectralConfig,
@@ -22,6 +26,9 @@ from .spectral import (
 )
 from .stats_utils import compare_groups
 from .utils.jobrunner import JobRunner
+from .viz.crp import plot_crp_response_contrast, plot_crp_score_map, plot_crp_site_comparison, plot_crp_summary
+from .viz.detections import plot_detection_summary
+from .viz.graph_metrics import plot_graph_metric_heatmap, plot_graph_metric_timecourse
 from .viz.networks import (
     adjacency_from_edges,
     edges_from_detections,
@@ -32,17 +39,16 @@ from .viz.networks import (
     plot_coordinate_network,
     plot_evoked_response_graph,
     plot_glass_brain_network,
-    plot_node_metric_glass_brain,
-    plot_node_metric_template_brain,
     plot_interactive_connectome,
     plot_network,
+    plot_node_metric_glass_brain,
+    plot_node_metric_template_brain,
     plot_ordered_adjacency_heatmap,
     plot_response_matrix_heatmap,
     plot_template_brain_network,
     response_matrix_from_edges,
 )
-from .viz.crp import plot_crp_response_contrast, plot_crp_score_map, plot_crp_site_comparison, plot_crp_summary
-from .viz.detections import plot_detection_summary
+from .viz.response_metrics import plot_within_stim_zscore_bars, plot_within_stim_zscore_heatmap
 from .viz.spectral import (
     plot_comodulogram,
     plot_connectivity_matrix,
@@ -52,8 +58,6 @@ from .viz.spectral import (
     plot_spectral_summary,
     plot_tfr,
 )
-from .viz.response_metrics import plot_within_stim_zscore_bars, plot_within_stim_zscore_heatmap
-from .viz.graph_metrics import plot_graph_metric_heatmap, plot_graph_metric_timecourse
 from .viz.waveforms import plot_grid, plot_heatmap, plot_mean, plot_ranked_grid
 
 
@@ -218,13 +222,19 @@ class Analysis:
         ax = plot_connectivity_matrix(matrix, **kwargs)
         return ax.figure
 
-    def plot_comodulogram(self, epochs, phase_channel: str, amp_channel: str | None = None, plot_kwargs: dict | None = None, **kwargs):
+    def plot_comodulogram(
+        self, epochs, phase_channel: str, amp_channel: str | None = None, plot_kwargs: dict | None = None, **kwargs
+    ):
         """Compute and plot a phase-amplitude comodulogram."""
 
-        ax = plot_comodulogram(phase_amplitude_comodulogram(epochs, phase_channel, amp_channel, **kwargs), **(plot_kwargs or {}))
+        ax = plot_comodulogram(
+            phase_amplitude_comodulogram(epochs, phase_channel, amp_channel, **kwargs), **(plot_kwargs or {})
+        )
         return ax.figure
 
-    def plot_pac(self, epochs, phase_channel: str, amp_channel: str | None = None, plot_kwargs: dict | None = None, **kwargs):
+    def plot_pac(
+        self, epochs, phase_channel: str, amp_channel: str | None = None, plot_kwargs: dict | None = None, **kwargs
+    ):
         """Compute and plot a phase-amplitude coupling estimate."""
 
         ax = plot_pac(phase_amplitude_coupling(epochs, phase_channel, amp_channel, **kwargs), **(plot_kwargs or {}))

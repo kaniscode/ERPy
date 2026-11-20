@@ -1,11 +1,16 @@
 """ERPy public API."""
 
 from .analysis import Analysis
-from .artifact_anchor import POST_ARTIFACT_ZERO, artifact_envelope, detect_post_artifact_anchor, detect_zero_time_artifact
+from .artifact_anchor import (
+    POST_ARTIFACT_ZERO,
+    artifact_envelope,
+    detect_post_artifact_anchor,
+    detect_zero_time_artifact,
+)
 from .bad_channels import (
+    DEFAULT_HARD_ARTIFACT_REASONS,
     ArtifactResponseReport,
     BadChannelReport,
-    DEFAULT_HARD_ARTIFACT_REASONS,
     detect_artifactual_responses,
     detect_bad_channels,
     reject_artifactual_responses,
@@ -13,7 +18,18 @@ from .bad_channels import (
     response_artifact_summary,
 )
 from .bids import BIDSImportResult, discover_bids_ieeg, import_bids_project
-from .dataloader import DataLoader
+from .connectivity import (
+    canonicalize_connectivity_edges,
+    coherence_matrix_from_dataframe,
+    connectivity_matrix_from_dataframe,
+    dataframe_time_window,
+    granger_causality_matrix_from_dataframe,
+    multitaper_coherence_matrices_from_dataframe,
+    mutual_information_matrix_from_dataframe,
+    plv_matrix_from_dataframe,
+    post_stim_rest_window,
+)
+from .coordinates import complete_contact_coordinates
 from .crp import CRPConfig, CRPResult, compare_crp_across_stim_sites, run_crp, run_crp_all
 from .crp_energy import (
     CRP_ENERGY_DETECTOR_VERSION,
@@ -24,6 +40,7 @@ from .crp_energy import (
     paired_log_rms_sign_flip_test,
     run_crp_energy_array,
 )
+from .dataloader import DataLoader
 from .epochs import Epochs, EpochsCore, UnsafeLegacyEpochMetadataError
 from .erp_detection import (
     ALL_METHODS,
@@ -33,8 +50,15 @@ from .erp_detection import (
     PRIMARY_CRITERION,
     detect,
 )
-from .events import EventDetectionError, Events, create_events_from_binary_series, create_events_from_timestamps
-from .events import detect_events_from_artifacts, evoked_to_datetime, process_events_for_session
+from .events import (
+    EventDetectionError,
+    Events,
+    create_events_from_binary_series,
+    create_events_from_timestamps,
+    detect_events_from_artifacts,
+    evoked_to_datetime,
+    process_events_for_session,
+)
 from .facade import AnalysisResult, EpochsResult, Patient, Recording, Session, Study
 from .graph_metrics import (
     bidirectional_edge_summary,
@@ -53,18 +77,6 @@ from .inference import (
     hierarchical_bootstrap_interval,
 )
 from .pipeline import Pipeline, UnsafeLegacyProcessedMetadataError
-from .connectivity import (
-    canonicalize_connectivity_edges,
-    coherence_matrix_from_dataframe,
-    connectivity_matrix_from_dataframe,
-    dataframe_time_window,
-    granger_causality_matrix_from_dataframe,
-    multitaper_coherence_matrices_from_dataframe,
-    mutual_information_matrix_from_dataframe,
-    plv_matrix_from_dataframe,
-    post_stim_rest_window,
-)
-from .coordinates import complete_contact_coordinates
 from .response_metrics import zscore_metric_within_stim
 from .spectral import (
     DEFAULT_BANDS,

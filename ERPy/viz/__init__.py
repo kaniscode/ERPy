@@ -1,3 +1,4 @@
+from .anatomy import plot_electrode_mni, plot_electrodes_from_metadata, plot_erps_on_brain
 from .crp import (
     plot_crp_curve,
     plot_crp_projections,
@@ -15,20 +16,45 @@ from .detections import (
     plot_method_significance_counts,
     plot_published_detector_diagnostic,
 )
-from .waveforms import (
-    EpochsPlotter,
-    plot_butterfly,
-    plot_grid,
-    plot_heatmap,
-    plot_grouped_grid,
-    plot_mean,
-    plot_mean_erp_comparison,
-    plot_overlay,
-    plot_ranked_grid,
-    plot_response_map,
-    plot_summary_panel,
-    plot_trials_grid,
+from .erp_plots import plot_erp_grid
+from .erp_plots import plot_mean_erp_comparison as plot_mean_erp_dataframe_comparison
+from .graph_metrics import (
+    plot_graph_metric_heatmap,
+    plot_graph_metric_timecourse,
 )
+from .heatmaps import heatmap_channels_time, heatmap_epochs
+from .io import save_analysis_figure
+from .networks import (
+    adjacency_from_edges,
+    edges_from_detections,
+    electrode_label_identity,
+    graph_from_edges,
+    graph_from_matrix,
+    node_coordinates_from_metadata,
+    order_nodes_by_metadata,
+    order_sources_by_metadata,
+    ordered_adjacency_from_edges,
+    plot_adjacency_heatmap,
+    plot_aggregate_evoked_response_graph,
+    plot_coordinate_network,
+    plot_electrode_connectome,
+    plot_evoked_response_graph,
+    plot_glass_brain_network,
+    plot_interactive_connectome,
+    plot_network,
+    plot_node_metric_glass_brain,
+    plot_node_metric_template_brain,
+    plot_ordered_adjacency_heatmap,
+    plot_region_connectome,
+    plot_response_matrix_heatmap,
+    plot_surface_connectome,
+    plot_template_brain_network,
+    resolve_electrode_label,
+    response_matrix_from_edges,
+    stim_pair_to_contact_electrodes,
+    validate_mni_coordinates,
+)
+from .quick import quick_erp
 from .response_metrics import (
     plot_within_stim_zscore_bars,
     plot_within_stim_zscore_heatmap,
@@ -46,45 +72,20 @@ from .spectral import (
     plot_spectral_summary,
     plot_tfr,
 )
-from .graph_metrics import (
-    plot_graph_metric_heatmap,
-    plot_graph_metric_timecourse,
-)
-from .quick import quick_erp
-from .erp_plots import plot_erp_grid, plot_mean_erp_comparison as plot_mean_erp_dataframe_comparison
-from .heatmaps import heatmap_channels_time, heatmap_epochs
 from .stim_order import plot_metric_vs_epoch
-from .anatomy import plot_electrode_mni, plot_electrodes_from_metadata, plot_erps_on_brain
-from .io import save_analysis_figure
-from .networks import (
-    adjacency_from_edges,
-    electrode_label_identity,
-    edges_from_detections,
-    graph_from_edges,
-    graph_from_matrix,
-    node_coordinates_from_metadata,
-    ordered_adjacency_from_edges,
-    order_nodes_by_metadata,
-    order_sources_by_metadata,
-    plot_adjacency_heatmap,
-    plot_coordinate_network,
-    plot_aggregate_evoked_response_graph,
-    plot_electrode_connectome,
-    plot_evoked_response_graph,
-    plot_glass_brain_network,
-    plot_interactive_connectome,
-    plot_network,
-    plot_node_metric_glass_brain,
-    plot_node_metric_template_brain,
-    plot_ordered_adjacency_heatmap,
-    plot_region_connectome,
-    plot_response_matrix_heatmap,
-    plot_surface_connectome,
-    plot_template_brain_network,
-    response_matrix_from_edges,
-    resolve_electrode_label,
-    stim_pair_to_contact_electrodes,
-    validate_mni_coordinates,
+from .waveforms import (
+    EpochsPlotter,
+    plot_butterfly,
+    plot_grid,
+    plot_grouped_grid,
+    plot_heatmap,
+    plot_mean,
+    plot_mean_erp_comparison,
+    plot_overlay,
+    plot_ranked_grid,
+    plot_response_map,
+    plot_summary_panel,
+    plot_trials_grid,
 )
 
 __all__ = [

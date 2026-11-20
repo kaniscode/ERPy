@@ -2,9 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
-import numpy as np
 import pandas as pd
 
 from .theme import apply_erpy_theme
@@ -15,9 +12,9 @@ def quick_erp(
     channel: str,
     ax=None,
     mode: str = "mean_sem",
-    color: Optional[str] = None,
-    label: Optional[str] = None,
-    title: Optional[str] = None,
+    color: str | None = None,
+    label: str | None = None,
+    title: str | None = None,
 ):
     """Plot one channel from an ``(epoch, time)`` indexed epochs DataFrame."""
 
@@ -39,7 +36,11 @@ def quick_erp(
         ax.plot(mean.index, mean.values, color=color or "C0", lw=2.0, label=label or "mean")
     else:
         mean = epochs_df[channel].groupby(level="time").mean()
-        spread = epochs_df[channel].groupby(level="time").sem() if mode == "mean_sem" else epochs_df[channel].groupby(level="time").std()
+        spread = (
+            epochs_df[channel].groupby(level="time").sem()
+            if mode == "mean_sem"
+            else epochs_df[channel].groupby(level="time").std()
+        )
         c = color or "C0"
         ax.fill_between(mean.index, mean - spread, mean + spread, color=c, alpha=0.25)
         ax.plot(mean.index, mean.values, color=c, lw=2.0, label=label or "mean")
@@ -52,4 +53,3 @@ def quick_erp(
     if label or mode == "trials":
         ax.legend(loc="best")
     return ax
-

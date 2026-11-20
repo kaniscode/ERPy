@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass
-from typing import Iterable
 
 import pandas as pd
 
@@ -32,7 +32,7 @@ def warm_session(
     pipeline = Pipeline(dataloader)
     steps = pipeline.get_standard_pipeline(config.pipeline)
     rows = []
-    for stim_pair in (list(stim_pairs) if stim_pairs is not None else dataloader.stim_pairs(session_id)):
+    for stim_pair in list(stim_pairs) if stim_pairs is not None else dataloader.stim_pairs(session_id):
         event_path = dataloader.get_event_path(session_id, stim_pair)
         event_status = "cached"
         if config.overwrite_events or not event_path.exists():
@@ -47,7 +47,15 @@ def warm_session(
                 )
                 event_status = "created"
             except Exception as exc:
-                rows.append({"session_id": session_id, "stim_pair": stim_pair, "ok": False, "stage": "events", "error": str(exc)})
+                rows.append(
+                    {
+                        "session_id": session_id,
+                        "stim_pair": stim_pair,
+                        "ok": False,
+                        "stage": "events",
+                        "error": str(exc),
+                    }
+                )
                 continue
         try:
             event_info = pipeline._load_event_info(session_id, stim_pair)
@@ -75,7 +83,9 @@ def warm_session(
                 }
             )
         except Exception as exc:
-            rows.append({"session_id": session_id, "stim_pair": stim_pair, "ok": False, "stage": "epoch", "error": str(exc)})
+            rows.append(
+                {"session_id": session_id, "stim_pair": stim_pair, "ok": False, "stage": "epoch", "error": str(exc)}
+            )
     return pd.DataFrame(rows)
 
 
@@ -90,7 +100,7 @@ def warm_patient(
     config = WarmConfig(**{k: v for k, v in kwargs.items() if k in WarmConfig.__annotations__})
     event_kwargs = {k: v for k, v in kwargs.items() if k not in WarmConfig.__annotations__}
     rows = []
-    for session_id in (list(session_ids) if session_ids is not None else dataloader.session_ids):
+    for session_id in list(session_ids) if session_ids is not None else dataloader.session_ids:
         rows.append(warm_session(dataloader, session_id, stim_pairs=stim_pairs, config=config, **event_kwargs))
     return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame()
 

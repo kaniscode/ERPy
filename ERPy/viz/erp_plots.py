@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import math
-from typing import Iterable, Optional, Sequence
+from collections.abc import Iterable, Sequence
 
 import pandas as pd
 
@@ -12,11 +12,11 @@ from .theme import apply_erpy_theme
 
 def plot_erp_grid(
     epochs_df: pd.DataFrame,
-    channels: Optional[Sequence[str]] = None,
+    channels: Sequence[str] | None = None,
     ncols: int = 4,
     mode: str = "mean_sem",
     figsize_per: tuple[float, float] = (3.2, 2.4),
-    suptitle: Optional[str] = None,
+    suptitle: str | None = None,
 ):
     """Faceted grid of mean ERPs, one subplot per channel."""
 
@@ -39,7 +39,11 @@ def plot_erp_grid(
     )
     for ax, channel in zip(axes.ravel(), channels):
         mean = epochs_df[channel].groupby(level="time").mean()
-        err = epochs_df[channel].groupby(level="time").sem() if mode == "mean_sem" else epochs_df[channel].groupby(level="time").std()
+        err = (
+            epochs_df[channel].groupby(level="time").sem()
+            if mode == "mean_sem"
+            else epochs_df[channel].groupby(level="time").std()
+        )
         ax.fill_between(mean.index, mean - err, mean + err, color="C0", alpha=0.25)
         ax.plot(mean.index, mean.values, color="C0", lw=1.2)
         ax.axvline(0.0, color="0.4", ls="--", lw=0.6)
@@ -57,7 +61,7 @@ def plot_mean_erp_comparison(
     series: Iterable[tuple[str, pd.DataFrame]],
     channel: str,
     ax=None,
-    colors: Optional[Sequence[str]] = None,
+    colors: Sequence[str] | None = None,
 ):
     """Overlay mean +/- SEM for several epoched DataFrames."""
 
@@ -78,4 +82,3 @@ def plot_mean_erp_comparison(
     ax.set_xlabel("Time (s)")
     ax.set_ylabel("Amplitude")
     return ax
-

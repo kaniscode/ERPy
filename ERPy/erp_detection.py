@@ -3,8 +3,9 @@ from __future__ import annotations
 import hashlib
 import re
 import warnings
+from collections.abc import Iterable
 from dataclasses import dataclass, replace
-from typing import Any, Iterable
+from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -20,7 +21,6 @@ from .crp_energy import (
 )
 from .inference import fdr_bh
 
-
 ALL_METHODS = [
     "kundu_rolston",
     "keller_zscore",
@@ -31,9 +31,7 @@ ALL_METHODS = [
     "rms_response",
 ]
 
-LEGACY_CONSENSUS_METHODS = tuple(
-    method for method in ALL_METHODS if method != "crp_energy"
-)
+LEGACY_CONSENSUS_METHODS = tuple(method for method in ALL_METHODS if method != "crp_energy")
 
 PRIMARY_CRITERION = "crp_energy_bh_conjunction"
 
@@ -257,9 +255,7 @@ def _feature_table_from_array(
     if not response_mask.any():
         raise ValueError("response_window does not overlap epoch times")
     referenced = (
-        np.asarray(arr, dtype=float)
-        if baseline_centered
-        else baseline_center_array(arr, times, baseline_window)
+        np.asarray(arr, dtype=float) if baseline_centered else baseline_center_array(arr, times, baseline_window)
     )
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=RuntimeWarning)
@@ -285,13 +281,8 @@ def _feature_table_from_array(
             )
             boundary_index = int(np.argmin(boundary_distances))
             boundary_distance_s = float(boundary_distances[boundary_index])
-            peak_at_boundary = bool(
-                boundary_distance_s
-                <= max(float(response_boundary_guard_s), 1.0 / float(sfreq))
-            )
-            peak_boundary_side = (
-                "start" if boundary_index == 0 else "end"
-            ) if peak_at_boundary else ""
+            peak_at_boundary = bool(boundary_distance_s <= max(float(response_boundary_guard_s), 1.0 / float(sfreq)))
+            peak_boundary_side = ("start" if boundary_index == 0 else "end") if peak_at_boundary else ""
         else:
             peak_amplitude = peak_latency = boundary_distance_s = np.nan
             peak_at_boundary = False
@@ -329,10 +320,7 @@ def _feature_table_from_array(
         baseline_z = float((peak_amplitude - abs(base_mean)) / base_std)
         response_trial_rms = _row_rms(referenced[:, response_mask, channel_index])
         baseline_trial_rms = _row_rms(referenced[:, baseline_mask, channel_index])
-        rms_z = float(
-            (_safe_mean(response_trial_rms) - _safe_mean(baseline_trial_rms))
-            / _safe_std(baseline_trial_rms)
-        )
+        rms_z = float((_safe_mean(response_trial_rms) - _safe_mean(baseline_trial_rms)) / _safe_std(baseline_trial_rms))
         rows.append(
             {
                 "channel": str(channel),
@@ -445,7 +433,9 @@ def _unavailable_signi_frame(
     return frame
 
 
-def _peak_in_window(wave: np.ndarray, times: np.ndarray, window: tuple[float, float], baseline_mean: float, baseline_std: float) -> dict[str, float]:
+def _peak_in_window(
+    wave: np.ndarray, times: np.ndarray, window: tuple[float, float], baseline_mean: float, baseline_std: float
+) -> dict[str, float]:
     mask = (times >= window[0]) & (times <= window[1])
     values = wave[mask]
     window_times = times[mask]
@@ -532,11 +522,12 @@ def _detect_keller(
     frame = _base_method_frame(features, "keller_zscore", "primary_epochs").merge(native, on="channel", how="left")
     frame["score"] = frame["keller_max_z"]
     frame["threshold"] = z_threshold
-    frame["significant"] = (
-        frame["keller_max_z"].ge(z_threshold)
-        & frame["keller_polarity_reversal"].fillna(False).astype(bool)
+    frame["significant"] = frame["keller_max_z"].ge(z_threshold) & frame["keller_polarity_reversal"].fillna(
+        False
+    ).astype(bool)
+    frame.loc[frame["keller_saturation_like"].fillna(False).astype(bool), "notes"] = (
+        "large unidirectional deflection; Keller polarity-reversal screen failed"
     )
-    frame.loc[frame["keller_saturation_like"].fillna(False).astype(bool), "notes"] = "large unidirectional deflection; Keller polarity-reversal screen failed"
     return frame
 
 
@@ -580,7 +571,10 @@ def _detect_crp(
 ) -> pd.DataFrame:
     alpha = float(params.get("alpha", 0.05))
     configured_response = tuple(params.get("response_window", response_window))
-    crp_response = (max(float(configured_response[0]), float(params.get("minimum_response_start_s", 0.015))), float(configured_response[1]))
+    crp_response = (
+        max(float(configured_response[0]), float(params.get("minimum_response_start_s", 0.015))),
+        float(configured_response[1]),
+    )
     config = CRPConfig(
         response_window=crp_response,
         baseline_window=tuple(params.get("baseline_window", baseline_window)),
@@ -639,11 +633,11 @@ def _detect_crp(
     q_values, rejected = fdr_bh(native["p_value"], alpha=alpha)
     native["crp_q_value"] = q_values
     native["crp_fdr_significant"] = rejected
-    native["crp_inference_status"] = (
-        "exploratory_uncalibrated_selected_duration_shared_trial_t_test"
-    )
+    native["crp_inference_status"] = "exploratory_uncalibrated_selected_duration_shared_trial_t_test"
     frame = _base_method_frame(features, "crp_significance", "primary_epochs")
-    frame = frame.drop(columns=["significant", "score", "p_value", "threshold", "notes"]).merge(native, on="channel", how="left")
+    frame = frame.drop(columns=["significant", "score", "p_value", "threshold", "notes"]).merge(
+        native, on="channel", how="left"
+    )
     return frame
 
 
@@ -655,14 +649,9 @@ def _stable_channel_random_state(
 
     if random_state is None:
         return None
-    payload = (
-        "erpy-crp-energy-channel-seed-v1\0"
-        f"{int(random_state)}\0{str(channel)}"
-    ).encode("utf-8")
+    payload = (f"erpy-crp-energy-channel-seed-v1\0{int(random_state)}\0{str(channel)}").encode()
     digest = hashlib.sha256(payload).digest()
-    return int.from_bytes(digest[:8], byteorder="big", signed=False) & (
-        (1 << 63) - 1
-    )
+    return int.from_bytes(digest[:8], byteorder="big", signed=False) & ((1 << 63) - 1)
 
 
 def _seed_decimal(value: int | None) -> str | None:
@@ -703,14 +692,10 @@ def _detect_crp_energy(
         min_clean_trials=int(params.get("min_clean_trials", 8)),
         n_permutations=int(params.get("n_permutations", 5_000)),
         max_exact_trials=int(params.get("max_exact_trials", 16)),
-        max_exact_reproducibility_trials=int(
-            params.get("max_exact_reproducibility_trials", 12)
-        ),
+        max_exact_reproducibility_trials=int(params.get("max_exact_reproducibility_trials", 12)),
         canonical_energy_cv=bool(params.get("canonical_energy_cv", True)),
         random_state=params.get("random_state", 42),
-        artifact_interval=tuple(
-            params.get("artifact_interval", (0.0, 0.015))
-        ),
+        artifact_interval=tuple(params.get("artifact_interval", (0.0, 0.015))),
         projection_start_s=float(params.get("projection_start_s", 0.010)),
         projection_step_s=float(params.get("projection_step_s", 0.005)),
         eps=float(params.get("eps", 1e-12)),
@@ -747,9 +732,7 @@ def _detect_crp_energy(
                     response_start,
                     float(channel_config.response_window[1]),
                 ),
-                baseline_window=tuple(
-                    float(value) for value in channel_config.baseline_window
-                ),
+                baseline_window=tuple(float(value) for value in channel_config.baseline_window),
                 parameters="",
                 notes=str(exc),
             )
@@ -759,19 +742,13 @@ def _detect_crp_energy(
             row = failure.to_record(include_arrays=include_arrays)
             row["qc_status"] = "detector_error"
         row["random_state_root"] = _seed_decimal(config.random_state)
-        row["random_state_effective"] = _seed_decimal(
-            effective_random_state
-        )
+        row["random_state_effective"] = _seed_decimal(effective_random_state)
         row["random_stream_derivation"] = (
-            "sha256-v1(root-seed,channel-label;63-bit)"
-            if config.random_state is not None
-            else "nondeterministic"
+            "sha256-v1(root-seed,channel-label;63-bit)" if config.random_state is not None else "nondeterministic"
         )
         rows.append(row)
     native = pd.DataFrame(rows)
-    excluded_keys = {
-        _channel_identity(channel) for channel in excluded_channels
-    }
+    excluded_keys = {_channel_identity(channel) for channel in excluded_channels}
     excluded = native["channel"].map(_channel_identity).isin(excluded_keys)
     if excluded.any():
         native.loc[excluded, "qc_status"] = "stimulation_contact_excluded"
@@ -786,9 +763,7 @@ def _detect_crp_energy(
             )
         )
     eligible = native["qc_status"].eq("pass").to_numpy(dtype=bool)
-    family_p_values = pd.to_numeric(
-        native["p_joint"], errors="coerce"
-    ).where(eligible)
+    family_p_values = pd.to_numeric(native["p_joint"], errors="coerce").where(eligible)
     if correction == "fdr_bh":
         q_values, rejected = fdr_bh(family_p_values, alpha=alpha)
     else:
@@ -797,25 +772,17 @@ def _detect_crp_energy(
     native["q_joint"] = q_values
     native["significant"] = np.asarray(rejected, dtype=bool) & eligible
     native["crp_energy_significant"] = native["significant"]
-    native["score"] = pd.to_numeric(
-        native.get("rms_ratio_db", np.nan), errors="coerce"
-    )
+    native["score"] = pd.to_numeric(native.get("rms_ratio_db", np.nan), errors="coerce")
     native["p_value"] = pd.to_numeric(native["p_joint"], errors="coerce")
     native["threshold"] = alpha
-    native["testing_family_size"] = int(
-        np.isfinite(family_p_values.to_numpy(dtype=float)).sum()
-    )
+    native["testing_family_size"] = int(np.isfinite(family_p_values.to_numpy(dtype=float)).sum())
     native["multiple_comparison_correction"] = correction
     frame = _base_method_frame(
         features,
         "crp_energy",
         "primary_epochs",
     )
-    drop = [
-        column
-        for column in ("significant", "score", "p_value", "threshold", "notes")
-        if column in frame.columns
-    ]
+    drop = [column for column in ("significant", "score", "p_value", "threshold", "notes") if column in frame.columns]
     return frame.drop(columns=drop).merge(native, on="channel", how="left")
 
 
@@ -918,13 +885,19 @@ def _detect_kundu(
         post_median = float(np.nanmedian(response_values)) if np.isfinite(response_values).any() else np.nan
         trial_median_wave = np.nanmedian(response_values, axis=0)
         envelope_threshold = multiplier * baseline_median
-        longest_samples = _longest_true_run(trial_median_wave > envelope_threshold) if np.isfinite(envelope_threshold) else 0
+        longest_samples = (
+            _longest_true_run(trial_median_wave > envelope_threshold) if np.isfinite(envelope_threshold) else 0
+        )
         longest_duration_ms = float(longest_samples / sfreq * 1000.0)
         persistence_pass = bool(longest_samples >= required_samples)
         magnitude_pass = bool(np.isfinite(post_median) and post_median > magnitude_threshold)
         mean_highpassed = np.nanmean(highpassed[:, response_mask, channel_index], axis=0)
         amplitude = float(np.nanmean(np.abs(mean_highpassed))) if np.isfinite(mean_highpassed).any() else np.nan
-        ratio = float(np.nanmax(trial_median_wave) / (baseline_median + 1e-12)) if np.isfinite(trial_median_wave).any() and np.isfinite(baseline_median) else np.nan
+        ratio = (
+            float(np.nanmax(trial_median_wave) / (baseline_median + 1e-12))
+            if np.isfinite(trial_median_wave).any() and np.isfinite(baseline_median)
+            else np.nan
+        )
         rows.append(
             {
                 "channel": channel,
@@ -998,7 +971,9 @@ def _detect_rms(
         response_median = float(np.nanmedian(response_trial_rms[finite])) if finite.any() else np.nan
         baseline_median = float(np.nanmedian(baseline_trial_rms[finite])) if finite.any() else np.nan
         baseline_scale = _robust_scale(baseline_trial_rms[finite])
-        robust_z = float((response_median - baseline_median) / baseline_scale) if np.isfinite(baseline_scale) else np.nan
+        robust_z = (
+            float((response_median - baseline_median) / baseline_scale) if np.isfinite(baseline_scale) else np.nan
+        )
         if finite.sum() >= 3:
             try:
                 test = stats.wilcoxon(
@@ -1013,7 +988,11 @@ def _detect_rms(
                 statistic, p_value = 0.0, 1.0
         else:
             statistic = p_value = np.nan
-        mean_wave = np.nanmean(referenced[finite][:, response_indices, channel_index], axis=0) if finite.any() else np.array([], dtype=float)
+        mean_wave = (
+            np.nanmean(referenced[finite][:, response_indices, channel_index], axis=0)
+            if finite.any()
+            else np.array([], dtype=float)
+        )
         waveform_rms = float(np.sqrt(np.nanmean(mean_wave * mean_wave))) if np.isfinite(mean_wave).any() else np.nan
         rows.append(
             {
@@ -1083,9 +1062,7 @@ def _signi_snr(values: np.ndarray, response_times: np.ndarray, eps: float = 1e-1
         else:
             mask = (response_times >= lower) & (response_times < upper)
         if mask.sum() >= 2:
-            bin_variances.append(
-                np.nanvar(values[..., mask, :], axis=(-3, -2), ddof=1)
-            )
+            bin_variances.append(np.nanvar(values[..., mask, :], axis=(-3, -2), ddof=1))
     if not bin_variances:
         return np.full(full_variance.shape, np.nan, dtype=float)
     local_variance = np.nanmean(np.stack(bin_variances, axis=0), axis=0)
@@ -1162,9 +1139,7 @@ def _signi_quantities(
 
     baseline_mean = np.nanmean(mean_envelope[baseline_mask], axis=0)
     baseline_std = np.nanstd(mean_envelope[baseline_mask], axis=0, ddof=1)
-    high_gamma_z = (
-        np.nanmean(mean_envelope[response_mask], axis=0) - baseline_mean
-    ) / (baseline_std + 1e-12)
+    high_gamma_z = (np.nanmean(mean_envelope[response_mask], axis=0) - baseline_mean) / (baseline_std + 1e-12)
     latency_threshold = baseline_mean + stats.norm.ppf(0.999) * baseline_std
     latencies = np.full(n_channels, np.nan, dtype=float)
     for channel in range(n_channels):
@@ -1184,9 +1159,7 @@ def _signi_quantities(
             if null_std > 0:
                 raw_p = float(stats.norm.sf(np.log(observed), loc=null_mean, scale=null_std))
                 standardized_null = (log_null - null_mean) / null_std
-                ks_p = float(
-                    stats.kstest(standardized_null, stats.norm.cdf).pvalue
-                )
+                ks_p = float(stats.kstest(standardized_null, stats.norm.cdf).pvalue)
             else:
                 raw_p = ks_p = np.nan
             empirical_p = float((1 + np.sum(finite_null >= observed)) / (len(finite_null) + 1))
@@ -1233,9 +1206,7 @@ def _detect_signi(
             polarity_labels=params.get("polarity_labels"),
         )
     except Exception as exc:
-        return _unavailable_signi_frame(
-            features, detector_input=detector_input, reason=str(exc)
-        )
+        return _unavailable_signi_frame(features, detector_input=detector_input, reason=str(exc))
     native["channel"] = [channels[int(index)] for index in native["channel_index"]]
     native["signi_p_value_bonferroni"] = np.minimum(
         pd.to_numeric(native["signi_p_value_raw"], errors="coerce") * len(channels),
@@ -1285,9 +1256,9 @@ def _high_gamma_z_all(
         envelope = np.abs(signal.hilbert(filtered, axis=1))
         baseline = envelope[:, baseline_mask, :].reshape(-1, stop - start)
         response = envelope[:, response_mask, :].reshape(-1, stop - start)
-        scores[start:stop] = (
-            np.nanmean(response, axis=0) - np.nanmean(baseline, axis=0)
-        ) / (np.nanstd(baseline, axis=0, ddof=1) + 1e-12)
+        scores[start:stop] = (np.nanmean(response, axis=0) - np.nanmean(baseline, axis=0)) / (
+            np.nanstd(baseline, axis=0, ddof=1) + 1e-12
+        )
     return scores
 
 
@@ -1338,7 +1309,6 @@ def _crp_significance_from_array(
     return result.score, result.p_value
 
 
-
 def _standalone_comparator_summary(
     detections: pd.DataFrame,
     channels: Iterable[str],
@@ -1355,9 +1325,17 @@ def _standalone_comparator_summary(
     result = pd.DataFrame(index=index)
     methods = (
         ("crp", "crp_significance", "crp_fdr_significant", ("crp_q_value",)),
-        ("kundu", "kundu_rolston", "significant",
-         ("kundu_baseline_median_uv", "kundu_post_median_uv",
-          "kundu_longest_suprathreshold_ms", "kundu_n_valid_trials")),
+        (
+            "kundu",
+            "kundu_rolston",
+            "significant",
+            (
+                "kundu_baseline_median_uv",
+                "kundu_post_median_uv",
+                "kundu_longest_suprathreshold_ms",
+                "kundu_n_valid_trials",
+            ),
+        ),
     )
     for short, method, call_column, required in methods:
         prefix = f"comparator_{short}"
@@ -1452,7 +1430,9 @@ def detect_erp_all(
     )
 
     detector_epochs = wideband_epochs if wideband_epochs is not None else epochs
-    detector_arr, detector_times, detector_sfreq, missing_wide_channels = _aligned_epoch_arrays(detector_epochs, channels)
+    detector_arr, detector_times, detector_sfreq, missing_wide_channels = _aligned_epoch_arrays(
+        detector_epochs, channels
+    )
     detector_input = "wideband_epochs" if wideband_epochs is not None else "primary_epochs"
     frames = []
     for method in methods:
@@ -1460,8 +1440,7 @@ def detect_erp_all(
         shared = {
             key: value
             for key, value in params.items()
-            if key not in ALL_METHODS
-            and key not in {"baseline_window", "response_window", "response_boundary_guard_s"}
+            if key not in ALL_METHODS and key not in {"baseline_window", "response_window", "response_boundary_guard_s"}
         }
         options = {**shared, **method_params}
         if method == "kundu_rolston":
@@ -1508,11 +1487,7 @@ def detect_erp_all(
                     ),
                 )
             else:
-                signi_input = (
-                    "wideband_epochs"
-                    if wideband_epochs is not None
-                    else "primary_epochs_declared_wideband"
-                )
+                signi_input = "wideband_epochs" if wideband_epochs is not None else "primary_epochs_declared_wideband"
                 frame = _detect_signi(
                     features,
                     detector_arr,
@@ -1533,9 +1508,7 @@ def detect_erp_all(
             frame.loc[missing_mask, "significant"] = False
             frame.loc[missing_mask, "notes"] = "channel absent from wideband detector input"
             frame.loc[missing_mask, "method_available"] = False
-            frame.loc[missing_mask, "availability_reason"] = (
-                "channel absent from wideband detector input"
-            )
+            frame.loc[missing_mask, "availability_reason"] = "channel absent from wideband detector input"
         frames.append(frame)
 
     if not frames:
@@ -1545,13 +1518,9 @@ def detect_erp_all(
         output = pd.concat(frames, ignore_index=True, sort=False)
     output["significant"] = output["significant"].fillna(False).astype(bool)
     output["method_available"] = output["method_available"].fillna(False).astype(bool)
-    available_legacy = output[
-        output["method"].isin(LEGACY_CONSENSUS_METHODS)
-        & output["method_available"]
-    ]
+    available_legacy = output[output["method"].isin(LEGACY_CONSENSUS_METHODS) & output["method_available"]]
     method_counts = (
-        available_legacy
-        .groupby("channel")["significant"]
+        available_legacy.groupby("channel")["significant"]
         .sum()
         .reindex(channels, fill_value=0)
         .rename("n_methods_significant")
@@ -1584,11 +1553,7 @@ def detect_erp_all(
         .astype(bool)
     )
     historical_shape_magnitude = crp_pass & kundu_pass
-    energy_rows = (
-        output[output["method"].eq("crp_energy")]
-        .drop_duplicates("channel")
-        .set_index("channel")
-    )
+    energy_rows = output[output["method"].eq("crp_energy")].drop_duplicates("channel").set_index("channel")
     primary = (
         energy_rows.get("significant", pd.Series(dtype="boolean"))
         .astype("boolean")
@@ -1610,31 +1575,18 @@ def detect_erp_all(
         .fillna(False)
         .astype(bool)
     )
-    joint_p = pd.to_numeric(
-        energy_rows.get("p_joint", pd.Series(dtype=float)), errors="coerce"
-    ).reindex(channels)
-    joint_q = pd.to_numeric(
-        energy_rows.get("q_joint", pd.Series(dtype=float)), errors="coerce"
-    ).reindex(channels)
+    joint_p = pd.to_numeric(energy_rows.get("p_joint", pd.Series(dtype=float)), errors="coerce").reindex(channels)
+    joint_q = pd.to_numeric(energy_rows.get("q_joint", pd.Series(dtype=float)), errors="coerce").reindex(channels)
     classifications = (
-        energy_rows.get("classification", pd.Series(dtype=str))
-        .reindex(channels)
-        .fillna("not_evaluated")
-        .astype(str)
+        energy_rows.get("classification", pd.Series(dtype=str)).reindex(channels).fillna("not_evaluated").astype(str)
     )
     output["primary_criterion"] = PRIMARY_CRITERION
-    output["primary_reproducibility_pass"] = (
-        output["channel"].map(reproducibility_pass).fillna(False).astype(bool)
-    )
-    output["primary_energy_pass"] = (
-        output["channel"].map(energy_pass).fillna(False).astype(bool)
-    )
+    output["primary_reproducibility_pass"] = output["channel"].map(reproducibility_pass).fillna(False).astype(bool)
+    output["primary_energy_pass"] = output["channel"].map(energy_pass).fillna(False).astype(bool)
     output["primary_joint_p_value"] = output["channel"].map(joint_p)
     output["primary_joint_q_value"] = output["channel"].map(joint_q)
     output["primary_classification"] = output["channel"].map(classifications)
-    output["primary_significant"] = (
-        output["channel"].map(primary).fillna(False).astype(bool)
-    )
+    output["primary_significant"] = output["channel"].map(primary).fillna(False).astype(bool)
     comparators = _standalone_comparator_summary(output, channels)
     for column in comparators:
         output[column] = output["channel"].map(comparators[column])

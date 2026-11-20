@@ -201,9 +201,7 @@ def _mean_projection_profile(voltage: np.ndarray, counts: np.ndarray, sfreq: flo
     profile = np.full(len(counts), np.nan, dtype=float)
     for index, count in enumerate(counts):
         trial_norms = np.maximum(np.sqrt(norm_sq[count - 1]), eps)
-        profile[index] = float(
-            np.sum(off_diagonal_dot[count - 1] / trial_norms) / denominator
-        )
+        profile[index] = float(np.sum(off_diagonal_dot[count - 1] / trial_norms) / denominator)
     return profile
 
 
@@ -262,9 +260,7 @@ def run_crp_array(
     centered = x - baseline_means[:, None]
     finite_trials = np.isfinite(baseline_means) & np.all(np.isfinite(centered[:, response_mask]), axis=1)
     if int(finite_trials.sum()) < int(config.min_trials):
-        raise CRPError(
-            f"CRP requires at least {config.min_trials} finite baseline and response-window trials"
-        )
+        raise CRPError(f"CRP requires at least {config.min_trials} finite baseline and response-window trials")
     centered = centered[finite_trials]
     response_times = times[response_mask]
     voltage = centered[:, response_mask].T
@@ -311,7 +307,9 @@ def run_crp_array(
     weight_sem = _sem(weight_trials, axis=0) if weight_trials.size else np.array([], dtype=float)
     weight_baseline_mask = (weight_times >= config.baseline_window[0]) & (weight_times <= config.baseline_window[1])
     weight_response_mask = (weight_times >= config.response_window[0]) & (weight_times <= config.response_window[1])
-    baseline_weights = weight_trials[:, weight_baseline_mask].ravel() if weight_baseline_mask.any() else np.array([], dtype=float)
+    baseline_weights = (
+        weight_trials[:, weight_baseline_mask].ravel() if weight_baseline_mask.any() else np.array([], dtype=float)
+    )
     baseline_weights = baseline_weights[np.isfinite(baseline_weights)]
     baseline_weight_mean = float(np.mean(baseline_weights)) if baseline_weights.size else np.nan
     baseline_weight_std = float(np.std(baseline_weights, ddof=1)) if baseline_weights.size > 1 else np.nan
@@ -349,9 +347,7 @@ def run_crp_array(
             ],
             dtype=float,
         )
-        permutation_p = float(
-            (1 + np.sum(null_distribution >= observed)) / (len(null_distribution) + 1)
-        )
+        permutation_p = float((1 + np.sum(null_distribution >= observed)) / (len(null_distribution) + 1))
 
     significant = bool(np.isfinite(p_value) and p_value < float(config.alpha))
     if np.isfinite(permutation_p):
@@ -515,7 +511,9 @@ def compare_crp_across_stim_sites(
 
     out["within_stim_z"] = out.groupby(stim_col, group_keys=False)[weight_col].transform(_zscore)
     out["baseline_z"] = out[baseline_col]
-    out["reconstruction_rms_within_stim_z"] = out.groupby(stim_col, group_keys=False)[reconstruction_col].transform(_zscore)
+    out["reconstruction_rms_within_stim_z"] = out.groupby(stim_col, group_keys=False)[reconstruction_col].transform(
+        _zscore
+    )
     out["permutation_significant"] = out[permutation_col] < alpha
     with np.errstate(divide="ignore", invalid="ignore"):
         out["permutation_log10_p"] = -np.log10(out[permutation_col])

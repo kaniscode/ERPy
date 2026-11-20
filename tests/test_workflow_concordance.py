@@ -4,19 +4,17 @@ import numpy as np
 import pandas as pd
 import pytest
 
+import ERPy.waveform_qc as waveform_qc
 from ERPy.epochs import Epochs
 from ERPy.erp_detection import DETECTOR_QUANTITY_COLUMNS
 from ERPy.waveform_qc import audit_waveforms
-import ERPy.waveform_qc as waveform_qc
 
 
 def _epochs(values, times, channels):
     return Epochs(
         pd.DataFrame(
             values.reshape(-1, len(channels)),
-            index=pd.MultiIndex.from_product(
-                [range(values.shape[0]), times], names=["epoch", "time"]
-            ),
+            index=pd.MultiIndex.from_product([range(values.shape[0]), times], names=["epoch", "time"]),
             columns=channels,
         ),
         sfreq=float(1.0 / np.median(np.diff(times))),
@@ -33,7 +31,7 @@ def test_waveform_qc_rejects_nonfinite_peak_features(monkeypatch, field, source,
     times = np.arange(-100, 81) / 200.0
     rng = np.random.default_rng(17)
     values = rng.normal(scale=0.1, size=(12, len(times), 1))
-    values[:, :, 0] += 80 * np.exp(-((times - 0.08) / 0.025) ** 2)
+    values[:, :, 0] += 80 * np.exp(-(((times - 0.08) / 0.025) ** 2))
     epochs = _epochs(values, times, ["response"])
     detections = epochs.detect_erp_all(
         methods=["peak_amplitude"],
@@ -65,6 +63,7 @@ def test_signi_failures_remain_unavailable_in_public_result(monkeypatch, failure
     values = np.random.default_rng(19).normal(size=(12, len(times), 1))
     epochs = _epochs(values, times, ["contact"])
     if failure == "filter":
+
         def fail_quantities(*args, **kwargs):
             raise ValueError("filter numerical failure")
 

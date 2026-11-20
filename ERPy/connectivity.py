@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Iterable
+from collections.abc import Iterable
 
 import numpy as np
 import pandas as pd
@@ -32,9 +32,7 @@ def canonicalize_connectivity_edges(
     data = pd.DataFrame(edges).copy()
     if data.empty:
         return data
-    missing = [
-        col for col in (source_col, target_col) if col not in data.columns
-    ]
+    missing = [col for col in (source_col, target_col) if col not in data.columns]
     if missing:
         raise ValueError(f"edges is missing endpoint columns: {missing}")
 
@@ -43,9 +41,7 @@ def canonicalize_connectivity_edges(
         undirected = ~directed
     elif method_col in data.columns:
         methods = {str(value).strip().lower() for value in undirected_methods}
-        undirected = data[method_col].fillna("").astype(str).str.lower().isin(
-            methods
-        )
+        undirected = data[method_col].fillna("").astype(str).str.lower().isin(methods)
     else:
         undirected = pd.Series(True, index=data.index)
 
@@ -61,11 +57,7 @@ def canonicalize_connectivity_edges(
         ("stim_region", "record_region"),
         ("stim_elec", "record_elec"),
     ):
-        if (
-            left in data.columns
-            and right in data.columns
-            and (left, right) not in endpoint_pairs
-        ):
+        if left in data.columns and right in data.columns and (left, right) not in endpoint_pairs:
             endpoint_pairs.append((left, right))
     for left, right in endpoint_pairs:
         left_values = data.loc[swap, left].copy()
@@ -77,9 +69,7 @@ def canonicalize_connectivity_edges(
 def _coerce_bool_series(values: pd.Series) -> pd.Series:
     if pd.api.types.is_bool_dtype(values):
         return values.fillna(False)
-    return values.fillna(False).astype(str).str.strip().str.lower().isin(
-        {"true", "1", "yes", "y"}
-    )
+    return values.fillna(False).astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
 
 
 def _as_channel_list(columns: Iterable[str], channels: Iterable[str] | None = None) -> list[str]:
@@ -184,11 +174,7 @@ def granger_causality_matrix_from_array(
     n_ch = data.shape[1]
     lag = int(maxlag)
     min_samples = int(min_samples or max(30, 6 * lag))
-    if (
-        data.ndim == 2
-        and data.shape[0] > max(min_samples, 2 * lag + 2)
-        and np.isfinite(data).all()
-    ):
+    if data.ndim == 2 and data.shape[0] > max(min_samples, 2 * lag + 2) and np.isfinite(data).all():
         return _granger_complete_matrix(
             data,
             channels,
@@ -361,7 +347,9 @@ def _pairwise_granger_score(x: np.ndarray, y: np.ndarray, *, lag: int, min_sampl
     return score, pval
 
 
-def _pairwise_granger_trials(x_trials: np.ndarray, y_trials: np.ndarray, *, lag: int, min_samples: int) -> tuple[float, float]:
+def _pairwise_granger_trials(
+    x_trials: np.ndarray, y_trials: np.ndarray, *, lag: int, min_samples: int
+) -> tuple[float, float]:
     targets, y_lags_all, x_lags_all = [], [], []
     for x, y in zip(np.asarray(x_trials, dtype=float), np.asarray(y_trials, dtype=float)):
         finite = np.isfinite(x) & np.isfinite(y)
@@ -572,9 +560,7 @@ def multitaper_coherence_matrices_from_dataframe(
 
     data = df.select_dtypes(include=[np.number])
     selected_channels = _as_channel_list(data.columns, channels)
-    data = data.loc[
-        _time_window_mask(data.index, time_window), selected_channels
-    ]
+    data = data.loc[_time_window_mask(data.index, time_window), selected_channels]
     values = data.to_numpy(dtype=float)
     coherence, imaginary = _multitaper_coherence_matrices(
         values,
@@ -584,12 +570,8 @@ def multitaper_coherence_matrices_from_dataframe(
         n_tapers=n_tapers,
     )
     return (
-        pd.DataFrame(
-            coherence, index=selected_channels, columns=selected_channels
-        ),
-        pd.DataFrame(
-            imaginary, index=selected_channels, columns=selected_channels
-        ),
+        pd.DataFrame(coherence, index=selected_channels, columns=selected_channels),
+        pd.DataFrame(imaginary, index=selected_channels, columns=selected_channels),
     )
 
 
@@ -617,9 +599,7 @@ def _multitaper_coherence_matrices(
     )
     spectra = np.fft.rfft(tapers[:, :, None] * values[None, :, :], axis=1)
     frequencies = np.fft.rfftfreq(values.shape[0], d=1.0 / float(sfreq))
-    selected = (frequencies >= float(band[0])) & (
-        frequencies <= float(band[1])
-    )
+    selected = (frequencies >= float(band[0])) & (frequencies <= float(band[1]))
     if not selected.any():
         raise ValueError("no Fourier bins fall inside the requested band")
     spectra = spectra[:, selected, :]
@@ -788,7 +768,9 @@ def connectivity_matrix_from_dataframe(
         return plv_matrix_from_dataframe(df, sfreq, band=band, channels=channels, time_window=time_window, **kwargs)
     if method in {"coherence", "imaginary_coherence", "imaginary"}:
         mode = "imaginary" if method in {"imaginary_coherence", "imaginary"} else kwargs.pop("mode", "coherence")
-        return coherence_matrix_from_dataframe(df, sfreq, band=band, channels=channels, time_window=time_window, mode=mode, **kwargs)
+        return coherence_matrix_from_dataframe(
+            df, sfreq, band=band, channels=channels, time_window=time_window, mode=mode, **kwargs
+        )
     if method in {"mutual_information", "mi"}:
         return mutual_information_matrix_from_dataframe(df, channels=channels, time_window=time_window, **kwargs)
     if method in {"granger", "granger_causality"}:

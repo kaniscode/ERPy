@@ -1,5 +1,5 @@
 """Behavioral regressions for automatic facade epoch cache invalidation."""
-from pathlib import Path
+
 import os
 
 import numpy as np
@@ -20,12 +20,16 @@ def project(tmp_path):
     raw = tmp_path / "signal.csv"
     times = np.arange(1000) / 100
     timestamps = pd.Timestamp("2026-01-01") + pd.to_timedelta(times, unit="s")
-    pd.DataFrame({"times": timestamps, "A1": np.sin(times), "A2": np.cos(times),
-                  "B1": np.ones(len(times))}).to_csv(raw, index=False)
+    pd.DataFrame({"times": timestamps, "A1": np.sin(times), "A2": np.cos(times), "B1": np.ones(len(times))}).to_csv(
+        raw, index=False
+    )
     metadata = {
-        "rawdata_meta_path": pd.DataFrame([dict(patient_id="P1", session_id="A", raw_file=raw.name, sampling_freq=100)]),
-        "stim_meta_path": pd.DataFrame([dict(patient_id="P1", session_id="A", stim_pair="A_1_2", stim_start=0,
-                                             stim_stop=10, stim_freq=0.5)]),
+        "rawdata_meta_path": pd.DataFrame(
+            [dict(patient_id="P1", session_id="A", raw_file=raw.name, sampling_freq=100)]
+        ),
+        "stim_meta_path": pd.DataFrame(
+            [dict(patient_id="P1", session_id="A", stim_pair="A_1_2", stim_start=0, stim_stop=10, stim_freq=0.5)]
+        ),
         "elec_meta_path": pd.DataFrame([dict(patient_id="P1", session_id="A", elec_label="B1", bad_channel=False)]),
     }
     config = {"rawdata_path": str(tmp_path), "procdata_path": str(tmp_path / "proc")}
@@ -114,12 +118,18 @@ def test_same_size_same_mtime_raw_edit_bypasses_memory_and_window_cache(project)
     np.testing.assert_allclose(second.epochs_df["B1"], 9)
 
 
-@pytest.mark.parametrize("options", [
-    {"tmin": -0.2}, {"tmax": 0.3}, {"baseline": (-0.1, -0.02)},
-    {"zero_time": 0.0}, {"processing_margin_s": 0.5},
-    {"artifact_anchor_params": {"search_end_s": 0.04}},
-    {"pipeline": [("artifact_blank", {"width_s": 0.02})]},
-])
+@pytest.mark.parametrize(
+    "options",
+    [
+        {"tmin": -0.2},
+        {"tmax": 0.3},
+        {"baseline": (-0.1, -0.02)},
+        {"zero_time": 0.0},
+        {"processing_margin_s": 0.5},
+        {"artifact_anchor_params": {"search_end_s": 0.04}},
+        {"pipeline": [("artifact_blank", {"width_s": 0.02})]},
+    ],
+)
 def test_changed_processing_settings_recompute_and_are_forwarded(project, monkeypatch, options):
     recording = project[0]
     run(recording)
@@ -209,7 +219,9 @@ def test_brainvision_binary_header_and_marker_dependencies(project, monkeypatch)
     marker = raw.with_suffix(".vmrk")
     np.ones(1000, dtype="<f4").tofile(binary)
     marker.write_text("Brain Vision Data Exchange Marker File\n")
-    header.write_text("[Common Infos]\nDataFile=signal.eeg\nMarkerFile=signal.vmrk\nNumberOfChannels=1\nSamplingInterval=10000\nDataOrientation=MULTIPLEXED\n[Binary Infos]\nBinaryFormat=IEEE_FLOAT_32\n[Channel Infos]\nCh1=B1,,1,uV\n")
+    header.write_text(
+        "[Common Infos]\nDataFile=signal.eeg\nMarkerFile=signal.vmrk\nNumberOfChannels=1\nSamplingInterval=10000\nDataOrientation=MULTIPLEXED\n[Binary Infos]\nBinaryFormat=IEEE_FLOAT_32\n[Channel Infos]\nCh1=B1,,1,uV\n"
+    )
     recording.dataloader.raw_meta.loc[:, "raw_file"] = header.name
     np.testing.assert_allclose(run(recording).epochs_df["B1"], 1)
     calls = count_processing(recording, monkeypatch)
@@ -250,6 +262,7 @@ def test_explicit_acquisition_source_is_forwarded_and_bound(project):
 
 def test_nwb_dependencies_are_explicitly_unverifiable(project):
     from ERPy._epoch_cache import epoch_cache_identity
+
     recording, raw, events, _ = project
     # No interpretation of this placeholder is needed: every NWB input is
     # conservatively uncached until external HDF5 dependencies are enumerated.
@@ -258,7 +271,6 @@ def test_nwb_dependencies_are_explicitly_unverifiable(project):
     recording.dataloader.raw_meta.loc[:, "raw_file"] = nwb.name
     identity, source = epoch_cache_identity(recording.pipeline_obj, "A", "A_1_2", [], events.read_bytes(), {})
     assert identity is None and source == "raw"
-
 
 
 def test_file_digest_retries_a_one_time_status_change(tmp_path, monkeypatch):

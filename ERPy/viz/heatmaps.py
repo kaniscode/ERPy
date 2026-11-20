@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 import pandas as pd
 
 from .theme import apply_erpy_theme
@@ -14,8 +12,8 @@ def heatmap_epochs(
     channel: str,
     ax=None,
     cmap: str = "RdBu_r",
-    vmin: Optional[float] = None,
-    vmax: Optional[float] = None,
+    vmin: float | None = None,
+    vmax: float | None = None,
     cbar_label: str = "Amplitude",
 ):
     """Plot a time-by-epoch heatmap for one channel."""
@@ -47,7 +45,7 @@ def heatmap_epochs(
 
 def heatmap_channels_time(
     epochs_df: pd.DataFrame,
-    channels: Optional[list[str]] = None,
+    channels: list[str] | None = None,
     ax=None,
     cmap: str = "viridis",
 ):
@@ -76,4 +74,3 @@ def heatmap_channels_time(
     ax.set_title("Mean amplitude: time x channel")
     plt.colorbar(im, ax=ax, shrink=0.6)
     return ax, im
-

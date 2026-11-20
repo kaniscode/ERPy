@@ -54,7 +54,7 @@ class JobRunner:
         python_script: str | Path,
         env: dict[str, str] | None = None,
         python: str | Path | None = None,
-    ) -> tuple["JobRunner", str, str]:
+    ) -> tuple[JobRunner, str, str]:
         backend = self.detect_backend()
         python_script = str(python_script)
         merged_env = os.environ.copy()

@@ -27,9 +27,9 @@ def test_composite_null_family_exercises_declared_branch_exactly(
     assert first["p_joint"] == pytest.approx(max(first["p_R"], first["p_E"]))
     assert first["testing_family_size"] == 4
     assert first["projection_test_exact"]
-    assert first["projection_randomizations"] == 2 ** 11 - 1
+    assert first["projection_randomizations"] == 2**11 - 1
     assert first["energy_test_exact"]
-    assert first["energy_randomizations"] == 2 ** 12 - 1
+    assert first["energy_randomizations"] == 2**12 - 1
 
 
 def test_composite_null_quick_outputs_are_complete(tmp_path) -> None:
@@ -49,5 +49,5 @@ def test_composite_null_quick_outputs_are_complete(tmp_path) -> None:
     }
     assert {path.name for path in tmp_path.iterdir()} == required
     config_record = json.loads((tmp_path / "composite_null_config.json").read_text())
-    assert config_record["exact_projection_assignments"] == 2 ** 11
-    assert config_record["exact_energy_assignments"] == 2 ** 12
+    assert config_record["exact_projection_assignments"] == 2**11
+    assert config_record["exact_energy_assignments"] == 2**12

@@ -61,9 +61,7 @@ def complete_contact_coordinates(
             "missing",
         )
     else:
-        output["mni_coordinate_source"] = (
-            output["mni_coordinate_source"].fillna("").astype(str)
-        )
+        output["mni_coordinate_source"] = output["mni_coordinate_source"].fillna("").astype(str)
         output.loc[
             complete & output["mni_coordinate_source"].eq(""),
             "mni_coordinate_source",
@@ -76,14 +74,10 @@ def complete_contact_coordinates(
         if col not in output.columns:
             output[col] = np.nan
 
-    parsed = output["elec_label"].astype(str).str.extract(
-        r"^(?P<_lead>.*?)(?P<_contact>\d+)$"
-    )
+    parsed = output["elec_label"].astype(str).str.extract(r"^(?P<_lead>.*?)(?P<_contact>\d+)$")
     output["_lead"] = parsed["_lead"]
     output["_contact"] = pd.to_numeric(parsed["_contact"], errors="coerce")
-    identity_cols = [
-        col for col in ("patient_id", "session_id") if col in output.columns
-    ]
+    identity_cols = [col for col in ("patient_id", "session_id") if col in output.columns]
     group_cols = [*identity_cols, "_lead"]
     grouper: str | list[str] = group_cols[0] if len(group_cols) == 1 else group_cols
 
@@ -109,13 +103,9 @@ def complete_contact_coordinates(
                 for col in coord_cols
             ]
         )
-        fitted = np.column_stack(
-            [np.polyval(coefficients[axis], contact_numbers) for axis in range(3)]
-        )
+        fitted = np.column_stack([np.polyval(coefficients[axis], contact_numbers) for axis in range(3)])
         observed = known[coord_cols].to_numpy(dtype=float)
-        fit_rmse = float(
-            np.sqrt(np.mean(np.sum((observed - fitted) ** 2, axis=1)))
-        )
+        fit_rmse = float(np.sqrt(np.mean(np.sum((observed - fitted) ** 2, axis=1))))
         step_mm = float(np.linalg.norm(coefficients[:, 0]))
         if (
             not np.isfinite(fit_rmse)
@@ -127,16 +117,10 @@ def complete_contact_coordinates(
         maximum_contact = float(np.nanmax(contact_numbers))
         for index, row in missing.iterrows():
             contact_number = float(row["_contact"])
-            if (
-                contact_number < minimum_contact - 1
-                or contact_number > maximum_contact + 1
-            ):
+            if contact_number < minimum_contact - 1 or contact_number > maximum_contact + 1:
                 continue
             predicted = np.array(
-                [
-                    np.polyval(coefficients[axis], contact_number)
-                    for axis in range(3)
-                ],
+                [np.polyval(coefficients[axis], contact_number) for axis in range(3)],
                 dtype=float,
             )
             if (

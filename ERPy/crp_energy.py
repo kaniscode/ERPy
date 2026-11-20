@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
 import json
 import math
+from dataclasses import asdict, dataclass
 from typing import Any
 
 import numpy as np
 
 from .crp import CRPConfig, CRPError, run_crp_array
-
 
 CRP_ENERGY_DETECTOR_VERSION = "1.0.0"
 
@@ -33,14 +32,10 @@ def _validated_integer(
         raise ValueError(f"{name} must be an integer") from exc
     if not np.isfinite(numeric) or numeric != float(integer):
         raise ValueError(f"{name} must be an integer")
-    if integer < int(minimum) or (
-        maximum is not None and integer > int(maximum)
-    ):
+    if integer < int(minimum) or (maximum is not None and integer > int(maximum)):
         if maximum is None:
             raise ValueError(f"{name} must be at least {minimum}")
-        raise ValueError(
-            f"{name} must be between {minimum} and {maximum}"
-        )
+        raise ValueError(f"{name} must be between {minimum} and {maximum}")
     return integer
 
 
@@ -132,13 +127,9 @@ class CRPEnergyConfig:
         )
         effective_response_start = max(response_start, artifact_stop)
         if effective_response_start >= response_stop:
-            raise ValueError(
-                "artifact_interval must leave a nonempty response_window"
-            )
+            raise ValueError("artifact_interval must leave a nonempty response_window")
         if baseline_stop >= effective_response_start:
-            raise ValueError(
-                "baseline_window must end before the effective response_window"
-            )
+            raise ValueError("baseline_window must end before the effective response_window")
         alpha = float(self.alpha)
         if not np.isfinite(alpha) or not 0.0 < alpha < 1.0:
             raise ValueError("alpha must be finite and between zero and one")
@@ -261,9 +252,7 @@ def _ordered_projection_matrix(
 
     values = np.asarray(response, dtype=float)
     if values.ndim != 2 or values.shape[0] < 2 or values.shape[1] < 2:
-        raise ValueError(
-            "response must be a finite trial-by-time array with at least two trials and samples"
-        )
+        raise ValueError("response must be a finite trial-by-time array with at least two trials and samples")
     if not np.all(np.isfinite(values)):
         raise ValueError("response must contain only finite values")
     sfreq = float(sfreq)
@@ -287,9 +276,7 @@ def _unique_quadratic_sign_patterns(n_trials: int) -> np.ndarray:
     n_trials = int(n_trials)
     assignments = np.arange(1 << (n_trials - 1), dtype=np.uint64)
     bit_positions = np.arange(n_trials - 1, dtype=np.uint64)
-    trailing = 2.0 * (
-        (assignments[:, None] >> bit_positions[None, :]) & 1
-    ).astype(float) - 1.0
+    trailing = 2.0 * ((assignments[:, None] >> bit_positions[None, :]) & 1).astype(float) - 1.0
     return np.c_[np.ones(len(assignments), dtype=float), trailing]
 
 
@@ -345,22 +332,23 @@ def fixed_window_reproducibility_sign_flip_test(
     if n_trials <= max_exact_trials:
         total_assignments = 1 << (n_trials - 1)
         signs = _unique_quadratic_sign_patterns(n_trials)[:-1]
-        null_statistics = np.einsum(
-            "bi,ij,bj->b",
-            signs,
-            projections,
-            signs,
-            optimize=True,
-        ) / denominator
+        null_statistics = (
+            np.einsum(
+                "bi,ij,bj->b",
+                signs,
+                projections,
+                signs,
+                optimize=True,
+            )
+            / denominator
+        )
         comparison_scale = max(
             abs(observed),
             float(np.max(np.abs(null_statistics), initial=0.0)),
             np.finfo(float).tiny,
         )
         tolerance = 64.0 * np.finfo(float).eps * comparison_scale
-        extreme_count = int(
-            np.sum(null_statistics >= observed - tolerance)
-        )
+        extreme_count = int(np.sum(null_statistics >= observed - tolerance))
         p_value = float((1 + extreme_count) / total_assignments)
         return FixedWindowReproducibilityResult(
             statistic=observed,
@@ -381,22 +369,23 @@ def fixed_window_reproducibility_sign_flip_test(
         replace=True,
     )
     signs[:, 0] = 1.0
-    null_statistics = np.einsum(
-        "bi,ij,bj->b",
-        signs,
-        projections,
-        signs,
-        optimize=True,
-    ) / denominator
+    null_statistics = (
+        np.einsum(
+            "bi,ij,bj->b",
+            signs,
+            projections,
+            signs,
+            optimize=True,
+        )
+        / denominator
+    )
     comparison_scale = max(
         abs(observed),
         float(np.max(np.abs(null_statistics), initial=0.0)),
         np.finfo(float).tiny,
     )
     tolerance = 64.0 * np.finfo(float).eps * comparison_scale
-    extreme_count = int(
-        np.sum(null_statistics >= observed - tolerance)
-    )
+    extreme_count = int(np.sum(null_statistics >= observed - tolerance))
     return FixedWindowReproducibilityResult(
         statistic=observed,
         p_value=float((1 + extreme_count) / (n_draws + 1)),
@@ -451,13 +440,9 @@ def paired_log_rms_sign_flip_test(
         total_assignments = 1 << n_trials
         assignments = np.arange(total_assignments - 1, dtype=np.uint64)
         bit_positions = np.arange(n_trials, dtype=np.uint64)
-        signs = 2.0 * (
-            (assignments[:, None] >> bit_positions[None, :]) & 1
-        ).astype(float) - 1.0
+        signs = 2.0 * ((assignments[:, None] >> bit_positions[None, :]) & 1).astype(float) - 1.0
         null_statistics = signs @ differences / float(n_trials)
-        extreme_count = int(
-            np.sum(null_statistics >= observed - tolerance)
-        )
+        extreme_count = int(np.sum(null_statistics >= observed - tolerance))
         p_value = float((1 + extreme_count) / total_assignments)
         return observed, p_value, True, int(total_assignments - 1)
 
@@ -504,11 +489,7 @@ def run_crp_energy_array(
         raise ValueError("x must be trial by time and times must be one-dimensional")
     if values.shape[1] != len(time_values):
         raise ValueError("x and times must have matching time dimensions")
-    if (
-        len(time_values) < 2
-        or not np.all(np.isfinite(time_values))
-        or not np.all(np.diff(time_values) > 0)
-    ):
+    if len(time_values) < 2 or not np.all(np.isfinite(time_values)) or not np.all(np.diff(time_values) > 0):
         raise ValueError("times must be finite and strictly increasing")
     time_steps = np.diff(time_values)
     median_step = float(np.median(time_steps))
@@ -528,10 +509,7 @@ def run_crp_energy_array(
     baseline_start, baseline_stop = map(float, config.baseline_window)
     parameter_json = _parameter_json(config)
     coverage_tolerance = median_step / 2.0 + 1e-12
-    if (
-        time_values[0] > response_start + coverage_tolerance
-        or time_values[-1] < response_stop - coverage_tolerance
-    ):
+    if time_values[0] > response_start + coverage_tolerance or time_values[-1] < response_stop - coverage_tolerance:
         return _empty_result(
             channel=channel,
             n_trials_total=values.shape[0],
@@ -543,12 +521,8 @@ def run_crp_energy_array(
                 "cover both effective endpoints within half a sample"
             ),
         )
-    response_indices = np.flatnonzero(
-        (time_values >= response_start) & (time_values <= response_stop)
-    )
-    baseline_candidates = np.flatnonzero(
-        (time_values >= baseline_start) & (time_values <= baseline_stop)
-    )
+    response_indices = np.flatnonzero((time_values >= response_start) & (time_values <= response_stop))
+    baseline_candidates = np.flatnonzero((time_values >= baseline_start) & (time_values <= baseline_stop))
     if not response_indices.size or len(baseline_candidates) < len(response_indices):
         return _empty_result(
             channel=channel,
@@ -587,10 +561,7 @@ def run_crp_energy_array(
             baseline_window=matched_baseline_window,
             parameters=parameter_json,
             notes=(
-                "Only {} clean matched trials remain; {} are required".format(
-                    len(clean_indices),
-                    int(config.min_clean_trials),
-                )
+                f"Only {len(clean_indices)} clean matched trials remain; {int(config.min_clean_trials)} are required"
             ),
         )
 
@@ -633,9 +604,7 @@ def run_crp_energy_array(
             centered[:, response_indices],
             sfreq=float(1.0 / np.median(np.diff(time_values))),
             n_permutations=int(config.n_permutations),
-            max_exact_trials=int(
-                config.max_exact_reproducibility_trials
-            ),
+            max_exact_trials=int(config.max_exact_reproducibility_trials),
             random_state=np.random.default_rng(reproducibility_seed),
             eps=float(config.eps),
         )
@@ -658,13 +627,11 @@ def run_crp_energy_array(
     baseline_rms = _row_rms(baseline_residual)
     eps = max(float(config.eps), np.finfo(float).tiny)
     log_differences = np.log(response_rms + eps) - np.log(baseline_rms + eps)
-    energy_statistic, p_energy, exact, n_permutations = (
-        paired_log_rms_sign_flip_test(
-            log_differences,
-            n_permutations=int(config.n_permutations),
-            max_exact_trials=int(config.max_exact_trials),
-            random_state=np.random.default_rng(energy_seed),
-        )
+    energy_statistic, p_energy, exact, n_permutations = paired_log_rms_sign_flip_test(
+        log_differences,
+        n_permutations=int(config.n_permutations),
+        max_exact_trials=int(config.max_exact_trials),
+        random_state=np.random.default_rng(energy_seed),
     )
     rms_response = float(np.exp(np.mean(np.log(response_rms + eps))))
     rms_baseline = float(np.exp(np.mean(np.log(baseline_rms + eps))))
@@ -703,26 +670,12 @@ def run_crp_energy_array(
         )
 
     crp_pass = bool(np.isfinite(p_crp) and p_crp <= float(config.alpha))
-    energy_pass = bool(
-        np.isfinite(p_energy) and p_energy <= float(config.alpha)
-    )
-    p_joint = (
-        float(max(p_crp, p_energy))
-        if np.isfinite(p_crp) and np.isfinite(p_energy)
-        else np.nan
-    )
-    classification = (
-        _classification(crp_pass, energy_pass)
-        if np.isfinite(p_joint)
-        else "insufficient_data"
-    )
+    energy_pass = bool(np.isfinite(p_energy) and p_energy <= float(config.alpha))
+    p_joint = float(max(p_crp, p_energy)) if np.isfinite(p_crp) and np.isfinite(p_energy) else np.nan
+    classification = _classification(crp_pass, energy_pass) if np.isfinite(p_joint) else "insufficient_data"
     return CRPEnergyResult(
         channel=str(channel),
-        significant=bool(
-            qc_status == "pass"
-            and np.isfinite(p_joint)
-            and p_joint <= float(config.alpha)
-        ),
+        significant=bool(qc_status == "pass" and np.isfinite(p_joint) and p_joint <= float(config.alpha)),
         classification=classification,
         p_crp=p_crp,
         p_energy=float(p_energy),
@@ -746,15 +699,9 @@ def run_crp_energy_array(
         clean_trial_indices=clean_indices,
         crp_explained_variance=explained,
         crp_snr=snr,
-        reproducibility_test_exact=bool(
-            reproducibility_result.exact
-            if reproducibility_result is not None
-            else False
-        ),
+        reproducibility_test_exact=bool(reproducibility_result.exact if reproducibility_result is not None else False),
         reproducibility_n_randomizations=int(
-            reproducibility_result.n_randomizations
-            if reproducibility_result is not None
-            else 0
+            reproducibility_result.n_randomizations if reproducibility_result is not None else 0
         ),
         energy_test_exact=bool(exact),
         energy_n_permutations=int(n_permutations),
@@ -764,11 +711,7 @@ def run_crp_energy_array(
         n_response_samples=len(response_indices),
         n_baseline_samples=len(baseline_indices),
         parameters=parameter_json,
-        notes="; ".join(
-            note
-            for note in (crp_error, reproducibility_error)
-            if note
-        ),
+        notes="; ".join(note for note in (crp_error, reproducibility_error) if note),
     )
 
 
@@ -893,9 +836,7 @@ def _empty_result(
         canonical_waveform_times=np.array([], dtype=float),
         trial_coefficients=np.array([], dtype=float),
         clean_trial_indices=(
-            np.asarray(clean_trial_indices, dtype=int)
-            if clean_trial_indices is not None
-            else np.array([], dtype=int)
+            np.asarray(clean_trial_indices, dtype=int) if clean_trial_indices is not None else np.array([], dtype=int)
         ),
         crp_explained_variance=np.nan,
         crp_snr=np.nan,

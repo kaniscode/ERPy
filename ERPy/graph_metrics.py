@@ -14,7 +14,6 @@ from .viz.networks import (
     stim_pair_to_source_electrode,
 )
 
-
 DEFAULT_GRAPH_METRICS = (
     "in_strength",
     "out_strength",
@@ -63,13 +62,7 @@ def opportunity_conditioned_reciprocity(
     data = data[data[source_col] != data[target_col]]
     responses = data[response_col]
     if not pd.api.types.is_bool_dtype(responses):
-        responses = (
-            responses.fillna(False)
-            .astype(str)
-            .str.strip()
-            .str.lower()
-            .isin({"true", "1", "yes", "y"})
-        )
+        responses = responses.fillna(False).astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
     data[response_col] = responses.fillna(False).astype(bool)
     if data.empty:
         return pd.DataFrame(columns=result_columns)
@@ -83,18 +76,12 @@ def opportunity_conditioned_reciprocity(
         .any()
         .reset_index()
     )
-    grouped = (
-        collapsed.groupby(group_cols, dropna=False, sort=False)
-        if group_cols
-        else [((), collapsed)]
-    )
+    grouped = collapsed.groupby(group_cols, dropna=False, sort=False) if group_cols else [((), collapsed)]
     rows = []
     for group_values, frame in grouped:
         if not isinstance(group_values, tuple):
             group_values = (group_values,)
-        opportunity_directions = set(
-            zip(frame[source_col], frame[target_col])
-        )
+        opportunity_directions = set(zip(frame[source_col], frame[target_col]))
         response_directions = set(
             zip(
                 frame.loc[frame[response_col], source_col],
@@ -107,30 +94,20 @@ def opportunity_conditioned_reciprocity(
             if (target, source) in opportunity_directions
         }
         any_response = sum(
-            (left, right) in response_directions
-            or (right, left) in response_directions
-            for left, right in tested_pairs
+            (left, right) in response_directions or (right, left) in response_directions for left, right in tested_pairs
         )
         bidirectional = sum(
-            (left, right) in response_directions
-            and (right, left) in response_directions
+            (left, right) in response_directions and (right, left) in response_directions
             for left, right in tested_pairs
         )
-        row = {
-            column: value
-            for column, value in zip(group_cols, group_values)
-        }
+        row = {column: value for column, value in zip(group_cols, group_values)}
         row.update(
             {
                 "bidirectionally_tested_pairs": int(len(tested_pairs)),
                 "pairs_with_any_response": int(any_response),
                 "bidirectional_pairs": int(bidirectional),
                 "unidirectional_pairs": int(any_response - bidirectional),
-                "reciprocity": (
-                    float(bidirectional / any_response)
-                    if any_response
-                    else np.nan
-                ),
+                "reciprocity": (float(bidirectional / any_response) if any_response else np.nan),
             }
         )
         rows.append(row)
@@ -182,11 +159,7 @@ def bidirectional_edge_summary(
     data = data[data[source_col] != data[target_col]]
     if data.empty:
         return pd.DataFrame(columns=result_columns)
-    directed = (
-        data.groupby([*group_cols, source_col, target_col], dropna=False)[weight_col]
-        .agg(agg)
-        .reset_index()
-    )
+    directed = data.groupby([*group_cols, source_col, target_col], dropna=False)[weight_col].agg(agg).reset_index()
     lookup = {
         tuple(row[col] for col in [*group_cols, source_col, target_col]): float(row[weight_col])
         for _, row in directed.iterrows()
@@ -255,9 +228,7 @@ def _weighted_module_cartography(
         )
     )
     membership = {
-        str(node): community_index
-        for community_index, community in enumerate(communities)
-        for node in community
+        str(node): community_index for community_index, community in enumerate(communities) for node in community
     }
     participation: dict[str, float] = {}
     within_strength: dict[str, float] = {}
@@ -265,24 +236,14 @@ def _weighted_module_cartography(
         module_strengths: dict[int, float] = {}
         for neighbor, attributes in undirected[node].items():
             module = membership[str(neighbor)]
-            module_strengths[module] = module_strengths.get(
-                module, 0.0
-            ) + float(attributes.get("weight", 0.0))
+            module_strengths[module] = module_strengths.get(module, 0.0) + float(attributes.get("weight", 0.0))
         total_strength = float(sum(module_strengths.values()))
         participation[str(node)] = (
-            float(
-                1.0
-                - sum(
-                    (module_strength / total_strength) ** 2
-                    for module_strength in module_strengths.values()
-                )
-            )
+            float(1.0 - sum((module_strength / total_strength) ** 2 for module_strength in module_strengths.values()))
             if total_strength > 0
             else 0.0
         )
-        within_strength[str(node)] = float(
-            module_strengths.get(membership[str(node)], 0.0)
-        )
+        within_strength[str(node)] = float(module_strengths.get(membership[str(node)], 0.0))
 
     within_module_z: dict[str, float] = {}
     for community in communities:
@@ -295,9 +256,7 @@ def _weighted_module_cartography(
         standard_deviation = float(np.std(values, ddof=0))
         for node in nodes:
             within_module_z[node] = (
-                float((within_strength[node] - mean) / standard_deviation)
-                if standard_deviation > 1e-12
-                else 0.0
+                float((within_strength[node] - mean) / standard_deviation) if standard_deviation > 1e-12 else 0.0
             )
     return participation, within_module_z
 
@@ -351,10 +310,7 @@ def weighted_directed_node_metrics(
     data[source_col] = data[source_col].astype(str)
     data[target_col] = data[target_col].astype(str)
     data[weight_col] = pd.to_numeric(data[weight_col], errors="coerce")
-    data = data[
-        np.isfinite(data[weight_col])
-        & data[weight_col].gt(float(min_weight))
-    ].copy()
+    data = data[np.isfinite(data[weight_col]) & data[weight_col].gt(float(min_weight))].copy()
     if data.empty:
         return pd.DataFrame(columns=result_columns)
     directed = (
@@ -366,25 +322,15 @@ def weighted_directed_node_metrics(
         .agg(agg)
         .reset_index()
     )
-    grouped = (
-        directed.groupby(group_cols, dropna=False, sort=True)
-        if group_cols
-        else [((), directed)]
-    )
+    grouped = directed.groupby(group_cols, dropna=False, sort=True) if group_cols else [((), directed)]
     rows: list[dict[str, float | str]] = []
     for group_values, frame in grouped:
         if not isinstance(group_values, tuple):
             group_values = (group_values,)
         graph = nx.DiGraph()
-        nodes = sorted(
-            set(frame[source_col].astype(str)).union(
-                frame[target_col].astype(str)
-            )
-        )
+        nodes = sorted(set(frame[source_col].astype(str)).union(frame[target_col].astype(str)))
         graph.add_nodes_from(nodes)
-        for edge in frame.sort_values([source_col, target_col]).itertuples(
-            index=False
-        ):
+        for edge in frame.sort_values([source_col, target_col]).itertuples(index=False):
             source = str(getattr(edge, source_col))
             target = str(getattr(edge, target_col))
             weight = float(getattr(edge, weight_col))
@@ -412,10 +358,7 @@ def weighted_directed_node_metrics(
             in_strength = float(graph.in_degree(node, weight="weight"))
             out_strength = float(graph.out_degree(node, weight="weight"))
             total_strength = in_strength + out_strength
-            row: dict[str, float | str] = {
-                column: value
-                for column, value in zip(group_cols, group_values)
-            }
+            row: dict[str, float | str] = {column: value for column, value in zip(group_cols, group_values)}
             row.update(
                 {
                     "node": str(node),
@@ -424,31 +367,17 @@ def weighted_directed_node_metrics(
                     "in_strength": in_strength,
                     "out_strength": out_strength,
                     "total_strength": total_strength,
-                    "in_strength_share": (
-                        in_strength / graph_strength
-                        if graph_strength > 0
-                        else np.nan
-                    ),
-                    "out_strength_share": (
-                        out_strength / graph_strength
-                        if graph_strength > 0
-                        else np.nan
-                    ),
+                    "in_strength_share": (in_strength / graph_strength if graph_strength > 0 else np.nan),
+                    "out_strength_share": (out_strength / graph_strength if graph_strength > 0 else np.nan),
                     "sender_receiver_index": (
-                        (out_strength - in_strength) / total_strength
-                        if total_strength > 0
-                        else np.nan
+                        (out_strength - in_strength) / total_strength if total_strength > 0 else np.nan
                     ),
                     "pagerank": float(pagerank.get(node, np.nan)),
                     "betweenness": float(betweenness.get(node, np.nan)),
                     "out_closeness": float(out_closeness.get(node, np.nan)),
                     "clustering": float(clustering.get(node, np.nan)),
-                    "module_participation": float(
-                        participation.get(str(node), np.nan)
-                    ),
-                    "within_module_z": float(
-                        within_module_z.get(str(node), np.nan)
-                    ),
+                    "module_participation": float(participation.get(str(node), np.nan)),
+                    "within_module_z": float(within_module_z.get(str(node), np.nan)),
                     "local_reaching_centrality": float(
                         nx.local_reaching_centrality(
                             graph,
@@ -476,12 +405,7 @@ def _jensen_shannon_distance(
         positive = values > 0
         if not positive.any():
             return 0.0
-        return float(
-            np.sum(
-                values[positive]
-                * np.log2(values[positive] / midpoint[positive])
-            )
-        )
+        return float(np.sum(values[positive] * np.log2(values[positive] / midpoint[positive])))
 
     return float(np.sqrt(0.5 * (divergence(first) + divergence(second))))
 
@@ -537,16 +461,12 @@ def dynamic_target_distribution_metrics(
     needed = [*group_cols, time_col, target_col, weight_col]
     missing = [column for column in needed if column not in distributions.columns]
     if missing:
-        raise ValueError(
-            f"distributions is missing required columns: {missing}"
-        )
+        raise ValueError(f"distributions is missing required columns: {missing}")
     data = distributions[needed].copy()
     data[time_col] = pd.to_numeric(data[time_col], errors="coerce")
     data[weight_col] = pd.to_numeric(data[weight_col], errors="coerce")
     data[target_col] = data[target_col].astype(str)
-    data = data[
-        np.isfinite(data[time_col]) & np.isfinite(data[weight_col])
-    ].copy()
+    data = data[np.isfinite(data[time_col]) & np.isfinite(data[weight_col])].copy()
     if (data[weight_col] < 0).any():
         raise ValueError("dynamic target weights must be nonnegative")
     data = (
@@ -594,25 +514,16 @@ def dynamic_target_distribution_metrics(
         entropy = -np.sum(
             np.where(
                 probabilities > 0,
-                probabilities
-                * np.log(np.where(probabilities > 0, probabilities, 1.0)),
+                probabilities * np.log(np.where(probabilities > 0, probabilities, 1.0)),
                 0.0,
             ),
             axis=1,
         )
-        normalized_entropy = (
-            entropy / np.log(target_count)
-            if target_count > 1
-            else np.zeros_like(entropy)
-        )
+        normalized_entropy = entropy / np.log(target_count) if target_count > 1 else np.zeros_like(entropy)
         effective_targets = np.exp(entropy)
         normalized_entropy[~has_weight] = np.nan
         effective_targets[~has_weight] = np.nan
-        scaffold_indices = [
-            index
-            for index, node in enumerate(pivot.columns.astype(str))
-            if node in scaffold
-        ]
+        scaffold_indices = [index for index, node in enumerate(pivot.columns.astype(str)) if node in scaffold]
         scaffold_fraction = (
             np.divide(
                 weights[:, scaffold_indices].sum(axis=1),
@@ -631,10 +542,7 @@ def dynamic_target_distribution_metrics(
                     probabilities[index - 1],
                     probabilities[index],
                 )
-        identity = {
-            column: value
-            for column, value in zip(group_cols, group_values)
-        }
+        identity = {column: value for column, value in zip(group_cols, group_values)}
         for index, time_value in enumerate(times):
             time_rows.append(
                 {
@@ -644,38 +552,28 @@ def dynamic_target_distribution_metrics(
                     "active_targets": int(np.sum(weights[index] > 0)),
                     "broadcast_participation": float(participation[index]),
                     "broadcast_entropy": float(normalized_entropy[index]),
-                    "broadcast_effective_targets": float(
-                        effective_targets[index]
-                    ),
-                    "scaffold_weight_fraction": float(
-                        scaffold_fraction[index]
-                    ),
+                    "broadcast_effective_targets": float(effective_targets[index]),
+                    "scaffold_weight_fraction": float(scaffold_fraction[index]),
                     "reconfiguration_jsd": float(reconfiguration[index]),
                 }
             )
 
-        finite_weight = has_weight
-
-        def weighted_mean(values: np.ndarray) -> float:
-            valid = finite_weight & np.isfinite(values)
+        def weighted_mean(
+            values: np.ndarray,
+            has_weight: np.ndarray = has_weight,
+            total_weight: np.ndarray = total_weight,
+        ) -> float:
+            valid = has_weight & np.isfinite(values)
             return (
                 float(np.average(values[valid], weights=total_weight[valid]))
                 if valid.any() and float(total_weight[valid].sum()) > 0
                 else np.nan
             )
 
-        finite_reconfiguration = reconfiguration[
-            np.isfinite(reconfiguration)
-        ]
-        finite_participation = np.flatnonzero(
-            np.isfinite(participation) & has_weight
-        )
+        finite_reconfiguration = reconfiguration[np.isfinite(reconfiguration)]
+        finite_participation = np.flatnonzero(np.isfinite(participation) & has_weight)
         peak_index = (
-            int(
-                finite_participation[
-                    np.argmax(participation[finite_participation])
-                ]
-            )
+            int(finite_participation[np.argmax(participation[finite_participation])])
             if len(finite_participation)
             else None
         )
@@ -685,34 +583,18 @@ def dynamic_target_distribution_metrics(
                 "target_count": target_count,
                 "broadcast_participation": weighted_mean(participation),
                 "broadcast_entropy": weighted_mean(normalized_entropy),
-                "broadcast_effective_targets": weighted_mean(
-                    effective_targets
-                ),
-                "scaffold_weight_fraction": weighted_mean(
-                    scaffold_fraction
-                ),
-                "participation_peak": (
-                    float(participation[peak_index])
-                    if peak_index is not None
-                    else np.nan
-                ),
-                "participation_peak_time": (
-                    float(times[peak_index])
-                    if peak_index is not None
-                    else np.nan
-                ),
-                "participation_variability": float(
-                    np.nanstd(participation[has_weight])
-                ) if has_weight.any() else np.nan,
+                "broadcast_effective_targets": weighted_mean(effective_targets),
+                "scaffold_weight_fraction": weighted_mean(scaffold_fraction),
+                "participation_peak": (float(participation[peak_index]) if peak_index is not None else np.nan),
+                "participation_peak_time": (float(times[peak_index]) if peak_index is not None else np.nan),
+                "participation_variability": float(np.nanstd(participation[has_weight]))
+                if has_weight.any()
+                else np.nan,
                 "reconfiguration_mean_jsd": (
-                    float(np.mean(finite_reconfiguration))
-                    if len(finite_reconfiguration)
-                    else np.nan
+                    float(np.mean(finite_reconfiguration)) if len(finite_reconfiguration) else np.nan
                 ),
                 "reconfiguration_peak_jsd": (
-                    float(np.max(finite_reconfiguration))
-                    if len(finite_reconfiguration)
-                    else np.nan
+                    float(np.max(finite_reconfiguration)) if len(finite_reconfiguration) else np.nan
                 ),
             }
         )
@@ -800,16 +682,12 @@ def evoked_response_edges_over_time(
         stim_pair = str(stim_pair)
         stim_node = resolve_electrode_label(stim_pair_to_source_electrode(stim_pair), available_labels)
         stimulation_contacts = {
-            electrode_label_identity(
-                resolve_electrode_label(contact, available_labels)
-            )
+            electrode_label_identity(resolve_electrode_label(contact, available_labels))
             for contact in stim_pair_to_contact_electrodes(stim_pair)
         }
         mean = baseline_center_frame(
             epochs.get_mean_waveform(),
-            baseline_window
-            if baseline_window is not None
-            else getattr(epochs, "baseline", None),
+            baseline_window if baseline_window is not None else getattr(epochs, "baseline", None),
         )
         metric_frame = _metric_frame_for_run(mean, run, response_metric_frame_key)
         times = mean.index.to_numpy(dtype=float)
@@ -825,17 +703,13 @@ def evoked_response_edges_over_time(
                 ranked = detections.copy()
                 selected_significance = significance_column or "consensus_ch"
                 if significance_column is not None and selected_significance not in ranked.columns:
-                    raise ValueError(
-                        f"detections must contain significance column {selected_significance!r}"
-                    )
+                    raise ValueError(f"detections must contain significance column {selected_significance!r}")
                 if consensus_only and selected_significance in ranked.columns:
                     values = ranked[selected_significance]
                     significance_mask = (
                         values.fillna(False).astype(bool)
                         if pd.api.types.is_bool_dtype(values)
-                        else values.fillna(False).astype(str).str.lower().isin(
-                            {"true", "1", "yes", "y"}
-                        )
+                        else values.fillna(False).astype(str).str.lower().isin({"true", "1", "yes", "y"})
                     )
                     if significance_column is not None or significance_mask.any():
                         ranked = ranked[significance_mask]
@@ -853,10 +727,7 @@ def evoked_response_edges_over_time(
             if channel not in metric_frame.columns:
                 continue
             target_node = resolve_electrode_label(str(channel), available_labels)
-            if (
-                exclude_stimulation_contacts
-                and electrode_label_identity(target_node) in stimulation_contacts
-            ):
+            if exclude_stimulation_contacts and electrode_label_identity(target_node) in stimulation_contacts:
                 continue
             peak = float(metric_frame.loc[response_mask, channel].abs().max())
             if not np.isfinite(peak):
@@ -951,7 +822,9 @@ def compute_dynamic_graph_metrics(
         if "total_strength" in metrics:
             in_strength = dict(graph.in_degree(weight="weight"))
             out_strength = dict(graph.out_degree(weight="weight"))
-            values["total_strength"] = {node: float(in_strength.get(node, 0.0) + out_strength.get(node, 0.0)) for node in all_nodes}
+            values["total_strength"] = {
+                node: float(in_strength.get(node, 0.0) + out_strength.get(node, 0.0)) for node in all_nodes
+            }
         if "in_degree" in metrics:
             values["in_degree"] = dict(graph.in_degree())
         if "out_degree" in metrics:
@@ -985,7 +858,11 @@ def compute_dynamic_graph_metrics(
             if "authority" in metrics and max(values["authority"].values(), default=0.0) <= 0:
                 values["authority"] = _normalized_positive(in_strength, all_nodes)
 
-        time_ms = float(frame["time_ms"].iloc[0]) if "time_ms" in frame.columns and not frame.empty else float(time_value) * 1000.0
+        time_ms = (
+            float(frame["time_ms"].iloc[0])
+            if "time_ms" in frame.columns and not frame.empty
+            else float(time_value) * 1000.0
+        )
         for metric in metrics:
             metric_values = values.get(metric, {})
             for node in all_nodes:
@@ -1038,5 +915,9 @@ def summarize_graph_metric(
     if summary == "min":
         return grouped.min().sort_values(ascending=False)
     if summary == "absmax":
-        return grouped.apply(lambda values: values.iloc[np.nanargmax(np.abs(values.to_numpy(dtype=float)))] if values.notna().any() else np.nan).sort_values(ascending=False)
+        return grouped.apply(
+            lambda values: (
+                values.iloc[np.nanargmax(np.abs(values.to_numpy(dtype=float)))] if values.notna().any() else np.nan
+            )
+        ).sort_values(ascending=False)
     return grouped.max().sort_values(ascending=False)

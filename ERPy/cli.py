@@ -12,7 +12,9 @@ def _template_path(name: str) -> Path:
     return Path(resources.files("ERPy.templates") / name)
 
 
-def init_project(config_path: Path, data_root: Path, config_only: bool = False, dry_run: bool = False, force: bool = False) -> list[Path]:
+def init_project(
+    config_path: Path, data_root: Path, config_only: bool = False, dry_run: bool = False, force: bool = False
+) -> list[Path]:
     written: list[Path] = []
     config_path = config_path.expanduser()
     data_root = data_root.expanduser()

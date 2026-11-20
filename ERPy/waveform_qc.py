@@ -2,18 +2,19 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 import math
 import os
-from pathlib import Path
 import uuid
-from typing import Any, Iterable, Mapping
+from collections.abc import Iterable, Mapping
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any
 
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
-from matplotlib.collections import LineCollection
 import numpy as np
 import pandas as pd
+from matplotlib.backends.backend_pdf import PdfPages
+from matplotlib.collections import LineCollection
 
 from .baseline import baseline_center_array
 from .erp_detection import (
@@ -22,7 +23,6 @@ from .erp_detection import (
     _standalone_comparator_summary,
 )
 from .inference import fdr_bh
-
 
 COMMON_MODE_RECOVERY_DEFAULTS = {
     "common_mode_recovery_enabled": True,
@@ -59,12 +59,9 @@ def common_mode_recovery_diagnostic(
         "common_mode_early_fraction": np.nan,
         "common_mode_median_start_abs_uv": np.nan,
         "common_mode_median_drift_abs_uv": np.nan,
-        "common_mode_early_window_start_ms": (
-            float(response_window[0]) * 1000.0
-        ),
+        "common_mode_early_window_start_ms": (float(response_window[0]) * 1000.0),
         "common_mode_early_window_stop_ms": (
-            float(response_window[0]) * 1000.0
-            + float(options["common_mode_early_window_ms"])
+            float(response_window[0]) * 1000.0 + float(options["common_mode_early_window_ms"])
         ),
     }
     data = pd.DataFrame(frame).copy()
@@ -87,13 +84,11 @@ def common_mode_recovery_diagnostic(
         return result
 
     data["channel"] = data["channel"].astype(str)
-    consensus_by_channel = data.groupby("channel", sort=False)[
-        consensus_column
-    ].apply(lambda values: bool(_bool_series(values).any()))
+    consensus_by_channel = data.groupby("channel", sort=False)[consensus_column].apply(
+        lambda values: bool(_bool_series(values).any())
+    )
     channels = data.drop_duplicates("channel", keep="first").copy()
-    channels["_detector_consensus"] = channels["channel"].map(
-        consensus_by_channel
-    ).fillna(False)
+    channels["_detector_consensus"] = channels["channel"].map(consensus_by_channel).fillna(False)
 
     def feature(*names: str) -> pd.Series:
         for name in names:
@@ -127,9 +122,7 @@ def common_mode_recovery_diagnostic(
     early_fraction = n_early / n_detector if n_detector else np.nan
 
     def median_absolute(values: pd.Series) -> float:
-        finite = pd.to_numeric(values, errors="coerce").dropna().to_numpy(
-            dtype=float
-        )
+        finite = pd.to_numeric(values, errors="coerce").dropna().to_numpy(dtype=float)
         return float(np.median(np.abs(finite))) if len(finite) else np.nan
 
     median_start = median_absolute(detector_rows["_response_start_uv"])
@@ -137,17 +130,13 @@ def common_mode_recovery_diagnostic(
     enabled = bool(options["common_mode_recovery_enabled"])
     flagged = bool(
         enabled
-        and n_detector
-        >= int(options["common_mode_min_detector_channels"])
+        and n_detector >= int(options["common_mode_min_detector_channels"])
         and np.isfinite(early_fraction)
-        and early_fraction
-        >= float(options["common_mode_min_early_fraction"])
+        and early_fraction >= float(options["common_mode_min_early_fraction"])
         and np.isfinite(median_start)
-        and median_start
-        >= float(options["common_mode_min_median_start_abs_uv"])
+        and median_start >= float(options["common_mode_min_median_start_abs_uv"])
         and np.isfinite(median_drift)
-        and median_drift
-        >= float(options["common_mode_min_median_drift_abs_uv"])
+        and median_drift >= float(options["common_mode_min_median_drift_abs_uv"])
     )
     result.update(
         {
@@ -227,15 +216,11 @@ class WaveformAudit:
         path.parent.mkdir(parents=True, exist_ok=True)
         selected = self._selected_channels(channels, max_channels=None)
         per_page = max(int(channels_per_page), 1)
-        temporary = path.with_name(
-            f".{path.stem}.{os.getpid()}.{uuid.uuid4().hex}.tmp{path.suffix}"
-        )
+        temporary = path.with_name(f".{path.stem}.{os.getpid()}.{uuid.uuid4().hex}.tmp{path.suffix}")
         try:
             with PdfPages(temporary) as pdf:
                 for page_start in range(0, len(selected), per_page):
-                    page_channels = selected[
-                        page_start : page_start + per_page
-                    ]
+                    page_channels = selected[page_start : page_start + per_page]
                     n_columns = 4
                     n_rows = max(
                         int(math.ceil(len(page_channels) / n_columns)),
@@ -258,10 +243,7 @@ class WaveformAudit:
                     page_number = page_start // per_page + 1
                     page_total = int(math.ceil(len(selected) / per_page))
                     fig.suptitle(
-                        (
-                            f"{title or 'ERPy waveform review'} | "
-                            f"page {page_number}/{page_total}"
-                        ),
+                        (f"{title or 'ERPy waveform review'} | page {page_number}/{page_total}"),
                         y=0.998,
                         fontsize=12,
                     )
@@ -320,9 +302,7 @@ class WaveformAudit:
                             )
                         ]
                     for page_start in range(0, len(flagged), per_page):
-                        page_channels = flagged[
-                            page_start : page_start + per_page
-                        ]
+                        page_channels = flagged[page_start : page_start + per_page]
                         n_columns = 4
                         n_rows = max(
                             int(math.ceil(len(page_channels) / n_columns)),
@@ -343,9 +323,7 @@ class WaveformAudit:
                         for axis in axes.flat[len(page_channels) :]:
                             axis.set_axis_off()
                         page_number = page_start // per_page + 1
-                        page_total = int(
-                            math.ceil(len(flagged) / per_page)
-                        )
+                        page_total = int(math.ceil(len(flagged) / per_page))
                         fig.suptitle(
                             (
                                 f"{title or 'ERPy waveform review'} | "
@@ -380,10 +358,7 @@ class WaveformAudit:
             raise ValueError("stop_s must be greater than start_s")
         if float(step_ms) <= 0:
             raise ValueError("step_ms must be positive")
-        selected = np.flatnonzero(
-            (self._times >= float(start_s))
-            & (self._times <= float(stop_s))
-        )
+        selected = np.flatnonzero((self._times >= float(start_s)) & (self._times <= float(stop_s)))
         if not len(selected):
             raise ValueError("Requested review window does not overlap epochs")
         stride = max(
@@ -446,9 +421,7 @@ class WaveformAudit:
             str(channel),
         )
         bad_mask = np.zeros(traces.shape[0], dtype=bool)
-        bad_mask[
-            [index for index in bad_epochs if 0 <= index < len(bad_mask)]
-        ] = True
+        bad_mask[[index for index in bad_epochs if 0 <= index < len(bad_mask)]] = True
         view = (times >= -0.10) & (times <= 0.45)
         x_values = times[view] * 1000.0
         trace_view = traces[:, view]
@@ -481,16 +454,8 @@ class WaveformAudit:
         mean = np.nanmean(clean, axis=0)
         sem = _nan_sem(clean)
         row = self.summary.set_index("channel").loc[str(channel)]
-        review_reasons = set(
-            filter(
-                None,
-                str(row.get("review_reasons", "")).split(";"),
-            )
-        )
         analysis_eligible_value = row.get("analysis_eligible", True)
-        analysis_eligible = bool(analysis_eligible_value) if pd.notna(
-            analysis_eligible_value
-        ) else False
+        analysis_eligible = bool(analysis_eligible_value) if pd.notna(analysis_eligible_value) else False
         mean_color = "#20262e" if analysis_eligible else "#b8423f"
         interval_color = "#2f6f9f" if analysis_eligible else "#b8423f"
         axis.fill_between(
@@ -535,11 +500,7 @@ class WaveformAudit:
             finite_mean = mean[view][np.isfinite(mean[view])]
             if len(finite_clean):
                 robust = float(np.nanquantile(np.abs(finite_clean), 0.99))
-                mean_peak = (
-                    float(np.nanmax(np.abs(finite_mean)))
-                    if len(finite_mean)
-                    else 0.0
-                )
+                mean_peak = float(np.nanmax(np.abs(finite_mean))) if len(finite_mean) else 0.0
                 limit = max(robust * 1.35, mean_peak * 1.20, 1.0)
                 axis.set_ylim(-limit, limit)
                 full_peak = float(np.nanmax(np.abs(traces[:, view])))
@@ -566,11 +527,7 @@ class WaveformAudit:
                 )
         pattern = str(row.get("detector_pattern", "") or "none")
         strict = "strict+" if bool(row.get("strict_consensus", False)) else "strict-"
-        primary = (
-            "CRP-energy+"
-            if bool(row.get("primary_qc_pass", False))
-            else "CRP-energy-"
-        )
+        primary = "CRP-energy+" if bool(row.get("primary_qc_pass", False)) else "CRP-energy-"
         eligibility = "eligible" if analysis_eligible else "excluded"
         priority = int(row.get("review_priority", 0))
         clean_count = int(row.get("n_clean_response", 0) or 0)
@@ -670,10 +627,7 @@ def audit_waveforms(
             )
         }
     )
-    response_mask = (
-        (times >= float(response_window[0]))
-        & (times <= float(response_window[1]))
-    )
+    response_mask = (times >= float(response_window[0])) & (times <= float(response_window[1]))
     clean_mean = np.nanmean(clean_referenced, axis=0)
     signed_peaks = []
     for channel_index in range(len(channels)):
@@ -694,12 +648,7 @@ def audit_waveforms(
         alpha=float(fdr_alpha),
     )
     summary["crp_q_value"] = summary["channel"].map(crp_q["q_value"])
-    summary["crp_fdr_significant"] = (
-        summary["channel"]
-        .map(crp_q["significant"])
-        .fillna(False)
-        .astype(bool)
-    )
+    summary["crp_fdr_significant"] = summary["channel"].map(crp_q["significant"]).fillna(False).astype(bool)
 
     strict_matrix = method_matrix.drop(
         columns=["crp_energy"],
@@ -707,18 +656,11 @@ def audit_waveforms(
     ).copy()
     if "crp_significance" in strict_matrix.columns:
         strict_matrix["crp_significance"] = (
-            strict_matrix.index.to_series()
-            .map(crp_q["significant"])
-            .fillna(False)
-            .astype(bool)
+            strict_matrix.index.to_series().map(crp_q["significant"]).fillna(False).astype(bool)
         )
     strict_counts = strict_matrix.sum(axis=1)
-    summary["strict_n_methods_significant"] = (
-        summary["channel"].map(strict_counts).fillna(0).astype(int)
-    )
-    summary["strict_detector_consensus"] = (
-        summary["strict_n_methods_significant"] >= int(min_consensus)
-    )
+    summary["strict_n_methods_significant"] = summary["channel"].map(strict_counts).fillna(0).astype(int)
+    summary["strict_detector_consensus"] = summary["strict_n_methods_significant"] >= int(min_consensus)
     kundu_detector_pass = (
         method_matrix.get(
             "kundu_rolston",
@@ -729,36 +671,26 @@ def audit_waveforms(
         .astype(bool)
     )
     primary_detector_pass = (
-        pd.Series(
-            {
-                str(channel): bool(crp_q["significant"].get(str(channel), False))
-                for channel in channels
-            }
-        )
+        pd.Series({str(channel): bool(crp_q["significant"].get(str(channel), False)) for channel in channels})
         & kundu_detector_pass
     )
     comparators = _standalone_comparator_summary(
-        detections, channels, crp_adjustment=crp_q,
+        detections,
+        channels,
+        crp_adjustment=crp_q,
     )
     for column in comparators:
         summary[column] = summary["channel"].map(comparators[column])
     # Deprecated compatibility aliases refer to standalone comparators only.
     summary["primary_shape_pass"] = summary["comparator_crp_pass"]
     summary["primary_magnitude_pass"] = summary["comparator_kundu_pass"]
-    summary["shape_magnitude_detector_pass"] = (
-        summary["channel"]
-        .map(primary_detector_pass)
-        .fillna(False)
-        .astype(bool)
-    )
-    summary["shape_magnitude_criterion"] = (
-        "CRP BH-FDR q<0.05 and published Kundu 15-ms/3x/30-uV rule"
-    )
+    summary["shape_magnitude_detector_pass"] = summary["channel"].map(primary_detector_pass).fillna(False).astype(bool)
+    summary["shape_magnitude_criterion"] = "CRP BH-FDR q<0.05 and published Kundu 15-ms/3x/30-uV rule"
     crp_energy_rows = pd.DataFrame()
     if not detections.empty and {"method", "channel"}.issubset(detections.columns):
-        crp_energy_rows = detections[
-            detections["method"].astype(str).eq("crp_energy")
-        ].drop_duplicates("channel").copy()
+        crp_energy_rows = (
+            detections[detections["method"].astype(str).eq("crp_energy")].drop_duplicates("channel").copy()
+        )
     if not crp_energy_rows.empty:
         crp_energy_rows["channel"] = crp_energy_rows["channel"].astype(str)
         crp_energy_rows = crp_energy_rows.set_index("channel")
@@ -777,18 +709,9 @@ def audit_waveforms(
         "energy_significant",
         channels,
     )
-    summary["primary_detector_pass"] = (
-        summary["channel"].map(primary_detector).fillna(False).astype(bool)
-    )
-    summary["primary_reproducibility_pass"] = (
-        summary["channel"]
-        .map(primary_reproducibility)
-        .fillna(False)
-        .astype(bool)
-    )
-    summary["primary_energy_pass"] = (
-        summary["channel"].map(primary_energy).fillna(False).astype(bool)
-    )
+    summary["primary_detector_pass"] = summary["channel"].map(primary_detector).fillna(False).astype(bool)
+    summary["primary_reproducibility_pass"] = summary["channel"].map(primary_reproducibility).fillna(False).astype(bool)
+    summary["primary_energy_pass"] = summary["channel"].map(primary_energy).fillna(False).astype(bool)
     for source, target in (
         ("p_joint", "primary_joint_p_value"),
         ("q_joint", "primary_joint_q_value"),
@@ -803,43 +726,23 @@ def audit_waveforms(
     summary["primary_criterion"] = PRIMARY_CRITERION
     summary["detector_pattern"] = summary["channel"].map(
         {
-            channel: "+".join(
-                method
-                for method, significant in row.items()
-                if bool(significant)
-            )
-            or "none"
+            channel: "+".join(method for method, significant in row.items() if bool(significant)) or "none"
             for channel, row in method_matrix.iterrows()
         }
     )
     summary["strict_detector_pattern"] = summary["channel"].map(
         {
-            channel: "+".join(
-                method
-                for method, significant in row.items()
-                if bool(significant)
-            )
-            or "none"
+            channel: "+".join(method for method, significant in row.items() if bool(significant)) or "none"
             for channel, row in strict_matrix.iterrows()
         }
     )
     for method in method_matrix.columns:
-        summary[f"detector_{method}"] = (
-            summary["channel"]
-            .map(method_matrix[method])
-            .fillna(False)
-            .astype(bool)
-        )
+        summary[f"detector_{method}"] = summary["channel"].map(method_matrix[method]).fillna(False).astype(bool)
         strict_method = strict_matrix.get(
             method,
             pd.Series(False, index=strict_matrix.index, dtype=bool),
         )
-        summary[f"strict_detector_{method}"] = (
-            summary["channel"]
-            .map(strict_method)
-            .fillna(False)
-            .astype(bool)
-        )
+        summary[f"strict_detector_{method}"] = summary["channel"].map(strict_method).fillna(False).astype(bool)
 
     artifact_summary = _artifact_channel_summary(
         artifacts,
@@ -857,23 +760,15 @@ def audit_waveforms(
         "n_hard_artifact_response",
         "n_clean_response",
     ):
-        summary[column] = (
-            pd.to_numeric(summary[column], errors="coerce")
-            .fillna(0)
-            .astype(int)
-        )
+        summary[column] = pd.to_numeric(summary[column], errors="coerce").fillna(0).astype(int)
     for column in ("bad_response_fraction", "hard_artifact_fraction"):
         summary[column] = pd.to_numeric(
             summary[column],
             errors="coerce",
         ).fillna(0.0)
 
-    recomputed_amplitude = pd.to_numeric(
-        summary["peak_amplitude_uv_recomputed"], errors="coerce"
-    )
-    recomputed_latency = pd.to_numeric(
-        summary["peak_latency_ms_recomputed"], errors="coerce"
-    )
+    recomputed_amplitude = pd.to_numeric(summary["peak_amplitude_uv_recomputed"], errors="coerce")
+    recomputed_latency = pd.to_numeric(summary["peak_latency_ms_recomputed"], errors="coerce")
     amplitude_tolerance = np.maximum(0.05, np.abs(recomputed_amplitude) * 5e-5)
     stored_amplitude = pd.to_numeric(
         summary.get(
@@ -889,12 +784,8 @@ def audit_waveforms(
         ),
         errors="coerce",
     )
-    summary["peak_amplitude_difference_uv"] = (
-        stored_amplitude - recomputed_amplitude
-    )
-    summary["peak_latency_difference_ms"] = (
-        stored_latency - recomputed_latency
-    )
+    summary["peak_amplitude_difference_uv"] = stored_amplitude - recomputed_amplitude
+    summary["peak_latency_difference_ms"] = stored_latency - recomputed_latency
     # Comparisons with NaN are False, and an infinite amplitude also produces
     # an infinite tolerance. Neither establishes agreement between features.
     features_finite = np.isfinite(
@@ -905,12 +796,8 @@ def audit_waveforms(
     ).all(axis=1)
     summary["feature_mismatch"] = (
         ~features_finite
-        | summary["peak_amplitude_difference_uv"].abs().gt(
-            amplitude_tolerance
-        )
-        | summary["peak_latency_difference_ms"].abs().gt(
-            1000.0 / float(epochs.sfreq) + 1e-6
-        )
+        | summary["peak_amplitude_difference_uv"].abs().gt(amplitude_tolerance)
+        | summary["peak_latency_difference_ms"].abs().gt(1000.0 / float(epochs.sfreq) + 1e-6)
     ).fillna(True)
     artifact_thresholds = dict(artifact_thresholds or {})
     common_mode = common_mode_recovery_diagnostic(
@@ -921,9 +808,7 @@ def audit_waveforms(
     )
     for column, value in common_mode.items():
         summary[column] = value
-    common_mode_recovery = _bool_series(
-        summary["common_mode_recovery_artifact"]
-    )
+    common_mode_recovery = _bool_series(summary["common_mode_recovery_artifact"])
     boundary_peak = _bool_series(
         summary.get(
             "peak_at_response_boundary_recomputed",
@@ -931,32 +816,18 @@ def audit_waveforms(
         )
     )
     summary["artifact_eligible"] = (
-        summary["bad_response_fraction"].lt(
-            float(max_bad_response_fraction)
-        )
-        & summary["hard_artifact_fraction"].lt(
-            float(max_hard_artifact_fraction)
-        )
+        summary["bad_response_fraction"].lt(float(max_bad_response_fraction))
+        & summary["hard_artifact_fraction"].lt(float(max_hard_artifact_fraction))
         & summary["n_clean_response"].ge(int(min_clean_responses))
         & ~boundary_peak
         & ~common_mode_recovery
     )
-    summary["analysis_eligible"] = (
-        summary["artifact_eligible"]
-        & ~_bool_series(summary["feature_mismatch"])
-    )
-    summary["strict_consensus"] = (
-        _bool_series(summary["strict_detector_consensus"])
-        & summary["analysis_eligible"]
-    )
+    summary["analysis_eligible"] = summary["artifact_eligible"] & ~_bool_series(summary["feature_mismatch"])
+    summary["strict_consensus"] = _bool_series(summary["strict_detector_consensus"]) & summary["analysis_eligible"]
     summary["shape_magnitude_qc_pass"] = (
-        _bool_series(summary["shape_magnitude_detector_pass"])
-        & summary["analysis_eligible"]
+        _bool_series(summary["shape_magnitude_detector_pass"]) & summary["analysis_eligible"]
     )
-    summary["primary_qc_pass"] = (
-        _bool_series(summary["primary_detector_pass"])
-        & summary["analysis_eligible"]
-    )
+    summary["primary_qc_pass"] = _bool_series(summary["primary_detector_pass"]) & summary["analysis_eligible"]
     summary["crp_energy_qc_pass"] = summary["primary_qc_pass"]
 
     z_threshold = float(artifact_thresholds.get("zscore_threshold", 6.0))
@@ -998,9 +869,7 @@ def audit_waveforms(
         ):
             reasons.append("near_bad_response_burden_cutoff")
             priority = max(priority, 2)
-        if row["hard_artifact_fraction"] >= float(
-            max_hard_artifact_fraction
-        ):
+        if row["hard_artifact_fraction"] >= float(max_hard_artifact_fraction):
             reasons.append("hard_artifact_burden")
             priority = max(priority, 3)
         elif row["hard_artifact_fraction"] >= max(
@@ -1021,24 +890,16 @@ def audit_waveforms(
         if channel in detector_borderline:
             reasons.append("detector_score_near_threshold")
             priority = max(priority, 2)
-        if bool(row.get("strict_detector_consensus", False)) and not bool(
-            row.get("analysis_eligible", False)
-        ):
+        if bool(row.get("strict_detector_consensus", False)) and not bool(row.get("analysis_eligible", False)):
             reasons.append("detector_consensus_excluded_by_qc")
             priority = max(priority, 3)
-        if bool(row.get("shape_magnitude_detector_pass", False)) and not bool(
-            row.get("analysis_eligible", False)
-        ):
+        if bool(row.get("shape_magnitude_detector_pass", False)) and not bool(row.get("analysis_eligible", False)):
             reasons.append("shape_magnitude_response_excluded_by_qc")
             priority = max(priority, 3)
-        if bool(row.get("primary_detector_pass", False)) and not bool(
-            row.get("analysis_eligible", False)
-        ):
+        if bool(row.get("primary_detector_pass", False)) and not bool(row.get("analysis_eligible", False)):
             reasons.append("crp_energy_response_excluded_by_qc")
             priority = max(priority, 3)
-        if bool(row.get("primary_reproducibility_pass", False)) != bool(
-            row.get("primary_energy_pass", False)
-        ):
+        if bool(row.get("primary_reproducibility_pass", False)) != bool(row.get("primary_energy_pass", False)):
             reasons.append("primary_reproducibility_energy_disagreement")
             priority = max(priority, 2)
         if (
@@ -1055,9 +916,7 @@ def audit_waveforms(
         if method_count in {max(int(min_consensus) - 1, 0), int(min_consensus)}:
             reasons.append("consensus_boundary")
             priority = max(priority, 2)
-        peak_amplitude = float(
-            row.get("peak_amplitude_uv_recomputed", np.nan)
-        )
+        peak_amplitude = float(row.get("peak_amplitude_uv_recomputed", np.nan))
         if np.isfinite(peak_amplitude) and peak_amplitude >= 1_000.0:
             reasons.append("large_clean_mean_response")
             priority = max(priority, 2)
@@ -1120,11 +979,7 @@ def _collapse_detection_features(detections: pd.DataFrame) -> pd.DataFrame:
     ]
     output = first[keep].copy()
     if "n_methods_significant" not in output:
-        counts = (
-            data.assign(_significant=_bool_series(data["significant"]))
-            .groupby("channel")["_significant"]
-            .sum()
-        )
+        counts = data.assign(_significant=_bool_series(data["significant"])).groupby("channel")["_significant"].sum()
         output["n_methods_significant"] = output["channel"].map(counts)
     return output
 
@@ -1243,16 +1098,10 @@ def _artifact_channel_summary(
         )
         .reset_index()
     )
-    summary["n_clean_response"] = (
-        summary["n_epochs_artifact"] - summary["n_bad_response"]
-    )
-    summary["bad_response_fraction"] = (
-        summary["n_bad_response"]
-        / summary["n_epochs_artifact"].replace(0, np.nan)
-    )
-    summary["hard_artifact_fraction"] = (
-        summary["n_hard_artifact_response"]
-        / summary["n_epochs_artifact"].replace(0, np.nan)
+    summary["n_clean_response"] = summary["n_epochs_artifact"] - summary["n_bad_response"]
+    summary["bad_response_fraction"] = summary["n_bad_response"] / summary["n_epochs_artifact"].replace(0, np.nan)
+    summary["hard_artifact_fraction"] = summary["n_hard_artifact_response"] / summary["n_epochs_artifact"].replace(
+        0, np.nan
     )
     return summary[columns]
 
@@ -1307,9 +1156,7 @@ def _trial_borderline_channels(
             )
             column_near &= rail_limits_known
         near |= column_near
-    return set(
-        artifacts.loc[near, "channel"].dropna().astype(str)
-    ).intersection(set(map(str, channels)))
+    return set(artifacts.loc[near, "channel"].dropna().astype(str)).intersection(set(map(str, channels)))
 
 
 def _detector_borderline_channels(detections: pd.DataFrame) -> set[str]:
@@ -1348,16 +1195,8 @@ def _bad_epoch_indices(
 ) -> list[int]:
     if artifacts.empty or "bad_response" not in artifacts:
         return []
-    selected = artifacts[
-        artifacts["channel"].astype(str).eq(str(channel))
-        & _bool_series(artifacts["bad_response"])
-    ]
-    return (
-        pd.to_numeric(selected["epoch"], errors="coerce")
-        .dropna()
-        .astype(int)
-        .tolist()
-    )
+    selected = artifacts[artifacts["channel"].astype(str).eq(str(channel)) & _bool_series(artifacts["bad_response"])]
+    return pd.to_numeric(selected["epoch"], errors="coerce").dropna().astype(int).tolist()
 
 
 def _indexed_bool_column(
@@ -1376,13 +1215,7 @@ def _indexed_bool_column(
 def _bool_series(values: pd.Series) -> pd.Series:
     if pd.api.types.is_bool_dtype(values):
         return values.fillna(False)
-    return (
-        values.astype("string")
-        .fillna("")
-        .str.strip()
-        .str.lower()
-        .isin({"true", "1", "yes", "y"})
-    )
+    return values.astype("string").fillna("").str.strip().str.lower().isin({"true", "1", "yes", "y"})
 
 
 def _nan_sem(values: np.ndarray) -> np.ndarray:

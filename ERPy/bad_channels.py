@@ -1,13 +1,12 @@
 from __future__ import annotations
 
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
-from typing import Iterable, Mapping
 
 import numpy as np
 import pandas as pd
 
 from .baseline import baseline_center_array
-
 
 DEFAULT_HARD_ARTIFACT_REASONS = frozenset(
     {
@@ -72,9 +71,7 @@ class ArtifactResponseReport:
         if self.table.empty or "bad_response" not in self.table.columns:
             return []
         summary = self.by_channel()
-        return sorted(
-            summary.loc[summary["bad_response_fraction"] > 0.25, "channel"].astype(str).tolist()
-        )
+        return sorted(summary.loc[summary["bad_response_fraction"] > 0.25, "channel"].astype(str).tolist())
 
     def to_csv(self, path) -> None:
         """Write the trial-by-channel artifact report to a CSV file."""
@@ -224,7 +221,10 @@ def reject_bad_channels(
     if report is None:
         report = BadChannelReport(
             pd.DataFrame(
-                {"bad_channel": [c in bad for c in df.columns], "reason": ["manual" if c in bad else "" for c in df.columns]},
+                {
+                    "bad_channel": [c in bad for c in df.columns],
+                    "reason": ["manual" if c in bad else "" for c in df.columns],
+                },
                 index=df.columns,
             )
         )
@@ -296,20 +296,12 @@ def detect_artifactual_responses(
                 raw_finite = raw_x[np.isfinite(raw_x)]
                 rounded = np.round(raw_finite, decimals=9)
                 _, counts = np.unique(rounded, return_counts=True)
-                sat_frac = (
-                    float(counts.max() / len(raw_finite))
-                    if len(raw_finite)
-                    else 1.0
-                )
+                sat_frac = float(counts.max() / len(raw_finite)) if len(raw_finite) else 1.0
                 plateau_run = _longest_near_constant_run(
                     raw_finite,
                     epsilon_uv=plateau_epsilon_uv,
                 )
-                plateau_frac = (
-                    float(plateau_run / len(raw_finite))
-                    if len(raw_finite)
-                    else 1.0
-                )
+                plateau_frac = float(plateau_run / len(raw_finite)) if len(raw_finite) else 1.0
                 extreme_dwell_frac = _rail_clip_fraction(
                     raw_finite,
                     epsilon_fraction=rail_epsilon_fraction,
@@ -343,7 +335,9 @@ def detect_artifactual_responses(
                     "saturation_fraction": sat_frac,
                     "plateau_fraction": plateau_frac,
                     "plateau_run_samples": int(plateau_run),
-                    "plateau_run_s": float(plateau_run / float(epochs.sfreq)) if np.isfinite(epochs.sfreq) and epochs.sfreq else np.nan,
+                    "plateau_run_s": float(plateau_run / float(epochs.sfreq))
+                    if np.isfinite(epochs.sfreq) and epochs.sfreq
+                    else np.nan,
                     "extreme_dwell_fraction": extreme_dwell_frac,
                     "rail_fraction": rail_frac,
                     "rail_limits_known": rail_limits is not None,
@@ -386,8 +380,7 @@ def detect_artifactual_responses(
         if absolute_ptp_uv is not None and np.isfinite(row["ptp"]) and row["ptp"] >= float(absolute_ptp_uv):
             r.append("absolute_ptp")
         if extreme_zscore_threshold is not None and (
-            row["peak_abs_z"] >= float(extreme_zscore_threshold)
-            or row["ptp_z"] >= float(extreme_zscore_threshold)
+            row["peak_abs_z"] >= float(extreme_zscore_threshold) or row["ptp_z"] >= float(extreme_zscore_threshold)
         ):
             r.append("extreme_amplitude_outlier")
         if row["peak_abs_z"] >= zscore_threshold or row["ptp_z"] >= zscore_threshold:
@@ -402,7 +395,9 @@ def detect_artifactual_responses(
     table["hard_artifact_response"] = table["reason"].map(
         lambda text: bool(DEFAULT_HARD_ARTIFACT_REASONS.intersection(_split_reasons(text)))
     )
-    return ArtifactResponseReport(table.sort_values(["bad_response", "epoch", "channel"], ascending=[False, True, True]))
+    return ArtifactResponseReport(
+        table.sort_values(["bad_response", "epoch", "channel"], ascending=[False, True, True])
+    )
 
 
 def response_artifact_summary(
@@ -461,10 +456,16 @@ def response_artifact_summary(
             n_hard_artifact_response=("_hard_artifact_response", "sum"),
             max_peak_abs=("peak_abs", "max") if "peak_abs" in data.columns else ("bad_response", "size"),
             max_ptp=("ptp", "max") if "ptp" in data.columns else ("bad_response", "size"),
-            max_saturation_fraction=("saturation_fraction", "max") if "saturation_fraction" in data.columns else ("bad_response", "size"),
-            max_plateau_fraction=("plateau_fraction", "max") if "plateau_fraction" in data.columns else ("bad_response", "size"),
+            max_saturation_fraction=("saturation_fraction", "max")
+            if "saturation_fraction" in data.columns
+            else ("bad_response", "size"),
+            max_plateau_fraction=("plateau_fraction", "max")
+            if "plateau_fraction" in data.columns
+            else ("bad_response", "size"),
             max_plateau_run_s=("plateau_run_s", "max") if "plateau_run_s" in data.columns else ("bad_response", "size"),
-            max_extreme_dwell_fraction=("extreme_dwell_fraction", "max") if "extreme_dwell_fraction" in data.columns else ("bad_response", "size"),
+            max_extreme_dwell_fraction=("extreme_dwell_fraction", "max")
+            if "extreme_dwell_fraction" in data.columns
+            else ("bad_response", "size"),
             max_rail_fraction=("rail_fraction", "max") if "rail_fraction" in data.columns else ("bad_response", "size"),
             artifact_reasons=("reason", _reason_text) if "reason" in data.columns else ("bad_response", "size"),
         )
@@ -506,7 +507,9 @@ def reject_artifactual_responses(
         bad = table[table["bad_response"]]
         frac = bad.groupby("epoch")["channel"].nunique() / max(len(epochs.channels), 1)
         drop_epochs = frac[frac >= max_bad_channel_fraction].index.astype(int).tolist()
-        kept_epochs = [int(ep) for ep in sorted(df.index.get_level_values("epoch").unique()) if int(ep) not in set(drop_epochs)]
+        kept_epochs = [
+            int(ep) for ep in sorted(df.index.get_level_values("epoch").unique()) if int(ep) not in set(drop_epochs)
+        ]
         epoch_mapping = {old: new for new, old in enumerate(kept_epochs)}
         df = df.drop(index=drop_epochs, level="epoch", errors="ignore")
         df = _renumber_epoch_index(df)

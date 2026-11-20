@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
 import json
-from pathlib import Path
 import pickle
 import threading
 import zlib
+from datetime import datetime, timezone
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -78,11 +78,56 @@ def _write_fixture(tmp_path: Path):
     ).to_csv(meta / "stim_metadata.csv", index=False)
     pd.DataFrame(
         [
-            {"patient_id": "P1", "session_id": "A", "elec_label": "LACC1", "anat_label": "L ACC", "mni_x": -4, "mni_y": 28, "mni_z": 30, "bad_channel": False},
-            {"patient_id": "P1", "session_id": "A", "elec_label": "LACC2", "anat_label": "L ACC", "mni_x": -3, "mni_y": 27, "mni_z": 31, "bad_channel": False},
-            {"patient_id": "P1", "session_id": "A", "elec_label": "LACC3", "anat_label": "L ACC", "mni_x": -2, "mni_y": 26, "mni_z": 32, "bad_channel": False},
-            {"patient_id": "P1", "session_id": "A", "elec_label": "BAD1", "anat_label": "bad", "mni_x": 0, "mni_y": 0, "mni_z": 0, "bad_channel": True},
-            {"patient_id": "P1", "session_id": "A", "elec_label": "RSGC1", "anat_label": "R SGC", "mni_x": 8, "mni_y": 18, "mni_z": -4, "bad_channel": False},
+            {
+                "patient_id": "P1",
+                "session_id": "A",
+                "elec_label": "LACC1",
+                "anat_label": "L ACC",
+                "mni_x": -4,
+                "mni_y": 28,
+                "mni_z": 30,
+                "bad_channel": False,
+            },
+            {
+                "patient_id": "P1",
+                "session_id": "A",
+                "elec_label": "LACC2",
+                "anat_label": "L ACC",
+                "mni_x": -3,
+                "mni_y": 27,
+                "mni_z": 31,
+                "bad_channel": False,
+            },
+            {
+                "patient_id": "P1",
+                "session_id": "A",
+                "elec_label": "LACC3",
+                "anat_label": "L ACC",
+                "mni_x": -2,
+                "mni_y": 26,
+                "mni_z": 32,
+                "bad_channel": False,
+            },
+            {
+                "patient_id": "P1",
+                "session_id": "A",
+                "elec_label": "BAD1",
+                "anat_label": "bad",
+                "mni_x": 0,
+                "mni_y": 0,
+                "mni_z": 0,
+                "bad_channel": True,
+            },
+            {
+                "patient_id": "P1",
+                "session_id": "A",
+                "elec_label": "RSGC1",
+                "anat_label": "R SGC",
+                "mni_x": 8,
+                "mni_y": 18,
+                "mni_z": -4,
+                "bad_channel": False,
+            },
         ]
     ).to_csv(meta / "electrode_metadata.csv", index=False)
     config = {
@@ -478,9 +523,7 @@ def test_processed_hdf_roundtrip_uses_safe_json_metadata(tmp_path):
     assert loaded.attrs["sfreq"] == 10.0
     assert loaded.attrs["pipeline_id"] == "pipe-1"
     assert loaded.attrs["session_id"] == "A"
-    assert loaded.attrs["pipeline_steps"] == [
-        ("artifact_blank", {"width_s": 0.003})
-    ]
+    assert loaded.attrs["pipeline_steps"] == [("artifact_blank", {"width_s": 0.003})]
     with tables.open_file(path, mode="r") as handle:
         group = handle.get_node("/data")
         assert hasattr(group, "erpy_metadata_v2")
@@ -715,10 +758,11 @@ def test_patient_analyze_returns_auditable_result(tmp_path):
         "peak_amplitude",
         "rms_response",
     ]
-    assert {
-        row["method"]
-        for row in result.metadata["detection"]["method_parameter_records"]
-    } == {"keller_zscore", "peak_amplitude", "rms_response"}
+    assert {row["method"] for row in result.metadata["detection"]["method_parameter_records"]} == {
+        "keller_zscore",
+        "peak_amplitude",
+        "rms_response",
+    }
 
     saved = result.save(tmp_path / "analysis_tables")
     assert saved["detections"].exists()
@@ -727,9 +771,7 @@ def test_patient_analyze_returns_auditable_result(tmp_path):
     saved_metadata = json.loads(saved["metadata"].read_text(encoding="utf-8"))
     assert saved_metadata["erpy_compatibility_id"] == ep.CHECKPOINT_COMPATIBILITY_ID
     assert saved_metadata["epoch"]["baseline"] == [-0.25, -0.05]
-    assert saved_metadata["artifact_qc"]["hard_artifact_reasons"] == sorted(
-        ep.DEFAULT_HARD_ARTIFACT_REASONS
-    )
+    assert saved_metadata["artifact_qc"]["hard_artifact_reasons"] == sorted(ep.DEFAULT_HARD_ARTIFACT_REASONS)
 
 
 def test_analysis_result_primary_significant_returns_one_native_row_per_channel():
@@ -755,9 +797,7 @@ def test_analysis_result_primary_significant_returns_one_native_row_per_channel(
 
     primary = result.primary_significant
 
-    assert primary[["channel", "method"]].to_dict("records") == [
-        {"channel": "C1", "method": "crp_energy"}
-    ]
+    assert primary[["channel", "method"]].to_dict("records") == [{"channel": "C1", "method": "crp_energy"}]
     assert primary.loc[0, "p_joint"] == pytest.approx(0.01)
 
 
@@ -812,9 +852,7 @@ def test_batched_erp_detection_matches_crp_and_high_gamma_reference():
     envelope = np.abs(signal.hilbert(filtered, axis=1))
     baseline = envelope[:, (times >= -0.2) & (times <= -0.03)].reshape(-1)
     response_values = envelope[:, response].reshape(-1)
-    expected = (
-        np.nanmean(response_values) - np.nanmean(baseline)
-    ) / (np.nanstd(baseline, ddof=1) + 1e-12)
+    expected = (np.nanmean(response_values) - np.nanmean(baseline)) / (np.nanstd(baseline, ddof=1) + 1e-12)
     assert scores[0] == pytest.approx(expected, rel=1e-12, abs=1e-12)
 
 
@@ -868,9 +906,7 @@ def test_response_artifact_detector_flags_plateau_saturation():
 
     report = epochs.flag_artifacts(response_window=(0.01, 0.2), zscore_threshold=99.0, saturation_fraction=0.95)
     flagged = report.table[
-        (report.table["epoch"].eq(2))
-        & (report.table["channel"].eq("clipped_contact"))
-        & (report.table["bad_response"])
+        (report.table["epoch"].eq(2)) & (report.table["channel"].eq("clipped_contact")) & (report.table["bad_response"])
     ]
     assert not flagged.empty
     assert "plateau_clipping" in flagged.iloc[0]["reason"] or "rail_clipping" in flagged.iloc[0]["reason"]
@@ -1185,7 +1221,7 @@ def test_patient_from_bids_brainvision_fixture(tmp_path):
         data[i, 2] += 40
         r0 = i + int(0.04 * sfreq)
         r1 = i + int(0.15 * sfreq)
-        data[r0:r1 + 1, 3] += (-4 * np.hanning(r1 - r0 + 1)).astype("<f4")
+        data[r0 : r1 + 1, 3] += (-4 * np.hanning(r1 - r0 + 1)).astype("<f4")
     (ieeg / f"{stem}_ieeg.eeg").write_bytes(data.astype("<f4").tobytes())
     vhdr = "\n".join(
         [
@@ -1200,7 +1236,7 @@ def test_patient_from_bids_brainvision_fixture(tmp_path):
             "[Binary Infos]",
             "BinaryFormat=IEEE_FLOAT_32",
             "[Channel Infos]",
-            *[f"Ch{i+1}={ch},,1,uV" for i, ch in enumerate(channels)],
+            *[f"Ch{i + 1}={ch},,1,uV" for i, ch in enumerate(channels)],
         ]
     )
     (ieeg / f"{stem}_ieeg.vhdr").write_text(vhdr, encoding="utf-8")
@@ -1210,14 +1246,23 @@ def test_patient_from_bids_brainvision_fixture(tmp_path):
         encoding="utf-8",
     )
     (ieeg / "sub-01_ses-ieeg01_electrodes.tsv").write_text(
-        "name\tx\ty\tz\tgroup\n"
-        + "\n".join(f"{ch}\t0\t0\t0\tDemo" for ch in channels),
+        "name\tx\ty\tz\tgroup\n" + "\n".join(f"{ch}\t0\t0\t0\tDemo" for ch in channels),
         encoding="utf-8",
     )
 
-    patient = ep.Patient.from_bids(str(bids), subject="01", session="ieeg01", task="ccep", output_root=str(tmp_path / "erpy_bids"))
+    patient = ep.Patient.from_bids(
+        str(bids), subject="01", session="ieeg01", task="ccep", output_root=str(tmp_path / "erpy_bids")
+    )
     assert patient.stim_pairs("ieeg01") == ["LACC_1_2"]
-    epochs = patient.epoch("ieeg01", "LACC_1_2", pipeline=[("artifact_blank", {"width_s": 0.004})], tmin=-0.2, tmax=0.4, baseline=(-0.2, -0.05), cache=False)
+    epochs = patient.epoch(
+        "ieeg01",
+        "LACC_1_2",
+        pipeline=[("artifact_blank", {"width_s": 0.004})],
+        tmin=-0.2,
+        tmax=0.4,
+        baseline=(-0.2, -0.05),
+        cache=False,
+    )
     assert epochs.n_trials() == 3
     det = epochs.detect_erp_all(methods=["keller_zscore", "peak_amplitude"], min_consensus=1)
     assert "RSGC1" in det["channel"].values
@@ -1239,7 +1284,7 @@ def test_patient_from_nwb_fixture(tmp_path):
         data[i, 1] += 25
         r0 = i + int(0.04 * sfreq)
         r1 = i + int(0.16 * sfreq)
-        data[r0:r1 + 1, 2] += -4 * np.hanning(r1 - r0 + 1)
+        data[r0 : r1 + 1, 2] += -4 * np.hanning(r1 - r0 + 1)
 
     nwb = NWBFile(
         session_description="ERPy NWB fixture",
@@ -1316,7 +1361,15 @@ def test_brain_graph_exports_and_zero_padded_labels(tmp_path):
     event_path = patient.dataloader.get_event_path("A", "LACC_1_2")
     event_path.parent.mkdir(parents=True, exist_ok=True)
     canonical.to_csv(event_path, index=False)
-    epochs = patient.epoch("A", "LACC_1_2", pipeline=[("artifact_blank", {"width_s": 0.005})], tmin=-0.2, tmax=0.4, baseline=(-0.2, -0.05), cache=False)
+    epochs = patient.epoch(
+        "A",
+        "LACC_1_2",
+        pipeline=[("artifact_blank", {"width_s": 0.005})],
+        tmin=-0.2,
+        tmax=0.4,
+        baseline=(-0.2, -0.05),
+        cache=False,
+    )
     detections = epochs.detect_erp_all(methods=["keller_zscore", "peak_amplitude"], min_consensus=1)
 
     from ERPy.viz.networks import (
@@ -1333,9 +1386,7 @@ def test_brain_graph_exports_and_zero_padded_labels(tmp_path):
             {"elec_label": "PT03", "anat_label": "temporal", "mni_x": -58, "mni_y": -56, "mni_z": -12},
         ]
     )
-    padded_det = pd.DataFrame(
-        [{"channel": "PT03", "peak_amplitude_uv": 12.0, "consensus_ch": True}]
-    )
+    padded_det = pd.DataFrame([{"channel": "PT03", "peak_amplitude_uv": 12.0, "consensus_ch": True}])
     edges = edges_from_detections(padded_det, stim_pair="PT_1_2", elec_meta=padded_meta)
     assert edges.loc[0, "stim_elec"] == "PT01"
     assert edges.loc[0, "record_elec"] == "PT03"
@@ -1509,20 +1560,21 @@ def test_coordinate_completion_is_patient_scoped_and_auditable():
     )
 
     completed = ep.complete_contact_coordinates(pd.DataFrame(rows))
-    endpoints = completed[completed["elec_label"].eq("L5")].set_index(
-        "patient_id"
-    )
+    endpoints = completed[completed["elec_label"].eq("L5")].set_index("patient_id")
 
     assert endpoints.loc["P1", "mni_x"] == pytest.approx(4.0)
     assert endpoints.loc["P2", "mni_x"] == pytest.approx(24.0)
-    assert endpoints["mni_coordinate_source"].eq(
-        "linear_lead_trajectory"
-    ).all()
+    assert endpoints["mni_coordinate_source"].eq("linear_lead_trajectory").all()
     assert endpoints["mni_coordinate_fit_n_contacts"].eq(4).all()
-    assert completed.loc[
-        completed["elec_label"].str.startswith("M"),
-        ["mni_x", "mni_y", "mni_z"],
-    ].isna().all().all()
+    assert (
+        completed.loc[
+            completed["elec_label"].str.startswith("M"),
+            ["mni_x", "mni_y", "mni_z"],
+        ]
+        .isna()
+        .all()
+        .all()
+    )
 
 
 def test_dynamic_graph_hub_authority_are_nonzero_for_directed_response_graph():
@@ -1626,9 +1678,7 @@ def test_dynamic_evoked_edges_exclude_both_stimulation_contacts():
     sfreq = 500.0
     times = np.arange(-0.2, 0.202, 1.0 / sfreq)
     response = np.exp(-0.5 * ((times - 0.08) / 0.018) ** 2)
-    values = np.column_stack(
-        [100.0 * response, 80.0 * response, 20.0 * response]
-    )
+    values = np.column_stack([100.0 * response, 80.0 * response, 20.0 * response])
     frame = pd.DataFrame(
         np.tile(values, (4, 1)),
         index=pd.MultiIndex.from_product(
@@ -1709,7 +1759,15 @@ def test_crp_visualization_helpers(tmp_path):
     event_path = patient.dataloader.get_event_path("A", "LACC_1_2")
     event_path.parent.mkdir(parents=True, exist_ok=True)
     ep.create_events_from_timestamps(events).to_csv(event_path, index=False)
-    epochs = patient.epoch("A", "LACC_1_2", pipeline=[("artifact_blank", {"width_s": 0.005})], tmin=-0.2, tmax=0.4, baseline=(-0.2, -0.05), cache=False)
+    epochs = patient.epoch(
+        "A",
+        "LACC_1_2",
+        pipeline=[("artifact_blank", {"width_s": 0.005})],
+        tmin=-0.2,
+        tmax=0.4,
+        baseline=(-0.2, -0.05),
+        cache=False,
+    )
 
     from ERPy.crp import CRPConfig, compare_crp_across_stim_sites, run_crp_all
     from ERPy.response_metrics import zscore_metric_within_stim

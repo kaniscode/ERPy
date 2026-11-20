@@ -2,16 +2,17 @@ from __future__ import annotations
 
 import math
 import re
+from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import numpy as np
 import pandas as pd
 from scipy import signal
 
 from .utils.jobrunner import JobRunner
-from .utils.utils import ensure_dir, infer_sfreq, parse_list, read_time_series_csv, write_time_series_csv
+from .utils.utils import ensure_dir, infer_sfreq, parse_list, read_time_series_csv
 
 
 class EventDetectionError(RuntimeError):
@@ -64,9 +65,7 @@ def _event_times_to_seconds(values: Iterable[Any] | pd.Series) -> np.ndarray:
     valid = parsed.notna()
     if valid.any():
         reference = parsed.loc[valid].iloc[0]
-        seconds[valid.to_numpy()] = (
-            parsed.loc[valid] - reference
-        ).dt.total_seconds().to_numpy(dtype=float)
+        seconds[valid.to_numpy()] = (parsed.loc[valid] - reference).dt.total_seconds().to_numpy(dtype=float)
     return seconds
 
 
@@ -107,21 +106,13 @@ def _regularize_event_sequence(
             delta = float(seconds[stop] - seconds[start])
             pulse_steps = int(max(round(delta / expected_interval), 1))
             per_pulse_interval = delta / pulse_steps
-            relative_error = abs(
-                per_pulse_interval - expected_interval
-            ) / expected_interval
+            relative_error = abs(per_pulse_interval - expected_interval) / expected_interval
             if relative_error > float(tolerance):
                 continue
             candidate_length = int(path_lengths[start] + 1)
-            candidate_cost = float(
-                path_costs[start] + relative_error**2
-            )
-            if (
-                candidate_length > path_lengths[stop]
-                or (
-                    candidate_length == path_lengths[stop]
-                    and candidate_cost < path_costs[stop]
-                )
+            candidate_cost = float(path_costs[start] + relative_error**2)
+            if candidate_length > path_lengths[stop] or (
+                candidate_length == path_lengths[stop] and candidate_cost < path_costs[stop]
             ):
                 path_lengths[stop] = candidate_length
                 path_costs[stop] = candidate_cost
@@ -151,39 +142,24 @@ def _event_candidate_score(
     expected_count: float,
     stim_freq: float | None,
 ) -> float:
-    count_error = (
-        abs(len(events) - expected_count) / expected_count
-        if expected_count > 0
-        else 0.0
-    )
+    count_error = abs(len(events) - expected_count) / expected_count if expected_count > 0 else 0.0
     cadence_error = 0.0
     frequency = pd.to_numeric(pd.Series([stim_freq]), errors="coerce").iloc[0]
     if len(events) > 1 and pd.notna(frequency) and float(frequency) > 0:
         values = events["times"]
         if pd.api.types.is_numeric_dtype(values):
-            ordered = np.sort(
-                pd.to_numeric(values, errors="coerce")
-                .dropna()
-                .to_numpy(dtype=float)
-            )
+            ordered = np.sort(pd.to_numeric(values, errors="coerce").dropna().to_numpy(dtype=float))
             intervals = np.diff(ordered)
         else:
             ordered = pd.to_datetime(values, errors="coerce").dropna().sort_values()
-            intervals = (
-                ordered.diff().dropna().dt.total_seconds().to_numpy(dtype=float)
-            )
+            intervals = ordered.diff().dropna().dt.total_seconds().to_numpy(dtype=float)
         expected_interval = 1.0 / float(frequency)
         if len(intervals):
             multiples = np.maximum(
                 np.rint(intervals / expected_interval),
                 1.0,
             )
-            cadence_error = float(
-                np.mean(
-                    np.abs(intervals / multiples - expected_interval)
-                    / expected_interval
-                )
-            )
+            cadence_error = float(np.mean(np.abs(intervals / multiples - expected_interval) / expected_interval))
     source_penalty = {
         "annotations": 0.0,
         "trigger": 0.0,
@@ -199,17 +175,8 @@ def _event_candidate_score(
         ),
         errors="coerce",
     ).median()
-    regularization_penalty = (
-        max(1.0 - float(retained), 0.0) * 0.05
-        if pd.notna(retained)
-        else 0.0
-    )
-    return float(
-        count_error
-        + 0.25 * cadence_error
-        + source_penalty
-        + regularization_penalty
-    )
+    regularization_penalty = max(1.0 - float(retained), 0.0) * 0.05 if pd.notna(retained) else 0.0
+    return float(count_error + 0.25 * cadence_error + source_penalty + regularization_penalty)
 
 
 def create_events_from_timestamps(
@@ -332,16 +299,9 @@ def _candidate_channels(df: pd.DataFrame, stim_pair: str, mode: str, electrode_r
         hi = max(pos, neg) + electrode_range
         numbers = set(range(lo, hi + 1))
     numbers -= {pos, neg}
-    patterns = {
-        label.casefold()
-        for n in numbers
-        for label in (f"{lead}{n}", f"{lead}_{n}")
-    }
+    patterns = {label.casefold() for n in numbers for label in (f"{lead}{n}", f"{lead}_{n}")}
     picked = [
-        col
-        for col in columns
-        if _clean_mne_channel_label(col).casefold() in patterns
-        or col.casefold() in patterns
+        col for col in columns if _clean_mne_channel_label(col).casefold() in patterns or col.casefold() in patterns
     ]
     return picked or columns
 
@@ -499,12 +459,7 @@ def _restrict_signal_to_stim_window(
     selected = df.loc[(df.index >= start) & (df.index <= stop)].copy()
     if selected.empty:
         raise ValueError(
-            "Stimulation window {} to {} does not overlap signal index {} to {}".format(
-                start,
-                stop,
-                df.index.min(),
-                df.index.max(),
-            )
+            f"Stimulation window {start} to {stop} does not overlap signal index {df.index.min()} to {df.index.max()}"
         )
     selected.attrs.update(attrs)
     selected.attrs["event_detection_window_start"] = str(start)
@@ -695,11 +650,7 @@ def _detect_trigger_events(
             r"STIM(?:ULUS)?|STIMTRIG(?:GER)?|TR)\d*$",
             flags=re.I,
         )
-        channels = [
-            ch
-            for ch in numeric.columns
-            if rgx.fullmatch(re.sub(r"[\s._-]+", "", str(ch)))
-        ]
+        channels = [ch for ch in numeric.columns if rgx.fullmatch(re.sub(r"[\s._-]+", "", str(ch)))]
     if not channels:
         raise ValueError("No trigger channels matched")
     sfreq = float(df.attrs.get("sfreq") or infer_sfreq(df))
@@ -724,7 +675,9 @@ def _detect_trigger_events(
                 if hit - kept[-1] >= min_dist:
                     kept.append(hit)
             peaks_by_channel[ch] = np.array(kept, dtype=int)
-    positions = _cluster_peak_samples(peaks_by_channel, max(int(round(merge_margin_s * sfreq)), 1), min_channel_consensus)
+    positions = _cluster_peak_samples(
+        peaks_by_channel, max(int(round(merge_margin_s * sfreq)), 1), min_channel_consensus
+    )
     return _event_df(_positions_to_times(df, positions))
 
 
@@ -749,8 +702,7 @@ def _auto_event_candidate_is_plausible(
         if pd.notna(retained) and float(retained) < 0.65:
             return (
                 False,
-                "cadence_consistency_after_regularization="
-                f"{float(retained):.1%} required>=65.0%",
+                f"cadence_consistency_after_regularization={float(retained):.1%} required>=65.0%",
             )
     frequency = pd.to_numeric(pd.Series([stim_freq]), errors="coerce").iloc[0]
     if pd.isna(frequency) or float(frequency) <= 0:
@@ -772,10 +724,7 @@ def _auto_event_candidate_is_plausible(
         if ratio < 0.65 or ratio > 1.5:
             return (
                 False,
-                "median_interval={:.6g}s expected={:.6g}s".format(
-                    median_interval,
-                    expected_interval,
-                ),
+                f"median_interval={median_interval:.6g}s expected={expected_interval:.6g}s",
             )
         multiples = np.maximum(np.rint(intervals / expected_interval), 1.0)
         per_pulse_intervals = intervals / multiples
@@ -784,9 +733,7 @@ def _auto_event_candidate_is_plausible(
         if len(intervals) >= 3 and regular_fraction < 0.65:
             return (
                 False,
-                "cadence_consistency={:.1%} required>=65.0%".format(
-                    regular_fraction,
-                ),
+                f"cadence_consistency={regular_fraction:.1%} required>=65.0%",
             )
 
     try:
@@ -807,17 +754,14 @@ def _auto_event_candidate_is_plausible(
         if not minimum <= len(events) <= maximum:
             return (
                 False,
-                "count={} expected_about={:.1f} accepted_range={}-{}".format(
-                    len(events),
-                    expected_count,
-                    minimum,
-                    maximum,
-                ),
+                f"count={len(events)} expected_about={expected_count:.1f} accepted_range={minimum}-{maximum}",
             )
     return True, "pulse_train_consistent"
 
 
-def _detect_annotation_events_from_raw(raw, include_regex: str | None = None, exclude_regex: str | None = None) -> pd.DataFrame:
+def _detect_annotation_events_from_raw(
+    raw, include_regex: str | None = None, exclude_regex: str | None = None
+) -> pd.DataFrame:
     include = re.compile(include_regex, flags=re.I) if include_regex else None
     exclude = re.compile(exclude_regex, flags=re.I) if exclude_regex else None
     meas_date = raw.info.get("meas_date")
@@ -897,9 +841,7 @@ def detect_events_from_artifacts(
                 ]
             )
         errors = []
-        plausible_candidates: list[
-            tuple[float, str, str, pd.DataFrame]
-        ] = []
+        plausible_candidates: list[tuple[float, str, str, pd.DataFrame]] = []
         loaded_signal = signal_data
         for label, candidate, candidate_options in attempts:
             try:
@@ -952,17 +894,14 @@ def detect_events_from_artifacts(
                         )
                         duration_s = max(
                             (
-                                pd.Timestamp(stim_row["stim_stop"])
-                                - pd.Timestamp(stim_row["stim_start"])
+                                pd.Timestamp(stim_row["stim_stop"]) - pd.Timestamp(stim_row["stim_start"])
                             ).total_seconds(),
                             0.0,
                         )
                     except Exception:
                         duration_s = 0.0
                     expected_count = (
-                        duration_s * float(stim_freq)
-                        if stim_freq is not None and float(stim_freq) > 0
-                        else 0.0
+                        duration_s * float(stim_freq) if stim_freq is not None and float(stim_freq) > 0 else 0.0
                     )
                     score = _event_candidate_score(
                         candidate_events,
@@ -970,24 +909,17 @@ def detect_events_from_artifacts(
                         expected_count=expected_count,
                         stim_freq=stim_freq,
                     )
-                    plausible_candidates.append(
-                        (score, label, validation, candidate_events.copy())
-                    )
+                    plausible_candidates.append((score, label, validation, candidate_events.copy()))
                     continue
-                errors.append("{}: rejected ({})".format(label, validation))
+                errors.append(f"{label}: rejected ({validation})")
             except Exception as exc:
                 errors.append(f"{label}: {exc}")
         if not plausible_candidates:
-            raise EventDetectionError(
-                "auto event detection failed: " + " | ".join(errors)
-            )
+            raise EventDetectionError("auto event detection failed: " + " | ".join(errors))
         plausible_candidates.sort(key=lambda item: (item[0], item[1]))
-        selected_score, selected_label, selected_validation, out = (
-            plausible_candidates[0]
-        )
+        selected_score, selected_label, selected_validation, out = plausible_candidates[0]
         candidate_summary = ";".join(
-            "{}:n={},score={:.5f}".format(label, len(frame), score)
-            for score, label, _, frame in plausible_candidates
+            f"{label}:n={len(frame)},score={score:.5f}" for score, label, _, frame in plausible_candidates
         )
         out["detection_method"] = selected_label
         out["auto_validation"] = selected_validation
@@ -1004,14 +936,18 @@ def detect_events_from_artifacts(
             stim_start=stim_start,
         )
     elif method == "trigger":
-        df = signal_data if signal_data is not None else _load_signal(
-            dataloader,
-            session_id,
-            stim_pair,
-            raw_source,
-            min_window_coverage,
-            raw_file=raw_file,
-            stim_start=stim_start,
+        df = (
+            signal_data
+            if signal_data is not None
+            else _load_signal(
+                dataloader,
+                session_id,
+                stim_pair,
+                raw_source,
+                min_window_coverage,
+                raw_file=raw_file,
+                stim_start=stim_start,
+            )
         )
         df = _restrict_signal_to_stim_window(
             df,
@@ -1022,7 +958,9 @@ def detect_events_from_artifacts(
         )
         out = _detect_trigger_events(
             df,
-            trigger_channels=parse_list(kwargs.get("trigger_channels")) if isinstance(kwargs.get("trigger_channels"), str) else kwargs.get("trigger_channels"),
+            trigger_channels=parse_list(kwargs.get("trigger_channels"))
+            if isinstance(kwargs.get("trigger_channels"), str)
+            else kwargs.get("trigger_channels"),
             trigger_regex=kwargs.get("trigger_regex"),
             edge=kwargs.get("edge", "rising"),
             threshold=kwargs.get("threshold"),
@@ -1037,14 +975,18 @@ def detect_events_from_artifacts(
                 stim_freq = float(row["stim_freq"]) if pd.notna(row.get("stim_freq")) else None
             except Exception:
                 stim_freq = None
-        df = signal_data if signal_data is not None else _load_signal(
-            dataloader,
-            session_id,
-            stim_pair,
-            raw_source,
-            min_window_coverage,
-            raw_file=raw_file,
-            stim_start=stim_start,
+        df = (
+            signal_data
+            if signal_data is not None
+            else _load_signal(
+                dataloader,
+                session_id,
+                stim_pair,
+                raw_source,
+                min_window_coverage,
+                raw_file=raw_file,
+                stim_start=stim_start,
+            )
         )
         df = _restrict_signal_to_stim_window(
             df,
@@ -1075,14 +1017,18 @@ def detect_events_from_artifacts(
                 stim_freq = float(row["stim_freq"]) if pd.notna(row.get("stim_freq")) else None
             except Exception:
                 stim_freq = None
-        df = signal_data if signal_data is not None else _load_signal(
-            dataloader,
-            session_id,
-            stim_pair,
-            raw_source,
-            min_window_coverage,
-            raw_file=raw_file,
-            stim_start=stim_start,
+        df = (
+            signal_data
+            if signal_data is not None
+            else _load_signal(
+                dataloader,
+                session_id,
+                stim_pair,
+                raw_source,
+                min_window_coverage,
+                raw_file=raw_file,
+                stim_start=stim_start,
+            )
         )
         df = _restrict_signal_to_stim_window(
             df,
@@ -1117,11 +1063,7 @@ def detect_events_from_artifacts(
     else:
         raise ValueError(f"Unknown event detection method {method!r}")
 
-    if (
-        method != "auto"
-        and bool(kwargs.get("regularize_sequence", True))
-        and stim_freq is not None
-    ):
+    if method != "auto" and bool(kwargs.get("regularize_sequence", True)) and stim_freq is not None:
         out = _regularize_event_sequence(
             out,
             stim_freq,
@@ -1208,7 +1150,9 @@ class Events:
     PYTHON_SCRIPT: str | None = None
     BASH_SCRIPT: str | None = None
 
-    def process(self, session_id: str, method: str = "consensus", stim_pairs: Iterable[str] | None = None, **kwargs: Any):
+    def process(
+        self, session_id: str, method: str = "consensus", stim_pairs: Iterable[str] | None = None, **kwargs: Any
+    ):
         """Detect events for the requested session and stimulation pairs."""
 
         return process_events_for_session(self.dataloader, session_id, method=method, stim_pairs=stim_pairs, **kwargs)
@@ -1234,6 +1178,8 @@ class Events:
         sessions = list(session_ids or self.dataloader.session_ids)
         lines = []
         for session_id in sessions:
-            result = self.process(session_id, **{k: v for k, v in kwargs.items() if k not in {"job_name", "queue", "numcpu", "memory"}})
+            result = self.process(
+                session_id, **{k: v for k, v in kwargs.items() if k not in {"job_name", "queue", "numcpu", "memory"}}
+            )
             lines.append(f"{session_id}: {sum(len(v) for v in result.values())} events across {len(result)} stim pairs")
         return runner, "\n".join(lines), ""

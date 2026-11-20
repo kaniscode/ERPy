@@ -4,11 +4,9 @@ import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
 
 import pandas as pd
 import yaml
-
 
 SUPPORTED_RAW_EXTS = (".edf", ".bdf", ".vhdr", ".eeg", ".csv", ".tsv")
 
@@ -228,7 +226,9 @@ def import_bids_project(
             if "status" in events.columns:
                 events = events[events["status"].fillna("good").astype(str).str.lower() != "bad"].copy()
             if "electrical_stimulation_site" in events.columns and "onset" in events.columns:
-                for site, sub in events.dropna(subset=["electrical_stimulation_site", "onset"]).groupby("electrical_stimulation_site"):
+                for site, sub in events.dropna(subset=["electrical_stimulation_site", "onset"]).groupby(
+                    "electrical_stimulation_site"
+                ):
                     stim_pair = normalize_stim_pair(site)
                     onset = pd.to_numeric(sub["onset"], errors="coerce").dropna()
                     if onset.empty:
@@ -257,7 +257,9 @@ def import_bids_project(
                     event_rows_by_pair.setdefault((erpy_session, stim_pair), []).append(canonical)
 
     raw_meta = pd.DataFrame(raw_rows).drop_duplicates()
-    stim_meta = pd.DataFrame(stim_rows).drop_duplicates(subset=["patient_id", "session_id", "stim_pair", "stim_start", "stim_stop"])
+    stim_meta = pd.DataFrame(stim_rows).drop_duplicates(
+        subset=["patient_id", "session_id", "stim_pair", "stim_start", "stim_stop"]
+    )
     elec_meta = build_electrode_metadata(discovered, patient_id)
     raw_meta_path = meta_dir / "raw_metadata.csv"
     stim_meta_path = meta_dir / "stim_metadata.csv"
@@ -311,7 +313,15 @@ def build_electrode_metadata(discovered: pd.DataFrame, patient_id: str) -> pd.Da
                     if key in seen:
                         continue
                     seen.add(key)
-                    rows.append({"patient_id": patient_id, "session_id": session, "elec_label": name, "anat_label": "", "bad_channel": False})
+                    rows.append(
+                        {
+                            "patient_id": patient_id,
+                            "session_id": session,
+                            "elec_label": name,
+                            "anat_label": "",
+                            "bad_channel": False,
+                        }
+                    )
             continue
         elec = pd.read_csv(path, sep="\t")
         name_col = "name" if "name" in elec.columns else elec.columns[0]

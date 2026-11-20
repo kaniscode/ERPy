@@ -25,7 +25,6 @@ from .utils.utils import (
     write_time_series_csv,
 )
 
-
 RAW_ALIASES = {
     "patient_id": ["subject", "participant_id", "sub"],
     "session_id": ["session", "ses"],
@@ -87,7 +86,9 @@ class DataLoader:
         self._stim_memory_cache_key: tuple[str, str, str] | None = None
         self._stim_memory_cache_df: pd.DataFrame | None = None
 
-        self.RAW_META_DF = self._load_metadata(self.RAW_META_PATH, RAW_ALIASES, ["patient_id", "session_id", "raw_file"])
+        self.RAW_META_DF = self._load_metadata(
+            self.RAW_META_PATH, RAW_ALIASES, ["patient_id", "session_id", "raw_file"]
+        )
         self.STIM_META_DF = self._load_metadata(
             self.STIM_META_PATH,
             STIM_ALIASES,
@@ -106,9 +107,7 @@ class DataLoader:
         self.session_ids = self._resolve_session_ids()
         self._validate_patient()
         self.PATIENT_PATH = str(Path(self.PROCDATA_PATH) / self.patient_id)
-        self.SESSION_PATHS = {
-            sid: str(Path(self.PATIENT_PATH) / str(sid)) for sid in self.session_ids
-        }
+        self.SESSION_PATHS = {sid: str(Path(self.PATIENT_PATH) / str(sid)) for sid in self.session_ids}
         if create_tree:
             self.create_session_tree()
         if load_data:
@@ -126,7 +125,7 @@ class DataLoader:
         copy_raw: bool = False,
         derivatives: bool = True,
         **kwargs: Any,
-    ) -> "DataLoader":
+    ) -> DataLoader:
         """Import one BIDS iEEG subject and return its configured data loader.
 
         ERPy metadata tables and configuration are created under
@@ -163,7 +162,7 @@ class DataLoader:
         series_name: str | None = None,
         copy_raw: bool = False,
         **kwargs: Any,
-    ) -> "DataLoader":
+    ) -> DataLoader:
         """Create a minimal ERPy project around one NWB file.
 
         Parameters
@@ -415,8 +414,7 @@ class DataLoader:
             selected = exact | by_name
             if not selected.any():
                 raise FileNotFoundError(
-                    f"Raw acquisition {raw_file!r} is not registered for "
-                    f"{self.patient_id}/{session_id}/{stim_pair}"
+                    f"Raw acquisition {raw_file!r} is not registered for {self.patient_id}/{session_id}/{stim_pair}"
                 )
             df = df[selected]
         if (
@@ -706,6 +704,7 @@ class DataLoader:
             # A previous interrupted run may leave a same-sized staging file.
             # Size alone cannot establish that its signal contents are current.
             from ._epoch_cache import file_digest
+
             if file_digest(staged) == file_digest(path):
                 return staged, staged
 
@@ -724,8 +723,7 @@ class DataLoader:
                 os.fsync(target.fileno())
             if partial.stat().st_size != source_size:
                 raise OSError(
-                    f"Staged raw file is incomplete: expected {source_size} bytes, "
-                    f"found {partial.stat().st_size}"
+                    f"Staged raw file is incomplete: expected {source_size} bytes, found {partial.stat().st_size}"
                 )
             os.replace(partial, staged)
         finally:
@@ -858,10 +856,7 @@ class DataLoader:
                     staged_path.unlink(missing_ok=True)
         if not frames:
             raise ValueError(f"Raw files were found but none could be loaded for {stim_pair}")
-        applied_scales = {
-            float(frame.attrs.get("value_scale_to_uv_applied", 1.0))
-            for frame in frames
-        }
+        applied_scales = {float(frame.attrs.get("value_scale_to_uv_applied", 1.0)) for frame in frames}
         if len(applied_scales) != 1:
             raise ValueError(
                 "Raw files for one stimulation acquisition use inconsistent "
@@ -899,7 +894,9 @@ class DataLoader:
             sfreq = float(sfreq)
             time_axis = _nwb_time_axis(series)
             total_samples = int(series.data.shape[time_axis])
-            base_time = self._recording_start_for_path(path) or _coerce_timestamp(getattr(nwbfile, "session_start_time", None))
+            base_time = self._recording_start_for_path(path) or _coerce_timestamp(
+                getattr(nwbfile, "session_start_time", None)
+            )
             timestamps = _nwb_timestamps(series)
             if timestamps is not None and len(timestamps) == total_samples:
                 start_s, stop_s, index_kind, base_time = self._window_seconds_from_stim_values(
@@ -946,7 +943,9 @@ class DataLoader:
     def _nwb_series_name_for_path(self, path: Path) -> str | None:
         if self.raw_meta.empty:
             return self.config.get("nwb_series")
-        rows = self.raw_meta[self.raw_meta.get("raw_file", pd.Series(dtype=str)).astype(str).map(lambda v: Path(v).name == path.name)]
+        rows = self.raw_meta[
+            self.raw_meta.get("raw_file", pd.Series(dtype=str)).astype(str).map(lambda v: Path(v).name == path.name)
+        ]
         if rows.empty:
             return self.config.get("nwb_series")
         row = rows.iloc[0]
@@ -958,7 +957,9 @@ class DataLoader:
     def _recording_start_for_path(self, path: Path) -> pd.Timestamp | None:
         if self.raw_meta.empty or "start_time" not in self.raw_meta.columns:
             return None
-        rows = self.raw_meta[self.raw_meta.get("raw_file", pd.Series(dtype=str)).astype(str).map(lambda v: Path(v).name == path.name)]
+        rows = self.raw_meta[
+            self.raw_meta.get("raw_file", pd.Series(dtype=str)).astype(str).map(lambda v: Path(v).name == path.name)
+        ]
         values = rows["start_time"] if not rows.empty else self.raw_meta["start_time"]
         parsed = pd.to_datetime(values, errors="coerce").dropna()
         if parsed.empty:
@@ -980,7 +981,11 @@ class DataLoader:
             start = pd.Timestamp(meas_date).tz_localize(None)
         else:
             row = self.raw_meta[self.raw_meta["raw_file"].astype(str).str.endswith(path.name)]
-            start = pd.Timestamp(row.iloc[0]["start_time"]) if not row.empty and pd.notna(row.iloc[0].get("start_time")) else pd.Timestamp("1970-01-01")
+            start = (
+                pd.Timestamp(row.iloc[0]["start_time"])
+                if not row.empty and pd.notna(row.iloc[0].get("start_time"))
+                else pd.Timestamp("1970-01-01")
+            )
         times = seconds_to_index(start, np.arange(data.shape[0]) / sfreq)
         df = pd.DataFrame(data, index=times, columns=channels)
         df.attrs["sfreq"] = sfreq
@@ -1101,7 +1106,9 @@ def _require_pynwb():
         from pynwb import NWBHDF5IO
         from pynwb.ecephys import ElectricalSeries
     except Exception as exc:
-        raise ImportError("NWB support requires the optional 'pynwb' dependency. Install with: python -m pip install -e '.[nwb]'") from exc
+        raise ImportError(
+            "NWB support requires the optional 'pynwb' dependency. Install with: python -m pip install -e '.[nwb]'"
+        ) from exc
     return NWBHDF5IO, ElectricalSeries
 
 
@@ -1128,10 +1135,14 @@ def _nwb_subject_id(nwbfile: Any) -> str | None:
     return None
 
 
-def _pick_nwb_electrical_series(nwbfile: Any, electrical_series_cls: Any, series_name: str | None = None) -> tuple[str, Any]:
+def _pick_nwb_electrical_series(
+    nwbfile: Any, electrical_series_cls: Any, series_name: str | None = None
+) -> tuple[str, Any]:
     candidates = list(_iter_nwb_electrical_series(nwbfile, electrical_series_cls))
     if not candidates:
-        raise FileNotFoundError("No NWB ElectricalSeries found in acquisitions, processing modules, or stimulus containers")
+        raise FileNotFoundError(
+            "No NWB ElectricalSeries found in acquisitions, processing modules, or stimulus containers"
+        )
     if series_name:
         target = str(series_name).strip()
         for path, series in candidates:
@@ -1321,7 +1332,13 @@ def _nwb_electrode_metadata(nwbfile: Any, patient_id: str, session_id: str, seri
         labels = _nwb_series_channel_labels(series, n_channels)
         return pd.DataFrame(
             [
-                {"patient_id": patient_id, "session_id": session_id, "elec_label": label, "anat_label": "", "bad_channel": False}
+                {
+                    "patient_id": patient_id,
+                    "session_id": session_id,
+                    "elec_label": label,
+                    "anat_label": "",
+                    "bad_channel": False,
+                }
                 for label in labels
             ]
         )
@@ -1374,7 +1391,17 @@ def _extract_nwb_stim_events(nwbfile: Any, stim_pair: str | None = None) -> tupl
     if df.empty:
         return stim_pair, None
     site_col = next(
-        (col for col in ("stim_pair", "electrical_stimulation_site", "stimulation_site", "stimulation_pair", "stimulus_pair") if col in df.columns),
+        (
+            col
+            for col in (
+                "stim_pair",
+                "electrical_stimulation_site",
+                "stimulation_site",
+                "stimulation_pair",
+                "stimulus_pair",
+            )
+            if col in df.columns
+        ),
         None,
     )
     time_col = "start_time" if "start_time" in df.columns else None

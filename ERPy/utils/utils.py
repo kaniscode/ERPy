@@ -3,13 +3,13 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import numpy as np
 import pandas as pd
 import yaml
-
 
 PATH_KEYS = {
     "rawdata_path",

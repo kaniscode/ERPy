@@ -112,22 +112,15 @@ def test_multitaper_coherence_returns_shared_and_lagged_alpha_sensitivity():
         {
             "reference": reference + 0.08 * rng.standard_normal(len(time)),
             "in_phase": reference + 0.08 * rng.standard_normal(len(time)),
-            "quadrature": np.sin(2.0 * np.pi * 10.0 * time + np.pi / 2.0)
-            + 0.08 * rng.standard_normal(len(time)),
+            "quadrature": np.sin(2.0 * np.pi * 10.0 * time + np.pi / 2.0) + 0.08 * rng.standard_normal(len(time)),
             "noise": rng.standard_normal(len(time)),
         }
     )
 
-    coherence, imaginary = ep.multitaper_coherence_matrices_from_dataframe(
-        frame, sfreq, band=(8.0, 13.0)
-    )
+    coherence, imaginary = ep.multitaper_coherence_matrices_from_dataframe(frame, sfreq, band=(8.0, 13.0))
 
-    assert coherence.loc["reference", "in_phase"] > coherence.loc[
-        "reference", "noise"
-    ]
-    assert imaginary.loc["reference", "quadrature"] > imaginary.loc[
-        "reference", "in_phase"
-    ]
+    assert coherence.loc["reference", "in_phase"] > coherence.loc["reference", "noise"]
+    assert imaginary.loc["reference", "quadrature"] > imaginary.loc["reference", "in_phase"]
     assert np.allclose(np.diag(coherence), 1.0)
     assert np.allclose(np.diag(imaginary), 0.0)
 
@@ -208,10 +201,7 @@ def test_weighted_directed_node_metrics_use_strength_for_local_reaching():
 
     assert metrics.loc["ACC", "out_strength"] == pytest.approx(10.0)
     assert metrics.loc["ACC", "sender_receiver_index"] == pytest.approx(6 / 14)
-    assert (
-        metrics.loc["ACC", "local_reaching_centrality"]
-        > metrics.loc["Striatum", "local_reaching_centrality"]
-    )
+    assert metrics.loc["ACC", "local_reaching_centrality"] > metrics.loc["Striatum", "local_reaching_centrality"]
     assert metrics["out_strength_share"].sum() == pytest.approx(1.0)
 
 
@@ -231,9 +221,7 @@ def test_dynamic_target_distribution_metrics_quantify_broadcast_and_change():
         scaffold_nodes=["ACC", "Thalamus"],
     )
 
-    assert timecourse["broadcast_participation"].tolist() == pytest.approx(
-        [0.0, 1.0]
-    )
+    assert timecourse["broadcast_participation"].tolist() == pytest.approx([0.0, 1.0])
     assert summary.loc[0, "broadcast_participation"] == pytest.approx(2 / 3)
     assert summary.loc[0, "broadcast_entropy"] == pytest.approx(2 / 3)
     assert summary.loc[0, "broadcast_effective_targets"] == pytest.approx(5 / 3)
@@ -269,13 +257,29 @@ def test_dynamic_target_distribution_metrics_marks_empty_bins_undefined():
 def test_latency_wavefront_gradient_recovers_known_direction():
     detections = pd.DataFrame(
         [
-            {"patient_id": "P1", "session_id": "A", "stim_pair": "LACC_1_2", "channel": f"C{i}", "consensus_ch": True, "n1_latency_ms": 20.0 + 0.5 * x, "peak_amplitude_uv": 100 + i}
+            {
+                "patient_id": "P1",
+                "session_id": "A",
+                "stim_pair": "LACC_1_2",
+                "channel": f"C{i}",
+                "consensus_ch": True,
+                "n1_latency_ms": 20.0 + 0.5 * x,
+                "peak_amplitude_uv": 100 + i,
+            }
             for i, x in enumerate([0.0, 10.0, 20.0, 30.0, 40.0], start=1)
         ]
     )
     elec_meta = pd.DataFrame(
         [
-            {"patient_id": "P1", "session_id": "A", "elec_label": f"C{i}", "anat_label": "L ACC" if i <= 2 else "L Caudate", "mni_x": x, "mni_y": 0.0, "mni_z": 0.0}
+            {
+                "patient_id": "P1",
+                "session_id": "A",
+                "elec_label": f"C{i}",
+                "anat_label": "L ACC" if i <= 2 else "L Caudate",
+                "mni_x": x,
+                "mni_y": 0.0,
+                "mni_z": 0.0,
+            }
             for i, x in enumerate([0.0, 10.0, 20.0, 30.0, 40.0], start=1)
         ]
     )
@@ -283,7 +287,9 @@ def test_latency_wavefront_gradient_recovers_known_direction():
     assert len(wavefront) == 5
     assert wavefront["in_scaffold"].all()
 
-    gradients = ep.estimate_latency_gradient(wavefront, group_cols=["patient_id", "session_id", "stim_pair"], min_points=4)
+    gradients = ep.estimate_latency_gradient(
+        wavefront, group_cols=["patient_id", "session_id", "stim_pair"], min_points=4
+    )
     row = gradients.iloc[0]
     assert row["status"] == "ok"
     assert row["gradient_x_ms_per_mm"] == pytest.approx(0.5, abs=1e-6)

@@ -5,4 +5,3 @@ from __future__ import annotations
 from .crp import plot_crp_summary
 
 __all__ = ["plot_crp_summary"]
-

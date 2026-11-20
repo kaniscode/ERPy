@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Iterable
+from collections.abc import Iterable
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -193,7 +193,11 @@ def plot_comodulogram(result: ComodulogramResult, ax=None, cmap: str = "inferno"
     )
     ax.set_xlabel("Phase frequency (Hz)")
     ax.set_ylabel("Amplitude frequency (Hz)")
-    title = f"{result.phase_channel} → {result.amp_channel}" if result.phase_channel != result.amp_channel else result.phase_channel
+    title = (
+        f"{result.phase_channel} → {result.amp_channel}"
+        if result.phase_channel != result.amp_channel
+        else result.phase_channel
+    )
     ax.set_title(f"PAC comodulogram ({result.method}): {title}")
     cbar = ax.figure.colorbar(im, ax=ax, fraction=0.046, pad=0.02)
     cbar.set_label("Modulation index")
@@ -228,7 +232,12 @@ def plot_phase_phase_matrix(matrix: pd.DataFrame, ax=None, cmap: str = "magma"):
         aspect="auto",
         origin="lower",
         cmap=cmap,
-        extent=[float(matrix.columns.min()), float(matrix.columns.max()), float(matrix.index.min()), float(matrix.index.max())],
+        extent=[
+            float(matrix.columns.min()),
+            float(matrix.columns.max()),
+            float(matrix.index.min()),
+            float(matrix.index.max()),
+        ],
         vmin=0.0,
         vmax=1.0,
     )

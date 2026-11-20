@@ -4,17 +4,17 @@ This is a local cache check, not a signed provenance record or a transaction
 against concurrent writers. All source bytes are read on each check. In-memory
 configuration/metadata are authoritative until a new DataLoader is constructed.
 """
+
 from __future__ import annotations
 
 import hashlib
 import importlib.metadata
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from .epochs import _metadata_to_json_value
 from .io import parse_brainvision_header
-
 
 _STAT_IDENTITY_FIELDS = ("st_dev", "st_ino", "st_size", "st_mtime_ns", "st_ctime_ns")
 _DIGEST_BLOCK_BYTES = 8 * 1024 * 1024
@@ -91,16 +91,16 @@ def epoch_cache_identity(pipeline, session_id, stim_pair, steps, event_bytes, op
     loader = pipeline.dataloader
     requested = options.get("input_source", "auto")
     raw_file = options.get("raw_file")
-    raw_paths = loader.get_raw_files(session_id, stim_pair, raw_file=raw_file,
-                                     stim_start=options.get("stim_start"))
-    caches = loader._raw_cache_candidates(session_id, stim_pair, raw_file=raw_file,
-                                           allow_legacy_cache=False)
+    raw_paths = loader.get_raw_files(session_id, stim_pair, raw_file=raw_file, stim_start=options.get("stim_start"))
+    caches = loader._raw_cache_candidates(session_id, stim_pair, raw_file=raw_file, allow_legacy_cache=False)
     cache_path = next((path for path in caches if path.is_file()), None)
     processed = pipeline._processed_path(session_id, stim_pair, steps)
     verifiable = True
     if requested == "processed" and processed.is_file() and not options.get("overwrite", False):
         source, paths = "processed", [processed]
-    elif requested in {"csv", "cache"} or (requested == "auto" and not any(p.exists() for p in raw_paths) and cache_path):
+    elif requested in {"csv", "cache"} or (
+        requested == "auto" and not any(p.exists() for p in raw_paths) and cache_path
+    ):
         if cache_path is None:
             raise FileNotFoundError("No current raw-window cache is available")
         source, paths = "cache", [cache_path]
@@ -115,12 +115,16 @@ def epoch_cache_identity(pipeline, session_id, stim_pair, steps, event_bytes, op
 
     # Unknown registered callables may depend on closures or external state.
     from .pipeline import Pipeline
+
     for name, _ in steps:
         hook = pipeline.registry[name]
         function = getattr(hook, "__func__", None)
-        if (function is None or getattr(hook, "__self__", None) is not pipeline
-                or function is not getattr(Pipeline, function.__name__, None)
-                or function.__module__ != Pipeline.__module__):
+        if (
+            function is None
+            or getattr(hook, "__self__", None) is not pipeline
+            or function is not getattr(Pipeline, function.__name__, None)
+            or function.__module__ != Pipeline.__module__
+        ):
             verifiable = False
 
     source_files = _files(paths)  # Missing/unreadable required inputs fail closed.
@@ -129,25 +133,31 @@ def epoch_cache_identity(pipeline, session_id, stim_pair, steps, event_bytes, op
     try:
         package_root = Path(__file__).parent
         implementation = _files(sorted(package_root.rglob("*.py")))
-        versions = {name: importlib.metadata.version(name)
-                    for name in ("numpy", "pandas", "scipy", "h5py", "tables")}
+        versions = {name: importlib.metadata.version(name) for name in ("numpy", "pandas", "scipy", "h5py", "tables")}
         if any(path.suffix.lower() in {".edf", ".bdf"} for path in paths):
             versions["mne"] = importlib.metadata.version("mne")
         # Bind all effective metadata, including bad-channel flags, scale,
         # sampling frequency, acquisition selection and window configuration.
-        metadata = {name: getattr(loader, name).to_dict(orient="split")
-                    for name in ("raw_meta", "stim_meta", "elec_meta")}
+        metadata = {
+            name: getattr(loader, name).to_dict(orient="split") for name in ("raw_meta", "stim_meta", "elec_meta")
+        }
         identity = {
             "schema": "erpy-facade-epoch-content-v1",
             "source_kind": source,
             "events_sha256": hashlib.sha256(event_bytes).hexdigest(),
             "source_sha256": _digest(source_files),
-            "settings_sha256": _digest({"session_id": session_id, "stim_pair": stim_pair,
-                                          "patient_id": loader.patient_id, "steps": steps,
-                                          "options": options, "config": loader.config,
-                                          "metadata": metadata}),
-            "implementation_sha256": _digest({"files": implementation, "versions": versions,
-                                                "python": sys.version}),
+            "settings_sha256": _digest(
+                {
+                    "session_id": session_id,
+                    "stim_pair": stim_pair,
+                    "patient_id": loader.patient_id,
+                    "steps": steps,
+                    "options": options,
+                    "config": loader.config,
+                    "metadata": metadata,
+                }
+            ),
+            "implementation_sha256": _digest({"files": implementation, "versions": versions, "python": sys.version}),
         }
     except (TypeError, ValueError, importlib.metadata.PackageNotFoundError):
         # Unsupported settings must never be represented by a lossy repr().

@@ -1,16 +1,16 @@
 from __future__ import annotations
 
+import warnings
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import warnings
 
 from ..crp import CRPConfig, CRPError, run_crp_array
 from ..erp_detection import (
     _aligned_epoch_arrays,
     _kundu_envelope,
 )
-
 
 METHOD_ORDER = [
     "kundu_rolston",
@@ -35,14 +35,11 @@ def method_significance_matrix(detections: pd.DataFrame) -> pd.DataFrame:
         aggfunc="max",
         fill_value=False,
     ).astype(bool)
-    ordered_methods = [m for m in METHOD_ORDER if m in matrix.columns] + [m for m in matrix.columns if m not in METHOD_ORDER]
+    ordered_methods = [m for m in METHOD_ORDER if m in matrix.columns] + [
+        m for m in matrix.columns if m not in METHOD_ORDER
+    ]
     matrix = matrix[ordered_methods]
-    row_order = (
-        matrix.sum(axis=1)
-        .sort_values(ascending=False)
-        .index
-        .tolist()
-    )
+    row_order = matrix.sum(axis=1).sort_values(ascending=False).index.tolist()
     if "peak_amplitude_uv" in detections.columns:
         peak = detections.drop_duplicates("channel").set_index("channel")["peak_amplitude_uv"]
         row_order = sorted(row_order, key=lambda ch: (matrix.loc[ch].sum(), peak.get(ch, 0.0)), reverse=True)
@@ -144,11 +141,7 @@ def plot_published_detector_diagnostic(
     channels = [str(value) for value in channels]
     if channel not in channels:
         raise KeyError(channel)
-    baseline_window = tuple(
-        baseline_window
-        or getattr(epochs, "baseline", None)
-        or (-0.5, -0.03)
-    )
+    baseline_window = tuple(baseline_window or getattr(epochs, "baseline", None) or (-0.5, -0.03))
     if detections is None:
         detections = epochs.detect_erp_all(
             wideband_epochs=wideband_epochs,
@@ -160,27 +153,20 @@ def plot_published_detector_diagnostic(
             },
         )
     detector_rows = pd.DataFrame(detections).copy()
-    detector_rows = detector_rows[
-        detector_rows["channel"].astype(str).eq(str(channel))
-    ].drop_duplicates("method", keep="first")
+    detector_rows = detector_rows[detector_rows["channel"].astype(str).eq(str(channel))].drop_duplicates(
+        "method", keep="first"
+    )
     detector_rows = detector_rows.set_index("method", drop=False)
 
     channel_index = channels.index(channel)
     channel_values = np.asarray(arr[:, :, channel_index], dtype=float)
     response_start = max(0.015, float(response_window[0]))
-    response_indices = np.flatnonzero(
-        (times >= response_start) & (times <= float(response_window[1]))
-    )
-    baseline_candidates = np.flatnonzero(
-        (times >= baseline_window[0])
-        & (times <= min(baseline_window[1], -0.005))
-    )
+    response_indices = np.flatnonzero((times >= response_start) & (times <= float(response_window[1])))
+    baseline_candidates = np.flatnonzero((times >= baseline_window[0]) & (times <= min(baseline_window[1], -0.005)))
     if len(response_indices) and len(baseline_candidates) >= len(response_indices):
         baseline_indices = baseline_candidates[-len(response_indices) :]
         clean_trials = np.all(
-            np.isfinite(
-                channel_values[:, np.r_[baseline_indices, response_indices]]
-            ),
+            np.isfinite(channel_values[:, np.r_[baseline_indices, response_indices]]),
             axis=1,
         )
     else:
@@ -200,9 +186,7 @@ def plot_published_detector_diagnostic(
         warnings.filterwarnings("ignore", category=RuntimeWarning)
         mean_wave = np.nanmean(displayed_trials, axis=0)
         finite_counts = np.sum(np.isfinite(displayed_trials), axis=0)
-        sem_wave = np.nanstd(displayed_trials, axis=0, ddof=1) / np.sqrt(
-            np.maximum(finite_counts, 1)
-        )
+        sem_wave = np.nanstd(displayed_trials, axis=0, ddof=1) / np.sqrt(np.maximum(finite_counts, 1))
 
     crp_result = None
     crp_error = ""
@@ -242,9 +226,7 @@ def plot_published_detector_diagnostic(
                 channel_envelope[:, kundu_response],
                 axis=0,
             )
-            kundu_baseline_median = float(
-                np.nanmedian(channel_envelope[:, kundu_baseline])
-            )
+            kundu_baseline_median = float(np.nanmedian(channel_envelope[:, kundu_baseline]))
         if not np.isfinite(kundu_median_wave).any():
             raise ValueError("Kundu response envelope has no finite samples")
         kundu_threshold = 3.0 * kundu_baseline_median
@@ -254,12 +236,8 @@ def plot_published_detector_diagnostic(
         kundu_baseline_median = kundu_threshold = np.nan
 
     if len(detector_trials) and len(baseline_indices):
-        response_rms = np.sqrt(
-            np.mean(detector_trials[:, response_indices] ** 2, axis=1)
-        )
-        baseline_rms = np.sqrt(
-            np.mean(detector_trials[:, baseline_indices] ** 2, axis=1)
-        )
+        response_rms = np.sqrt(np.mean(detector_trials[:, response_indices] ** 2, axis=1))
+        baseline_rms = np.sqrt(np.mean(detector_trials[:, baseline_indices] ** 2, axis=1))
     else:
         response_rms = np.array([], dtype=float)
         baseline_rms = np.array([], dtype=float)
@@ -296,16 +274,27 @@ def plot_published_detector_diagnostic(
     axis.axvspan(50, 250, color=colors["teal"], alpha=0.08, label="Late 50-250 ms")
     axis.axvline(0, color=colors["ink"], linestyle="--", linewidth=0.9)
     axis.axhline(0, color=colors["gray"], linewidth=0.8)
-    axis.set(xlim=(-100, 300), xlabel="Time after stimulation (ms)", ylabel="Amplitude (uV)", title="A  Mean evoked response")
+    axis.set(
+        xlim=(-100, 300), xlabel="Time after stimulation (ms)", ylabel="Amplitude (uV)", title="A  Mean evoked response"
+    )
     axis.legend(frameon=False, fontsize=8, loc="upper right")
 
     axis = axes[0, 1]
     if kundu_median_wave.size:
         kundu_times_ms = detector_times[kundu_response] * 1000.0
-        axis.plot(kundu_times_ms, kundu_median_wave, color=colors["orange"], linewidth=1.9, label="Trial-median envelope")
+        axis.plot(
+            kundu_times_ms, kundu_median_wave, color=colors["orange"], linewidth=1.9, label="Trial-median envelope"
+        )
         axis.axhline(kundu_threshold, color=colors["red"], linestyle="--", linewidth=1.2, label="3x prestimulus median")
         axis.axhline(30.0, color=colors["ink"], linestyle=":", linewidth=1.2, label="30 uV magnitude floor")
-        axis.fill_between(kundu_times_ms, kundu_threshold, kundu_median_wave, where=kundu_median_wave > kundu_threshold, color=colors["orange"], alpha=0.18)
+        axis.fill_between(
+            kundu_times_ms,
+            kundu_threshold,
+            kundu_median_wave,
+            where=kundu_median_wave > kundu_threshold,
+            color=colors["orange"],
+            alpha=0.18,
+        )
         axis.set_xlim(5, 100)
         axis.legend(
             frameon=True,
@@ -317,32 +306,54 @@ def plot_published_detector_diagnostic(
         )
     else:
         axis.text(0.5, 0.5, "Kundu envelope unavailable", ha="center", va="center", transform=axis.transAxes)
-    axis.set(xlabel="Time after stimulation (ms)", ylabel="Envelope amplitude (uV)", title="B  Published Kundu envelope")
+    axis.set(
+        xlabel="Time after stimulation (ms)", ylabel="Envelope amplitude (uV)", title="B  Published Kundu envelope"
+    )
 
     axis = axes[0, 2]
     if crp_result is not None:
-        reconstruction = crp_result.canonical_waveform * float(
-            np.nanmedian(crp_result.projections)
-        )
+        reconstruction = crp_result.canonical_waveform * float(np.nanmedian(crp_result.projections))
         canonical_times_ms = crp_result.times * 1000.0
         axis.plot(time_ms, mean_wave, color=colors["gray"], linewidth=1.2, alpha=0.8, label="Matched-trial mean")
-        axis.plot(canonical_times_ms, reconstruction, color=colors["teal"], linewidth=2.2, label="Canonical reconstruction")
+        axis.plot(
+            canonical_times_ms, reconstruction, color=colors["teal"], linewidth=2.2, label="Canonical reconstruction"
+        )
         axis.axvline(0, color=colors["ink"], linestyle="--", linewidth=0.9)
         axis.axhline(0, color=colors["gray"], linewidth=0.8)
         axis.set_xlim(-25, max(150, crp_result.times[-1] * 1000.0 + 15))
         axis.legend(frameon=False, fontsize=8)
     else:
         axis.text(0.5, 0.54, "CRP unavailable", ha="center", va="center", transform=axis.transAxes, weight="bold")
-        axis.text(0.5, 0.42, crp_error or "Insufficient matched clean trials", ha="center", va="center", transform=axis.transAxes, fontsize=8, wrap=True)
+        axis.text(
+            0.5,
+            0.42,
+            crp_error or "Insufficient matched clean trials",
+            ha="center",
+            va="center",
+            transform=axis.transAxes,
+            fontsize=8,
+            wrap=True,
+        )
     axis.set(xlabel="Time after stimulation (ms)", ylabel="Amplitude (uV)", title="C  CRP canonical response")
 
     axis = axes[1, 0]
     if crp_result is not None:
         duration_index = int(np.nanargmax(crp_result.mean_projection_profile))
         duration_endpoint_ms = float(crp_result.projection_times[duration_index] * 1000.0)
-        axis.plot(crp_result.projection_times * 1000.0, crp_result.mean_projection_profile, color=colors["teal"], linewidth=2.0)
+        axis.plot(
+            crp_result.projection_times * 1000.0,
+            crp_result.mean_projection_profile,
+            color=colors["teal"],
+            linewidth=2.0,
+        )
         axis.axvline(duration_endpoint_ms, color=colors["red"], linestyle="--", linewidth=1.2)
-        axis.scatter([duration_endpoint_ms], [crp_result.mean_projection_profile[duration_index]], color=colors["red"], s=34, zorder=3)
+        axis.scatter(
+            [duration_endpoint_ms],
+            [crp_result.mean_projection_profile[duration_index]],
+            color=colors["red"],
+            s=34,
+            zorder=3,
+        )
         crp_p_label = "<1e-300" if crp_result.p_value == 0 else f"{crp_result.p_value:.2g}"
         axis.set_title(f"D  CRP duration: {crp_result.response_duration_s * 1000.0:.1f} ms, p={crp_p_label}")
     else:
@@ -356,11 +367,7 @@ def plot_published_detector_diagnostic(
         axis.plot([0, 1], [baseline_value, response_value], color=colors["gray"], alpha=0.28, linewidth=0.8)
     axis.scatter(np.zeros(finite.sum()), baseline_rms[finite], color=colors["gray"], s=18, alpha=0.72)
     axis.scatter(np.ones(finite.sum()), response_rms[finite], color=colors["blue"], s=18, alpha=0.72)
-    energy_row = (
-        detector_rows.loc["crp_energy"]
-        if "crp_energy" in detector_rows.index
-        else pd.Series(dtype=object)
-    )
+    energy_row = detector_rows.loc["crp_energy"] if "crp_energy" in detector_rows.index else pd.Series(dtype=object)
     n_clean = pd.to_numeric(
         energy_row.get("n_trials_clean", finite.sum()),
         errors="coerce",
@@ -396,7 +403,15 @@ def plot_published_detector_diagnostic(
         passed = bool(detector_rows.loc[method, "significant"]) if available else False
         circle_color = colors["green"] if passed else colors["light"]
         axis.scatter([0.06], [y], s=145, color=circle_color, edgecolor=colors["ink"], linewidth=0.6)
-        axis.text(0.06, y, "yes" if passed else "no", ha="center", va="center", fontsize=6.5, color="white" if passed else colors["ink"])
+        axis.text(
+            0.06,
+            y,
+            "yes" if passed else "no",
+            ha="center",
+            va="center",
+            fontsize=6.5,
+            color="white" if passed else colors["ink"],
+        )
         details = "not computed"
         if available:
             row = detector_rows.loc[method]
@@ -415,12 +430,23 @@ def plot_published_detector_diagnostic(
                     f"{row.get('classification', 'not evaluated')}"
                 )
             elif method == "crowther_gamma":
-                details = f"SNR {row.get('signi_snr', np.nan):.1f}; pBonf {row.get('signi_p_value_bonferroni', np.nan):.2g}"
+                details = (
+                    f"SNR {row.get('signi_snr', np.nan):.1f}; pBonf {row.get('signi_p_value_bonferroni', np.nan):.2g}"
+                )
             elif method == "peak_amplitude":
                 details = f"N1 z {row.get('keller_a1_z', np.nan):.1f}; {row.get('keller_a1_peak_uv', np.nan):.1f} uV"
             elif method == "rms_response":
                 details = f"RMS {row.get('rms_waveform_10_100_uv', np.nan):.1f} uV; N1 z {row.get('rms_detection_n1_z', np.nan):.1f}"
-        axis.text(0.15, y + 0.10, display_names[method], ha="left", va="center", fontsize=9, weight="bold", color=colors["ink"])
+        axis.text(
+            0.15,
+            y + 0.10,
+            display_names[method],
+            ha="left",
+            va="center",
+            fontsize=9,
+            weight="bold",
+            color=colors["ink"],
+        )
         axis.text(0.15, y - 0.16, details, ha="left", va="center", fontsize=7.5, color=colors["ink"])
     axis.set_title("F  Source-native detector decisions", loc="left")
 

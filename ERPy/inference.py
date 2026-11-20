@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from itertools import product
-from typing import Callable, Iterable, Sequence
+from typing import Callable
 
 import numpy as np
 import pandas as pd
@@ -196,10 +197,7 @@ def hierarchical_bootstrap_interval(
     ]
     estimate = float(stat_func(np.asarray(observed_top, dtype=float)))
     rng = _as_generator(random_state)
-    grouped = {
-        key: group.copy()
-        for key, group in frame.groupby(levels[0], dropna=False, sort=False)
-    }
+    grouped = {key: group.copy() for key, group in frame.groupby(levels[0], dropna=False, sort=False)}
     top_keys = list(grouped)
     can_vectorize = (
         isinstance(statistic, str)
@@ -234,9 +232,7 @@ def hierarchical_bootstrap_interval(
                     rng=rng,
                 )
                 top_statistics.append(float(stat_func(sampled_values)))
-            draws[draw_index] = float(
-                stat_func(np.asarray(top_statistics, dtype=float))
-            )
+            draws[draw_index] = float(stat_func(np.asarray(top_statistics, dtype=float)))
 
     tail = (1.0 - float(confidence)) / 2.0
     ci_low, ci_high = np.nanquantile(draws, [tail, 1.0 - tail])
@@ -303,10 +299,7 @@ def _resample_nested_values(
         selected = rng.integers(0, len(values), size=len(values))
         return values[selected]
 
-    grouped = [
-        group
-        for _, group in frame.groupby(levels[0], dropna=False, sort=False)
-    ]
+    grouped = [group for _, group in frame.groupby(levels[0], dropna=False, sort=False)]
     selected = rng.integers(0, len(grouped), size=len(grouped))
     return np.concatenate(
         [

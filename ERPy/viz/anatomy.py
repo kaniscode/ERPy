@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Optional, Union
-
 import numpy as np
 import pandas as pd
 from matplotlib import colormaps, colors
@@ -20,9 +18,9 @@ def _require_nilearn():
 
 def plot_electrode_mni(
     coords: np.ndarray,
-    values: Optional[np.ndarray] = None,
-    node_size: Union[float, np.ndarray] = 50.0,
-    title: Optional[str] = None,
+    values: np.ndarray | None = None,
+    node_size: float | np.ndarray = 50.0,
+    title: str | None = None,
     display_mode: str = "ortho",
     **kwargs,
 ):
@@ -63,7 +61,7 @@ def plot_electrode_mni(
 
 def plot_electrodes_from_metadata(
     elec_df: pd.DataFrame,
-    value_col: Optional[str] = None,
+    value_col: str | None = None,
     mni_cols: tuple[str, str, str] = ("mni_x", "mni_y", "mni_z"),
     **kwargs,
 ):

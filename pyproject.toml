@@ -39,7 +39,7 @@ viz = ["seaborn>=0.12", "nilearn>=0.10", "plotly>=5.18"]
 surface = ["mne>=1.6", "pyvista>=0.43"]
 validation = ["mne>=1.6", "requests>=2.28", "pynwb>=2.5"]
 n1-training = ["scikit-learn>=1.2"]
-dev = ["pytest>=7", "build>=1.0", "twine>=4.0", "mne>=1.6", "plotly>=5.18", "pynwb>=2.5", "scikit-learn>=1.2"]
+dev = ["pytest>=7", "ruff>=0.6", "build>=1.0", "twine>=4.0", "mne>=1.6", "plotly>=5.18", "pynwb>=2.5", "scikit-learn>=1.2"]
 
 [project.urls]
 Homepage = "https://github.com/kaniscode/ERPy"
@@ -62,3 +62,19 @@ ERPy = ["templates/*.yaml", "templates/*.csv"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+extend-exclude = ["notebooks", "validation"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = [
+    "E501",  # long scientific expressions and messages are wrapped by the formatter where possible
+    "B905",  # zip(strict=...) requires Python 3.10
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"ERPy/utils/events.py" = ["F403"]

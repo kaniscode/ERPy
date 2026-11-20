@@ -1,20 +1,19 @@
 from __future__ import annotations
 
+import re
+import warnings
 from collections.abc import Iterable
 from functools import lru_cache
 from pathlib import Path
-import re
-import warnings
 
-import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
-from matplotlib.patches import FancyArrowPatch
+import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 import pandas as pd
+from matplotlib.patches import FancyArrowPatch
 
 from ..baseline import baseline_center_frame
-
 
 STIM_NODE_COLOR = "#111827"
 STIM_NODE_ACCENT = "#fbbf24"
@@ -48,9 +47,7 @@ def edges_from_detections(
     if consensus_only:
         selected_significance = significance_column or "consensus_ch"
         if significance_column is not None and selected_significance not in data.columns:
-            raise ValueError(
-                f"detections must contain significance column {selected_significance!r}"
-            )
+            raise ValueError(f"detections must contain significance column {selected_significance!r}")
         if selected_significance in data.columns:
             data = data[_boolean_mask(data[selected_significance])]
     if qc_only:
@@ -66,10 +63,7 @@ def edges_from_detections(
     if channel_col not in data.columns:
         raise ValueError(f"detections must contain channel column {channel_col!r}")
 
-    identity_candidates = list(
-        identity_cols
-        or ("patient_id", "session_id", "acquisition_id", "raw_file")
-    )
+    identity_candidates = list(identity_cols or ("patient_id", "session_id", "acquisition_id", "raw_file"))
     detection_identity = [col for col in identity_candidates if col in data.columns]
     dedup_cols = [*detection_identity, "stim_pair", channel_col]
     if "method" in data.columns:
@@ -79,11 +73,7 @@ def edges_from_detections(
         return pd.DataFrame()
 
     metadata = pd.DataFrame(elec_meta).copy() if elec_meta is not None else pd.DataFrame()
-    metadata_identity = [
-        col
-        for col in ("patient_id", "session_id")
-        if col in data.columns and col in metadata.columns
-    ]
+    metadata_identity = [col for col in ("patient_id", "session_id") if col in data.columns and col in metadata.columns]
     passthrough_cols = [
         col
         for col in (
@@ -98,21 +88,13 @@ def edges_from_detections(
         if col in data.columns
     ]
     rows = []
-    grouped = (
-        data.groupby(metadata_identity, dropna=False, sort=False)
-        if metadata_identity
-        else [((), data)]
-    )
+    grouped = data.groupby(metadata_identity, dropna=False, sort=False) if metadata_identity else [((), data)]
     for group_values, frame in grouped:
         if not isinstance(group_values, tuple):
             group_values = (group_values,)
         sub_meta = metadata
         for col, value in zip(metadata_identity, group_values):
-            sub_meta = sub_meta[
-                sub_meta[col].fillna("").astype(str).eq(
-                    "" if pd.isna(value) else str(value)
-                )
-            ]
+            sub_meta = sub_meta[sub_meta[col].fillna("").astype(str).eq("" if pd.isna(value) else str(value))]
         region_map, coord_map, available_labels = _electrode_metadata_maps(
             sub_meta,
             context=dict(zip(metadata_identity, group_values)),
@@ -129,15 +111,10 @@ def edges_from_detections(
                 available_labels,
             )
             stimulation_contacts = {
-                electrode_label_identity(
-                    resolve_electrode_label(contact, available_labels)
-                )
+                electrode_label_identity(resolve_electrode_label(contact, available_labels))
                 for contact in stim_pair_to_contact_electrodes(sp)
             }
-            if (
-                exclude_stimulation_contacts
-                and electrode_label_identity(record_elec) in stimulation_contacts
-            ):
+            if exclude_stimulation_contacts and electrode_label_identity(record_elec) in stimulation_contacts:
                 continue
             metric_value = pd.to_numeric(
                 pd.Series([row[metric]]),
@@ -169,9 +146,7 @@ def edges_from_detections(
 def _boolean_mask(values: pd.Series) -> pd.Series:
     if pd.api.types.is_bool_dtype(values):
         return values.fillna(False)
-    return values.fillna(False).astype(str).str.strip().str.lower().isin(
-        {"true", "1", "yes", "y"}
-    )
+    return values.fillna(False).astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
 
 
 def _electrode_metadata_maps(
@@ -184,11 +159,7 @@ def _electrode_metadata_maps(
 
     metadata = elec_meta.copy()
     metadata["elec_label"] = metadata["elec_label"].astype(str)
-    value_cols = [
-        col
-        for col in ("anat_label", "mni_x", "mni_y", "mni_z")
-        if col in metadata.columns
-    ]
+    value_cols = [col for col in ("anat_label", "mni_x", "mni_y", "mni_z") if col in metadata.columns]
     conflicts = []
     for label, frame in metadata.groupby("elec_label", sort=False):
         for col in value_cols:
@@ -199,30 +170,16 @@ def _electrode_metadata_maps(
             if values.nunique(dropna=True) > 1:
                 conflicts.append(f"{label}:{col}")
     if conflicts:
-        location = (
-            ", ".join(f"{key}={value!r}" for key, value in (context or {}).items())
-            or "unscoped metadata"
-        )
-        raise ValueError(
-            "Conflicting electrode metadata within "
-            f"{location}: {', '.join(conflicts[:8])}"
-        )
+        location = ", ".join(f"{key}={value!r}" for key, value in (context or {}).items()) or "unscoped metadata"
+        raise ValueError(f"Conflicting electrode metadata within {location}: {', '.join(conflicts[:8])}")
 
     metadata = metadata.drop_duplicates("elec_label", keep="first")
     available = metadata["elec_label"].tolist()
     region_map = (
-        metadata.set_index("elec_label")["anat_label"].fillna("").to_dict()
-        if "anat_label" in metadata.columns
-        else {}
+        metadata.set_index("elec_label")["anat_label"].fillna("").to_dict() if "anat_label" in metadata.columns else {}
     )
-    coord_cols = [
-        col for col in ("mni_x", "mni_y", "mni_z") if col in metadata.columns
-    ]
-    coord_map = (
-        metadata.set_index("elec_label")[coord_cols].to_dict("index")
-        if len(coord_cols) == 3
-        else {}
-    )
+    coord_cols = [col for col in ("mni_x", "mni_y", "mni_z") if col in metadata.columns]
+    coord_map = metadata.set_index("elec_label")[coord_cols].to_dict("index") if len(coord_cols) == 3 else {}
     return region_map, coord_map, available
 
 
@@ -260,10 +217,7 @@ def electrode_label_identity(label: str) -> str:
         flags=re.IGNORECASE,
     )
     compact = re.sub(r"[^A-Z0-9]", "", text.upper())
-    return "".join(
-        str(int(part)) if part.isdigit() else part
-        for part in re_split_label(compact)
-    )
+    return "".join(str(int(part)) if part.isdigit() else part for part in re_split_label(compact))
 
 
 def _label_key(label: str) -> str:
@@ -375,8 +329,7 @@ def order_sources_by_metadata(
     if not sources:
         return []
     contact_by_source = {
-        source: stim_pair_to_source_electrode(source) if "_" in source else source
-        for source in sources
+        source: stim_pair_to_source_electrode(source) if "_" in source else source for source in sources
     }
     contacts = list(dict.fromkeys(contact_by_source.values()))
     ordered_contacts = order_nodes_by_metadata(contacts, elec_meta=elec_meta)
@@ -523,6 +476,7 @@ def plot_network(
     weights = np.array([abs(d.get(weight_attr, 1.0)) for _, _, d in graph.edges(data=True)])
     graph_vmax = _robust_abs_vmax(weights)
     widths = 0.85 + 3.00 * np.clip(weights / graph_vmax, 0.0, 1.0)
+
     def node_strength(node: str) -> float:
         incident = list(graph.edges(node, data=True))
         if graph.is_directed():
@@ -531,7 +485,9 @@ def plot_network(
 
     strength = {node: node_strength(node) for node in graph.nodes}
     max_strength = max(strength.values()) if strength else 1.0
-    node_sizes = {node: 300 + 560 * strength.get(node, 0.0) / (max_strength if max_strength else 1.0) for node in graph.nodes}
+    node_sizes = {
+        node: 300 + 560 * strength.get(node, 0.0) / (max_strength if max_strength else 1.0) for node in graph.nodes
+    }
     source_nodes = [node for node in graph.nodes if graph.is_directed() and graph.out_degree(node) > 0]
     response_nodes = [node for node in graph.nodes if node not in source_nodes]
     if response_nodes:
@@ -573,8 +529,10 @@ def plot_network(
     )
     if edge_collection is not None and not isinstance(edge_collection, list):
         edge_collection.set_zorder(1)
-    label_nodes = set(graph.nodes) if graph.number_of_nodes() <= 24 else set(
-        sorted(graph.nodes, key=lambda node: graph.degree(node), reverse=True)[:24]
+    label_nodes = (
+        set(graph.nodes)
+        if graph.number_of_nodes() <= 24
+        else set(sorted(graph.nodes, key=lambda node: graph.degree(node), reverse=True)[:24])
     )
     nx.draw_networkx_labels(
         graph.subgraph(label_nodes),
@@ -867,7 +825,8 @@ def _load_fsaverage_surfaces(mesh: str = "fsaverage5", surface: str = "pial"):
     """Load template cortical meshes from Nilearn's packaged fsaverage surfaces."""
 
     try:
-        from nilearn import datasets, surface as nilearn_surface
+        from nilearn import datasets
+        from nilearn import surface as nilearn_surface
     except Exception as exc:
         raise ImportError("fsaverage cortical rendering requires the optional 'nilearn' dependency") from exc
     fsaverage = datasets.fetch_surf_fsaverage(mesh=mesh)
@@ -956,8 +915,7 @@ def _edge_subset_with_coords(
         return edges.iloc[0:0].copy(), coords.iloc[0:0].copy()
     coord_nodes = set(coords["node"])
     data = edges[
-        edges[source_col].astype(str).isin(coord_nodes)
-        & edges[target_col].astype(str).isin(coord_nodes)
+        edges[source_col].astype(str).isin(coord_nodes) & edges[target_col].astype(str).isin(coord_nodes)
     ].copy()
     if data.empty:
         return data, coords.iloc[0:0].copy()
@@ -1078,9 +1036,7 @@ def plot_coordinate_network(
 
     stim_nodes = set(data[source_col].astype(str))
     strong_targets = [
-        node
-        for node in coords.sort_values("strength", ascending=False)["node"].astype(str)
-        if node not in stim_nodes
+        node for node in coords.sort_values("strength", ascending=False)["node"].astype(str) if node not in stim_nodes
     ][:7]
     label_order = [*sorted(stim_nodes, key=natural_label_key), *strong_targets]
     offsets = [(8, 8), (10, -10), (-10, 9), (-12, -9), (0, 13), (13, 0), (-13, 0)]
@@ -1163,7 +1119,11 @@ def plot_template_brain_network(
     `plot_surface_connectome` with that subject's FreeSurfer reconstruction.
     """
 
-    all_nodes = sorted(set(edges.get(source_col, pd.Series(dtype=str)).astype(str)).union(edges.get(target_col, pd.Series(dtype=str)).astype(str)))
+    all_nodes = sorted(
+        set(edges.get(source_col, pd.Series(dtype=str)).astype(str)).union(
+            edges.get(target_col, pd.Series(dtype=str)).astype(str)
+        )
+    )
     coords = node_coordinates_from_metadata(
         elec_meta,
         nodes=all_nodes,
@@ -1278,11 +1238,17 @@ def plot_template_brain_network(
                 alpha=0.82,
                 zorder=2,
             )
-        coords["_node_size"] = 24 + 155 * coords["strength"] / (coords["strength"].max() if coords["strength"].max() else 1.0)
+        coords["_node_size"] = 24 + 155 * coords["strength"] / (
+            coords["strength"].max() if coords["strength"].max() else 1.0
+        )
         response_coords = coords[~coords["node"].astype(str).isin(stim_nodes)]
         stim_coords = coords[coords["node"].astype(str).isin(stim_nodes)]
         if node_color_values is not None:
-            node_colors = response_coords["node_color_value"].to_numpy(dtype=float) if not response_coords.empty else np.array([], dtype=float)
+            node_colors = (
+                response_coords["node_color_value"].to_numpy(dtype=float)
+                if not response_coords.empty
+                else np.array([], dtype=float)
+            )
             if not response_coords.empty:
                 scatter = ax.scatter(
                     response_coords["x"],
@@ -1392,7 +1358,9 @@ def _node_metric_values(
     elif summary == "min":
         values = grouped.min()
     elif summary == "absmax":
-        values = grouped.apply(lambda vals: vals.iloc[np.nanargmax(np.abs(vals.to_numpy(dtype=float)))] if vals.notna().any() else np.nan)
+        values = grouped.apply(
+            lambda vals: vals.iloc[np.nanargmax(np.abs(vals.to_numpy(dtype=float)))] if vals.notna().any() else np.nan
+        )
     else:
         values = grouped.max()
     return values.dropna().sort_values(ascending=False)
@@ -1441,14 +1409,20 @@ def plot_node_metric_template_brain(
     if coords.empty:
         fig = plt.figure(figsize=(7, 5))
         ax = fig.add_subplot(111, projection="3d")
-        ax.text2D(0.5, 0.5, "No node metric values with MNI coordinates", ha="center", va="center", transform=ax.transAxes)
+        ax.text2D(
+            0.5, 0.5, "No node metric values with MNI coordinates", ha="center", va="center", transform=ax.transAxes
+        )
         ax.set_axis_off()
         return fig
 
     n_views = len(views)
     fig = plt.figure(figsize=(6.7 * n_views, 6.1), layout="constrained")
     axes = [fig.add_subplot(1, n_views, i + 1, projection="3d") for i in range(n_views)]
-    summary_label = f"{summary} {metric.replace('_', ' ')}" if time_s is None else f"{metric.replace('_', ' ')} at {time_s * 1000:.0f} ms"
+    summary_label = (
+        f"{summary} {metric.replace('_', ' ')}"
+        if time_s is None
+        else f"{metric.replace('_', ' ')} at {time_s * 1000:.0f} ms"
+    )
     fig.suptitle(title or f"Node graph metric brain map: {summary_label}", fontsize=16, y=0.99)
     cortical_surfaces = None
     shell_surfaces = None
@@ -1459,7 +1433,11 @@ def plot_node_metric_template_brain(
             raise
         shell_surfaces = _template_brain_surface()
 
-    vmax = float(np.nanpercentile(coords["value"].to_numpy(dtype=float), 98)) if np.isfinite(coords["value"]).any() else 1.0
+    vmax = (
+        float(np.nanpercentile(coords["value"].to_numpy(dtype=float), 98))
+        if np.isfinite(coords["value"]).any()
+        else 1.0
+    )
     if not np.isfinite(vmax) or vmax <= 0:
         vmax = 1.0
     coords["_node_size"] = 26 + 190 * np.sqrt(np.clip(coords["value"].to_numpy(dtype=float) / vmax, 0.0, 1.0))
@@ -1534,7 +1512,9 @@ def plot_node_metric_template_brain(
         label_frame = pd.concat(
             [
                 coords[coords["node"].astype(str).isin(stim_nodes)],
-                coords[~coords["node"].astype(str).isin(stim_nodes)].sort_values("value", ascending=False).head(top_n_labels),
+                coords[~coords["node"].astype(str).isin(stim_nodes)]
+                .sort_values("value", ascending=False)
+                .head(top_n_labels),
             ]
         ).drop_duplicates("node")
         for _, row in label_frame.iterrows():
@@ -1598,7 +1578,11 @@ def plot_interactive_connectome(
     except Exception as exc:
         raise ImportError("Interactive connectome plotting requires the optional 'plotly' dependency") from exc
 
-    all_nodes = sorted(set(edges.get(source_col, pd.Series(dtype=str)).astype(str)).union(edges.get(target_col, pd.Series(dtype=str)).astype(str)))
+    all_nodes = sorted(
+        set(edges.get(source_col, pd.Series(dtype=str)).astype(str)).union(
+            edges.get(target_col, pd.Series(dtype=str)).astype(str)
+        )
+    )
     coords = node_coordinates_from_metadata(
         elec_meta,
         nodes=all_nodes,
@@ -1669,7 +1653,9 @@ def plot_interactive_connectome(
         .sum()
     )
     coords["strength"] = coords["node"].map(strength).fillna(0.0)
-    coords["_marker_size"] = 4 + 13 * coords["strength"] / (coords["strength"].max() if coords["strength"].max() else 1.0)
+    coords["_marker_size"] = 4 + 13 * coords["strength"] / (
+        coords["strength"].max() if coords["strength"].max() else 1.0
+    )
     stim_nodes = set(data[source_col].astype(str))
     response_coords = coords[~coords["node"].astype(str).isin(stim_nodes)]
     stim_coords = coords[coords["node"].astype(str).isin(stim_nodes)]
@@ -1690,7 +1676,9 @@ def plot_interactive_connectome(
                     "opacity": 0.94,
                     "colorbar": {"title": "Node strength"},
                 },
-                hovertext=response_coords.apply(lambda r: f"{r['node']}<br>{r['region']}<br>strength: {r['strength']:.3g}", axis=1),
+                hovertext=response_coords.apply(
+                    lambda r: f"{r['node']}<br>{r['region']}<br>strength: {r['strength']:.3g}", axis=1
+                ),
                 hoverinfo="text",
                 name="Recording responses",
             )
@@ -1711,7 +1699,10 @@ def plot_interactive_connectome(
                     "line": {"color": STIM_NODE_ACCENT, "width": 1.8},
                     "opacity": 0.98,
                 },
-                hovertext=stim_coords.apply(lambda r: f"{r['node']}<br>stimulation source<br>{r['region']}<br>strength: {r['strength']:.3g}", axis=1),
+                hovertext=stim_coords.apply(
+                    lambda r: f"{r['node']}<br>stimulation source<br>{r['region']}<br>strength: {r['strength']:.3g}",
+                    axis=1,
+                ),
                 hoverinfo="text",
                 name="Stimulation sources",
             )
@@ -1725,9 +1716,27 @@ def plot_interactive_connectome(
         height=760,
         margin={"l": 0, "r": 0, "t": 52, "b": 0},
         scene={
-            "xaxis": {"title": "MNI x", "showbackground": False, "showgrid": False, "zeroline": False, "showticklabels": False},
-            "yaxis": {"title": "MNI y", "showbackground": False, "showgrid": False, "zeroline": False, "showticklabels": False},
-            "zaxis": {"title": "MNI z", "showbackground": False, "showgrid": False, "zeroline": False, "showticklabels": False},
+            "xaxis": {
+                "title": "MNI x",
+                "showbackground": False,
+                "showgrid": False,
+                "zeroline": False,
+                "showticklabels": False,
+            },
+            "yaxis": {
+                "title": "MNI y",
+                "showbackground": False,
+                "showgrid": False,
+                "zeroline": False,
+                "showticklabels": False,
+            },
+            "zaxis": {
+                "title": "MNI z",
+                "showbackground": False,
+                "showgrid": False,
+                "zeroline": False,
+                "showticklabels": False,
+            },
             "aspectmode": "data",
         },
         font={"family": "Arial, sans-serif", "size": 12},
@@ -1863,10 +1872,7 @@ def plot_evoked_response_graph(
         plot_nodes = [node for _, node in selected]
         amplitudes = np.array([node_values[n] for n in plot_nodes], dtype=float)
         sizes = 6 + 17 * np.clip(np.abs(amplitudes) / scale, 0.0, 1.0)
-        text = [
-            f"{node}<br>{coord_map[node]['region']}<br>{amp:.3g}"
-            for node, amp in zip(plot_nodes, amplitudes)
-        ]
+        text = [f"{node}<br>{coord_map[node]['region']}<br>{amp:.3g}" for node, amp in zip(plot_nodes, amplitudes)]
         return go.Scatter3d(
             x=[coord_map[node]["x"] for node in plot_nodes],
             y=[coord_map[node]["y"] for node in plot_nodes],
@@ -1923,7 +1929,11 @@ def plot_evoked_response_graph(
     )
 
     def dynamic_data(time_i: int):
-        return [*[edge_trace(ch, node, time_i) for ch, node in selected], response_node_trace(time_i), source_node_trace()]
+        return [
+            *[edge_trace(ch, node, time_i) for ch, node in selected],
+            response_node_trace(time_i),
+            source_node_trace(),
+        ]
 
     def frame_data(time_i: int):
         return [*brain_traces, *dynamic_data(time_i)]
@@ -1955,9 +1965,27 @@ def plot_evoked_response_graph(
         height=780,
         margin={"l": 0, "r": 0, "t": 58, "b": 0},
         scene={
-            "xaxis": {"title": "MNI x", "showbackground": False, "showgrid": False, "zeroline": False, "showticklabels": False},
-            "yaxis": {"title": "MNI y", "showbackground": False, "showgrid": False, "zeroline": False, "showticklabels": False},
-            "zaxis": {"title": "MNI z", "showbackground": False, "showgrid": False, "zeroline": False, "showticklabels": False},
+            "xaxis": {
+                "title": "MNI x",
+                "showbackground": False,
+                "showgrid": False,
+                "zeroline": False,
+                "showticklabels": False,
+            },
+            "yaxis": {
+                "title": "MNI y",
+                "showbackground": False,
+                "showgrid": False,
+                "zeroline": False,
+                "showticklabels": False,
+            },
+            "zaxis": {
+                "title": "MNI z",
+                "showbackground": False,
+                "showgrid": False,
+                "zeroline": False,
+                "showticklabels": False,
+            },
             "aspectmode": "data",
         },
         updatemenus=[
@@ -2039,7 +2067,9 @@ def plot_aggregate_evoked_response_graph(
     all_nodes: set[str] = set()
     all_values = []
     edge_specs = []
-    metric_label = metric_label or ("Mean evoked voltage (uV)" if response_metric == "voltage" else response_metric.replace("_", " "))
+    metric_label = metric_label or (
+        "Mean evoked voltage (uV)" if response_metric == "voltage" else response_metric.replace("_", " ")
+    )
 
     def metric_frame_for_run(mean: pd.DataFrame, run: dict) -> pd.DataFrame:
         frame = run.get(response_metric_frame_key)
@@ -2075,7 +2105,9 @@ def plot_aggregate_evoked_response_graph(
         if "significant" in data.columns:
             significant = data["significant"].astype(bool)
         elif {"p_value", "threshold"}.issubset(data.columns):
-            significant = pd.to_numeric(data["p_value"], errors="coerce") < pd.to_numeric(data["threshold"], errors="coerce")
+            significant = pd.to_numeric(data["p_value"], errors="coerce") < pd.to_numeric(
+                data["threshold"], errors="coerce"
+            )
         elif "consensus_ch" in data.columns:
             significant = data["consensus_ch"].astype(bool)
         else:
@@ -2131,7 +2163,9 @@ def plot_aggregate_evoked_response_graph(
             if node == stim_node:
                 continue
             peak = float(metric_mean.loc[response_mask, ch].abs().max())
-            selected.append({"channel": str(ch), "node": node, "peak": peak, "sig_count": method_counts.get(str(ch), 0)})
+            selected.append(
+                {"channel": str(ch), "node": node, "peak": peak, "sig_count": method_counts.get(str(ch), 0)}
+            )
         selected = sorted(selected, key=lambda item: item["peak"], reverse=True)[:top_n_per_stim]
         if not selected:
             continue
@@ -2169,7 +2203,9 @@ def plot_aggregate_evoked_response_graph(
         )
     coord_nodes = set(coords["node"])
     for info in prepared:
-        info["selected"] = [item for item in info["selected"] if item["node"] in coord_nodes and info["stim_node"] in coord_nodes]
+        info["selected"] = [
+            item for item in info["selected"] if item["node"] in coord_nodes and info["stim_node"] in coord_nodes
+        ]
         for item in info["selected"]:
             edge_specs.append(
                 {
@@ -2190,7 +2226,11 @@ def plot_aggregate_evoked_response_graph(
     prepared_by_run = {info["run_i"]: info for info in prepared}
     coord_map = coords.set_index("node")[["x", "y", "z", "region"]].to_dict("index")
     value_arrays = [arr for arr in all_values if arr.size]
-    scale = float(np.nanpercentile(np.abs(np.concatenate([arr.ravel() for arr in value_arrays])), 98)) if value_arrays else 1.0
+    scale = (
+        float(np.nanpercentile(np.abs(np.concatenate([arr.ravel() for arr in value_arrays])), 98))
+        if value_arrays
+        else 1.0
+    )
     if not np.isfinite(scale) or scale == 0:
         scale = 1.0
 
@@ -2239,7 +2279,8 @@ def plot_aggregate_evoked_response_graph(
                 np.nansum(
                     [
                         edge.get("sig_count", 0)
-                        if abs(value_at(edge, float(time_s))) >= significance_time_gate * max(float(edge.get("peak", 0.0)), 1e-12)
+                        if abs(value_at(edge, float(time_s)))
+                        >= significance_time_gate * max(float(edge.get("peak", 0.0)), 1e-12)
                         else 0
                         for edge in node_edges
                     ]
@@ -2261,7 +2302,8 @@ def plot_aggregate_evoked_response_graph(
                 np.nansum(
                     [
                         edge.get("sig_count", 0)
-                        if abs(value_at(edge, time_s)) >= significance_time_gate * max(float(edge.get("peak", 0.0)), 1e-12)
+                        if abs(value_at(edge, time_s))
+                        >= significance_time_gate * max(float(edge.get("peak", 0.0)), 1e-12)
                         else 0
                         for edge in node_edges
                     ]
@@ -2362,9 +2404,27 @@ def plot_aggregate_evoked_response_graph(
         height=780,
         margin={"l": 0, "r": 0, "t": 58, "b": 0},
         scene={
-            "xaxis": {"title": "MNI x", "showbackground": False, "showgrid": False, "zeroline": False, "showticklabels": False},
-            "yaxis": {"title": "MNI y", "showbackground": False, "showgrid": False, "zeroline": False, "showticklabels": False},
-            "zaxis": {"title": "MNI z", "showbackground": False, "showgrid": False, "zeroline": False, "showticklabels": False},
+            "xaxis": {
+                "title": "MNI x",
+                "showbackground": False,
+                "showgrid": False,
+                "zeroline": False,
+                "showticklabels": False,
+            },
+            "yaxis": {
+                "title": "MNI y",
+                "showbackground": False,
+                "showgrid": False,
+                "zeroline": False,
+                "showticklabels": False,
+            },
+            "zaxis": {
+                "title": "MNI z",
+                "showbackground": False,
+                "showgrid": False,
+                "zeroline": False,
+                "showticklabels": False,
+            },
             "aspectmode": "data",
         },
         updatemenus=[
@@ -2426,12 +2486,16 @@ def plot_surface_connectome(
     """
 
     try:
-        import pyvista as pv
         import mne
+        import pyvista as pv
     except Exception as exc:
         raise ImportError("Surface connectome plotting requires optional dependencies: mne and pyvista") from exc
 
-    all_nodes = sorted(set(edges.get(source_col, pd.Series(dtype=str)).astype(str)).union(edges.get(target_col, pd.Series(dtype=str)).astype(str)))
+    all_nodes = sorted(
+        set(edges.get(source_col, pd.Series(dtype=str)).astype(str)).union(
+            edges.get(target_col, pd.Series(dtype=str)).astype(str)
+        )
+    )
     coords = node_coordinates_from_metadata(
         elec_meta,
         nodes=all_nodes,
@@ -2467,8 +2531,12 @@ def plot_surface_connectome(
         src_xyz = np.array([coord_map[src]["x"], coord_map[src]["y"], coord_map[src]["z"]], dtype=float)
         dst_xyz = np.array([coord_map[dst]["x"], coord_map[dst]["y"], coord_map[dst]["z"]], dtype=float)
         weight = abs(float(edge[weight_col]))
-        tube = pv.Line(src_xyz, dst_xyz).tube(radius=edge_radius + edge_radius_scale * _positive_scale(weight, vmax), n_sides=18)
-        plotter.add_mesh(tube, color=_color_from_cmap(weight, vmin, vmax, cmap), opacity=edge_opacity, smooth_shading=True)
+        tube = pv.Line(src_xyz, dst_xyz).tube(
+            radius=edge_radius + edge_radius_scale * _positive_scale(weight, vmax), n_sides=18
+        )
+        plotter.add_mesh(
+            tube, color=_color_from_cmap(weight, vmin, vmax, cmap), opacity=edge_opacity, smooth_shading=True
+        )
 
     stim_nodes = set(data[source_col].astype(str))
     response_points = coords[~coords["node"].astype(str).isin(stim_nodes)][["x", "y", "z"]].to_numpy(dtype=float)
@@ -2502,7 +2570,9 @@ def plot_surface_connectome(
     return plotter
 
 
-def _connectome(edges, elec_meta, stim_col, record_col, weight_col, region_col, mni_cols, title, display_mode, edge_cmap):
+def _connectome(
+    edges, elec_meta, stim_col, record_col, weight_col, region_col, mni_cols, title, display_mode, edge_cmap
+):
     try:
         from nilearn import plotting
     except Exception as exc:
@@ -2547,7 +2617,9 @@ def plot_region_connectome(
 ):
     """Plot region-level directed response edges on an MNI connectome view."""
 
-    return _connectome(edges, elec_meta, stim_col, record_col, weight_col, region_col, mni_cols, title, display_mode, edge_cmap)
+    return _connectome(
+        edges, elec_meta, stim_col, record_col, weight_col, region_col, mni_cols, title, display_mode, edge_cmap
+    )
 
 
 def plot_electrode_connectome(
@@ -2606,7 +2678,9 @@ def plot_node_metric_glass_brain(
         raise ValueError("electrode metadata does not contain MNI coordinates")
     meta[elec_col] = meta[elec_col].astype(str)
     meta = meta.drop_duplicates(elec_col).set_index(elec_col)
-    nodes = order_nodes_by_metadata([node for node in values.index.astype(str) if node in meta.index], elec_meta=elec_meta, elec_col=elec_col)
+    nodes = order_nodes_by_metadata(
+        [node for node in values.index.astype(str) if node in meta.index], elec_meta=elec_meta, elec_col=elec_col
+    )
     if validate_mni and nodes:
         coord_frame = pd.DataFrame(
             {
@@ -2628,12 +2702,15 @@ def plot_node_metric_glass_brain(
     stim_nodes = set(str(node) for node in (stimulation_nodes or []))
     response_nodes = [node for node in nodes if node not in stim_nodes]
     source_nodes = [node for node in nodes if node in stim_nodes]
-    coords = meta.loc[nodes, list(mni_cols)].astype(float).to_numpy()
     node_values = values.reindex(nodes).fillna(0.0).to_numpy(dtype=float)
     vmax = float(np.nanpercentile(node_values, 98)) if np.isfinite(node_values).any() else 1.0
     if not np.isfinite(vmax) or vmax <= 0:
         vmax = 1.0
-    summary_label = f"{summary} {metric.replace('_', ' ')}" if time_s is None else f"{metric.replace('_', ' ')} at {time_s * 1000:.0f} ms"
+    summary_label = (
+        f"{summary} {metric.replace('_', ' ')}"
+        if time_s is None
+        else f"{metric.replace('_', ' ')} at {time_s * 1000:.0f} ms"
+    )
     if response_nodes:
         response_coords = meta.loc[response_nodes, list(mni_cols)].astype(float).to_numpy()
         response_values = values.reindex(response_nodes).fillna(0.0).to_numpy(dtype=float)

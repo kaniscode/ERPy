@@ -22,8 +22,7 @@ def plot_graph_metric_timecourse(
         ax.axis("off")
         return ax
     data = metric_table[
-        (metric_table["node"].astype(str) == str(node))
-        & (metric_table["metric"].astype(str) == str(metric))
+        (metric_table["node"].astype(str) == str(node)) & (metric_table["metric"].astype(str) == str(metric))
     ].copy()
     if data.empty:
         ax.text(0.5, 0.5, f"No {metric} data for {node}", ha="center", va="center")
@@ -61,12 +60,7 @@ def plot_graph_metric_heatmap(
         return ax
     data["value"] = pd.to_numeric(data["value"], errors="coerce")
     node_order = (
-        data.groupby("node")["value"]
-        .max()
-        .sort_values(ascending=False)
-        .head(top_n_nodes)
-        .index.astype(str)
-        .tolist()
+        data.groupby("node")["value"].max().sort_values(ascending=False).head(top_n_nodes).index.astype(str).tolist()
     )
     matrix = data[data["node"].astype(str).isin(node_order)].pivot_table(
         index="node",

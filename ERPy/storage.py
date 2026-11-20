@@ -1,16 +1,15 @@
 from __future__ import annotations
 
-from fractions import Fraction
 import json
 import os
+import uuid
+from fractions import Fraction
 from pathlib import Path
 from typing import Any
-import uuid
 
 import numpy as np
 import pandas as pd
 from scipy import signal
-
 
 CONTINUOUS_NPZ_FORMAT = "erpy-continuous-npz-v1"
 
@@ -42,12 +41,7 @@ def resample_continuous(
     actual_sfreq = source_sfreq * up / down
     values = numeric.to_numpy(dtype=float, copy=False)
     if not np.isfinite(values).all():
-        values = (
-            pd.DataFrame(values)
-            .interpolate(axis=0, limit_direction="both")
-            .fillna(0.0)
-            .to_numpy(dtype=float)
-        )
+        values = pd.DataFrame(values).interpolate(axis=0, limit_direction="both").fillna(0.0).to_numpy(dtype=float)
     resampled = signal.resample_poly(values, up, down, axis=0)
     index = _resampled_index(df.index, len(resampled), actual_sfreq)
     out = pd.DataFrame(resampled, index=index, columns=numeric.columns)
@@ -58,9 +52,7 @@ def resample_continuous(
             "source_sfreq": float(source_sfreq),
             "resample_up": up,
             "resample_down": down,
-            "dropped_non_numeric_columns": [
-                str(column) for column in df.columns if column not in numeric.columns
-            ],
+            "dropped_non_numeric_columns": [str(column) for column in df.columns if column not in numeric.columns],
         }
     )
     return out

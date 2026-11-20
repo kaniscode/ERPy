@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Callable, Optional
+from typing import Callable
 
 import numpy as np
 import pandas as pd
@@ -13,10 +13,10 @@ from .theme import apply_erpy_theme
 def plot_metric_vs_epoch(
     epochs_df: pd.DataFrame,
     channel: str,
-    metric_fn: Optional[Callable[[np.ndarray], float]] = None,
+    metric_fn: Callable[[np.ndarray], float] | None = None,
     ax=None,
     rolling: int = 0,
-    title: Optional[str] = None,
+    title: str | None = None,
 ):
     """Plot a per-epoch scalar metric in stimulation order."""
 
@@ -48,4 +48,3 @@ def plot_metric_vs_epoch(
     ax.set_ylabel("Metric")
     ax.set_title(title or f"{channel}: per-epoch metric")
     return ax
-

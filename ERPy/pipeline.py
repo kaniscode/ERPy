@@ -1,16 +1,16 @@
 from __future__ import annotations
 
-import json
 import os
-from pathlib import Path
-from typing import Any, Iterable
 import uuid
+from collections.abc import Iterable
+from pathlib import Path
+from typing import Any
 
 import numpy as np
 import pandas as pd
 
-from .bad_channels import reject_bad_channels
 from .artifact_anchor import POST_ARTIFACT_ZERO, detect_post_artifact_anchor
+from .bad_channels import reject_bad_channels
 from .epochs import (
     Epochs,
     EpochsRunner,
@@ -20,7 +20,7 @@ from .epochs import (
 )
 from .utils import preproc
 from .utils.jobrunner import JobRunner
-from .utils.utils import ensure_dir, infer_sfreq, stable_hash, write_time_series_csv
+from .utils.utils import ensure_dir, infer_sfreq, stable_hash
 
 
 class UnsafeLegacyProcessedMetadataError(UnsafeLegacyMetadataError):
@@ -129,7 +129,9 @@ class Pipeline:
 
     def _processed_path(self, session_id: str, stim_pair: str, pipeline_steps) -> Path:
         pid = self.pipeline_id(pipeline_steps)
-        return self.dataloader.get_session_path(session_id, "processed") / f"{stim_pair}_{session_id}_{pid}_processed.h5"
+        return (
+            self.dataloader.get_session_path(session_id, "processed") / f"{stim_pair}_{session_id}_{pid}_processed.h5"
+        )
 
     def _epochs_path(
         self,
@@ -153,7 +155,9 @@ class Pipeline:
             },
             length=8,
         )
-        return self.dataloader.get_session_path(session_id, "epochs") / f"{stim_pair}_{session_id}_{pid}_{tag}_epochs.h5"
+        return (
+            self.dataloader.get_session_path(session_id, "epochs") / f"{stim_pair}_{session_id}_{pid}_{tag}_epochs.h5"
+        )
 
     def _load_event_info(self, session_id: str, stim_pair: str) -> pd.DataFrame:
         path = self.dataloader.get_event_path(session_id, stim_pair)
@@ -226,7 +230,9 @@ class Pipeline:
         )
         if time_window is not None:
             df = _crop_continuous_window(df, *time_window)
-        sfreq = float(df.attrs.get("sfreq") or self.dataloader.get_sampling_freq(session_id, stim_pair) or infer_sfreq(df))
+        sfreq = float(
+            df.attrs.get("sfreq") or self.dataloader.get_sampling_freq(session_id, stim_pair) or infer_sfreq(df)
+        )
         state = {
             "session_id": session_id,
             "stim_pair": stim_pair,
@@ -244,7 +250,9 @@ class Pipeline:
             self.save_processed_data(df, path, pipeline_steps=steps, session_id=session_id, stim_pair=stim_pair)
         return df
 
-    def process_session(self, session_id: str, pipeline_steps=None, stim_pairs: Iterable[str] | None = None, **kwargs: Any):
+    def process_session(
+        self, session_id: str, pipeline_steps=None, stim_pairs: Iterable[str] | None = None, **kwargs: Any
+    ):
         """Preprocess selected stimulation pairs within one session."""
 
         return {
@@ -334,9 +342,7 @@ class Pipeline:
         if zero_time is not None:
             if zero_time == POST_ARTIFACT_ZERO:
                 for epoch_i, chunk in chunks:
-                    rep = detect_post_artifact_anchor(
-                        chunk, stim_ch=stim_ch, baseline_window=baseline, **anchor_params
-                    )
+                    rep = detect_post_artifact_anchor(chunk, stim_ch=stim_ch, baseline_window=baseline, **anchor_params)
                     rep = {**rep, "epoch": int(epoch_i), "zero_time_strategy": POST_ARTIFACT_ZERO}
                     zero_anchor_reports.append(rep)
                 mean_arr = np.nanmean(np.stack([c.to_numpy(dtype=float) for _, c in chunks]), axis=0)
@@ -490,9 +496,7 @@ class Pipeline:
 
         path = Path(path)
         ensure_dir(path.parent)
-        temporary = path.with_name(
-            f".{path.stem}.{uuid.uuid4().hex}.tmp{path.suffix or '.h5'}"
-        )
+        temporary = path.with_name(f".{path.stem}.{uuid.uuid4().hex}.tmp{path.suffix or '.h5'}")
         provenance = {
             "sfreq": df.attrs.get("sfreq"),
             "pipeline_id": df.attrs.get("pipeline_id"),
@@ -537,10 +541,7 @@ class Pipeline:
             allow_unsafe_legacy_pickle=allow_unsafe_legacy_pickle,
             legacy_error_type=UnsafeLegacyProcessedMetadataError,
             metadata_description="ERPy processed-data",
-            unsafe_opt_in_example=(
-                "Pipeline.load_processed_data(..., "
-                "allow_unsafe_legacy_pickle=True)"
-            ),
+            unsafe_opt_in_example=("Pipeline.load_processed_data(..., allow_unsafe_legacy_pickle=True)"),
         )
         with pd.HDFStore(path, mode="r") as store:
             df = store["data"]
@@ -594,7 +595,9 @@ class Pipeline:
             allow_unsafe_legacy_pickle=allow_unsafe_legacy_pickle,
         )
 
-    def _step_artifact_blank(self, df: pd.DataFrame, event_freq_to_width: dict | None = None, width_s: float = 0.003, **state):
+    def _step_artifact_blank(
+        self, df: pd.DataFrame, event_freq_to_width: dict | None = None, width_s: float = 0.003, **state
+    ):
         events = state.get("event_times")
         if events is None:
             try:
@@ -612,7 +615,9 @@ class Pipeline:
         out.attrs["sfreq"] = state.get("sfreq") or df.attrs.get("sfreq")
         return out
 
-    def _step_notch_filter(self, df: pd.DataFrame, notch_freq: float = 60.0, bw: float = 2.0, harm: bool = True, **state):
+    def _step_notch_filter(
+        self, df: pd.DataFrame, notch_freq: float = 60.0, bw: float = 2.0, harm: bool = True, **state
+    ):
         out = preproc.notch_line(df, notch_freq=notch_freq, bw=bw, harm=harm, fs=state.get("sfreq"))
         out.attrs["sfreq"] = state.get("sfreq") or df.attrs.get("sfreq")
         return out
@@ -756,7 +761,9 @@ class Pipeline:
         cls.PYTHON_SCRIPT = None
         cls.BASH_SCRIPT = None
 
-    def queue_job(self, pipeline_steps=None, session_ids: Iterable[str] | None = None, backend: str | None = None, **kwargs: Any):
+    def queue_job(
+        self, pipeline_steps=None, session_ids: Iterable[str] | None = None, backend: str | None = None, **kwargs: Any
+    ):
         """Process selected acquisitions and return the job-runner summary."""
 
         runner = JobRunner(
@@ -774,7 +781,9 @@ class Pipeline:
             if isinstance(pairs, str):
                 pairs = [p.strip() for p in pairs.split(",") if p.strip()]
             for sp in pairs:
-                self.process_stim_session(sid, sp, steps, save_processed=True, overwrite=bool(kwargs.get("overwrite_existing", False)))
+                self.process_stim_session(
+                    sid, sp, steps, save_processed=True, overwrite=bool(kwargs.get("overwrite_existing", False))
+                )
                 lines.append(f"{sid}/{sp}: processed")
         return runner, "\n".join(lines), ""
 

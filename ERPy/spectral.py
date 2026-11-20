@@ -22,15 +22,14 @@ The :class:`Epochs` object exposes these through an ``epochs.spectral`` accessor
 
 from __future__ import annotations
 
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
-from typing import Iterable, Mapping
 
 import numpy as np
 import pandas as pd
 from scipy import signal
 
 from .connectivity import granger_causality_matrix_from_trials, mutual_information_matrix_from_trials
-
 
 # ---------------------------------------------------------------------------
 # Configuration and result containers
@@ -156,6 +155,7 @@ class ComodulogramResult:
 # Low-level signal helpers
 # ---------------------------------------------------------------------------
 
+
 def make_frequencies(fmin: float, fmax: float, n_freqs: int, spacing: str = "log") -> np.ndarray:
     fmin = max(float(fmin), 1e-6)
     fmax = max(float(fmax), fmin * 1.001)
@@ -178,7 +178,9 @@ def _resolve_n_cycles(n_cycles: float | str | Iterable[float], freqs: np.ndarray
     return arr
 
 
-def morlet_wavelet(freq: float, sfreq: float, n_cycles: float, n_times: int | None = None, sigma_factor: float = 5.0) -> np.ndarray:
+def morlet_wavelet(
+    freq: float, sfreq: float, n_cycles: float, n_times: int | None = None, sigma_factor: float = 5.0
+) -> np.ndarray:
     """Return a zero-mean, unit-energy complex Morlet wavelet."""
 
     freq = float(freq)
@@ -188,7 +190,7 @@ def morlet_wavelet(freq: float, sfreq: float, n_cycles: float, n_times: int | No
         half = min(half, max((int(n_times) - 1) // 2, 1))
     half = max(half, 1)
     t = np.arange(-half, half + 1) / sfreq
-    gauss = np.exp(-(t ** 2) / (2.0 * sigma_t ** 2))
+    gauss = np.exp(-(t**2) / (2.0 * sigma_t**2))
     wavelet = np.exp(2j * np.pi * freq * t) * gauss
     wavelet = wavelet - wavelet.mean()  # remove DC for admissibility
     norm = np.sqrt(np.sum(np.abs(wavelet) ** 2))
@@ -253,7 +255,9 @@ def _finite_trials(mat: np.ndarray) -> np.ndarray:
     return mat[finite]
 
 
-def _apply_baseline(power: np.ndarray, times: np.ndarray, baseline: tuple[float, float] | None, mode: str) -> np.ndarray:
+def _apply_baseline(
+    power: np.ndarray, times: np.ndarray, baseline: tuple[float, float] | None, mode: str
+) -> np.ndarray:
     if baseline is None:
         return power
     bmask = _time_mask(times, baseline)
@@ -282,6 +286,7 @@ def _apply_baseline(power: np.ndarray, times: np.ndarray, baseline: tuple[float,
 # ---------------------------------------------------------------------------
 # Power spectral density
 # ---------------------------------------------------------------------------
+
 
 def compute_psd(
     epochs,
@@ -358,8 +363,14 @@ def band_power(
     """Average PSD power within named frequency bands -> channels x bands DataFrame."""
 
     bands = dict(bands or DEFAULT_BANDS)
-    psd = compute_psd(epochs, channels=channels, fmin=min(b[0] for b in bands.values()),
-                      fmax=max(b[1] for b in bands.values()), on=on, relative=relative)
+    psd = compute_psd(
+        epochs,
+        channels=channels,
+        fmin=min(b[0] for b in bands.values()),
+        fmax=max(b[1] for b in bands.values()),
+        on=on,
+        relative=relative,
+    )
     if psd.empty:
         return pd.DataFrame()
     freqs = psd.index.to_numpy(dtype=float)
@@ -375,6 +386,7 @@ def band_power(
 # ---------------------------------------------------------------------------
 # Time-frequency: power, ERSP, ITPC
 # ---------------------------------------------------------------------------
+
 
 def compute_tfr(
     epochs,
@@ -447,6 +459,7 @@ def inter_trial_phase_coherence(epochs, channel: str, config: SpectralConfig | N
 # ---------------------------------------------------------------------------
 # Phase-locking value (PLV)
 # ---------------------------------------------------------------------------
+
 
 def phase_locking_value(epochs, ch_x: str, ch_y: str, config: SpectralConfig | None = None) -> PLVResult:
     """Time-frequency phase-locking value between two contacts across trials.
@@ -534,6 +547,7 @@ def plv_matrix(
 # Coherence connectivity (magnitude-squared and imaginary)
 # ---------------------------------------------------------------------------
 
+
 def coherence_matrix(
     epochs,
     band: tuple[float, float] = (8.0, 13.0),
@@ -595,6 +609,7 @@ def coherence_matrix(
 # Information-theoretic and directed connectivity
 # ---------------------------------------------------------------------------
 
+
 def mutual_information_matrix(
     epochs,
     channels: Iterable[str] | None = None,
@@ -650,7 +665,10 @@ def granger_causality_matrix(
 # Phase-amplitude coupling (PAC)
 # ---------------------------------------------------------------------------
 
-def _modulation_index(phase: np.ndarray, amplitude: np.ndarray, method: str, n_bins: int) -> tuple[float, np.ndarray, np.ndarray, float]:
+
+def _modulation_index(
+    phase: np.ndarray, amplitude: np.ndarray, method: str, n_bins: int
+) -> tuple[float, np.ndarray, np.ndarray, float]:
     finite = np.isfinite(phase) & np.isfinite(amplitude)
     phase = phase[finite]
     amplitude = amplitude[finite]
@@ -762,9 +780,14 @@ def phase_amplitude_comodulogram(
                 continue
             try:
                 res = phase_amplitude_coupling(
-                    epochs, phase_channel, amp_channel,
-                    phase_band=p_band, amp_band=a_band,
-                    method=method, n_bins=n_bins, time_window=time_window,
+                    epochs,
+                    phase_channel,
+                    amp_channel,
+                    phase_band=p_band,
+                    amp_band=a_band,
+                    method=method,
+                    n_bins=n_bins,
+                    time_window=time_window,
                 )
                 mi[ai, pi] = res.mi
             except Exception:
@@ -784,6 +807,7 @@ def phase_amplitude_comodulogram(
 # ---------------------------------------------------------------------------
 # Phase-phase (n:m) cross-frequency coupling
 # ---------------------------------------------------------------------------
+
 
 def phase_phase_coupling(
     epochs,
@@ -848,8 +872,15 @@ def phase_phase_matrix(
         for xi, fx in enumerate(freqs_x):
             try:
                 mat[yi, xi] = phase_phase_coupling(
-                    epochs, ch_x, ch_y, freq_x=fx, freq_y=fy, n=n, m=m,
-                    n_cycles=n_cycles, time_window=time_window,
+                    epochs,
+                    ch_x,
+                    ch_y,
+                    freq_x=fx,
+                    freq_y=fy,
+                    n=n,
+                    m=m,
+                    n_cycles=n_cycles,
+                    time_window=time_window,
                 )
             except Exception:
                 continue
@@ -862,6 +893,7 @@ def phase_phase_matrix(
 # ---------------------------------------------------------------------------
 # Epochs accessor
 # ---------------------------------------------------------------------------
+
 
 class EpochsSpectral:
     """Spectral-analysis accessor available as ``epochs.spectral``."""

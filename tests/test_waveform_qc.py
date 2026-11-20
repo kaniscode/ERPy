@@ -15,15 +15,12 @@ def make_epochs():
     rows = []
     index = []
     for epoch in range(8):
-        response = 80.0 * np.exp(-((times - 0.08) / 0.025) ** 2)
+        response = 80.0 * np.exp(-(((times - 0.08) / 0.025) ** 2))
         rows.append(
             np.column_stack(
                 [
-                    response
-                    + epoch * 0.1
-                    + rng.normal(scale=0.08, size=len(times)),
-                    np.sin(2 * np.pi * 5 * times)
-                    + rng.normal(scale=0.03, size=len(times)),
+                    response + epoch * 0.1 + rng.normal(scale=0.08, size=len(times)),
+                    np.sin(2 * np.pi * 5 * times) + rng.normal(scale=0.03, size=len(times)),
                 ]
             )
         )
@@ -265,10 +262,7 @@ def test_erp_metrics_and_waveform_audit_are_invariant_to_trial_dc_offsets():
         rtol=1e-10,
         atol=1e-10,
     )
-    assert (
-        reference_detection["significant"].to_numpy()
-        == shifted_detection["significant"].to_numpy()
-    ).all()
+    assert (reference_detection["significant"].to_numpy() == shifted_detection["significant"].to_numpy()).all()
 
     audit = audit_waveforms(
         shifted,
@@ -378,10 +372,14 @@ def test_unknown_rail_diagnostic_does_not_make_waveform_borderline():
         min_clean_responses=3,
     )
 
-    assert not audit.summary["review_reasons"].str.contains(
-        "artifact_feature_near_threshold",
-        na=False,
-    ).any()
+    assert (
+        not audit.summary["review_reasons"]
+        .str.contains(
+            "artifact_feature_near_threshold",
+            na=False,
+        )
+        .any()
+    )
 
 
 def test_common_mode_recovery_diagnostic_requires_shared_early_step():
@@ -407,9 +405,7 @@ def test_common_mode_recovery_diagnostic_requires_shared_early_step():
         180.0,
         len(physiological),
     )
-    assert not common_mode_recovery_diagnostic(physiological)[
-        "common_mode_recovery_artifact"
-    ]
+    assert not common_mode_recovery_diagnostic(physiological)["common_mode_recovery_artifact"]
 
 
 def test_waveform_audit_quarantines_common_mode_recovery_acquisition():
@@ -428,15 +424,9 @@ def test_waveform_audit_quarantines_common_mode_recovery_acquisition():
             recovery = (
                 -180.0
                 + 120.0 * (1.0 - np.exp(-relative_time / 0.15))
-                - 25.0
-                * np.exp(
-                    -0.5
-                    * ((times[response] - 0.0125) / 0.0007) ** 2
-                )
+                - 25.0 * np.exp(-0.5 * ((times[response] - 0.0125) / 0.0007) ** 2)
             )
-            channel_scale = 0.9 + 0.2 * channel_index / (
-                len(channels) - 1
-            )
+            channel_scale = 0.9 + 0.2 * channel_index / (len(channels) - 1)
             waveform[response] += recovery * channel_scale
             trial_channels.append(waveform)
         rows.append(np.column_stack(trial_channels))
@@ -475,6 +465,4 @@ def test_waveform_audit_quarantines_common_mode_recovery_acquisition():
     assert audit.summary["common_mode_recovery_artifact"].all()
     assert not audit.summary["analysis_eligible"].any()
     assert not audit.summary["strict_consensus"].any()
-    assert audit.summary["review_reasons"].str.contains(
-        "common_mode_recovery_artifact"
-    ).all()
+    assert audit.summary["review_reasons"].str.contains("common_mode_recovery_artifact").all()

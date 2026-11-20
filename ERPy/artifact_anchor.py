@@ -5,7 +5,6 @@ from collections.abc import Iterable
 import numpy as np
 import pandas as pd
 
-
 POST_ARTIFACT_ZERO = "post_artifact"
 
 
@@ -31,7 +30,9 @@ def _robust_location_scale(values: np.ndarray) -> tuple[float, float]:
     return center, scale
 
 
-def artifact_envelope(epoch_df: pd.DataFrame, stim_ch: str | Iterable[str] | None = None) -> tuple[np.ndarray, list[str]]:
+def artifact_envelope(
+    epoch_df: pd.DataFrame, stim_ch: str | Iterable[str] | None = None
+) -> tuple[np.ndarray, list[str]]:
     """Return a robust stimulation-artifact envelope for one epoch.
 
     Stimulation channels are included first when present, but the envelope also

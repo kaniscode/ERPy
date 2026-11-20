@@ -4,21 +4,21 @@ import inspect
 import io
 import json
 import math
+from collections.abc import Iterable
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import pandas as pd
 
+from ._epoch_cache import epoch_cache_identity
 from .analysis import Analysis
 from .artifact_anchor import POST_ARTIFACT_ZERO
-from .bad_channels import ArtifactResponseReport, DEFAULT_HARD_ARTIFACT_REASONS
+from .bad_channels import DEFAULT_HARD_ARTIFACT_REASONS, ArtifactResponseReport
 from .dataloader import DataLoader
 from .epochs import Epochs
 from .events import Events, detect_events_from_artifacts
-from ._epoch_cache import epoch_cache_identity
 from .pipeline import Pipeline
-
 
 EpochsResult = Epochs
 
@@ -65,11 +65,7 @@ class AnalysisResult:
             )
             if column in data.columns
         ]
-        return (
-            data.drop_duplicates(identity).reset_index(drop=True)
-            if identity
-            else data.reset_index(drop=True)
-        )
+        return data.drop_duplicates(identity).reset_index(drop=True) if identity else data.reset_index(drop=True)
 
     @property
     def qc_pass_detections(self) -> pd.DataFrame:
@@ -158,7 +154,7 @@ class Patient:
         copy_raw: bool = False,
         derivatives: bool = True,
         verbose: bool = True,
-    ) -> "Patient":
+    ) -> Patient:
         """Import a BIDS iEEG subject and return a ready-to-use patient facade."""
 
         from .bids import import_bids_project, normalize_subject
@@ -189,7 +185,7 @@ class Patient:
         series_name: str | None = None,
         copy_raw: bool = False,
         verbose: bool = True,
-    ) -> "Patient":
+    ) -> Patient:
         """Import one NWB recording and return a ready-to-use patient facade."""
 
         dataloader = DataLoader.from_nwb(
@@ -206,15 +202,15 @@ class Patient:
         )
         return cls(dataloader.patient_id, config_path=str(dataloader.CONFIG_PATH), verbose=verbose)
 
-    def __getitem__(self, session_id: str) -> "Recording":
+    def __getitem__(self, session_id: str) -> Recording:
         return self.recording(session_id)
 
-    def recording(self, session_id: str) -> "Recording":
+    def recording(self, session_id: str) -> Recording:
         """Return the recording facade for one session."""
 
         return Recording(self, session_id)
 
-    def session(self, session_id: str) -> "Recording":
+    def session(self, session_id: str) -> Recording:
         """Return a recording facade; alias of ``recording``."""
 
         return self.recording(session_id)
@@ -296,7 +292,9 @@ class Patient:
 
         from .warmup import submit_warmup_jobs
 
-        return submit_warmup_jobs(self.patient_id, config_path=self.dataloader.CONFIG_PATH, session_ids=session_ids, **kwargs)
+        return submit_warmup_jobs(
+            self.patient_id, config_path=self.dataloader.CONFIG_PATH, session_ids=session_ids, **kwargs
+        )
 
 
 @dataclass
@@ -346,7 +344,9 @@ class Recording:
             **kwargs,
         )
 
-    def load_epochs(self, stim_pair: str, pipeline: str | list[tuple[str, dict[str, Any]]] = "blank_filt", **kwargs: Any) -> EpochsResult:
+    def load_epochs(
+        self, stim_pair: str, pipeline: str | list[tuple[str, dict[str, Any]]] = "blank_filt", **kwargs: Any
+    ) -> EpochsResult:
         """Load the newest matching epoch cache for a stimulation pair.
 
         ``allow_unsafe_legacy_pickle=True`` may be passed only for a trusted
@@ -358,9 +358,7 @@ class Recording:
             self.session_id,
             stim_pair,
             pipeline_steps=steps,
-            allow_unsafe_legacy_pickle=bool(
-                kwargs.pop("allow_unsafe_legacy_pickle", False)
-            ),
+            allow_unsafe_legacy_pickle=bool(kwargs.pop("allow_unsafe_legacy_pickle", False)),
         )
 
     def epoch(
@@ -397,20 +395,43 @@ class Recording:
         if "times" not in event_info:
             raise ValueError(f"Event file must contain a 'times' column: {event_path}")
         event_times = _parse_event_times(event_info["times"])
-        processing_options = {key: kwargs[key] for key in (
-            "input_source", "raw_file", "stim_start", "processing_margin_s",
-            "load_from_raw", "overwrite",
-        ) if key in kwargs}
+        processing_options = {
+            key: kwargs[key]
+            for key in (
+                "input_source",
+                "raw_file",
+                "stim_start",
+                "processing_margin_s",
+                "load_from_raw",
+                "overwrite",
+            )
+            if key in kwargs
+        }
         options = {
-            "tmin": float(tmin), "tmax": float(tmax), "baseline": baseline,
-            "zero_time": zero_time, "artifact_anchor_params": artifact_anchor_params or {},
-            "event_method": event_method, **processing_options,
+            "tmin": float(tmin),
+            "tmax": float(tmax),
+            "baseline": baseline,
+            "zero_time": zero_time,
+            "artifact_anchor_params": artifact_anchor_params or {},
+            "event_method": event_method,
+            **processing_options,
         }
         identity, source = epoch_cache_identity(
-            self.pipeline_obj, self.session_id, stim_pair, steps, event_bytes, options,
+            self.pipeline_obj,
+            self.session_id,
+            stim_pair,
+            steps,
+            event_bytes,
+            options,
         )
         path = self.pipeline_obj._epochs_path(
-            self.session_id, stim_pair, steps, tmin, tmax, baseline, zero_time,
+            self.session_id,
+            stim_pair,
+            steps,
+            tmin,
+            tmax,
+            baseline,
+            zero_time,
             artifact_anchor_params=artifact_anchor_params,
         )
         if cache and identity is not None and not processing_options.get("overwrite", False):
@@ -439,8 +460,12 @@ class Recording:
             **processing_options,
         )
         current, _ = epoch_cache_identity(
-            self.pipeline_obj, self.session_id, stim_pair, steps,
-            event_path.read_bytes(), options,
+            self.pipeline_obj,
+            self.session_id,
+            stim_pair,
+            steps,
+            event_path.read_bytes(),
+            options,
         )
         if current != identity or event_path.read_bytes() != event_bytes:
             raise RuntimeError("Epoch inputs changed during processing; retry after writes finish")
@@ -485,9 +510,7 @@ class Recording:
         if response_window is not None:
             artifact_options["response_window"] = response_window
         artifact_report = epochs.flag_artifacts(**artifact_options)
-        artifact_summary = artifact_report.by_channel(
-            hard_artifact_reasons=hard_reason_values
-        )
+        artifact_summary = artifact_report.by_channel(hard_artifact_reasons=hard_reason_values)
 
         clean_epochs = epochs
         if artifact_reject:
@@ -530,32 +553,19 @@ class Recording:
                 min(float(epochs.tmax), 0.5),
             )
 
-        selected_methods = [
-            str(method).lower()
-            for method in detection_options.get("methods", ALL_METHODS)
-        ]
+        selected_methods = [str(method).lower() for method in detection_options.get("methods", ALL_METHODS)]
         effective_detection_core = {
             "methods": selected_methods,
             "min_consensus": int(detection_options.get("min_consensus", 2)),
-            "baseline_window": detection_options.get(
-                "baseline_window", (-0.5, -0.03)
-            ),
-            "response_window": detection_options.get(
-                "response_window", (0.01, 0.3)
-            ),
-            "response_boundary_guard_s": detection_options.get(
-                "response_boundary_guard_s", 0.002
-            ),
+            "baseline_window": detection_options.get("baseline_window", (-0.5, -0.03)),
+            "response_window": detection_options.get("response_window", (0.01, 0.3)),
+            "response_boundary_guard_s": detection_options.get("response_boundary_guard_s", 0.002),
             "detector_input": (
-                "wideband_epochs"
-                if detection_options.get("wideband_epochs") is not None
-                else "primary_epochs"
+                "wideband_epochs" if detection_options.get("wideband_epochs") is not None else "primary_epochs"
             ),
         }
         method_overrides = {
-            method: detection_options[method]
-            for method in selected_methods
-            if method in detection_options
+            method: detection_options[method] for method in selected_methods if method in detection_options
         }
         shared_detection_overrides = {
             key: value
@@ -578,9 +588,7 @@ class Recording:
             "tmax": epoch_kwargs.get("tmax", 1.0),
             "baseline": epoch_kwargs.get("baseline", (-0.5, -0.03)),
             "zero_time": epoch_kwargs.get("zero_time", POST_ARTIFACT_ZERO),
-            "artifact_anchor_params": epoch_kwargs.get(
-                "artifact_anchor_params", None
-            ),
+            "artifact_anchor_params": epoch_kwargs.get("artifact_anchor_params", None),
             "cache": bool(epoch_kwargs.get("cache", True)),
             "event_method": epoch_kwargs.get("event_method", "auto"),
             "save_epochs": bool(epoch_kwargs.get("save_epochs", True)),
@@ -639,12 +647,8 @@ class Recording:
                 "max_bad_channel_fraction": float(max_bad_channel_fraction),
                 "hard_artifact_reasons": sorted(hard_reason_values),
                 "eligibility": {
-                    "max_bad_response_fraction": float(
-                        qc_max_bad_response_fraction
-                    ),
-                    "max_hard_artifact_fraction": float(
-                        qc_max_hard_artifact_fraction
-                    ),
+                    "max_bad_response_fraction": float(qc_max_bad_response_fraction),
+                    "max_hard_artifact_fraction": float(qc_max_hard_artifact_fraction),
                     "min_clean_responses": int(qc_min_clean_responses),
                     "exclude_boundary_peaks": bool(qc_exclude_boundary_peaks),
                 },
@@ -654,9 +658,7 @@ class Recording:
                 "effective_core": effective_detection_core,
                 "shared_overrides": shared_detection_overrides,
                 "method_overrides": method_overrides,
-                "method_parameter_records": _detector_parameter_records(
-                    detections
-                ),
+                "method_parameter_records": _detector_parameter_records(detections),
             },
         }
         return AnalysisResult(
@@ -753,10 +755,7 @@ def _metadata_value(value: Any) -> Any:
     if isinstance(value, Path):
         return str(value)
     if isinstance(value, dict):
-        return {
-            str(key): _metadata_value(item)
-            for key, item in sorted(value.items(), key=lambda pair: str(pair[0]))
-        }
+        return {str(key): _metadata_value(item) for key, item in sorted(value.items(), key=lambda pair: str(pair[0]))}
     if isinstance(value, (list, tuple)):
         return [_metadata_value(item) for item in value]
     if isinstance(value, (set, frozenset)):
@@ -854,7 +853,9 @@ def _annotate_detection_artifact_qc(
             suffixes=("", "_artifact"),
         )
     bad_fraction = out["bad_response_fraction"] if "bad_response_fraction" in out else pd.Series(0.0, index=out.index)
-    hard_fraction = out["hard_artifact_fraction"] if "hard_artifact_fraction" in out else pd.Series(0.0, index=out.index)
+    hard_fraction = (
+        out["hard_artifact_fraction"] if "hard_artifact_fraction" in out else pd.Series(0.0, index=out.index)
+    )
     if "n_clean_response" in out:
         clean_count = out["n_clean_response"]
     elif {"n_epochs", "n_bad_response"}.issubset(out.columns):
@@ -873,19 +874,13 @@ def _annotate_detection_artifact_qc(
         boundary_peak = out["peak_at_response_boundary"]
         if not pd.api.types.is_bool_dtype(boundary_peak):
             boundary_peak = (
-                boundary_peak.fillna(False)
-                .astype(str)
-                .str.strip()
-                .str.lower()
-                .isin({"true", "1", "yes", "y"})
+                boundary_peak.fillna(False).astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
             )
         else:
             boundary_peak = boundary_peak.fillna(False)
     else:
         boundary_peak = pd.Series(False, index=out.index)
-    out["artifact_boundary_peak_fail"] = (
-        boundary_peak & bool(exclude_boundary_peaks)
-    )
+    out["artifact_boundary_peak_fail"] = boundary_peak & bool(exclude_boundary_peaks)
     out["artifact_qc_pass"] = (
         (out["bad_response_fraction"] < float(max_bad_response_fraction))
         & ~out["artifact_hard_fail"]
@@ -895,32 +890,16 @@ def _annotate_detection_artifact_qc(
     if "primary_significant" in out.columns:
         primary = out["primary_significant"]
         if not pd.api.types.is_bool_dtype(primary):
-            primary = (
-                primary.fillna(False)
-                .astype(str)
-                .str.strip()
-                .str.lower()
-                .isin({"true", "1", "yes", "y"})
-            )
-        out["primary_qc_pass"] = (
-            primary.fillna(False) & out["artifact_qc_pass"]
-        )
+            primary = primary.fillna(False).astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
+        out["primary_qc_pass"] = primary.fillna(False) & out["artifact_qc_pass"]
     else:
         out["primary_qc_pass"] = False
     out["crp_energy_qc_pass"] = out["primary_qc_pass"]
     if "shape_magnitude_significant" in out.columns:
         primary = out["shape_magnitude_significant"]
         if not pd.api.types.is_bool_dtype(primary):
-            primary = (
-                primary.fillna(False)
-                .astype(str)
-                .str.strip()
-                .str.lower()
-                .isin({"true", "1", "yes", "y"})
-            )
-        out["shape_magnitude_qc_pass"] = (
-            primary.fillna(False) & out["artifact_qc_pass"]
-        )
+            primary = primary.fillna(False).astype(str).str.strip().str.lower().isin({"true", "1", "yes", "y"})
+        out["shape_magnitude_qc_pass"] = primary.fillna(False) & out["artifact_qc_pass"]
     else:
         out["shape_magnitude_qc_pass"] = False
     return out

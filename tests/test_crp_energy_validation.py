@@ -8,7 +8,6 @@ import pandas as pd
 
 import ERPy as ep
 
-
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
     "validate_crp_energy_real_baseline",

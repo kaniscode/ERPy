@@ -3,10 +3,10 @@ from __future__ import annotations
 import json
 from itertools import product
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import pytest
-import matplotlib.pyplot as plt
 
 import ERPy as ep
 from ERPy.crp import (
@@ -108,9 +108,7 @@ def test_primary_shape_magnitude_rule_separates_discordant_responses() -> None:
 
     assert bool(crp.loc["strong", "crp_fdr_significant"])
     assert bool(crp.loc["weak", "crp_fdr_significant"])
-    assert crp["crp_inference_status"].eq(
-        "exploratory_uncalibrated_selected_duration_shared_trial_t_test"
-    ).all()
+    assert crp["crp_inference_status"].eq("exploratory_uncalibrated_selected_duration_shared_trial_t_test").all()
     assert bool(kundu.loc["strong", "significant"])
     assert not bool(kundu.loc["weak", "significant"])
     assert bool(kundu.loc["inconsistent", "significant"])
@@ -137,9 +135,8 @@ def _crp_energy_fixture() -> tuple[ep.Epochs, list[str]]:
     arr = rng.normal(0.0, 0.5, (20, len(times), len(channels)))
     response = (times >= 0.015) & (times <= 0.350)
     response_times = times[response]
-    waveform = (
-        np.exp(-0.5 * ((response_times - 0.090) / 0.018) ** 2)
-        - 0.75 * np.exp(-0.5 * ((response_times - 0.180) / 0.030) ** 2)
+    waveform = np.exp(-0.5 * ((response_times - 0.090) / 0.018) ** 2) - 0.75 * np.exp(
+        -0.5 * ((response_times - 0.180) / 0.030) ** 2
     )
     arr[:, response, 0] += 4.0 * waveform
     arr[:, response, 1] *= 0.55
@@ -198,9 +195,7 @@ def test_crp_energy_excludes_stimulation_contacts_from_fdr_family() -> None:
     assert excluded["qc_status"] == "stimulation_contact_excluded"
     assert not bool(excluded["significant"])
     assert results["testing_family_size"].nunique() == 1
-    assert int(results["testing_family_size"].iloc[0]) == int(
-        results.drop(index="both")["p_joint"].notna().sum()
-    )
+    assert int(results["testing_family_size"].iloc[0]) == int(results.drop(index="both")["p_joint"].notna().sum())
 
     included = ep.detect(
         epochs,
@@ -243,12 +238,8 @@ def test_crp_energy_is_deterministic_and_global_sign_invariant() -> None:
         "canonical_energy",
         "canonical_energy_fraction",
     ):
-        assert first[column].to_numpy() == pytest.approx(
-            repeated[column].to_numpy(), nan_ok=True
-        )
-        assert first[column].to_numpy() == pytest.approx(
-            sign_reversed[column].to_numpy(), nan_ok=True
-        )
+        assert first[column].to_numpy() == pytest.approx(repeated[column].to_numpy(), nan_ok=True)
+        assert first[column].to_numpy() == pytest.approx(sign_reversed[column].to_numpy(), nan_ok=True)
     assert first["classification"].tolist() == sign_reversed["classification"].tolist()
 
 
@@ -380,9 +371,7 @@ def test_fixed_window_reproducibility_matches_brute_force_quadratic_null() -> No
     )
 
     assert result.statistic == pytest.approx(observed, rel=1e-14, abs=1e-14)
-    assert result.p_value == pytest.approx(
-        np.mean(null_statistics >= observed - 1e-15)
-    )
+    assert result.p_value == pytest.approx(np.mean(null_statistics >= observed - 1e-15))
 
 
 def test_crp_energy_fixed_window_inference_is_independent_of_duration_grid() -> None:
@@ -463,24 +452,16 @@ def test_crp_energy_channel_streams_are_distinct_and_order_invariant() -> None:
         times,
         list(reversed(channels)),
     )
-    reordered = (
-        ep.detect(reversed_epochs, **options)
-        .set_index("channel")
-        .sort_index()
-    )
+    reordered = ep.detect(reversed_epochs, **options).set_index("channel").sort_index()
 
     assert original["random_state_root"].eq("42").all()
     assert original["random_state_effective"].is_unique
-    assert original["random_stream_derivation"].eq(
-        "sha256-v1(root-seed,channel-label;63-bit)"
-    ).all()
+    assert original["random_stream_derivation"].eq("sha256-v1(root-seed,channel-label;63-bit)").all()
     assert original["reproducibility_test_exact"].eq(False).all()
     assert original["reproducibility_n_randomizations"].eq(5_000).all()
     assert original["energy_test_exact"].eq(False).all()
     assert original["energy_n_permutations"].eq(5_000).all()
-    assert original["random_state_effective"].tolist() == reordered[
-        "random_state_effective"
-    ].tolist()
+    assert original["random_state_effective"].tolist() == reordered["random_state_effective"].tolist()
     for column in ("p_crp", "p_energy", "p_joint", "q_joint"):
         np.testing.assert_allclose(
             original[column].to_numpy(dtype=float),
@@ -491,9 +472,7 @@ def test_crp_energy_channel_streams_are_distinct_and_order_invariant() -> None:
         )
     for _, row in original.iterrows():
         parameters = json.loads(str(row["parameters"]))
-        assert parameters["random_state"] == int(
-            row["random_state_effective"]
-        )
+        assert parameters["random_state"] == int(row["random_state_effective"])
 
 
 def test_multimethod_concat_and_metadata_preserve_seed_decimal_exactly(
@@ -520,17 +499,9 @@ def test_multimethod_concat_and_metadata_preserve_seed_decimal_exactly(
     assert primary["random_state_effective"].map(int).gt(2**53).all()
     for _, row in primary.iterrows():
         parameters = json.loads(str(row["parameters"]))
-        assert str(parameters["random_state"]) == row[
-            "random_state_effective"
-        ]
+        assert str(parameters["random_state"]) == row["random_state_effective"]
 
-    metadata = {
-        "detection": {
-            "method_parameter_records": _detector_parameter_records(
-                detections
-            )
-        }
-    }
+    metadata = {"detection": {"method_parameter_records": _detector_parameter_records(detections)}}
     analysis_result = ep.AnalysisResult(
         epochs=epochs,
         detections=detections,
@@ -543,19 +514,13 @@ def test_multimethod_concat_and_metadata_preserve_seed_decimal_exactly(
         tmp_path / "seed_roundtrip",
         prefix="seed_roundtrip",
     )
-    decoded = json.loads(
-        saved["metadata"].read_text(encoding="utf-8")
-    )
+    decoded = json.loads(saved["metadata"].read_text(encoding="utf-8"))
     crp_record = next(
-        record
-        for record in decoded["detection"]["method_parameter_records"]
-        if record["method"] == "crp_energy"
+        record for record in decoded["detection"]["method_parameter_records"] if record["method"] == "crp_energy"
     )
     first = primary.iloc[0]
     assert crp_record["random_state_root"] == "42"
-    assert crp_record["random_state_effective"] == first[
-        "random_state_effective"
-    ]
+    assert crp_record["random_state_effective"] == first["random_state_effective"]
 
 
 @pytest.mark.parametrize(
@@ -607,9 +572,7 @@ def test_sign_flip_helpers_bound_enumeration_and_mark_empty_as_not_run() -> None
             sfreq=500.0,
             n_permutations=0,
         )
-    statistic, p_value, exact, n_randomizations = (
-        ep.paired_log_rms_sign_flip_test(np.asarray([np.nan]))
-    )
+    statistic, p_value, exact, n_randomizations = ep.paired_log_rms_sign_flip_test(np.asarray([np.nan]))
     assert np.isnan(statistic)
     assert np.isnan(p_value)
     assert not exact
@@ -652,7 +615,8 @@ def test_crp_energy_does_not_infer_from_a_truncated_declared_window() -> None:
 
     # An explicitly declared shorter test remains valid on the same data.
     shorter = ep.run_crp_energy_array(
-        values, times,
+        values,
+        times,
         config=ep.CRPEnergyConfig(
             response_window=(0.015, 0.1),
             baseline_window=(-0.5, -0.02),
@@ -669,14 +633,16 @@ def test_crp_energy_does_not_infer_from_a_truncated_declared_window() -> None:
     [(0.3, True), (0.3005, True), (0.3006, False)],
 )
 def test_crp_energy_window_coverage_allows_only_sample_grid_rounding(
-    declared_stop: float, available: bool,
+    declared_stop: float,
+    available: bool,
 ) -> None:
     times = np.arange(-500, 301, dtype=float) / 1000.0
     rng = np.random.default_rng(6060)
     values = rng.normal(0.0, 0.2, (8, len(times)))
     values += 8.0 * np.exp(-0.5 * ((times - 0.045) / 0.008) ** 2)
     result = ep.run_crp_energy_array(
-        values, times,
+        values,
+        times,
         config=ep.CRPEnergyConfig(
             response_window=(0.015, declared_stop),
             baseline_window=(-0.5, -0.02),
@@ -710,9 +676,7 @@ def test_crp_energy_detector_error_retains_schema_and_parameters(
     )
 
     assert len(detections) == len(channels)
-    assert set(ep.DETECTOR_QUANTITY_COLUMNS["crp_energy"]).issubset(
-        detections.columns
-    )
+    assert set(ep.DETECTOR_QUANTITY_COLUMNS["crp_energy"]).issubset(detections.columns)
     assert detections["qc_status"].eq("detector_error").all()
     assert detections["parameters"].str.len().gt(0).all()
     assert detections["reproducibility_test_exact"].eq(False).all()
@@ -749,8 +713,7 @@ def test_crp_energy_detects_reproducible_late_multiphasic_response_that_kundu_mi
     rng = np.random.default_rng(73)
     arr = rng.normal(0.0, 0.5, (20, len(times), len(channels)))
     late_waveform = 8.0 * (
-        np.exp(-0.5 * ((times - 0.190) / 0.025) ** 2)
-        - 0.70 * np.exp(-0.5 * ((times - 0.270) / 0.030) ** 2)
+        np.exp(-0.5 * ((times - 0.190) / 0.025) ** 2) - 0.70 * np.exp(-0.5 * ((times - 0.270) / 0.030) ** 2)
     )
     arr[:, :, 0] += late_waveform
     epochs = _epochs(arr, times, channels)
@@ -793,9 +756,7 @@ def test_crp_energy_receives_saturation_rejected_before_detection() -> None:
         return_arrays=False,
     ).set_index("channel")
 
-    assert report.table.loc[
-        report.table["channel"].eq("saturated"), "bad_response"
-    ].all()
+    assert report.table.loc[report.table["channel"].eq("saturated"), "bad_response"].all()
     assert results.loc["saturated", "classification"] == "insufficient_data"
     assert results.loc["saturated", "n_trials_clean"] == 0
 
@@ -833,12 +794,8 @@ def test_crp_energy_excludes_the_declared_stimulation_artifact_interval() -> Non
             atol=0.0,
             equal_nan=True,
         )
-    starts = artifact_results["response_window"].map(
-        lambda window: float(tuple(window)[0])
-    )
-    stops = artifact_results["response_window"].map(
-        lambda window: float(tuple(window)[1])
-    )
+    starts = artifact_results["response_window"].map(lambda window: float(tuple(window)[0]))
+    stops = artifact_results["response_window"].map(lambda window: float(tuple(window)[1]))
     np.testing.assert_allclose(starts, 0.015, atol=1.0 / sfreq)
     assert ((stops <= 0.170) & (stops >= 0.170 - 1.0 / sfreq)).all()
 
@@ -952,9 +909,7 @@ def test_rms_paired_test_compares_separately_demeaned_segments() -> None:
         rms_response={"response_window": (0.010, 0.100)},
     ).iloc[0]
 
-    assert rms["rms_response_trial_median_uv"] == pytest.approx(
-        rms["rms_baseline_trial_median_uv"]
-    )
+    assert rms["rms_response_trial_median_uv"] == pytest.approx(rms["rms_baseline_trial_median_uv"])
     assert rms["rms_wilcoxon_p_value"] > 0.05
     assert not bool(rms["rms_paired_fdr_significant"])
 
@@ -969,8 +924,8 @@ def test_signi_randomization_is_deterministic_and_detects_induced_gamma() -> Non
     response_times = times[response]
     burst_envelope = np.exp(-0.5 * ((response_times - 0.050) / 0.014) ** 2)
     phases = rng.uniform(0.0, 2 * np.pi, size=arr.shape[0])
-    arr[:, response, 0] += 14.0 * burst_envelope[None, :] * np.sin(
-        2 * np.pi * 100.0 * response_times[None, :] + phases[:, None]
+    arr[:, response, 0] += (
+        14.0 * burst_envelope[None, :] * np.sin(2 * np.pi * 100.0 * response_times[None, :] + phases[:, None])
     )
     epochs = _epochs(arr, times, channels)
     options = {
@@ -999,9 +954,7 @@ def test_signi_randomization_is_deterministic_and_detects_induced_gamma() -> Non
         crowther_gamma=options,
     ).set_index("channel")
 
-    assert first.loc["induced_gamma", "signi_snr"] == pytest.approx(
-        second.loc["induced_gamma", "signi_snr"]
-    )
+    assert first.loc["induced_gamma", "signi_snr"] == pytest.approx(second.loc["induced_gamma", "signi_snr"])
     assert first.loc["induced_gamma", "signi_p_value_raw"] == pytest.approx(
         second.loc["induced_gamma", "signi_p_value_raw"]
     )
@@ -1060,10 +1013,7 @@ def test_detector_diagnostic_renders_insufficient_matched_trials() -> None:
     )
 
     assert "FAIL" in fig._suptitle.get_text()
-    assert any(
-        "CRP unavailable" in text.get_text()
-        for text in fig.axes[2].texts
-    )
+    assert any("CRP unavailable" in text.get_text() for text in fig.axes[2].texts)
     assert "RMS unavailable" in fig.axes[4].get_title()
     plt.close(fig)
 
@@ -1095,6 +1045,4 @@ def test_every_published_detector_exposes_its_native_quantities() -> None:
         assert rows[list(quantity_columns)].notna().any(axis=None)
 
     hays = detections[detections["method"].eq("peak_amplitude")].set_index("channel")
-    assert hays.loc["response", "hays_n1_z"] == pytest.approx(
-        hays.loc["response", "keller_a1_z"]
-    )
+    assert hays.loc["response", "hays_n1_z"] == pytest.approx(hays.loc["response", "keller_a1_z"])

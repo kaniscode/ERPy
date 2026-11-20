@@ -2,17 +2,17 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable, Optional, Union
 
 import matplotlib.axes
 import matplotlib.figure
 
 
 def save_analysis_figure(
-    fig: Union[matplotlib.figure.Figure, matplotlib.axes.Axes],
+    fig: matplotlib.figure.Figure | matplotlib.axes.Axes,
     name: str,
-    patient_path: Optional[str] = None,
+    patient_path: str | None = None,
     subdir: str = "",
     formats: Iterable[str] = ("png", "pdf"),
 ) -> list[str]:
@@ -34,4 +34,3 @@ def save_analysis_figure(
         fig.savefig(path, bbox_inches="tight")
         outputs.append(str(path))
     return outputs
-

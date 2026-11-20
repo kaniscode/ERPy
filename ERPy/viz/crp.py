@@ -116,8 +116,7 @@ def plot_crp_summary(
         f"Duration      {result.response_duration_s * 1000.0:.1f} ms",
         (
             f"Median alpha' {np.nanmedian(result.alpha_prime_uv):.2f} uV"
-            if result.alpha_prime_uv is not None
-            and np.isfinite(result.alpha_prime_uv).any()
+            if result.alpha_prime_uv is not None and np.isfinite(result.alpha_prime_uv).any()
             else "Median alpha' n/a"
         ),
         (
@@ -125,9 +124,15 @@ def plot_crp_summary(
             if result.snr is not None and np.isfinite(result.snr).any()
             else "Median SNR    n/a"
         ),
-        f"Perm p        {result.permutation_p_value:.3g}" if np.isfinite(result.permutation_p_value) else "Perm p        not run",
-        f"Max weight z  {result.max_canonical_weight_z:.2f}" if np.isfinite(result.max_canonical_weight_z) else "Max weight z  n/a",
-        f"Recon RMS     {result.reconstruction_rms_uv:.2f} uV" if np.isfinite(result.reconstruction_rms_uv) else "Recon RMS     n/a",
+        f"Perm p        {result.permutation_p_value:.3g}"
+        if np.isfinite(result.permutation_p_value)
+        else "Perm p        not run",
+        f"Max weight z  {result.max_canonical_weight_z:.2f}"
+        if np.isfinite(result.max_canonical_weight_z)
+        else "Max weight z  n/a",
+        f"Recon RMS     {result.reconstruction_rms_uv:.2f} uV"
+        if np.isfinite(result.reconstruction_rms_uv)
+        else "Recon RMS     n/a",
         f"Significant   {'yes' if result.significant else 'no'}",
         f"Window        {result.response_window[0] * 1000:.0f}-{result.response_window[1] * 1000:.0f} ms",
         f"Trials        {len(result.projections)}",
@@ -203,6 +208,7 @@ def plot_crp_site_comparison(
         return ax
     data = comparison_table.copy()
     data[metric] = pd.to_numeric(data[metric], errors="coerce")
+
     def finite_maximum(values: pd.Series) -> float:
         finite = np.abs(values.to_numpy(dtype=float))
         finite = finite[np.isfinite(finite)]

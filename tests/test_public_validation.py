@@ -4,7 +4,6 @@ import importlib.util
 import sys
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -74,17 +73,22 @@ def test_public_lowpass_marks_gamma_unavailable_and_excludes_it_from_consensus()
     assert not gamma["significant"].any()
     assert gamma["availability_reason"].str.contains("0.5-80 Hz", regex=False).all()
     assert gamma["availability_reason"].str.contains("no independent wideband_epochs", regex=False).all()
-    assert gamma[
-        [
-            "score",
-            "p_value",
-            "threshold",
-            "signi_snr",
-            "signi_p_value_raw",
-            "signi_p_value_bonferroni",
-            "high_gamma_z",
+    assert (
+        gamma[
+            [
+                "score",
+                "p_value",
+                "threshold",
+                "signi_snr",
+                "signi_p_value_raw",
+                "signi_p_value_bonferroni",
+                "high_gamma_z",
+            ]
         ]
-    ].isna().all().all()
+        .isna()
+        .all()
+        .all()
+    )
 
     channel_status = corrected.drop_duplicates("channel").set_index("channel")
     assert channel_status.loc["single_plus_invalid_gamma", "n_methods_available"] == len(

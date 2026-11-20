@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import math
-from typing import Iterable
+from collections.abc import Iterable
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -107,7 +107,9 @@ def plot_mean(epochs, channel: str, ax=None, color="#2563eb", label: str | None 
     ax = ax or plt.subplots(figsize=(6, 3))[1]
     ax.plot(mean.index, mean[channel], color=color, lw=1.8, label=label or channel)
     if channel in sem:
-        ax.fill_between(mean.index, mean[channel] - sem[channel], mean[channel] + sem[channel], color=color, alpha=0.18, lw=0)
+        ax.fill_between(
+            mean.index, mean[channel] - sem[channel], mean[channel] + sem[channel], color=color, alpha=0.18, lw=0
+        )
     ax.axvline(0, color="0.2", ls="--", lw=1)
     ax.axhline(0, color="0.8", lw=0.8)
     zero_sample = _nearest_zero_sample(epochs)
@@ -191,11 +193,7 @@ def plot_ranked_grid(
         data = data[data["consensus_ch"]]
     if data.empty or metric not in data.columns:
         return plot_grid(epochs, channels=epochs.channels[:top_n], ncols=ncols)
-    order = (
-        data.drop_duplicates("channel")
-        .sort_values(metric, ascending=False)["channel"]
-        .tolist()
-    )
+    order = data.drop_duplicates("channel").sort_values(metric, ascending=False)["channel"].tolist()
     channels = [ch for ch in order if ch in epochs.channels][:top_n]
     return plot_grid(epochs, channels=channels, ncols=ncols)
 
@@ -344,7 +342,9 @@ def plot_summary_panel(epochs, channel: str, detections: pd.DataFrame | None = N
                     lines.append(f"Zero anchor  {nearest * 1000:.1f} ms")
             lines.append(f"Residual     {float(zero_report['max_abs_uv']):.3g} uV max")
             if zero_report.get("n_anchor_reports"):
-                lines.append(f"Onset artifact {int(zero_report.get('n_onset_artifact_epochs', 0))}/{int(zero_report['n_anchor_reports'])}")
+                lines.append(
+                    f"Onset artifact {int(zero_report.get('n_onset_artifact_epochs', 0))}/{int(zero_report['n_anchor_reports'])}"
+                )
     if detections is not None and not detections.empty:
         sub = detections[detections["channel"] == channel]
         if not sub.empty:
